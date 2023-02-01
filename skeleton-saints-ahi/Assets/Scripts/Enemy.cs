@@ -34,9 +34,12 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private IEnumerator FlashMaterial()
     {
-        Color originalColor = _material.color;
-        _material.color = Color.red;
+        // Done this way so original material isn't touched and possibly kept altered
+        Material flashMaterial = Instantiate(_material);
+        flashMaterial.color = Color.red;
+        gameObject.GetComponent<Renderer>().material = flashMaterial;
         yield return new WaitForSeconds(_materialFlashSpeed);
-        _material.color = originalColor;
+        gameObject.GetComponent<Renderer>().material = _material;
+        Destroy(flashMaterial);
     }
 }
