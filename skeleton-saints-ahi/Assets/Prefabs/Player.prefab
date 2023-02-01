@@ -53,6 +53,11 @@ MonoBehaviour:
   maxJumps: 1
   jumpSpeed: 8
   gravity: 16
+  projectileSpeed: 50
+  cooldown: 0.5
+  range: 150
+  maxAmmo: 40
+  damage: 5
   debugMessages: 0
 --- !u!143 &6160287242515428983
 CharacterController:

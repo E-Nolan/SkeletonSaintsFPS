@@ -18,8 +18,15 @@ public class playerController : MonoBehaviour
 
     // Stats used by the player's gun
     [Header("Weapon Stats")]
+    [Range(5, 200)]     [SerializeField] int projectileSpeed;
+    [Range(0.0f, 5.0f)] [SerializeField] float cooldown; // in seconds
+    [Range(1, 200)]     [SerializeField] int range;
+    [Range(1, 200)]     [SerializeField] int maxAmmo;
+    [Range(1, 20)]      [SerializeField] int damage;
+
 
     // Debug bool. Enable to receive Debug messages in the console
+    [Header("Miscellaneous")]
     [SerializeField] bool debugMessages;
 
     // Private variables used within the script to facilitate movement and actions
