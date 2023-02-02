@@ -53,7 +53,7 @@ MonoBehaviour:
   maxJumps: 1
   jumpSpeed: 8
   gravity: 16
-  maxHealth: 20
+  maxHealth: 10
   dashEnabled: 1
   dashSpeed: 25
   dashCooldown: 0.75
@@ -63,8 +63,11 @@ MonoBehaviour:
   range: 150
   maxAmmo: 40
   startingAmmo: 200
-  damage: 5
+  damage: 1
   debugMessages: 0
+  jumpsCurrent: 0
+  currentHealth: 0
+  currentAmmo: 0
 --- !u!143 &6160287242515428983
 CharacterController:
   m_ObjectHideFlags: 0

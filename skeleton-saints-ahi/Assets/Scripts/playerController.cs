@@ -100,6 +100,26 @@ public class playerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
+    /// <summary> Return true if the player's ammo is full </summary>
+    public bool isAmmoFull()
+    {
+        return (currentAmmo == maxAmmo);
+    }
+
+    /// <summary> Return true if the player has no ammo </summary>
+    public bool isAmmoEmpty()
+    {
+        return (currentAmmo == 0);
+    }
+
+    /// <summary> Give the player an amount of ammo (positive input), or take it away (negative input).
+    /// Clamp it if it exceeds max ammo or becomes negative </summary>
+    public void updateAmmo(int amount)
+    {
+        currentAmmo += amount;
+        currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
+    }
+
     IEnumerator startDash()
     {
         // Start a dash, then reenable dashing when the cooldown expires
