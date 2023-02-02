@@ -15,12 +15,15 @@ public class playerController : MonoBehaviour
     [Range(1, 5)] [SerializeField] int maxJumps;
     [Range(3, 50)] [SerializeField] int jumpSpeed;
     [Range(0, 50)] [SerializeField] int gravity;
+    [Range(1, 100)] [SerializeField] int maxHealth;
 
     // Stats for player dashing
     [Header("Dash Stats")]
     [SerializeField] bool dashEnabled;
     [Range(2, 100)] [SerializeField] int dashSpeed;
+    [Tooltip("This should be longer or equal to Dash Duration")]
     [Range(0.0f, 20.0f)] [SerializeField] float dashCooldown;
+    [Tooltip("This should be shorter or equal to Dash Cooldown")]
     [Range(0.0f, 5.0f)] [SerializeField] float dashDuration;
 
     // Stats used by the player's gun
@@ -29,6 +32,8 @@ public class playerController : MonoBehaviour
     [Range(0.0f, 5.0f)] [SerializeField] float cooldown; // in seconds
     [Range(1, 200)]     [SerializeField] int range;
     [Range(1, 200)]     [SerializeField] int maxAmmo;
+    [Tooltip("Will be rounded down if it exceeds maxAmmo.\nSet to 200 to always be equal to maxAmmo")]
+    [Range(0, 200)] [SerializeField] int startingAmmo;
     [Range(1, 20)]      [SerializeField] int damage;
 
 
@@ -41,6 +46,8 @@ public class playerController : MonoBehaviour
     Vector3 playerVelocity;
     int jumpsCurrent = 0;
     int defaultSpeed;
+    int currentHealth;
+    int currentAmmo;
     bool isDashing;
 
     // Start is called before the first frame update
@@ -48,6 +55,10 @@ public class playerController : MonoBehaviour
     {
         // Store the player's speed in another variable so that the player's speed can return to default after dashing
         defaultSpeed = playerSpeed;
+        currentHealth = maxHealth;
+        // If the starting ammo exceeds max ammo, bring it down to maxAmmo
+        currentAmmo = startingAmmo;
+        currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
     }
 
     // Update is called once per frame
