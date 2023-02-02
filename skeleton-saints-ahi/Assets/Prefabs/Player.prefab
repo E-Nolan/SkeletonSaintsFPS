@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6160287242515428978}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,6 +53,10 @@ MonoBehaviour:
   maxJumps: 1
   jumpSpeed: 8
   gravity: 16
+  dashEnabled: 1
+  dashSpeed: 25
+  dashCooldown: 0.75
+  dashDuration: 0.25
   projectileSpeed: 50
   cooldown: 0.5
   range: 150
@@ -105,7 +109,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 35e234b80e548d946955a5ba8bd457f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
