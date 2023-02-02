@@ -100,24 +100,53 @@ public class playerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    /// <summary> Return true if the player's ammo is full </summary>
+    /// <summary>
+    /// Return true if the player's ammo is full
+    /// </summary>
     public bool isAmmoFull()
     {
         return (currentAmmo == maxAmmo);
     }
 
-    /// <summary> Return true if the player has no ammo </summary>
+    /// <summary>
+    /// Return true if the player has no ammo
+    /// </summary>
     public bool isAmmoEmpty()
     {
         return (currentAmmo == 0);
     }
 
-    /// <summary> Give the player an amount of ammo (positive input), or take it away (negative input).
-    /// Clamp it if it exceeds max ammo or becomes negative </summary>
+    /// <summary>
+    /// Give the player an amount of ammo (positive input), or take it away (negative input).
+    /// Clamp it if it exceeds max ammo or becomes negative
+    /// </summary>
+    /// <param name="amount"></param>
     public void updateAmmo(int amount)
     {
         currentAmmo += amount;
         currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
+    }
+
+    /// <summary>
+    /// Deal damage to the player (negative input) or heal the player (positive input)
+    /// Clamp it if it exceeds max health or becomes negative
+    /// </summary>
+    /// <param name="amount"></param>
+    public void updateHealth(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (currentHealth == 0)
+            killPlayer();
+    }
+
+    /// <summary>
+    /// Kill the player. runs when the player's health reaches 0, but can be called for other reasons.
+    /// </summary>
+    public void killPlayer()
+    {
+        // TODO: Implement this functionality
     }
 
     IEnumerator startDash()
