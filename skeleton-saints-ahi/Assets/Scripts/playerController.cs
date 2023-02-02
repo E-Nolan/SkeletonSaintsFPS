@@ -44,11 +44,12 @@ public class playerController : MonoBehaviour
     // Private variables used within the script to facilitate movement and actions
     Vector3 moveInput;
     Vector3 playerVelocity;
-    int jumpsCurrent = 0;
     int defaultSpeed;
-    int currentHealth;
-    int currentAmmo;
     bool isDashing;
+
+    public int jumpsCurrent = 0;
+    public int currentHealth;
+    public int currentAmmo;
 
     // Start is called before the first frame update
     void Start()
