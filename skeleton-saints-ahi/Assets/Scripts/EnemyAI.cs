@@ -12,16 +12,18 @@ public class EnemyAI : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _playerGameObject = GameObject.FindGameObjectWithTag("Player");
-
-        if (_playerGameObject == null)
-            Debug.Log($"{gameObject.name} could not find Player GameObject");
-        else
-            Debug.Log($"{gameObject.name} found the player");
     }
 
     void Update()
     {
         if(_playerGameObject != null)
             _agent.destination = _playerGameObject.transform.position;
+        else
+        {
+            // If no player is detected for whatever reason, script destroys itself
+            // on enemy so it doesnt continue checking (save minimal performance)
+            Debug.Log($"{gameObject.name} did not detect player, destroying EnemyAI script");
+            Destroy(GetComponent<EnemyAI>());
+        }
     }
 }

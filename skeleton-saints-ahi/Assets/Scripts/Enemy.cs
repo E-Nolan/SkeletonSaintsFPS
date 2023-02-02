@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
-    [SerializeField] int _health;
     [SerializeField] float _materialFlashSpeed = 0f;
     [SerializeField] Material _material = null;
+    [SerializeField] private int _health;
 
-    void Start()
+    // Property to update _health field
+    public int Health
     {
-
+        get { return _health; }
+        private set { _health = value; }
     }
 
     void Update()
     {
         // debug
+#if UNITY_EDITOR
         if (Input.GetButtonDown("Fire1"))
             TakeDamage(1);
+#endif
     }
 
     public void TakeDamage(int damage)
@@ -40,6 +44,7 @@ public class Enemy : MonoBehaviour, IDamagable
         gameObject.GetComponent<Renderer>().material = flashMaterial;
         yield return new WaitForSeconds(_materialFlashSpeed);
         gameObject.GetComponent<Renderer>().material = _material;
+
         Destroy(flashMaterial);
     }
 }
