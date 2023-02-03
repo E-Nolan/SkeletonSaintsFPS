@@ -15,7 +15,8 @@ public class bullet : MonoBehaviour
    
     void Start()
     {
-        
+        // Destroys the bullet after X amount of time
+        Destroy(gameObject, timer);
     }
 
 }
