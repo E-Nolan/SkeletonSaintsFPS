@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IDamagable
+public class Enemy : MonoBehaviour, IDamage
 {
-    [SerializeField] float _materialFlashSpeed = 0f;
-    [SerializeField] Material _material = null;
-    [SerializeField] private int _health;
+    [SerializeField] private GameObject firePosition;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] float fireRate;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] float _materialFlashSpeed;
+    [SerializeField] Material _material;
+    [Range(0,10)] [SerializeField] private int _health;
+
+    private EnemyAI _enemyAI;
+
+    public bool isShooting = false;
+    public bool isPlayerInRange = false;
 
     // Property to update _health field
     public int Health
@@ -15,13 +24,28 @@ public class Enemy : MonoBehaviour, IDamagable
         private set { _health = value; }
     }
 
+    void Start()
+    {
+        if (_material == null)
+            _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
+    }
+
     void Update()
     {
-        // debug
-#if UNITY_EDITOR
-        if (Input.GetButtonDown("Fire1"))
-            TakeDamage(1);
-#endif
+        if(isPlayerInRange && (isShooting == false)) 
+            StartCoroutine(Shoot());
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            isPlayerInRange = true;
+    }
+    
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            isPlayerInRange = false;
     }
 
     public void TakeDamage(int damage)
@@ -36,15 +60,26 @@ public class Enemy : MonoBehaviour, IDamagable
         }
     }
 
+    private IEnumerator Shoot()
+    {
+        isShooting = true;
+        GameObject bulletClone = Instantiate(bullet, firePosition.transform.position, bullet.transform.rotation);
+        bulletClone.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
+
+        yield return new WaitForSeconds(fireRate);
+        isShooting = false;
+    }
+
     private IEnumerator FlashMaterial()
     {
         // Done this way so original material isn't touched and possibly kept altered
         Material flashMaterial = Instantiate(_material);
         flashMaterial.color = Color.red;
-        gameObject.GetComponent<Renderer>().material = flashMaterial;
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = flashMaterial;
         yield return new WaitForSeconds(_materialFlashSpeed);
-        gameObject.GetComponent<Renderer>().material = _material;
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = _material;
 
         Destroy(flashMaterial);
     }
+
 }
