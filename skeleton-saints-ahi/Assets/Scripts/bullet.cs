@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Dmg for the bullet
+    public int bulletDmg;
+    // Timer for how long the before the bullet is destroyed if no hit occurs
+    [SerializeField] int timer;
+
+   
     void Start()
     {
         
