@@ -6,20 +6,23 @@ using UnityEngine.Animations;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private GameObject _playerGameObject;
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _obsticleMask;
-    [Range(0,360)] [SerializeField] private float viewAngle;
 
+    // Public for the FieldOfViewEditor script
+    [SerializeField] public GameObject playerGameObject;
+    [Range(0,360)] [SerializeField] public float viewAngle;
+
+    public int radius;
     public bool CanSeePlayer = false;
 
     void Start()
     {
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();
-        if(_playerGameObject == null)
-            _playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        if(playerGameObject == null)
+            playerGameObject = GameObject.FindGameObjectWithTag("Player");
         
         _playerMask = LayerMask.GetMask("Player");
         _obsticleMask = LayerMask.GetMask("Obsticle");
@@ -27,7 +30,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (_playerGameObject != null)
+        if (playerGameObject != null)
             //CheckForPlayer();
             StartCoroutine(CheckForPlayerWithDelay(.25f));
         else
@@ -64,7 +67,7 @@ public class EnemyAI : MonoBehaviour
                     }
 
 #if UNITY_EDITOR
-                    Debug.DrawRay(transform.position, playerDirection, Color.green);
+                    //Debug.DrawRay(transform.position, playerDirection, Color.green);
 #endif
                 }
                 else

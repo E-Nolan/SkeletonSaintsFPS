@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] Material _material;
     [Range(0,10)] [SerializeField] private int _health;
 
-    private EnemyAI _enemyAI;
+    private EnemyAI _enemyAi;
 
     public bool isShooting = false;
     public bool isPlayerInRange = false;
