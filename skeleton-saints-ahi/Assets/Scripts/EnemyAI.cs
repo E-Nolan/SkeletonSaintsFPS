@@ -24,11 +24,13 @@ public class EnemyAI : MonoBehaviour
         // Component initializations
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();
+
+        // Doing this so the FieldOfViewEditor script can access the player via reference with this script
         if(PlayerGameObject == null)
-            PlayerGameObject = GameObject.FindGameObjectWithTag("Player");
+            PlayerGameObject = gameManager.instance.player;
         
-            _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
-            _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
+        _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
+        _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
     }
 
     void Update()
@@ -92,8 +94,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets a random location on the NavMesh within a given radius & sets the _agent's destination
-    /// to that location for roaming
+    /// Gets a random location on the NavMesh within a given radius and sets the _agent's destination to that location for roaming
     /// </summary>
     public void RandomNavMeshLocation(float radius)
     {

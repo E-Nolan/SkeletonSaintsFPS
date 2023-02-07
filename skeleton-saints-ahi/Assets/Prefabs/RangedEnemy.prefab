@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyAi: {fileID: 1849573101920146961}
   firePosition: {fileID: 8903817350632271023}
-  bullet: {fileID: 551724359064236877, guid: 3f7df7734f7abcf489ea5c800b4e85a3, type: 3}
+  bullet: {fileID: 2442857871477385035, guid: e905b6323b0c1884f92ad9deecdd15df, type: 3}
   fireRate: 0.5
   bulletSpeed: 200
   _materialFlashSpeed: 0.2
@@ -100,6 +100,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _turnSpeed: 2
+  _roamingDelay: 1
   ViewAngle: 100
   ViewRadius: 17
   PlayerGameObject: {fileID: 6160287242515428979, guid: 778775e26acfd1f4fb0ff65be5206492, type: 3}
