@@ -71,6 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab6f7bbdaae55ce4d8cc950fd4cdc48a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyAi: {fileID: 1849573101920146961}
   firePosition: {fileID: 8903817350632271023}
   bullet: {fileID: 551724359064236877, guid: 3f7df7734f7abcf489ea5c800b4e85a3, type: 3}
   fireRate: 0.5
@@ -79,7 +80,6 @@ MonoBehaviour:
   _material: {fileID: 2100000, guid: 69c0fd068809d2a4cafbb12fd8e38326, type: 2}
   _health: 3
   isShooting: 0
-  isPlayerInRange: 0
 --- !u!114 &1849573101920146961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 256
+  _turnSpeed: 2
   ViewAngle: 100
   ViewRadius: 17
   PlayerGameObject: {fileID: 6160287242515428979, guid: 778775e26acfd1f4fb0ff65be5206492, type: 3}

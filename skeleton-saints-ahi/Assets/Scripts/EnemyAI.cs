@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _obstacleMask;
+    [Range(1, 10)] [SerializeField] private int _turnSpeed;
+    [Range(1, 10)] [SerializeField] private int _roamingDelay;
 
     // Public for the FieldOfViewEditor script
     [Range(0,360)] public float ViewAngle;
@@ -30,7 +33,6 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         if (PlayerGameObject != null)
-            //CheckForPlayer();
             StartCoroutine(CheckForPlayerWithDelay(.25f));
         else
         {
@@ -63,7 +65,7 @@ public class EnemyAI : MonoBehaviour
                     if (_agent.remainingDistance <= _agent.stoppingDistance)
                     {
                         Quaternion enemyRotation = Quaternion.LookRotation(playerDirection);
-                        transform.rotation = Quaternion.Lerp(transform.rotation, enemyRotation, Time.deltaTime * 2f);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, enemyRotation, Time.deltaTime * _turnSpeed);
                     }
                 }
                 else
@@ -78,14 +80,35 @@ public class EnemyAI : MonoBehaviour
         }
         else if (CanSeePlayer)
             CanSeePlayer = false;
+
+        if (CanSeePlayer == false)
+            StartCoroutine(RandomNavMeshLocationWithDelay(_roamingDelay));
+    }
+
+    public void RandomNavMeshLocation(float radius)
+    {
+        if (_agent.remainingDistance >= _agent.stoppingDistance)
+            return;
+
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        Vector3 finalPosition = Vector3.zero;
+        randomDirection += transform.position;
+
+        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1))
+            finalPosition = hit.position;
+
+        _agent.SetDestination(finalPosition);
+    }
+
+    private IEnumerator RandomNavMeshLocationWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        RandomNavMeshLocation(ViewRadius);
     }
 
     private IEnumerator CheckForPlayerWithDelay(float delay)
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(delay);
-            CheckForPlayer();
-        }
+        yield return new WaitForSeconds(delay);
+        CheckForPlayer();
     }
 }

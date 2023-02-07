@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour, IDamage
 
 
     public bool isShooting = false;
-    public bool isPlayerInRange = false;
 
     // Property to update _health field
     public int Health
@@ -28,6 +27,9 @@ public class Enemy : MonoBehaviour, IDamage
     {
         if (_material == null)
             _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
+
+        if(_enemyAi == null)
+            _enemyAi = GetComponent<EnemyAI>();
     }
 
     void Update()
@@ -35,18 +37,6 @@ public class Enemy : MonoBehaviour, IDamage
         if(isShooting == false && _enemyAi.CanSeePlayer) 
             StartCoroutine(Shoot());
     }
-
-    //public void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player") && _enemyAi.CanSeePlayer)
-    //        isPlayerInRange = true;
-    //}
-    
-    //public void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //        isPlayerInRange = false;
-    //}
 
     public void TakeDamage(int damage)
     {

@@ -379,6 +379,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1981200032 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1849573101920146961, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+  m_PrefabInstance: {fileID: 8903817351782983168}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22928c4fe739af04983e1bdea4110b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1986617335
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,6 +524,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101920146961, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+      propertyPath: _roamingDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849573101920146961, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: PlayerGameObject
       value: 
       objectReference: {fileID: 987687898}
@@ -532,6 +547,10 @@ PrefabInstance:
       propertyPath: _obstacleMask.m_Bits
       value: 256
       objectReference: {fileID: 0}
+    - target: {fileID: 1849573101920146962, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+      propertyPath: _enemyAi
+      value: 
+      objectReference: {fileID: 1981200032}
     - target: {fileID: 1849573101920146964, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_Enabled
       value: 0
