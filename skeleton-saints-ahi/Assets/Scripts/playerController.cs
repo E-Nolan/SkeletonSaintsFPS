@@ -12,25 +12,31 @@ public class playerController : MonoBehaviour, IDamage
     // Stats that determine player movement
     [Header("----- Player Stats -----")]
     [Range(5, 30)] [SerializeField] int playerSpeed;
-    [Range(1, 5)] [SerializeField] int maxJumps;
-    [Range(3, 50)] [SerializeField] int jumpSpeed;
     [Range(0, 50)] [SerializeField] int gravity;
     [Range(1, 100)] [SerializeField] int maxHealth;
     [Range(10, 500)] [SerializeField] int maxStamina;
     [Range(0.0f, 100.0f)] [SerializeField] int staminaRegenSpeed;
+    [Tooltip("This is how long (in seconds) the player will have to stop using stamina in order for their stamina to regenerate")]
+    [Range(0.0f, 5.0f)] [SerializeField] float staminaRegenCooldown;
+
+    [Header("----- Jump Stats -----")]
+    [Range(3, 50)] [SerializeField] int jumpSpeed;
+    [Range(0, 3)] [SerializeField] int maxJumps;
+    [Range(0, 100)] [SerializeField] int jumpStaminaCost;
 
     // Stats for player dashing
-    [Header("----- Dash and Sprint Stats -----")]
-    [SerializeField] bool dashEnabled;
+    [Header("----- Dash Stats -----")]
     [Range(15, 100)] [SerializeField] int dashSpeed;
     [Tooltip("This should be longer or equal to Dash Duration")]
     [Range(0.0f, 20.0f)] [SerializeField] float dashCooldown;
     [Tooltip("This should be shorter or equal to Dash Cooldown")]
     [Range(0.0f, 5.0f)] [SerializeField] float dashDuration;
+    [Range(0, 100)] [SerializeField] int dashStaminaCost;
+
+    [Header("----- Sprint Stats -----")]
     [Tooltip("This should ideally be between normal Speed and Dash Speed")]
     [Range(10,60)] [SerializeField] int sprintSpeed;
-    [Range(0, 100)] [SerializeField] int dashStaminaCost;
-    [Range(0.0f, 10.0f)] [SerializeField] int sprintStaminaDrain;
+    [Range(0.0f, 50.0f)] [SerializeField] int sprintStaminaDrain;
 
     // Stats used by the player's gun
     [Header("----- Weapon Stats -----")]
@@ -48,7 +54,7 @@ public class playerController : MonoBehaviour, IDamage
     Vector3 moveInput;
     Vector3 playerVelocity;
     int defaultSpeed;
-    bool canRegenStamina;
+    float staminaRegenTimer;
 
     public bool isDashing;
     public bool isSprinting;
@@ -76,16 +82,25 @@ public class playerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        // Decrement the stamina regen timer. If any stamina is used this frame, the timer will be reset
+        if (staminaRegenTimer > 0.0f)
+            staminaRegenTimer -= Time.deltaTime;
+
         // Drain the player's stamina while they're sprinting
         // Stop their sprint if they run out of stamina
         if (isSprinting)
         {
             useStamina(sprintStaminaDrain * Time.deltaTime);
+            if (currentStamina <= 0)
+            {
+                playerSpeed = defaultSpeed;
+                isSprinting = false;
+            }
         }
 
         // If the player releases the dash button while sprinting, return them to normal speed
         // Also stop their sprint if they ran out of stamina
-        if (Input.GetButtonUp("Dash") && !isDashing && isSprinting)
+        if (isSprinting && !isDashing && !Input.GetButton("Dash"))
         {
             playerSpeed = defaultSpeed;
             isSprinting = false;
@@ -94,10 +109,15 @@ public class playerController : MonoBehaviour, IDamage
 
         // If the player presses the Dash button, and they aren't currently dashing, initiate a dash
         // If the player continues holding the dash button, they will start sprinting
-        if (Input.GetButtonDown("Dash") && !isDashing && dashEnabled && currentStamina >= dashStaminaCost)
+        if (Input.GetButtonDown("Dash") && !isDashing && currentStamina >= dashStaminaCost)
             StartCoroutine(startDash());
 
+        // Once all related variables are sorted out this frame, move the player
         movement();
+
+        // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
+        if (staminaRegenTimer <= 0)
+            giveStamina(staminaRegenSpeed * Time.deltaTime);
     }
 
     // Tell the player where to move based on player input
@@ -122,6 +142,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             jumpsCurrent++;
             playerVelocity.y = jumpSpeed;
+            useStamina(jumpStaminaCost);
         }
 
         // Accelerate the player downward via gravity
@@ -208,12 +229,15 @@ public class playerController : MonoBehaviour, IDamage
     }
 
     /// <summary>
-    /// Take stamina away from the current player's stamina as a cost for abilities
+    /// Take stamina away from the current player's stamina as a cost for abilities.
+    /// Also puts their stamina regen on cooldown
     /// </summary>
     /// <param name="staminaCost"></param>
     public void useStamina(float staminaCost)
     {
         updateStamina(-staminaCost);
+        if (staminaCost > 0.0f)
+            staminaRegenTimer = staminaRegenCooldown;
     }
 
     // Add or subtract from the player's current stamina. Clamped between 0 and max stamina

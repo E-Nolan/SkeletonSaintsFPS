@@ -153,19 +153,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 6160287242515428983}
   playerSpeed: 10
-  maxJumps: 1
-  jumpSpeed: 8
   gravity: 16
   maxHealth: 10
   maxStamina: 100
-  staminaRegenSpeed: 20
-  dashEnabled: 1
+  staminaRegenSpeed: 50
+  staminaRegenCooldown: 0.5
+  jumpSpeed: 8
+  maxJumps: 1
+  jumpStaminaCost: 0
   dashSpeed: 25
   dashCooldown: 0.75
   dashDuration: 0.25
+  dashStaminaCost: 30
   sprintSpeed: 15
-  dashStaminaCost: 20
-  sprintStaminaDrain: 5
+  sprintStaminaDrain: 20
   projectileSpeed: 50
   cooldown: 0.5
   range: 150
