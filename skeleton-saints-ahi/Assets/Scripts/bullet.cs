@@ -25,8 +25,7 @@ public class bullet : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // If true then causes players to take damage equal to the bullet damage
-            // TODO: Update this to proper syntax based on game manager/player scripts
-            GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>().takeDamage(bulletDmg);
+            gameManager.instance.playerScript.TakeDamage(bulletDmg);
         }
         // Destroys the bullet
         Destroy(gameObject);
