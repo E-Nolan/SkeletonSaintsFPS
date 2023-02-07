@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class playerController : MonoBehaviour, IDamage
 {
 
     // Components used by this script
@@ -132,14 +132,32 @@ public class playerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Deal damage to the player (negative input) or heal the player (positive input)
-    /// Clamp it if it exceeds max health or becomes negative
+    /// Deal damage to the player, then kill them if their health reaches 0.
+    /// </summary>
+    /// <param name="damage"></param>
+    public void TakeDamage(int damage)
+    {
+        updateHealth(-damage);
+    }
+
+    /// <summary>
+    /// Heal the player by an amount. Their health can not exceed their max health
     /// </summary>
     /// <param name="amount"></param>
-    public void updateHealth(int amount)
+    public void HealPlayer(int amount)
+    {
+        updateHealth(amount);
+    }
+
+    /// <summary>
+    /// Deal damage to the player (negative input) or heal the player (positive input)
+    /// Clamp it if it exceeds max health
+    /// </summary>
+    /// <param name="amount"></param>
+    void updateHealth(int amount)
     {
         currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, int.MinValue, maxHealth);
 
         if (currentHealth == 0)
             killPlayer();
@@ -150,20 +168,11 @@ public class playerController : MonoBehaviour
     /// </summary>
     public void killPlayer()
     {
+        Debug.Log($"{gameObject.name} has died");
+        Destroy(gameObject);
         // TODO: Implement this functionality
     }
 
-    public void takeDamage(int damage)
-    {
-        currentHealth -= damage;
-        StartCoroutine(FlashMaterial());
-
-        if (currentHealth <= 0)
-        {
-            Debug.Log($"{gameObject.name} has died");
-            Destroy(gameObject);
-        }
-    }
 
     IEnumerator startDash()
     {
@@ -191,17 +200,5 @@ public class playerController : MonoBehaviour
         playerSpeed = defaultSpeed;
         if (debugMessages)
             Debug.Log($"Player's speed is now {playerSpeed}");
-    }
-
-    private IEnumerator FlashMaterial()
-    {
-        // Made a new material so the original material isn't touched and possibly kept altered should it be interupted
-        Material flashMaterial = Instantiate(material);
-        flashMaterial.color = Color.red;
-        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = flashMaterial;
-        yield return new WaitForSeconds(materialFlashSpeed);
-        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = material;
-
-        Destroy(flashMaterial);
     }
 }
