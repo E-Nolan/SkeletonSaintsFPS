@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Update()
     {
+        // If not shooting and can see the player
         if(isShooting == false && _enemyAi.CanSeePlayer) 
             StartCoroutine(Shoot());
     }
@@ -62,7 +63,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     private IEnumerator FlashMaterial()
     {
-        // Done this way so original material isn't touched and possibly kept altered
+        // Made a new material so the original material isn't touched and possibly kept altered should it be interupted
         Material flashMaterial = Instantiate(_material);
         flashMaterial.color = Color.red;
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = flashMaterial;
