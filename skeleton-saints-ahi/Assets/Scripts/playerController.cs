@@ -6,33 +6,34 @@ public class playerController : MonoBehaviour, IDamage
 {
 
     // Components used by this script
-    [Header("-=- Components -=-")]
+    [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
 
     // Stats that determine player movement
-    [Header("Player Stats")]
+    [Header("----- Player Stats -----")]
     [Range(5, 30)] [SerializeField] int playerSpeed;
     [Range(1, 5)] [SerializeField] int maxJumps;
     [Range(3, 50)] [SerializeField] int jumpSpeed;
     [Range(0, 50)] [SerializeField] int gravity;
     [Range(1, 100)] [SerializeField] int maxHealth;
-    [Range(1, 10)] [SerializeField] int materialFlashSpeed;
+    [Range(10, 500)] [SerializeField] int maxStamina;
+    [Range(0.0f, 100.0f)] [SerializeField] int staminaRegenSpeed;
 
     // Stats for player dashing
-    [Header("Dash Stats")]
+    [Header("----- Dash and Sprint Stats -----")]
     [SerializeField] bool dashEnabled;
     [Range(15, 100)] [SerializeField] int dashSpeed;
     [Tooltip("This should be longer or equal to Dash Duration")]
     [Range(0.0f, 20.0f)] [SerializeField] float dashCooldown;
     [Tooltip("This should be shorter or equal to Dash Cooldown")]
     [Range(0.0f, 5.0f)] [SerializeField] float dashDuration;
+    [Tooltip("This should ideally be between normal Speed and Dash Speed")]
     [Range(10,60)] [SerializeField] int sprintSpeed;
-    [Range(10, 500)] [SerializeField] int maxStamina;
     [Range(0, 100)] [SerializeField] int dashStaminaCost;
     [Range(0.0f, 10.0f)] [SerializeField] int sprintStaminaDrain;
 
     // Stats used by the player's gun
-    [Header("Weapon Stats")]
+    [Header("----- Weapon Stats -----")]
     [Range(5, 200)]     [SerializeField] int projectileSpeed;
     [Range(0.0f, 5.0f)] [SerializeField] float cooldown; // in seconds
     [Range(1, 200)]     [SerializeField] int range;
@@ -41,12 +42,14 @@ public class playerController : MonoBehaviour, IDamage
     [Range(0, 200)] [SerializeField] int startingAmmo;
     [Range(1, 20)]      [SerializeField] int damage;
 
-    [Header("Miscellaneous")]
+    [Header("----- Miscellaneous -----")]
 
     // Private variables used within the script to facilitate movement and actions
     Vector3 moveInput;
     Vector3 playerVelocity;
     int defaultSpeed;
+    bool canRegenStamina;
+
     public bool isDashing;
     public bool isSprinting;
 
@@ -73,16 +76,25 @@ public class playerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        // Drain the player's stamina while they're sprinting
+        // Stop their sprint if they run out of stamina
+        if (isSprinting)
+        {
+            useStamina(sprintStaminaDrain * Time.deltaTime);
+        }
+
         // If the player releases the dash button while sprinting, return them to normal speed
+        // Also stop their sprint if they ran out of stamina
         if (Input.GetButtonUp("Dash") && !isDashing && isSprinting)
         {
             playerSpeed = defaultSpeed;
             isSprinting = false;
         }
 
+
         // If the player presses the Dash button, and they aren't currently dashing, initiate a dash
         // If the player continues holding the dash button, they will start sprinting
-        if (!isDashing && Input.GetButtonDown("Dash") && dashEnabled)
+        if (Input.GetButtonDown("Dash") && !isDashing && dashEnabled && currentStamina >= dashStaminaCost)
             StartCoroutine(startDash());
 
         movement();
@@ -186,12 +198,37 @@ public class playerController : MonoBehaviour, IDamage
         // TODO: Implement this functionality
     }
 
+    /// <summary>
+    /// Give stamina to the player. Their stamina can't exceed their max stamina
+    /// </summary>
+    /// <param name="amount"></param>
+    public void giveStamina(float amount)
+    {
+        updateStamina(amount);
+    }
+
+    /// <summary>
+    /// Take stamina away from the current player's stamina as a cost for abilities
+    /// </summary>
+    /// <param name="staminaCost"></param>
+    public void useStamina(float staminaCost)
+    {
+        updateStamina(-staminaCost);
+    }
+
+    // Add or subtract from the player's current stamina. Clamped between 0 and max stamina
+    void updateStamina(float amount)
+    {
+        currentStamina += amount;
+        currentStamina = Mathf.Clamp(currentStamina, 0.0f, (float)maxStamina);
+    }
 
     IEnumerator startDash()
     {
         // Start a dash, then reenable dashing when the cooldown expires
         isDashing = true;
         isSprinting = false;
+        useStamina(dashStaminaCost);
         StartCoroutine(dash());
 
         yield return new WaitForSeconds(dashCooldown);

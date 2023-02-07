@@ -157,12 +157,15 @@ MonoBehaviour:
   jumpSpeed: 8
   gravity: 16
   maxHealth: 10
-  materialFlashSpeed: 0
+  maxStamina: 100
+  staminaRegenSpeed: 20
   dashEnabled: 1
   dashSpeed: 25
   dashCooldown: 0.75
   dashDuration: 0.25
   sprintSpeed: 15
+  dashStaminaCost: 20
+  sprintStaminaDrain: 5
   projectileSpeed: 50
   cooldown: 0.5
   range: 150
@@ -171,6 +174,7 @@ MonoBehaviour:
   damage: 1
   isDashing: 0
   isSprinting: 0
+  currentStamina: 0
   jumpsCurrent: 0
   currentHealth: 0
   currentAmmo: 0
