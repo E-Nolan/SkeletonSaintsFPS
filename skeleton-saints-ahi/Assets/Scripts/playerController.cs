@@ -27,6 +27,9 @@ public class playerController : MonoBehaviour, IDamage
     [Tooltip("This should be shorter or equal to Dash Cooldown")]
     [Range(0.0f, 5.0f)] [SerializeField] float dashDuration;
     [Range(10,60)] [SerializeField] int sprintSpeed;
+    [Range(10, 500)] [SerializeField] int maxStamina;
+    [Range(0, 100)] [SerializeField] int dashStaminaCost;
+    [Range(0.0f, 10.0f)] [SerializeField] int sprintStaminaDrain;
 
     // Stats used by the player's gun
     [Header("Weapon Stats")]
@@ -47,6 +50,7 @@ public class playerController : MonoBehaviour, IDamage
     public bool isDashing;
     public bool isSprinting;
 
+    public float currentStamina;
     public int jumpsCurrent = 0;
     public int currentHealth;
     public int currentAmmo;
@@ -58,6 +62,7 @@ public class playerController : MonoBehaviour, IDamage
         // Store the player's speed in another variable so that the player's speed can return to default after dashing
         defaultSpeed = playerSpeed;
         currentHealth = maxHealth;
+        currentStamina = maxStamina;
         // If the starting ammo exceeds max ammo, bring it down to maxAmmo
         currentAmmo = startingAmmo;
         currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
@@ -209,5 +214,35 @@ public class playerController : MonoBehaviour, IDamage
         {
             playerSpeed = defaultSpeed;
         }
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public int GetMaxStamina()
+    {
+        return maxStamina;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return maxAmmo;
+    }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetCurrentStamina()
+    {
+        return currentStamina;
+    }
+
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
     }
 }
