@@ -11,7 +11,7 @@ public class playerController : MonoBehaviour, IDamage
 
     // Stats that determine player movement
     [Header("Player Stats")]
-    [Range(1, 30)] [SerializeField] int playerSpeed;
+    [Range(5, 30)] [SerializeField] int playerSpeed;
     [Range(1, 5)] [SerializeField] int maxJumps;
     [Range(3, 50)] [SerializeField] int jumpSpeed;
     [Range(0, 50)] [SerializeField] int gravity;
@@ -21,11 +21,12 @@ public class playerController : MonoBehaviour, IDamage
     // Stats for player dashing
     [Header("Dash Stats")]
     [SerializeField] bool dashEnabled;
-    [Range(2, 100)] [SerializeField] int dashSpeed;
+    [Range(15, 100)] [SerializeField] int dashSpeed;
     [Tooltip("This should be longer or equal to Dash Duration")]
     [Range(0.0f, 20.0f)] [SerializeField] float dashCooldown;
     [Tooltip("This should be shorter or equal to Dash Cooldown")]
     [Range(0.0f, 5.0f)] [SerializeField] float dashDuration;
+    [Range(10,60)] [SerializeField] int sprintSpeed;
 
     // Stats used by the player's gun
     [Header("Weapon Stats")]
@@ -37,16 +38,14 @@ public class playerController : MonoBehaviour, IDamage
     [Range(0, 200)] [SerializeField] int startingAmmo;
     [Range(1, 20)]      [SerializeField] int damage;
 
-
-    // Debug bool. Enable to receive Debug messages in the console
     [Header("Miscellaneous")]
-    [SerializeField] bool debugMessages;
 
     // Private variables used within the script to facilitate movement and actions
     Vector3 moveInput;
     Vector3 playerVelocity;
     int defaultSpeed;
-    bool isDashing;
+    public bool isDashing;
+    public bool isSprinting;
 
     public int jumpsCurrent = 0;
     public int currentHealth;
@@ -69,10 +68,19 @@ public class playerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        movement();
+        // If the player releases the dash button while sprinting, return them to normal speed
+        if (Input.GetButtonUp("Dash") && !isDashing && isSprinting)
+        {
+            playerSpeed = defaultSpeed;
+            isSprinting = false;
+        }
+
         // If the player presses the Dash button, and they aren't currently dashing, initiate a dash
+        // If the player continues holding the dash button, they will start sprinting
         if (!isDashing && Input.GetButtonDown("Dash") && dashEnabled)
             StartCoroutine(startDash());
+
+        movement();
     }
 
     // Tell the player where to move based on player input
@@ -177,28 +185,29 @@ public class playerController : MonoBehaviour, IDamage
     IEnumerator startDash()
     {
         // Start a dash, then reenable dashing when the cooldown expires
-        if (debugMessages)
-            Debug.Log("Starting a dash!");
-
         isDashing = true;
+        isSprinting = false;
         StartCoroutine(dash());
+
         yield return new WaitForSeconds(dashCooldown);
         isDashing = false;
-
-        if (debugMessages)
-            Debug.Log("Ending dash");
     }
 
     IEnumerator dash()
     {
         // Increase the player's speed for the duration of the dash, then return it to normal
         playerSpeed = dashSpeed;
-        if (debugMessages)
-            Debug.Log($"Player's speed is now {playerSpeed}");
-
         yield return new WaitForSeconds(dashDuration);
-        playerSpeed = defaultSpeed;
-        if (debugMessages)
-            Debug.Log($"Player's speed is now {playerSpeed}");
+
+        // If the player is still holding the dash button down after the dash ends, they will continue sprinting at an increased speed
+        if (Input.GetButton("Dash"))
+        {
+            playerSpeed = sprintSpeed;
+            isSprinting = true;
+        }
+        else
+        {
+            playerSpeed = defaultSpeed;
+        }
     }
 }
