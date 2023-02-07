@@ -2,23 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class bullet : MonoBehaviour
 {
-    [Range(0.1f,10f)] [SerializeField] public float timer;
+    // Dmg for the bullet
+    public int bulletDmg;
 
-    private playerController playerController;
+    // Timer for how long the before the bullet is destroyed if no hit occurs
+    [SerializeField] int timer;
 
+
+
+   
     void Start()
     {
+        // Destroys the bullet after X amount of time
         Destroy(gameObject, timer);
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
+        // Checks to see if the tag of the object is player
         if (other.CompareTag("Player"))
         {
-            playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
-            
+            // If true then causes players to take damage equal to the bullet damage
+            // TODO: Update this to proper syntax based on game manager/player scripts
+            GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>().takeDamage(bulletDmg);
         }
+        // Destroys the bullet
+        Destroy(gameObject);
     }
+
+
 }

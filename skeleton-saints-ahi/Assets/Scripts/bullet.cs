@@ -26,9 +26,11 @@ public class bullet : MonoBehaviour
         {
             // If true then causes players to take damage equal to the bullet damage
             // TODO: Update this to proper syntax based on game manager/player scripts
-            gameManager.instance.playerScript.takeDamage(bulletDmg);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>().takeDamage(bulletDmg);
         }
         // Destroys the bullet
         Destroy(gameObject);
     }
+
+
 }

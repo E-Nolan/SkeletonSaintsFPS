@@ -16,6 +16,7 @@ public class playerController : MonoBehaviour
     [Range(3, 50)] [SerializeField] int jumpSpeed;
     [Range(0, 50)] [SerializeField] int gravity;
     [Range(1, 100)] [SerializeField] int maxHealth;
+    [Range(1, 10)] [SerializeField] int materialFlashSpeed;
 
     // Stats for player dashing
     [Header("Dash Stats")]
@@ -50,6 +51,7 @@ public class playerController : MonoBehaviour
     public int jumpsCurrent = 0;
     public int currentHealth;
     public int currentAmmo;
+    public Material material;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +62,8 @@ public class playerController : MonoBehaviour
         // If the starting ammo exceeds max ammo, bring it down to maxAmmo
         currentAmmo = startingAmmo;
         currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
+
+        material = GetComponent<Material>();
     }
 
     // Update is called once per frame
@@ -149,6 +153,18 @@ public class playerController : MonoBehaviour
         // TODO: Implement this functionality
     }
 
+    public void takeDamage(int damage)
+    {
+        currentHealth -= damage;
+        StartCoroutine(FlashMaterial());
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log($"{gameObject.name} has died");
+            Destroy(gameObject);
+        }
+    }
+
     IEnumerator startDash()
     {
         // Start a dash, then reenable dashing when the cooldown expires
@@ -175,5 +191,17 @@ public class playerController : MonoBehaviour
         playerSpeed = defaultSpeed;
         if (debugMessages)
             Debug.Log($"Player's speed is now {playerSpeed}");
+    }
+
+    private IEnumerator FlashMaterial()
+    {
+        // Made a new material so the original material isn't touched and possibly kept altered should it be interupted
+        Material flashMaterial = Instantiate(material);
+        flashMaterial.color = Color.red;
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = flashMaterial;
+        yield return new WaitForSeconds(materialFlashSpeed);
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = material;
+
+        Destroy(flashMaterial);
     }
 }
