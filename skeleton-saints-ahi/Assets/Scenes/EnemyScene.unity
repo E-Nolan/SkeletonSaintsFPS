@@ -107,7 +107,7 @@ NavMeshSettings:
     serializedVersion: 2
     agentTypeID: 0
     agentRadius: 0.5
-    agentHeight: 1
+    agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 0
@@ -229,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6160287242515428979, guid: 778775e26acfd1f4fb0ff65be5206492, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6160287242515428979, guid: 778775e26acfd1f4fb0ff65be5206492, type: 3}
       propertyPath: m_TagString
@@ -488,6 +488,14 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: fcb334eb247ae3e488abb081c847cf09, type: 3}
+    - target: {fileID: 1849573101920146959, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849573101920146960, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+      propertyPath: m_AutoBraking
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1849573101920146960, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_StoppingDistance
       value: 8
@@ -510,7 +518,15 @@ PrefabInstance:
       objectReference: {fileID: 987687898}
     - target: {fileID: 1849573101920146961, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: _playerMask.m_Bits
-      value: 128
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849573101920146961, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+      propertyPath: _obstacleMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849573101920146964, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101927521897, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_Name

@@ -8,12 +8,11 @@ public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private LayerMask _playerMask;
-    [SerializeField] private LayerMask _obsticleMask;
+    [SerializeField] private LayerMask _obstacleMask;
 
     // Public for the FieldOfViewEditor script
-    [SerializeField] public GameObject playerGameObject;
-    [Range(0,360)] [SerializeField] public float viewAngle;
-
+    [Range(0,360)] public float viewAngle;
+    public GameObject playerGameObject;
     public int radius;
     public bool CanSeePlayer = false;
 
@@ -25,7 +24,7 @@ public class EnemyAI : MonoBehaviour
             playerGameObject = GameObject.FindGameObjectWithTag("Player");
         
         _playerMask = LayerMask.GetMask("Player");
-        _obsticleMask = LayerMask.GetMask("Obsticle");
+        _obstacleMask = LayerMask.GetMask("Obstacle");
     }
 
     void Update()
@@ -49,26 +48,22 @@ public class EnemyAI : MonoBehaviour
         if (targetsInViewRange.Length != 0)
         {
             Transform target = targetsInViewRange[0].transform;
-            Vector3 playerDirection = (target.position - transform.position);
+            Vector3 playerDirection = (target.position - transform.position).normalized;
 
             if (Vector3.Angle(transform.forward, playerDirection) < viewAngle / 2)
             {
                 float distanceToPlayer = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obsticleMask))
+                if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
                 {
                     CanSeePlayer = true;
-                    _agent.destination = target.position;
+                    _agent.SetDestination(playerGameObject.transform.position);
 
                     if (_agent.remainingDistance <= _agent.stoppingDistance)
                     {
                         Quaternion enemyRotation = Quaternion.LookRotation(playerDirection);
                         transform.rotation = Quaternion.Lerp(transform.rotation, enemyRotation, Time.deltaTime * 2f);
                     }
-
-#if UNITY_EDITOR
-                    //Debug.DrawRay(transform.position, playerDirection, Color.green);
-#endif
                 }
                 else
                 {
