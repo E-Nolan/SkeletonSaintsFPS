@@ -11,17 +11,17 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private LayerMask _obstacleMask;
 
     // Public for the FieldOfViewEditor script
-    [Range(0,360)] public float viewAngle;
-    public GameObject playerGameObject;
-    public int radius;
+    [Range(0,360)] public float ViewAngle;
+    public int ViewRadius;
+    public GameObject PlayerGameObject;
     public bool CanSeePlayer = false;
 
     void Start()
     {
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();
-        if(playerGameObject == null)
-            playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        if(PlayerGameObject == null)
+            PlayerGameObject = GameObject.FindGameObjectWithTag("Player");
         
         _playerMask = LayerMask.GetMask("Player");
         _obstacleMask = LayerMask.GetMask("Obstacle");
@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (playerGameObject != null)
+        if (PlayerGameObject != null)
             //CheckForPlayer();
             StartCoroutine(CheckForPlayerWithDelay(.25f));
         else
@@ -43,21 +43,22 @@ public class EnemyAI : MonoBehaviour
 
     private void CheckForPlayer()
     {
-        Collider[] targetsInViewRange = Physics.OverlapSphere(transform.position, 170f, _playerMask);
+        Collider[] targetsInViewRange = Physics.OverlapSphere(transform.position, ViewRadius, _playerMask);
 
         if (targetsInViewRange.Length != 0)
         {
-            Transform target = targetsInViewRange[0].transform;
-            Vector3 playerDirection = (target.position - transform.position).normalized;
+            Transform player = targetsInViewRange[0].transform;
 
-            if (Vector3.Angle(transform.forward, playerDirection) < viewAngle / 2)
+            Vector3 playerDirection = (player.position - transform.position);
+
+            if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2)
             {
-                float distanceToPlayer = Vector3.Distance(transform.position, target.position);
+                float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
                 if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
                 {
                     CanSeePlayer = true;
-                    _agent.SetDestination(playerGameObject.transform.position);
+                    _agent.SetDestination(PlayerGameObject.transform.position);
 
                     if (_agent.remainingDistance <= _agent.stoppingDistance)
                     {

@@ -11,20 +11,20 @@ public class FieldOfViewEditor : Editor
     {
         EnemyAI fov = (EnemyAI)target;
         Handles.color = Color.white;
-        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.radius);
+        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.ViewRadius);
 
-        Vector3 leftViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.viewAngle / 2);
-        Vector3 rightViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, fov.viewAngle / 2);
+        Vector3 leftViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.ViewAngle / 2);
+        Vector3 rightViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, fov.ViewAngle / 2);
 
         Handles.color = Color.yellow;
 
-        Handles.DrawLine(fov.transform.position, fov.transform.position + leftViewAngle * fov.radius);
-        Handles.DrawLine(fov.transform.position, fov.transform.position + rightViewAngle * fov.radius);
+        Handles.DrawLine(fov.transform.position, fov.transform.position + leftViewAngle * fov.ViewRadius);
+        Handles.DrawLine(fov.transform.position, fov.transform.position + rightViewAngle * fov.ViewRadius);
 
         if (fov.CanSeePlayer)
         {
             Handles.color = Color.green;
-            Handles.DrawLine(fov.transform.position, fov.playerGameObject.transform.position);
+            Handles.DrawLine(fov.transform.position, fov.PlayerGameObject.transform.position);
         }
     }
 

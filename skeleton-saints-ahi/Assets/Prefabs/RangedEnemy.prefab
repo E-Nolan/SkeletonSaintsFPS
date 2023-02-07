@@ -99,9 +99,9 @@ MonoBehaviour:
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  viewAngle: 100
-  playerGameObject: {fileID: 6160287242515428979, guid: 778775e26acfd1f4fb0ff65be5206492, type: 3}
-  radius: 17
+  ViewAngle: 100
+  ViewRadius: 17
+  PlayerGameObject: {fileID: 6160287242515428979, guid: 778775e26acfd1f4fb0ff65be5206492, type: 3}
   CanSeePlayer: 0
 --- !u!195 &1849573101920146960
 NavMeshAgent:

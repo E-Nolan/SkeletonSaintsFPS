@@ -509,6 +509,14 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101920146961, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+      propertyPath: CanSeePlayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849573101920146961, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
+      propertyPath: PlayerGameObject
+      value: 
+      objectReference: {fileID: 987687898}
+    - target: {fileID: 1849573101920146961, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: _enemyMask.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -526,7 +534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101920146964, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101927521897, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_Name
@@ -550,7 +558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101927855267, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.77
+      value: 5.94
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101927855267, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_LocalPosition.y
@@ -558,7 +566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101927855267, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.04
+      value: -13.14
       objectReference: {fileID: 0}
     - target: {fileID: 1849573101927855267, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
       propertyPath: m_LocalRotation.w

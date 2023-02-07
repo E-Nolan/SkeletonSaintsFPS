@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamage
 {
+    [SerializeField] private EnemyAI _enemyAi;
     [SerializeField] private GameObject firePosition;
     [SerializeField] private GameObject bullet;
     [SerializeField] float fireRate;
@@ -12,7 +13,6 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] Material _material;
     [Range(0,10)] [SerializeField] private int _health;
 
-    private EnemyAI _enemyAi;
 
     public bool isShooting = false;
     public bool isPlayerInRange = false;
@@ -32,21 +32,21 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Update()
     {
-        if(isPlayerInRange && (isShooting == false)) 
+        if(isShooting == false && _enemyAi.CanSeePlayer) 
             StartCoroutine(Shoot());
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-            isPlayerInRange = true;
-    }
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player") && _enemyAi.CanSeePlayer)
+    //        isPlayerInRange = true;
+    //}
     
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-            isPlayerInRange = false;
-    }
+    //public void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //        isPlayerInRange = false;
+    //}
 
     public void TakeDamage(int damage)
     {
