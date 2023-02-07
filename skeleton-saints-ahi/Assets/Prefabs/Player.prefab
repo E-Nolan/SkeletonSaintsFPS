@@ -53,12 +53,21 @@ MonoBehaviour:
   maxJumps: 1
   jumpSpeed: 8
   gravity: 16
+  maxHealth: 10
+  dashEnabled: 1
+  dashSpeed: 25
+  dashCooldown: 0.75
+  dashDuration: 0.25
   projectileSpeed: 50
   cooldown: 0.5
   range: 150
   maxAmmo: 40
-  damage: 5
+  startingAmmo: 200
+  damage: 1
   debugMessages: 0
+  jumpsCurrent: 0
+  currentHealth: 0
+  currentAmmo: 0
 --- !u!143 &6160287242515428983
 CharacterController:
   m_ObjectHideFlags: 0
@@ -105,7 +114,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 35e234b80e548d946955a5ba8bd457f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
