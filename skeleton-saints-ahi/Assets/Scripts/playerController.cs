@@ -56,6 +56,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip dashSound;
     [SerializeField] AudioClip[] walkSoundsGroup;
     [SerializeField] AudioClip[] runSoundsGroup;
+    [SerializeField] AudioClip gunshotSound;
 
     // Private variables used within the script to facilitate movement and actions
     Vector3 moveInput;
@@ -92,7 +93,6 @@ public class playerController : MonoBehaviour, IDamage
         // Decrement the stamina regen timer. If any stamina is used this frame, the timer will be reset
         if (staminaRegenTimer > 0.0f)
             staminaRegenTimer -= Time.deltaTime;
-
 
         // Handle movement for the player
         movement();
@@ -218,6 +218,8 @@ public class playerController : MonoBehaviour, IDamage
             GameObject newBullet = Instantiate(bullet, weaponFirePos.transform.position, weaponFirePos.rotation);
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.right * projectileSpeed;
         }
+
+        audioSource.PlayOneShot(gunshotSound);
 
         yield return new WaitForSeconds(weaponFireRate);
 

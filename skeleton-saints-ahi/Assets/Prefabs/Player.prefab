@@ -318,6 +318,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 30d91ecf6891492408d97e7332f2a317, type: 3}
   - {fileID: 8300000, guid: 2e096b1af295c834685c2e52a07fbdd7, type: 3}
   - {fileID: 8300000, guid: 32cec9cc9a2b59544834839747e558b2, type: 3}
+  gunshotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   isDashing: 0
   isSprinting: 0
   isShooting: 0
