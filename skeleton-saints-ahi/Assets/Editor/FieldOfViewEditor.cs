@@ -10,10 +10,19 @@ public class FieldOfViewEditor : Editor
     // To show the cone of view of the Enemy in only the Editor
     private void OnSceneGUI()
     {
-        // Drawing a circle around the player for testing if the angle math is correct
         EnemyAI fov = (EnemyAI)target;
+
+        // Draw circle around player to display ViewRadius
         Handles.color = Color.white;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.ViewRadius);
+
+        // Draw circle around player to display SprintDetectRadius
+        Handles.color = Color.blue;
+        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.SprintDetectRadius);
+
+        // Draw circle around player to display WalkDetectRadius
+        Handles.color = Color.red;
+        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.WalkDetectRadius);
 
         // Get the angle from DirectionFromAngle() to get right and left angle from the Enemy's transform 
         Vector3 leftViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.ViewAngle / 2);
@@ -25,7 +34,7 @@ public class FieldOfViewEditor : Editor
         Handles.DrawLine(fov.transform.position, fov.transform.position + rightViewAngle * fov.ViewRadius);
 
         // If Enemy can see Player, draw a green line to the Player to visualize detection in Editor
-        if (fov.CanSeePlayer)
+        if (fov.CanDetectPlayer)
         {
             Handles.color = Color.green;
             Handles.DrawLine(fov.transform.position, fov.PlayerGameObject.transform.position);

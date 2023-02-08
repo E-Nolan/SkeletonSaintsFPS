@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour, IDamage
     void Update()
     {
         // If not shooting and can see the player
-        if(isShooting == false && _enemyAi.CanSeePlayer) 
+        if(isShooting == false && _enemyAi.CanDetectPlayer) 
             StartCoroutine(Shoot());
     }
 

@@ -25,7 +25,9 @@ public class EnemyAI : MonoBehaviour
     // Public for the FieldOfViewEditor Editor script
     [Range(0,360)] public float ViewAngle;
     public int ViewRadius;
-    public bool CanSeePlayer = false;
+    public int SprintDetectRadius;
+    public int WalkDetectRadius;
+    public bool CanDetectPlayer = false;
 
     [Header("----- Fallback AI -----")] 
     [SerializeField] private bool _useFallbackAi;
@@ -79,24 +81,27 @@ public class EnemyAI : MonoBehaviour
             // Run as long as the Player was detected within the OverlapSphere()
             if (targetsInViewRange.Length != 0)
             {
-                // OverlapSphere() only returns an array of Colliders so only taking the first array entry (should only be one player)
-                Transform player = targetsInViewRange[0].transform;
-                playerDirection = (player.position - transform.position);
+                // OverlapSphere() only returns an array of Colliders so only take the first array entry (should only be one player)
+                Transform playerTransform = targetsInViewRange[0].transform;
+                playerDirection = (playerTransform.position - transform.position);
 
-                if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2)
+                // Get the distance between the Enemy and the Player
+                float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+                // If the Player is in the viewing angle of the Enemy OR
+                // the player is within the DetectRadius and is Sprinting, 
+                if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
+                    (distanceToPlayer <= SprintDetectRadius && gameManager.instance.playerScript.isSprinting) ||
+                    distanceToPlayer <= WalkDetectRadius)
                 {
-                    // Get the distance between the Enemy and the Player for the Raycast below
-                    float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
                     // Checks if an Obstacle with the Obstacle layer mask is between the Enemy and Player
                     // If no Obstacle was detected, runs the if, else the Enemy can't see the Player
                     if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
                     {
-                        CanSeePlayer = true;
-                        _agent.SetDestination(PlayerGameObject.transform.position);
+                        CanDetectPlayer = true;
+                        _agent.SetDestination(playerTransform.position);
 
-                        // This code leads to some rotational jittering when the agent is stopped
-                        // due to being to close to the target
+
                         if (_agent.remainingDistance <= _agent.stoppingDistance)
                         {
                             Quaternion enemyRotation = Quaternion.LookRotation(playerDirection);
@@ -105,16 +110,24 @@ public class EnemyAI : MonoBehaviour
                         }
                     }
                     else
-                        CanSeePlayer = false;
+                    {
+                        // If Enemy saw the Player previously but can't currently see the Player, go to last known location
+                        if (CanDetectPlayer)
+                            StartCoroutine(GoToLastKnownLocation(playerTransform.position, _roamingDelay));
+
+                        CanDetectPlayer = false;
+                    }
                 }
                 else
-                    CanSeePlayer = false;
+                {
+                    CanDetectPlayer = false;
+                }
             }
-            else if (CanSeePlayer)
-                CanSeePlayer = false;
+            else if (CanDetectPlayer)
+                CanDetectPlayer = false;
 
             // If the Player was not detected, start Roaming with a delay
-            if (CanSeePlayer == false)
+            if (CanDetectPlayer == false)
                 StartCoroutine(RandomNavMeshLocationWithDelay(_roamingDelay));
             #endregion
         }
@@ -177,6 +190,16 @@ public class EnemyAI : MonoBehaviour
             finalPosition = hit.position;
 
         _agent.SetDestination(finalPosition);
+    }
+
+    private IEnumerator GoToLastKnownLocation(Vector3 location, float delay = 0f)
+    {
+        float originalStoppingDistance = _agent.stoppingDistance;
+        _agent.stoppingDistance = 0f;
+        _agent.SetDestination(PlayerGameObject.transform.position);
+        yield return new WaitForSeconds(_roamingDelay);
+        if (_agent.remainingDistance >= _agent.stoppingDistance)
+            _agent.stoppingDistance = originalStoppingDistance;
     }
 
     /// <summary>
