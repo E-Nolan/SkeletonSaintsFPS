@@ -93,6 +93,23 @@ public class playerController : MonoBehaviour, IDamage
         if (staminaRegenTimer > 0.0f)
             staminaRegenTimer -= Time.deltaTime;
 
+
+        // Handle movement for the player
+        movement();
+
+        // If the player presses the Shoot Button, they will fire at whatever they are looking at
+        // They can not fire if they do not have ammo
+        if (Input.GetButtonDown("Fire1") && !isAmmoEmpty() && !isShooting)
+            StartCoroutine(shoot());
+
+        // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
+        if (staminaRegenTimer <= 0)
+            giveStamina(staminaRegenSpeed * Time.deltaTime);
+    }
+
+    // Tell the player where to move based on player input
+    void movement()
+    {
         // Drain the player's stamina while they're sprinting
         // Stop their sprint if they run out of stamina
         if (isSprinting)
@@ -117,23 +134,6 @@ public class playerController : MonoBehaviour, IDamage
         // If the player continues holding the dash button, they will start sprinting
         if (Input.GetButtonDown("Dash") && !isDashing && currentStamina >= dashStaminaCost)
             StartCoroutine(startDash());
-
-        // Once all related variables are sorted out this frame, move the player
-        movement();
-
-        // If the player presses the Shoot Button, they will fire at whatever they are looking at
-        // They can not fire if they do not have ammo
-        if (Input.GetButtonDown("Fire1") && !isAmmoEmpty() && !isShooting)
-            StartCoroutine(shoot());
-
-        // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
-        if (staminaRegenTimer <= 0)
-            giveStamina(staminaRegenSpeed * Time.deltaTime);
-    }
-
-    // Tell the player where to move based on player input
-    void movement()
-    {
 
         // Set the player's vertical velocity to 0 if they are standing on ground
         if (controller.isGrounded && playerVelocity.y <= 0)
