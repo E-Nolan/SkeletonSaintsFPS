@@ -10,8 +10,6 @@ public class bullet : MonoBehaviour
     // Timer for how long the before the bullet is destroyed if no hit occurs
     [SerializeField] int timer;
 
-
-
    
     void Start()
     {
@@ -21,13 +19,12 @@ public class bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Checks to see if the tag of the object is player
-        if (other.CompareTag("Player"))
+        // Use the IDamage interface to damage what the bullet collides with
+        if (other.GetComponent<IDamage>() != null)
         {
-            // If true then causes players to take damage equal to the bullet damage
-            gameManager.instance.playerScript.TakeDamage(bulletDmg);
+            other.GetComponent<IDamage>().TakeDamage(bulletDmg);
         }
-        // Destroys the bullet
+
         Destroy(gameObject);
     }
 
