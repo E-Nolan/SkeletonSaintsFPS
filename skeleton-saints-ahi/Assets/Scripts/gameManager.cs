@@ -10,6 +10,12 @@ public class gameManager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
 
+    [Header("----- UI -----")]
+    public GameObject activeMenu;
+    public GameObject pauseMenu;
+
+    public bool isPaused;
+
     private void Awake()
     {
         instance = this;
@@ -19,6 +25,32 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
-        
+        if(Input.GetButtonDown("Cancel"))
+        {
+            isPaused = !isPaused;
+            activeMenu = pauseMenu;
+            activeMenu.SetActive(isPaused);
+
+            if (isPaused)
+                pause();
+            else
+                unPause();
+        }
+    }
+
+    public void pause()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void unPause()
+    {
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        activeMenu.SetActive(false);
+        activeMenu = null;
     }
 }
