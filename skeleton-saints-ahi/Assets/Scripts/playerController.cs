@@ -219,6 +219,7 @@ public class playerController : MonoBehaviour, IDamage
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.right * projectileSpeed;
         }
 
+        updateAmmo(-1);
         audioSource.PlayOneShot(gunshotSound);
 
         yield return new WaitForSeconds(weaponFireRate);

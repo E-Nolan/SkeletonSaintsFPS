@@ -288,9 +288,9 @@ MonoBehaviour:
   dashStaminaCost: 30
   sprintSpeed: 15
   sprintStaminaDrain: 20
-  projectileSpeed: 50
-  weaponFireRate: 0
-  range: 150
+  projectileSpeed: 40
+  weaponFireRate: 0.5
+  range: 60
   maxAmmo: 40
   startingAmmo: 200
   damage: 1
