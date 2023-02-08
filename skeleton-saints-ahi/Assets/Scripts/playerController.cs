@@ -8,6 +8,7 @@ public class playerController : MonoBehaviour, IDamage
     // Components used by this script
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
+    [SerializeField] AudioSource audioSource;
 
     // Stats that determine player movement
     [Header("----- Player Stats -----")]
@@ -48,7 +49,11 @@ public class playerController : MonoBehaviour, IDamage
     [Range(0, 200)] [SerializeField] int startingAmmo;
     [Range(1, 20)]      [SerializeField] int damage;
 
-    [Header("----- Miscellaneous -----")]
+    [Header("----- Sound Effects -----")]
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip dashSound;
+    [SerializeField] AudioClip[] walkSoundsGroup;
+    [SerializeField] AudioClip[] runSoundsGroup;
 
     // Private variables used within the script to facilitate movement and actions
     Vector3 moveInput;
@@ -56,14 +61,15 @@ public class playerController : MonoBehaviour, IDamage
     int defaultSpeed;
     float staminaRegenTimer;
 
-    public bool isDashing;
-    public bool isSprinting;
+    public bool isDashing = false;
+    public bool isSprinting = false;
 
     public float currentStamina;
     public int jumpsCurrent = 0;
     public int currentHealth;
     public int currentAmmo;
-    public Material material;
+
+    bool canPlayFootsteps = true;
 
     // Start is called before the first frame update
     void Start()
@@ -75,8 +81,6 @@ public class playerController : MonoBehaviour, IDamage
         // If the starting ammo exceeds max ammo, bring it down to maxAmmo
         currentAmmo = startingAmmo;
         currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
-
-        material = GetComponent<Material>();
     }
 
     // Update is called once per frame
@@ -123,6 +127,7 @@ public class playerController : MonoBehaviour, IDamage
     // Tell the player where to move based on player input
     void movement()
     {
+
         // Set the player's vertical velocity to 0 if they are standing on ground
         if (controller.isGrounded && playerVelocity.y <= 0)
         {
@@ -133,6 +138,11 @@ public class playerController : MonoBehaviour, IDamage
         // Move the character via arrow keys/WASD input
         moveInput = (transform.right * Input.GetAxis("Horizontal") + 
                 transform.forward * Input.GetAxis("Vertical"));
+        
+        // Play walk sound effects if the player is walking on ground
+        // Play run sound effects if the player is sprinting on ground
+        if (controller.isGrounded && moveInput.magnitude >= 0.1 && canPlayFootsteps)
+            StartCoroutine(playFootstep());
 
         controller.Move(moveInput * Time.deltaTime * playerSpeed);
 
@@ -143,6 +153,7 @@ public class playerController : MonoBehaviour, IDamage
             jumpsCurrent++;
             playerVelocity.y = jumpSpeed;
             useStamina(jumpStaminaCost);
+            audioSource.PlayOneShot(jumpSound);
         }
 
         // Accelerate the player downward via gravity
@@ -253,6 +264,7 @@ public class playerController : MonoBehaviour, IDamage
         isDashing = true;
         isSprinting = false;
         useStamina(dashStaminaCost);
+        audioSource.PlayOneShot(dashSound);
         StartCoroutine(dash());
 
         yield return new WaitForSeconds(dashCooldown);
@@ -305,5 +317,17 @@ public class playerController : MonoBehaviour, IDamage
     public int GetCurrentAmmo()
     {
         return currentAmmo;
+    }
+
+    IEnumerator playFootstep()
+    {
+        if (isSprinting)
+            audioSource.PlayOneShot(runSoundsGroup[Random.Range(0, runSoundsGroup.Length)]);
+        else
+            audioSource.PlayOneShot(walkSoundsGroup[Random.Range(0, walkSoundsGroup.Length)]);
+
+        canPlayFootsteps = false;
+        yield return new WaitForSeconds(0.35f);
+        canPlayFootsteps = true;
     }
 }
