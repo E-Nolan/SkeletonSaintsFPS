@@ -13,6 +13,10 @@ public class gameManager : MonoBehaviour
     [Header("----- UI -----")]
     public GameObject activeMenu;
     public GameObject pauseMenu;
+    public GameObject winMenu;
+
+    [Header("----- Game Goals -----")]
+    public int enemiesRemaining;
 
     public bool isPaused;
 
@@ -25,7 +29,7 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetButtonDown("Cancel"))
+        if(Input.GetButtonDown("Cancel") && activeMenu == null)
         {
             isPaused = !isPaused;
             activeMenu = pauseMenu;
@@ -52,5 +56,17 @@ public class gameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         activeMenu.SetActive(false);
         activeMenu = null;
+    }
+
+    public void updateGameGoal(int amount)
+    {
+        enemiesRemaining += amount;
+
+        if(enemiesRemaining <= 0)
+        {
+            pause();
+            activeMenu = winMenu;
+            activeMenu.SetActive(true);
+        }
     }
 }
