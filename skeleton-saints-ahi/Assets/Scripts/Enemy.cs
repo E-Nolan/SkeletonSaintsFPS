@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour, IDamage
         }
     }
 
-    private IEnumerator Shoot()
+    public IEnumerator Shoot()
     {
         isShooting = true;
         GameObject bulletClone = Instantiate(bullet, firePosition.transform.position, bullet.transform.rotation);
