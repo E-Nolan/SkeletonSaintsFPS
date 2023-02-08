@@ -32,7 +32,7 @@ public class EnemyAI : MonoBehaviour
     [Header("----- Fallback AI -----")] 
     [SerializeField] private bool _useFallbackAi;
     [SerializeField] private Transform _headPosition;
-    [SerializeField] private bool isShooting;
+    //[SerializeField] private bool isShooting;
 
     void Start()
     {
@@ -93,9 +93,9 @@ public class EnemyAI : MonoBehaviour
                 float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
                 // Enter the if when:
-                // the Player is in the viewing angle of the Enemy OR
-                // the player is within the SprintDetectRadius and is Sprinting OR
-                // the player is within the WalkDetectRadius
+                // - the Player is in the viewing angle of the Enemy
+                // - the player is within the SprintDetectRadius and is Sprinting
+                // - the player is within the WalkDetectRadius
                 if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
                     (distanceToPlayer <= SprintDetectRadius && gameManager.instance.playerScript.isSprinting) ||
                     distanceToPlayer <= WalkDetectRadius)
@@ -145,7 +145,7 @@ public class EnemyAI : MonoBehaviour
                 if (_agent.remainingDistance < _agent.stoppingDistance)
                     FacePlayer();
 
-                if (!isShooting)
+                if (!_enemyScript.isShooting)
                     StartCoroutine(_enemyScript.Shoot());
             }
             #endregion
