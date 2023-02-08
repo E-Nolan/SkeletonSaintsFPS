@@ -132,6 +132,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1412934999}
+  - {fileID: 6584625157997060860}
   m_Father: {fileID: 1342936407}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -270,6 +271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 6160287242515428983}
   audioSource: {fileID: 8025057114160814094}
+  weaponFirePos: {fileID: 6584625157997060860}
+  bullet: {fileID: 8273331056342493339, guid: 2e49e8e2e7019ee439d07fbccbeaeb47, type: 3}
   playerSpeed: 10
   gravity: 16
   maxHealth: 10
@@ -286,7 +289,7 @@ MonoBehaviour:
   sprintSpeed: 15
   sprintStaminaDrain: 20
   projectileSpeed: 50
-  cooldown: 0.5
+  weaponFireRate: 0
   range: 150
   maxAmmo: 40
   startingAmmo: 200
@@ -317,6 +320,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 32cec9cc9a2b59544834839747e558b2, type: 3}
   isDashing: 0
   isSprinting: 0
+  isShooting: 0
   currentStamina: 0
   jumpsCurrent: 0
   currentHealth: 0
@@ -498,4 +502,49 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7668171613308657967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6584625157997060860}
+  - component: {fileID: 6503087747413845232}
+  m_Layer: 9
+  m_Name: Fire Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6584625157997060860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668171613308657967}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -3.5, y: 0.65, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1412878475}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!135 &6503087747413845232
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668171613308657967}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

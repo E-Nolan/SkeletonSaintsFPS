@@ -9,6 +9,8 @@ public class playerController : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
     [SerializeField] AudioSource audioSource;
+    [SerializeField] Transform weaponFirePos;
+    [SerializeField] GameObject bullet;
 
     // Stats that determine player movement
     [Header("----- Player Stats -----")]
@@ -42,7 +44,7 @@ public class playerController : MonoBehaviour, IDamage
     // Stats used by the player's gun
     [Header("----- Weapon Stats -----")]
     [Range(5, 200)]     [SerializeField] int projectileSpeed;
-    [Range(0.0f, 5.0f)] [SerializeField] float cooldown; // in seconds
+    [Range(0.0f, 5.0f)] [SerializeField] float weaponFireRate; // in seconds
     [Range(1, 200)]     [SerializeField] int range;
     [Range(1, 200)]     [SerializeField] int maxAmmo;
     [Tooltip("Will be rounded down if it exceeds maxAmmo.\nSet to 200 to always be equal to maxAmmo")]
@@ -63,6 +65,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public bool isDashing = false;
     public bool isSprinting = false;
+    public bool isShooting = false;
 
     public float currentStamina;
     public int jumpsCurrent = 0;
@@ -110,7 +113,6 @@ public class playerController : MonoBehaviour, IDamage
             isSprinting = false;
         }
 
-
         // If the player presses the Dash button, and they aren't currently dashing, initiate a dash
         // If the player continues holding the dash button, they will start sprinting
         if (Input.GetButtonDown("Dash") && !isDashing && currentStamina >= dashStaminaCost)
@@ -118,6 +120,11 @@ public class playerController : MonoBehaviour, IDamage
 
         // Once all related variables are sorted out this frame, move the player
         movement();
+
+        // If the player presses the Shoot Button, they will fire at whatever they are looking at
+        // They can not fire if they do not have ammo
+        if (Input.GetButtonDown("Fire1") && !isAmmoEmpty() && !isShooting)
+            StartCoroutine(shoot());
 
         // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
         if (staminaRegenTimer <= 0)
@@ -159,6 +166,62 @@ public class playerController : MonoBehaviour, IDamage
         // Accelerate the player downward via gravity
         playerVelocity.y -= (gravity * Time.deltaTime);
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+
+    IEnumerator startDash()
+    {
+        // Start a dash, then reenable dashing when the cooldown expires
+        isDashing = true;
+        isSprinting = false;
+        useStamina(dashStaminaCost);
+        audioSource.PlayOneShot(dashSound);
+        StartCoroutine(dash());
+
+        yield return new WaitForSeconds(dashCooldown);
+        isDashing = false;
+    }
+
+    IEnumerator dash()
+    {
+
+        // Increase the player's speed for the duration of the dash, then return it to normal
+        playerSpeed = dashSpeed;
+        yield return new WaitForSeconds(dashDuration);
+
+        // If the player is still holding the dash button down after the dash ends, they will continue sprinting at an increased speed
+        if (Input.GetButton("Dash"))
+        {
+            playerSpeed = sprintSpeed;
+            isSprinting = true;
+        }
+        else
+        {
+            playerSpeed = defaultSpeed;
+        }
+    }
+
+    IEnumerator shoot()
+    {
+        isShooting = true;
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, range))
+        {
+            // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
+            Vector3 directionToTarget = (hit.point - weaponFirePos.transform.position).normalized;
+            GameObject newBullet = Instantiate(bullet, weaponFirePos.transform.position, weaponFirePos.rotation);
+            newBullet.GetComponent<Rigidbody>().velocity = directionToTarget * projectileSpeed;
+        }
+        else
+        {
+            // If the raycast didn't hit anything, fire a bullet straight forwards
+            GameObject newBullet = Instantiate(bullet, weaponFirePos.transform.position, weaponFirePos.rotation);
+            newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.right * projectileSpeed;
+        }
+
+        yield return new WaitForSeconds(weaponFireRate);
+
+        isShooting = false;
     }
 
     /// <summary>
@@ -256,37 +319,6 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentStamina += amount;
         currentStamina = Mathf.Clamp(currentStamina, 0.0f, (float)maxStamina);
-    }
-
-    IEnumerator startDash()
-    {
-        // Start a dash, then reenable dashing when the cooldown expires
-        isDashing = true;
-        isSprinting = false;
-        useStamina(dashStaminaCost);
-        audioSource.PlayOneShot(dashSound);
-        StartCoroutine(dash());
-
-        yield return new WaitForSeconds(dashCooldown);
-        isDashing = false;
-    }
-
-    IEnumerator dash()
-    {
-        // Increase the player's speed for the duration of the dash, then return it to normal
-        playerSpeed = dashSpeed;
-        yield return new WaitForSeconds(dashDuration);
-
-        // If the player is still holding the dash button down after the dash ends, they will continue sprinting at an increased speed
-        if (Input.GetButton("Dash"))
-        {
-            playerSpeed = sprintSpeed;
-            isSprinting = true;
-        }
-        else
-        {
-            playerSpeed = defaultSpeed;
-        }
     }
 
     public int GetMaxHealth()
