@@ -47,6 +47,7 @@ public class EnemyAI : MonoBehaviour
         _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
         _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
 
+        // FALLBACK AI SETUP
         if (_useFallbackAi)
         {
             _headPosition.gameObject.SetActive(true);
@@ -58,8 +59,9 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        // As long as the Player exists, Enemy will roam with specified delay
         if (PlayerGameObject != null)
-            StartCoroutine(CheckForPlayerWithDelay(.25f));
+            StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
         else
         {
             // If no player is detected for whatever reason, script destroys itself
@@ -83,13 +85,17 @@ public class EnemyAI : MonoBehaviour
             {
                 // OverlapSphere() only returns an array of Colliders so only take the first array entry (should only be one player)
                 Transform playerTransform = targetsInViewRange[0].transform;
-                playerDirection = (playerTransform.position - transform.position);
+
+                // Get the direction the player is from the Enemy
+                playerDirection = playerTransform.position - transform.position;
 
                 // Get the distance between the Enemy and the Player
                 float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-                // If the Player is in the viewing angle of the Enemy OR
-                // the player is within the DetectRadius and is Sprinting, 
+                // Enter the if when:
+                // the Player is in the viewing angle of the Enemy OR
+                // the player is within the SprintDetectRadius and is Sprinting OR
+                // the player is within the WalkDetectRadius
                 if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
                     (distanceToPlayer <= SprintDetectRadius && gameManager.instance.playerScript.isSprinting) ||
                     distanceToPlayer <= WalkDetectRadius)
@@ -98,20 +104,18 @@ public class EnemyAI : MonoBehaviour
                     // If no Obstacle was detected, runs the if, else the Enemy can't see the Player
                     if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
                     {
+                        // Player detected, move Enemy towards Player
                         CanDetectPlayer = true;
                         _agent.SetDestination(playerTransform.position);
 
-
+                        // If the Player is within the stopping distance of the Enemy,
+                        // change rotation of the Enemy to face the Player
                         if (_agent.remainingDistance <= _agent.stoppingDistance)
-                        {
-                            Quaternion enemyRotation = Quaternion.LookRotation(playerDirection);
-                            transform.rotation = Quaternion.Lerp(transform.rotation, enemyRotation,
-                                Time.deltaTime * _turnSpeed);
-                        }
+                            FacePlayer();
                     }
                     else
                     {
-                        // If Enemy saw the Player previously but can't currently see the Player, go to last known location
+                        // If Enemy detected the Player previously but can't currently detect the Player, go to last known location
                         if (CanDetectPlayer)
                             StartCoroutine(GoToLastKnownLocation(playerTransform.position, _roamingDelay));
 
@@ -148,6 +152,10 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Fallback AI usage: Check if the Player is within viewing distance and angle of the Enemy
+    /// </summary>
+    /// <returns></returns>
     bool canSeePlayer()
     {
         playerDirection = gameManager.instance.player.transform.position - _headPosition.position;
@@ -168,6 +176,9 @@ public class EnemyAI : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Rotate the Enemy to face the Player with _turnSpeed
+    /// </summary>
     void FacePlayer()
     {
         Quaternion rot = Quaternion.LookRotation(playerDirection);
@@ -192,6 +203,9 @@ public class EnemyAI : MonoBehaviour
         _agent.SetDestination(finalPosition);
     }
 
+    /// <summary>
+    /// Go to last known location of the location given with optional delay 
+    /// </summary>
     private IEnumerator GoToLastKnownLocation(Vector3 location, float delay = 0f)
     {
         float originalStoppingDistance = _agent.stoppingDistance;
