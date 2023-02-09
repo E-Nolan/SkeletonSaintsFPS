@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] Material _material;
     [Range(0,10)] [SerializeField] private int _health;
 
-
     public bool isShooting = false;
 
     // Property to update _health field
@@ -47,6 +46,7 @@ public class Enemy : MonoBehaviour, IDamage
         if (_health <= 0)
         {
             Debug.Log($"{gameObject.name} has died");
+            gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }
