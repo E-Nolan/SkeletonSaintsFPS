@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ public class gameManager : MonoBehaviour
     public GameObject loseMenu;
     public Image playerHealthBar;
     public Image playerStaminaBar;
+    public TextMeshProUGUI playerAmmoText;
 
 
     [Header("----- Game Goals -----")]

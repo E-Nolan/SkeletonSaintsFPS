@@ -87,6 +87,7 @@ public class playerController : MonoBehaviour, IDamage
         currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
         updatePlayerHealthBar();
         updatePlayerStaminaBar();
+        updatePlayerAmmo();
     }
 
     // Update is called once per frame
@@ -258,6 +259,12 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentAmmo += amount;
         currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
+        updatePlayerAmmo();
+    }
+
+    public void updatePlayerAmmo()
+    {
+        gameManager.instance.playerAmmoText.text = $"{currentAmmo.ToString()} / {maxAmmo.ToString()}";
     }
 
     /// <summary>
@@ -384,4 +391,6 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.35f);
         canPlayFootsteps = true;
     }
+
+
 }
