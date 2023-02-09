@@ -2201,9 +2201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pause Menu
-
-'
+  m_text: You Won!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2735,9 +2733,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pause Menu
-
-'
+  m_text: You Lost!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3586,10 +3582,10 @@ MonoBehaviour:
   activeMenu: {fileID: 0}
   pauseMenu: {fileID: 8968009673331726912}
   winMenu: {fileID: 8968009673473818088}
-  loseMenu: {fileID: 0}
+  loseMenu: {fileID: 8968009674946308144}
   playerHealthBar: {fileID: 8968009673325930903}
   playerStaminaBar: {fileID: 8968009673629124204}
-  playerAmmoText: {fileID: 0}
+  playerAmmoText: {fileID: 2046007034360370564}
   enemiesRemaining: 1
   isPaused: 0
 --- !u!1 &8968009675176533943
