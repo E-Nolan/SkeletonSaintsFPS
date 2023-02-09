@@ -8,7 +8,7 @@ public class breakableObstacle : MonoBehaviour, IDamage
     
     [Header("----- Optional -----")]
     [SerializeField] GameObject droppedItem;
-    [SerializeField] AudioClip destructionSound;
+    [SerializeField] AudioSource destructionSound;
 
     public void TakeDamage(int damage)
     {
@@ -25,8 +25,11 @@ public class breakableObstacle : MonoBehaviour, IDamage
         }
         if (destructionSound != null)
         {
-            // TODO
+            destructionSound.Play();
         }
-        Destroy(gameObject);
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
+
+        Destroy(gameObject, 5.0f);
     }
 }

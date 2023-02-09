@@ -222,7 +222,7 @@ public class playerController : MonoBehaviour, IDamage
         }
 
         updateAmmo(-1);
-        audioSource.PlayOneShot(gunshotSound);
+        audioSource.PlayOneShot(gunshotSound, 0.5f);
 
         yield return new WaitForSeconds(weaponFireRate);
 

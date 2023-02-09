@@ -10,6 +10,8 @@ public class bullet : MonoBehaviour
     // Timer for how long the before the bullet is destroyed if no hit occurs
     [SerializeField] int timer;
 
+    [SerializeField] AudioSource bulletImpactSound;
+
    
     void Start()
     {
@@ -25,7 +27,14 @@ public class bullet : MonoBehaviour
             other.GetComponent<IDamage>().TakeDamage(bulletDmg);
         }
 
-        Destroy(gameObject);
+        if (bulletImpactSound)
+            bulletImpactSound.Play();
+        GetComponent<SphereCollider>().enabled = false;
+        if (GetComponent<MeshRenderer>())
+            GetComponent<MeshRenderer>().enabled = false;
+
+
+        Destroy(gameObject, 5.0f);
     }
 
 
