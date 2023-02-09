@@ -21,6 +21,7 @@ public class gameManager : MonoBehaviour
     public Image playerStaminaBar;
     public TextMeshProUGUI playerAmmoText;
     public TextMeshProUGUI enemiesCounter;
+    public GameObject damageFlashScreen;
 
     [Header("----- Game Goals -----")]
     public int enemiesRemaining;
@@ -75,6 +76,7 @@ public class gameManager : MonoBehaviour
             activeMenu = winMenu;
             activeMenu.SetActive(true);
         }
+        updateEnemyCounter();
     }
 
     public void updateEnemyCounter()

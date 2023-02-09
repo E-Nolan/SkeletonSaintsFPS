@@ -284,6 +284,14 @@ public class playerController : MonoBehaviour, IDamage
     {
         updateHealth(-damage);
         updatePlayerHealthBar();
+        StartCoroutine(flashDamage());
+    }
+
+    IEnumerator flashDamage()
+    {
+        gameManager.instance.damageFlashScreen.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.instance.damageFlashScreen.SetActive(false);
     }
 
     /// <summary>
