@@ -14,6 +14,7 @@ public class gameManager : MonoBehaviour
     public GameObject activeMenu;
     public GameObject pauseMenu;
     public GameObject winMenu;
+    public GameObject loseMenu;
 
     [Header("----- Game Goals -----")]
     public int enemiesRemaining;
@@ -68,5 +69,12 @@ public class gameManager : MonoBehaviour
             activeMenu = winMenu;
             activeMenu.SetActive(true);
         }
+    }
+
+    public void playerDead()
+    {
+        pause();
+        activeMenu = loseMenu;
+        activeMenu.SetActive(true);
     }
 }

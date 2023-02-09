@@ -21,4 +21,9 @@ public class buttonFunctions : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void givePlayerHP(int amount)
+    {
+        gameManager.instance.playerScript.HealPlayer(2);
+    }
 }
