@@ -29,10 +29,10 @@ public class EnemyAI : MonoBehaviour
     public int WalkDetectRadius;
     public bool CanDetectPlayer = false;
 
+
     [Header("----- Fallback AI -----")] 
     [SerializeField] private bool _useFallbackAi;
     [SerializeField] private Transform _headPosition;
-    //[SerializeField] private bool isShooting;
 
     void Start()
     {
@@ -40,9 +40,16 @@ public class EnemyAI : MonoBehaviour
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();
 
-        // Doing this so the FieldOfViewEditor script can access the player via reference with this script
-        if(PlayerGameObject == null)
-            PlayerGameObject = gameManager.instance.player;
+        // Check if there is a Game Manager present
+        if (gameManager.instance == null)
+            Debug.Log("EnemyAI: There is no GameManager. Not using a GameManager will lead to unsupported behavior.");
+        else
+        {
+            // Using PlayerGameObject so the FieldOfViewEditor script can access the player via reference with this script
+            if(PlayerGameObject == null)
+                PlayerGameObject = gameManager.instance.player;
+        }
+
         
         _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
         _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
