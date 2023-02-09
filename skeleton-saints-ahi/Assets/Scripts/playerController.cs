@@ -8,7 +8,7 @@ public class playerController : MonoBehaviour, IDamage
     // Components used by this script
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
-    [SerializeField] AudioSource audioSource;
+    public AudioSource audioSource;
     [SerializeField] Transform weaponFirePos;
     [SerializeField] GameObject bullet;
 

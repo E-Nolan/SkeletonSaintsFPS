@@ -25,6 +25,8 @@ public class collectiblePickup : MonoBehaviour
                 gameManager.instance.playerScript.giveAmmo(ammoRecovery);
                 gameManager.instance.playerScript.GiveHealth(healthRecovery);
 
+                gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
+
                 Destroy(gameObject);
             }
         }
