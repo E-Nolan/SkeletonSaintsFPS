@@ -261,6 +261,15 @@ public class playerController : MonoBehaviour, IDamage
     }
 
     /// <summary>
+    /// Returns true if the player's health is full
+    /// </summary>
+    /// <returns></returns>
+    public bool isHealthFull()
+    {
+        return (currentHealth >= maxHealth);
+    }
+
+    /// <summary>
     /// Deal damage to the player, then kill them if their health reaches 0.
     /// </summary>
     /// <param name="damage"></param>
