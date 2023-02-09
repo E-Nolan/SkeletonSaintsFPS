@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
@@ -15,7 +17,11 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _obstacleMask;
 
-    [Header("----- Misc Vars -----")]
+    [Header("----- Animation -----")] 
+    [SerializeField] private Animator _animator;
+    [SerializeField] private EnemyLookAt _enemyLookAt;
+
+    [Header("----- Misc -----")]
     [Range(1, 10)] [SerializeField] private int _turnSpeed;
     [Range(1, 10)] [SerializeField] private int _roamingDelay;
     [SerializeField] private Vector3 playerDirection;
@@ -33,6 +39,8 @@ public class EnemyAI : MonoBehaviour
     [Header("----- Fallback AI -----")] 
     [SerializeField] private bool _useFallbackAi;
     [SerializeField] private Transform _headPosition;
+    private Vector2 smoothDeltaPosition;
+    private Vector2 velocity;
 
     void Start()
     {
@@ -50,18 +58,19 @@ public class EnemyAI : MonoBehaviour
                 PlayerGameObject = gameManager.instance.player;
         }
 
-        
         _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
         _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
 
-        // FALLBACK AI SETUP
-        if (_useFallbackAi)
-        {
-            _headPosition.gameObject.SetActive(true);
+        if (_headPosition == null)
+            GameObject.FindGameObjectWithTag("PlayerHeadPosition");
 
-            if (_headPosition == null)
-                GameObject.FindGameObjectWithTag("PlayerHeadPosition");
-        }
+        if (_animator == null)
+            GetComponent<Animator>();
+
+        if (_enemyLookAt == null)
+            GetComponent<EnemyLookAt>();
+
+        _agent.updatePosition = false;
     }
 
     void Update()
@@ -76,6 +85,39 @@ public class EnemyAI : MonoBehaviour
             Debug.Log($"{gameObject.name} did not detect player, destroying EnemyAI script");
             Destroy(GetComponent<EnemyAI>());
         }
+
+        // Get how far enemy is from its next position
+        Vector3 worldDeltaPosition = _agent.nextPosition - transform.position;
+
+        // Map worldDeltaPosition to local space
+        float dx = Vector3.Dot(transform.right, worldDeltaPosition);
+        float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
+        // Use Vector2 because z isnt needed for our purpose (yet)
+        Vector2 deltaPosition = new Vector2 (dx, dy);
+
+        // Low-pass filter the deltaMove
+        float smooth = Mathf.Min(1.0f, Time.deltaTime/0.15f);
+        smoothDeltaPosition = Vector2.Lerp (smoothDeltaPosition, deltaPosition, smooth);
+
+        // Update velocity if time advances
+        if (Time.deltaTime > 1e-5f)
+            velocity = smoothDeltaPosition / Time.deltaTime;
+
+        bool shouldMove = velocity.magnitude > 0.5f && _agent.remainingDistance > _agent.radius;
+
+        // Update animation parameters
+        _animator.SetBool("isWalking", shouldMove);
+        _animator.SetFloat ("xVelocity", velocity.x);
+        _animator.SetFloat ("yVelocity", velocity.y);
+
+        if(_enemyLookAt != null)
+            _enemyLookAt.lookAtTargetPosition = _agent.steeringTarget + transform.forward;
+    }
+
+    void OnAnimatorMove ()
+    {
+        // Update position to agent position
+        transform.position = _agent.nextPosition;
     }
 
     private void CheckForPlayer()
