@@ -102,7 +102,7 @@ public class playerController : MonoBehaviour, IDamage
 
         // If the player presses the Shoot Button, they will fire at whatever they are looking at
         // They can not fire if they do not have ammo
-        if (Input.GetButtonDown("Fire1") && !isAmmoEmpty() && !isShooting)
+        if (Input.GetButtonDown("Fire1") && !isAmmoEmpty() && !isShooting && !gameManager.instance.isPaused)
             StartCoroutine(shoot());
 
         // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
