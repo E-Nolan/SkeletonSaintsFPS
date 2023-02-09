@@ -48,7 +48,6 @@ public class Enemy : MonoBehaviour, IDamage
         {
             Debug.Log($"{gameObject.name} has died");
             gameManager.instance.updateGameGoal(-1);
-            gameManager.instance.updateEnemyCounter();
             Destroy(gameObject);
         }
     }
