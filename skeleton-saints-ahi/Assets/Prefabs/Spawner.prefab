@@ -47,11 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypes:
-  - {fileID: 0}
+  - {fileID: 1849573101927521897, guid: 2bf398bf3ececbc4993564816ace32ae, type: 3}
   spawnMaxNum: 1
   spawnCooldown: 0
   spawnPos:
   - {fileID: 1346264199665415579}
+  spawnInRandomPositions: 0
+  spawnRandomEnemyTypes: 0
 --- !u!135 &5225804314777869367
 SphereCollider:
   m_ObjectHideFlags: 0
