@@ -24,6 +24,6 @@ public class buttonFunctions : MonoBehaviour
 
     public void givePlayerHP(int amount)
     {
-        gameManager.instance.playerScript.HealPlayer(2);
+        gameManager.instance.playerScript.GiveHealth(2);
     }
 }

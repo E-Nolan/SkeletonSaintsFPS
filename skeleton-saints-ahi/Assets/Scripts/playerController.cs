@@ -170,7 +170,6 @@ public class playerController : MonoBehaviour, IDamage
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-
     IEnumerator startDash()
     {
         // Start a dash, then reenable dashing when the cooldown expires
@@ -245,6 +244,11 @@ public class playerController : MonoBehaviour, IDamage
         return (currentAmmo == 0);
     }
 
+    public void giveAmmo(int amount)
+    {
+        updateAmmo(amount);
+    }
+
     /// <summary>
     /// Give the player an amount of ammo (positive input), or take it away (negative input).
     /// Clamp it if it exceeds max ammo or becomes negative
@@ -270,7 +274,7 @@ public class playerController : MonoBehaviour, IDamage
     /// Heal the player by an amount. Their health can not exceed their max health
     /// </summary>
     /// <param name="amount"></param>
-    public void HealPlayer(int amount)
+    public void GiveHealth(int amount)
     {
         updateHealth(amount);
     }
@@ -286,22 +290,12 @@ public class playerController : MonoBehaviour, IDamage
         currentHealth = Mathf.Clamp(currentHealth, int.MinValue, maxHealth);
         updatePlayerHealthBar();
         if (currentHealth == 0)
-            killPlayer();
+            gameManager.instance.playerDead();
     }
 
     public void updatePlayerHealthBar()
     {
         gameManager.instance.playerHealthBar.fillAmount = (float) currentHealth / (float) maxHealth;
-    }
-
-    /// <summary>
-    /// Kill the player. runs when the player's health reaches 0, but can be called for other reasons.
-    /// </summary>
-    public void killPlayer()
-    {
-        Debug.Log($"{gameObject.name} has died");
-        Destroy(gameObject);
-        // TODO: Implement this functionality
     }
 
     /// <summary>
