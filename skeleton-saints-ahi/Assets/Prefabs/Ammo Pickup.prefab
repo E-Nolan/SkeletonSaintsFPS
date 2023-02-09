@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ad4d3e90872674aa61d38c598fed14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoRecovery: 10
+  ammoRecovery: 5
   healthRecovery: 0
   rotationSpeed: 90
   pickupSound: {fileID: 8300000, guid: 406f880e3ae0e254f8999d7239c1164d, type: 3}
