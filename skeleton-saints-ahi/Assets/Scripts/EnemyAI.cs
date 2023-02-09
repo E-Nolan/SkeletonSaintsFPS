@@ -9,9 +9,10 @@ using UnityEngine.Animations;
 
 public class EnemyAI : MonoBehaviour
 {
-    [Header("----- Agent -----")]
+    [Header("----- Objects/Transforms -----")]
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] public GameObject PlayerGameObject;
+    [SerializeField] private Transform _headPosition;
 
     [Header("----- Masks -----")]
     [SerializeField] private LayerMask _playerMask;
@@ -27,18 +28,18 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Vector3 playerDirection;
     [SerializeField] private Enemy _enemyScript;
 
-
+    [Header("----- FieldOfView Public -----")]
     // Public for the FieldOfViewEditor Editor script
-    [Range(0,360)] public float ViewAngle;
-    public int ViewRadius;
-    public int SprintDetectRadius;
-    public int WalkDetectRadius;
-    public bool CanDetectPlayer = false;
+     [Range(0,360)] public float ViewAngle;
+     public int ViewRadius;
+     public int SprintDetectRadius;
+     public int WalkDetectRadius;
+     public bool CanDetectPlayer = false;
 
-
-    [Header("----- Fallback AI -----")] 
+    [Header("----- Fallback AI (buggy) -----")] 
     [SerializeField] private bool _useFallbackAi;
-    [SerializeField] private Transform _headPosition;
+
+
     private Vector2 smoothDeltaPosition;
     private Vector2 velocity;
 
