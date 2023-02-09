@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class gameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject winMenu;
     public GameObject loseMenu;
+    public Image playerHealthBar;
+    public Image playerStaminaBar;
+
 
     [Header("----- Game Goals -----")]
     public int enemiesRemaining;

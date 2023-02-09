@@ -85,6 +85,8 @@ public class playerController : MonoBehaviour, IDamage
         // If the starting ammo exceeds max ammo, bring it down to maxAmmo
         currentAmmo = startingAmmo;
         currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
+        updatePlayerHealthBar();
+        updatePlayerStaminaBar();
     }
 
     // Update is called once per frame
@@ -261,6 +263,7 @@ public class playerController : MonoBehaviour, IDamage
     public void TakeDamage(int damage)
     {
         updateHealth(-damage);
+        updatePlayerHealthBar();
     }
 
     /// <summary>
@@ -281,9 +284,14 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, int.MinValue, maxHealth);
-
+        updatePlayerHealthBar();
         if (currentHealth == 0)
             killPlayer();
+    }
+
+    public void updatePlayerHealthBar()
+    {
+        gameManager.instance.playerHealthBar.fillAmount = (float) currentHealth / (float) maxHealth;
     }
 
     /// <summary>
@@ -313,6 +321,7 @@ public class playerController : MonoBehaviour, IDamage
     public void useStamina(float staminaCost)
     {
         updateStamina(-staminaCost);
+    
         if (staminaCost > 0.0f)
             staminaRegenTimer = staminaRegenCooldown;
     }
@@ -322,8 +331,15 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentStamina += amount;
         currentStamina = Mathf.Clamp(currentStamina, 0.0f, (float)maxStamina);
+        updatePlayerStaminaBar();
     }
 
+    public void updatePlayerStaminaBar()
+    {
+        gameManager.instance.playerStaminaBar.fillAmount = (float) currentStamina / (float) maxStamina;
+    }
+
+    
     public int GetMaxHealth()
     {
         return maxHealth;
