@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4073,6 +4073,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca83687b4049d644f9b5b1e3e70772a2, type: 3}
+--- !u!114 &390334963 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2037303873305178254, guid: c7f69d22203a0465091a896ac30fc56c, type: 3}
+  m_PrefabInstance: {fileID: 1431488154}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &390672597 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1669738678815827674, guid: ca83687b4049d644f9b5b1e3e70772a2, type: 3}
@@ -11984,6 +11995,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 8968009675158193658, guid: c7f69d22203a0465091a896ac30fc56c, type: 3}
+      propertyPath: enemiesCounter
+      value: 
+      objectReference: {fileID: 390334963}
     - target: {fileID: 8968009675158193658, guid: c7f69d22203a0465091a896ac30fc56c, type: 3}
       propertyPath: enemiesRemaining
       value: 0

@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Start()
     {
+        gameManager.instance.updateEnemyCounter();
         if (_material == null)
             _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
 
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour, IDamage
         {
             Debug.Log($"{gameObject.name} has died");
             gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.updateEnemyCounter();
             Destroy(gameObject);
         }
     }

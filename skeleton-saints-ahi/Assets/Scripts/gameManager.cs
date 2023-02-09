@@ -20,7 +20,7 @@ public class gameManager : MonoBehaviour
     public Image playerHealthBar;
     public Image playerStaminaBar;
     public TextMeshProUGUI playerAmmoText;
-
+    public TextMeshProUGUI enemiesCounter;
 
     [Header("----- Game Goals -----")]
     public int enemiesRemaining;
@@ -75,6 +75,11 @@ public class gameManager : MonoBehaviour
             activeMenu = winMenu;
             activeMenu.SetActive(true);
         }
+    }
+
+    public void updateEnemyCounter()
+    {
+        gameManager.instance.enemiesCounter.text = $"{enemiesRemaining}";
     }
 
     public void playerDead()

@@ -264,7 +264,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public void updatePlayerAmmo()
     {
-        gameManager.instance.playerAmmoText.text = $"{currentAmmo.ToString()} / {maxAmmo.ToString()}";
+        gameManager.instance.playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
     }
 
     /// <summary>
