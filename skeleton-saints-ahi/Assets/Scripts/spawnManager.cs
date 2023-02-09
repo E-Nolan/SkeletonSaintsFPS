@@ -9,13 +9,18 @@ public class spawnManager : MonoBehaviour
     [Range(0.0f, 10.0f)] [SerializeField] float spawnCooldown;
     [SerializeField] Transform[] spawnPos;
 
+    [SerializeField] bool spawnInRandomPositions;
+    [SerializeField] bool spawnRandomEnemyTypes;
+
+    int enemyIter = 0;
+    int posIter = 0;
     int enemiesSpawned;
     bool playerInRange;
     bool isSpawning;
 
     void Start()
     {
-        
+        gameManager.instance.updateGameGoal(spawnMaxNum);
     }
 
     void Update()
@@ -35,11 +40,38 @@ public class spawnManager : MonoBehaviour
     }
     IEnumerator spawnEnemy()
     {
-        // Choose a random enemy from the enemyTypes array and spawn it a random spawn Position
         isSpawning = true;
-        GameObject newEnemy = enemyTypes[Random.Range(0, enemyTypes.Length)];
-        Instantiate(newEnemy, spawnPos[Random.Range(0, spawnPos.Length)].position, newEnemy.transform.rotation);
         enemiesSpawned++;
+
+        Transform newSpawnPos;
+        GameObject newEnemy;
+        // If the spawner uses random spawn Positions, it will choose a random spawn Position to spawn the next enemy
+        // Otherwise it will iterate/loop through the spawnPos array
+        if (spawnInRandomPositions)
+        {
+            newSpawnPos = spawnPos[Random.Range(0, spawnPos.Length)];
+        }
+        else
+        {
+            newSpawnPos = spawnPos[posIter++];
+            if (posIter >= spawnPos.Length)
+                posIter = 0;
+        }
+
+        // If the spawner spawns random enemy types, it will choose a random enemy each time one is spawned.
+        // Otherwise it will iterate/loop through the enemyTypes array
+        if (spawnRandomEnemyTypes)
+        {
+            newEnemy = enemyTypes[Random.Range(0, enemyTypes.Length)];
+        }
+        else
+        {
+            newEnemy = enemyTypes[enemyIter++];
+            if (enemyIter >= enemyTypes.Length)
+                enemyIter = 0;
+        }
+
+        Instantiate(newEnemy, newSpawnPos.position, newEnemy.transform.rotation);
 
         yield return new WaitForSeconds(spawnCooldown);
         isSpawning = false;
