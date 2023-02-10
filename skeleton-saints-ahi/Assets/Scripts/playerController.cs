@@ -11,6 +11,8 @@ public class playerController : MonoBehaviour, IDamage
     public AudioSource audioSource;
     [SerializeField] Transform weaponFirePos;
     [SerializeField] GameObject bullet;
+    [SerializeField] List<GameObject> weaponInventory;
+    [SerializeField] GameObject currentWeapon;
 
     // Stats that determine player movement
     [Header("----- Player Stats -----")]
