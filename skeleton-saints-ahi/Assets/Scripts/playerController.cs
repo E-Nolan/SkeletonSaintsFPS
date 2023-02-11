@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour, IDamage
 {
-
+    #region Member Fields
     // Components used by this script
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
     public AudioSource audioSource;
     [SerializeField] Transform weaponFirePos;
-    [SerializeField] GameObject bullet;
+    //[SerializeField] GameObject bullet;
     [SerializeField] List<GameObject> weaponInventory;
     [SerializeField] GameObject currentWeapon;
+    [SerializeField] Camera playerCamera;
 
     // Stats that determine player movement
     [Header("----- Player Stats -----")]
@@ -44,14 +45,14 @@ public class playerController : MonoBehaviour, IDamage
     [Range(0.0f, 50.0f)] [SerializeField] int sprintStaminaDrain;
 
     // Stats used by the player's gun
+    // TODO Remove all ammo stats and functions and move them to rangedWeapon.cs
     [Header("----- Weapon Stats -----")]
-    [Range(5, 200)]     [SerializeField] int projectileSpeed;
-    [Range(0.0f, 5.0f)] [SerializeField] float weaponFireRate; // in seconds
-    [Range(1, 200)]     [SerializeField] int range;
+    //[Range(5, 200)]     [SerializeField] int projectileSpeed;
+    //[Range(0.0f, 5.0f)] [SerializeField] float weaponFireRate; // in seconds
     [Range(1, 200)]     [SerializeField] int maxAmmo;
     [Tooltip("Will be rounded down if it exceeds maxAmmo.\nSet to 200 to always be equal to maxAmmo")]
     [Range(0, 200)] [SerializeField] int startingAmmo;
-    [Range(1, 20)]      [SerializeField] int damage;
+    //[Range(1, 20)]      [SerializeField] int damage;
 
     [Header("----- Sound Effects -----")]
     [SerializeField] AudioClip jumpSound;
@@ -60,6 +61,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip[] runSoundsGroup;
     [SerializeField] AudioClip gunshotSound;
 
+    [Header("Miscellaneous")]
+    [Range(1, 200)] [SerializeField] int raycastRange;
     // Private variables used within the script to facilitate movement and actions
     Vector3 moveInput;
     Vector3 playerVelocity;
@@ -76,6 +79,9 @@ public class playerController : MonoBehaviour, IDamage
     public int currentAmmo;
 
     bool canPlayFootsteps = true;
+    IWeapon currentIWeapon;
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +96,8 @@ public class playerController : MonoBehaviour, IDamage
         updatePlayerHealthBar();
         updatePlayerStaminaBar();
         updatePlayerAmmo();
+
+        currentIWeapon = currentWeapon.GetComponent<IWeapon>();
     }
 
     // Update is called once per frame
@@ -104,8 +112,10 @@ public class playerController : MonoBehaviour, IDamage
 
         // If the player presses the Shoot Button, they will fire at whatever they are looking at
         // They can not fire if they do not have ammo
-        if (Input.GetButtonDown("Fire1") && !isAmmoEmpty() && !isShooting && !gameManager.instance.isPaused)
-            StartCoroutine(shoot());
+        if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.isPaused)
+        {
+            shoot();
+        }
 
         // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
         if (staminaRegenTimer <= 0)
@@ -205,30 +215,24 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator shoot()
+    void shoot()
     {
-        isShooting = true;
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, range))
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, raycastRange))
         {
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
-            Vector3 directionToTarget = (hit.point - weaponFirePos.transform.position).normalized;
-            GameObject newBullet = Instantiate(bullet, weaponFirePos.transform.position, weaponFirePos.rotation);
-            newBullet.GetComponent<Rigidbody>().velocity = directionToTarget * projectileSpeed;
+            Vector3 directionToTarget = (hit.point - weaponFirePos.transform.position);
+            Debug.DrawRay(transform.position, directionToTarget);
+            currentIWeapon.shoot(directionToTarget.normalized);
         }
         else
         {
             // If the raycast didn't hit anything, fire a bullet straight forwards
-            GameObject newBullet = Instantiate(bullet, weaponFirePos.transform.position, weaponFirePos.rotation);
-            newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.right * projectileSpeed;
+            currentIWeapon.shootForward();
         }
 
-        updateAmmo(-1);
+        //updateAmmo(-1);
         audioSource.PlayOneShot(gunshotSound, 0.5f);
-
-        yield return new WaitForSeconds(weaponFireRate);
-
-        isShooting = false;
     }
 
     /// <summary>

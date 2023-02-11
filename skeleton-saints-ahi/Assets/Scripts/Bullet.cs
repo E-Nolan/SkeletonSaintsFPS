@@ -32,6 +32,7 @@ public class bullet : MonoBehaviour
         GetComponent<SphereCollider>().enabled = false;
         if (GetComponent<MeshRenderer>())
             GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
 
 
         Destroy(gameObject, 5.0f);
