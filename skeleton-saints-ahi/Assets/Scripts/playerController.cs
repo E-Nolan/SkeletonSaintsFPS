@@ -79,7 +79,7 @@ public class playerController : MonoBehaviour, IDamage
     public int currentAmmo;
 
     bool canPlayFootsteps = true;
-    IWeapon currentIWeapon;
+    IWeapon currentIWeaponInterface;
 
     #endregion
 
@@ -95,9 +95,9 @@ public class playerController : MonoBehaviour, IDamage
         currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
         updatePlayerHealthBar();
         updatePlayerStaminaBar();
-        updatePlayerAmmo();
+        //updatePlayerAmmo();
 
-        currentIWeapon = currentWeapon.GetComponent<IWeapon>();
+        currentIWeaponInterface = currentWeapon.GetComponent<IWeapon>();
     }
 
     // Update is called once per frame
@@ -223,16 +223,13 @@ public class playerController : MonoBehaviour, IDamage
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
             Vector3 directionToTarget = (hit.point - weaponFirePos.transform.position);
             Debug.DrawRay(transform.position, directionToTarget);
-            currentIWeapon.shoot(directionToTarget.normalized);
+            currentIWeaponInterface.shoot(directionToTarget.normalized);
         }
         else
         {
             // If the raycast didn't hit anything, fire a bullet straight forwards
-            currentIWeapon.shootForward();
+            currentIWeaponInterface.shootForward();
         }
-
-        //updateAmmo(-1);
-        audioSource.PlayOneShot(gunshotSound, 0.5f);
     }
 
     /// <summary>
