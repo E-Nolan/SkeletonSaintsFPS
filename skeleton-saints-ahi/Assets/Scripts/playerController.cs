@@ -44,16 +44,6 @@ public class playerController : MonoBehaviour, IDamage
     [Range(10,60)] [SerializeField] int sprintSpeed;
     [Range(0.0f, 50.0f)] [SerializeField] int sprintStaminaDrain;
 
-    // Stats used by the player's gun
-    // TODO Remove all ammo stats and functions and move them to rangedWeapon.cs
-    [Header("----- Weapon Stats -----")]
-    //[Range(5, 200)]     [SerializeField] int projectileSpeed;
-    //[Range(0.0f, 5.0f)] [SerializeField] float weaponFireRate; // in seconds
-    [Range(1, 200)]     [SerializeField] int maxAmmo;
-    [Tooltip("Will be rounded down if it exceeds maxAmmo.\nSet to 200 to always be equal to maxAmmo")]
-    [Range(0, 200)] [SerializeField] int startingAmmo;
-    //[Range(1, 20)]      [SerializeField] int damage;
-
     [Header("----- Sound Effects -----")]
     [SerializeField] AudioClip jumpSound;
     [SerializeField] AudioClip dashSound;
@@ -76,10 +66,9 @@ public class playerController : MonoBehaviour, IDamage
     public float currentStamina;
     public int jumpsCurrent = 0;
     public int currentHealth;
-    public int currentAmmo;
 
     bool canPlayFootsteps = true;
-    IWeapon currentIWeaponInterface;
+    public IWeapon weaponInterface;
 
     #endregion
 
@@ -90,14 +79,11 @@ public class playerController : MonoBehaviour, IDamage
         defaultSpeed = playerSpeed;
         currentHealth = maxHealth;
         currentStamina = maxStamina;
-        // If the starting ammo exceeds max ammo, bring it down to maxAmmo
-        currentAmmo = startingAmmo;
-        currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
+
         updatePlayerHealthBar();
         updatePlayerStaminaBar();
-        //updatePlayerAmmo();
 
-        currentIWeaponInterface = currentWeapon.GetComponent<IWeapon>();
+        weaponInterface = currentWeapon.GetComponent<IWeapon>();
     }
 
     // Update is called once per frame
@@ -122,6 +108,7 @@ public class playerController : MonoBehaviour, IDamage
             giveStamina(staminaRegenSpeed * Time.deltaTime);
     }
 
+    #region movement functions
     // Tell the player where to move based on player input
     void movement()
     {
@@ -215,6 +202,8 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    #endregion
+
     void shoot()
     {
         RaycastHit hit;
@@ -223,51 +212,13 @@ public class playerController : MonoBehaviour, IDamage
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
             Vector3 directionToTarget = (hit.point - weaponFirePos.transform.position);
             Debug.DrawRay(transform.position, directionToTarget);
-            currentIWeaponInterface.shoot(directionToTarget.normalized);
+            weaponInterface.shoot(directionToTarget.normalized);
         }
         else
         {
             // If the raycast didn't hit anything, fire a bullet straight forwards
-            currentIWeaponInterface.shootForward();
+            weaponInterface.shootForward();
         }
-    }
-
-    /// <summary>
-    /// Return true if the player's ammo is full
-    /// </summary>
-    public bool isAmmoFull()
-    {
-        return (currentAmmo == maxAmmo);
-    }
-
-    /// <summary>
-    /// Return true if the player has no ammo
-    /// </summary>
-    public bool isAmmoEmpty()
-    {
-        return (currentAmmo == 0);
-    }
-
-    public void giveAmmo(int amount)
-    {
-        updateAmmo(amount);
-    }
-
-    /// <summary>
-    /// Give the player an amount of ammo (positive input), or take it away (negative input).
-    /// Clamp it if it exceeds max ammo or becomes negative
-    /// </summary>
-    /// <param name="amount"></param>
-    public void updateAmmo(int amount)
-    {
-        currentAmmo += amount;
-        currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
-        updatePlayerAmmo();
-    }
-
-    public void updatePlayerAmmo()
-    {
-        gameManager.instance.playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
     }
 
     /// <summary>
@@ -371,11 +322,6 @@ public class playerController : MonoBehaviour, IDamage
         return maxStamina;
     }
 
-    public int GetMaxAmmo()
-    {
-        return maxAmmo;
-    }
-
     public int GetCurrentHealth()
     {
         return currentHealth;
@@ -384,11 +330,6 @@ public class playerController : MonoBehaviour, IDamage
     public float GetCurrentStamina()
     {
         return currentStamina;
-    }
-
-    public int GetCurrentAmmo()
-    {
-        return currentAmmo;
     }
 
     IEnumerator playFootstep()

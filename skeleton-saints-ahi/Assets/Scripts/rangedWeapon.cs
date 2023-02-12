@@ -7,12 +7,10 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     #region Member Fields
     [Header("----- Components -----")]
     [SerializeField] Transform weaponFirePos;
-    [SerializeField] Transform weaponForwardPos;
-    [SerializeField] Transform weaponFinalDirection;
+    [SerializeField] Transform targetFinder;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip shotSound;
-    [SerializeField] AudioClip bulletImpactSound;
 
     [Header("----- Settings -----")]
     [SerializeField] bool usedByPlayer;
@@ -21,7 +19,6 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     [Header("----- Stats -----")]
     [Range(5, 200)] [SerializeField] int bulletSpeed;
     [Range(0.0f, 5.0f)] [SerializeField] float fireRate; // in seconds
-    [Range(1, 200)] [SerializeField] int range;
     [Range(1, 20)] [SerializeField] int damage;
     [Range(1, 20)] [SerializeField] int bulletsPerSpread;
     [Range(0, 60)] [SerializeField] int spreadAngle;
@@ -39,7 +36,6 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     Enemy enemyScript;
 
     #endregion
-
 
     private void Start()
     {
@@ -112,7 +108,7 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     /// </summary>
     public void shootForward()
     {
-        shoot(weaponForwardPos.position - weaponFirePos.position);
+        shoot(targetFinder.position - weaponFirePos.position);
     }
 
     /// <summary>
@@ -126,38 +122,34 @@ public class rangedWeapon : MonoBehaviour, IWeapon
         if (!isAmmoEmpty())
         {
             StartCoroutine(startShootCooldown());
-
             // For each shot in a burst, fire a bullet with a delay between each shot
             for (int i = 0; i  < bulletsPerBurst; i++)
             {
-                StartCoroutine(shootBullet(i * burstFireDelay));
+                StartCoroutine(shootBullet(fireDirection, i * burstFireDelay));
             }
         }
     }
 
     // Fire a bullet after a delay. A delay of 0 will fire immediately
     // Delays greater than 0 are used for guns with burst fire, and delay is equal to the time between each shot
-    IEnumerator shootBullet(float delay = 0.0f)
+    IEnumerator shootBullet(Vector3 fireDirection, float delay = 0.0f)
     {
         yield return new WaitForSeconds(delay);
 
-        // Fire a bullet each 
+        // Fire a bullet for each bullet in the spread.
         for (int i = 0; i < bulletsPerSpread; i++)
         {
-            GameObject newBullet = Instantiate(bullet, weaponFirePos.position, weaponFirePos.rotation);
-            weaponFinalDirection.position = weaponForwardPos.position;
-            weaponForwardPos.rotation = weaponForwardPos.rotation;
+            // Find the rotation that will be applied to the new bullet
+            targetFinder.rotation.SetLookRotation(fireDirection, Vector3.up);
+            if (spreadAngle > 0)
+                getRandomSpreadTarget();
 
+            // Instantiate a bullet at the Fire Position with the targetFinder's rotation and give it forward velocity
+            // Reset the targetFinder's rotation for the next fired bullet
+            GameObject newBullet = Instantiate(bullet, weaponFirePos.position, targetFinder.rotation);
             newBullet.GetComponent<bullet>().bulletDmg = damage;
-
-            // Send the bullet flying in the direction of its target, with some variance in angle if there is spread
-
-            getRandomSpreadTarget();
-            newBullet.transform.rotation = Quaternion.LookRotation(weaponFinalDirection.position - newBullet.transform.position);
-            weaponFinalDirection.position = weaponForwardPos.position;
-            weaponFinalDirection.rotation = weaponForwardPos.rotation;
-
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed;
+            targetFinder.rotation = weaponFirePos.rotation;
         }
 
         spendAmmo(1);
@@ -181,9 +173,18 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     // Get a random angle within a cone from the gun. Used for spread shots.
     void getRandomSpreadTarget()
     {
-        weaponFinalDirection.Rotate(weaponFinalDirection.forward, Random.Range(0, 360));
-        float radius = ((Mathf.Sin(spreadAngle * Mathf.Deg2Rad)) / (Mathf.Cos(spreadAngle * Mathf.Deg2Rad)));
-        weaponFinalDirection.position += weaponFinalDirection.right * (Random.Range(0.0f, 1.0f)) * radius;
+        targetFinder.Rotate(Mathf.Pow(Random.Range(-1.0f, 1.0f), 3) * spreadAngle,
+                            Mathf.Pow(Random.Range(-1.0f, 1.0f), 3) * spreadAngle,
+                            Random.Range(0.0f, 360.0f),
+                            Space.Self);
     }
     #endregion
+
+    public void onSwitch()
+    {
+        if (usedByPlayer)
+        {
+
+        }
+    }
 }
