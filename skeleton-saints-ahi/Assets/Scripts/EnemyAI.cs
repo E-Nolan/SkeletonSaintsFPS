@@ -28,7 +28,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Vector3 playerDirection;
     [SerializeField] private Enemy _enemyScript;
 
-    [Header("----- FieldOfView Public -----")]
+    [Header("----- FieldOfView Publics -----")]
     // Public for the FieldOfViewEditor Editor script
      [Range(0,360)] public float ViewAngle;
      public int ViewRadius;
@@ -87,6 +87,7 @@ public class EnemyAI : MonoBehaviour
             Destroy(GetComponent<EnemyAI>());
         }
 
+        // --- ANIMATION STUFF ---
         // Get how far enemy is from its next position
         Vector3 worldDeltaPosition = _agent.nextPosition - transform.position;
 
@@ -112,7 +113,7 @@ public class EnemyAI : MonoBehaviour
         _animator.SetFloat ("yVelocity", velocity.y);
 
         if(_enemyLookAt != null)
-            _enemyLookAt.lookAtTargetPosition = _agent.steeringTarget + transform.forward;
+            _enemyLookAt.lookAtFuturePosition = _agent.steeringTarget + transform.forward;
     }
 
     void OnAnimatorMove ()
@@ -209,7 +210,7 @@ public class EnemyAI : MonoBehaviour
     bool canSeePlayer()
     {
         playerDirection = gameManager.instance.player.transform.position - _headPosition.position;
-        float angleToPlayer = Vector3.Angle(playerDirection, transform.forward);
+        float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
 
         Debug.Log(angleToPlayer);
         Debug.DrawRay(_headPosition.position, playerDirection);
@@ -231,6 +232,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     void FacePlayer()
     {
+        playerDirection.y = 0f;
         Quaternion rot = Quaternion.LookRotation(playerDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * _turnSpeed);
     }
@@ -246,6 +248,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
         Vector3 finalPosition = Vector3.zero;
         randomDirection += transform.position;
+
 
         if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1))
             finalPosition = hit.position;
