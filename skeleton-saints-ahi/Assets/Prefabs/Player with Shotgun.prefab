@@ -71,8 +71,6 @@ MonoBehaviour:
   dashStaminaCost: 30
   sprintSpeed: 15
   sprintStaminaDrain: 20
-  maxAmmo: 40
-  startingAmmo: 200
   jumpSound: {fileID: 8300000, guid: 9375ea157ec82eb4781108a5a021b21d, type: 3}
   dashSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
   walkSoundsGroup:
@@ -105,7 +103,6 @@ MonoBehaviour:
   currentStamina: 0
   jumpsCurrent: 0
   currentHealth: 0
-  currentAmmo: 0
 --- !u!82 &3768964609929772061
 AudioSource:
   m_ObjectHideFlags: 0
@@ -329,51 +326,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &3647379120654161467
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6313376552760315958}
-  - component: {fileID: 3057041640162256148}
-  m_Layer: 9
-  m_Name: Final Weapon Dir
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6313376552760315958
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3647379120654161467}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: -4.5, y: 0.65, z: -0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6561946646741120152}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
---- !u!135 &3057041640162256148
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3647379120654161467}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6561946646741334478
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +441,6 @@ Transform:
   - {fileID: 6561946646741027140}
   - {fileID: 32085969656399599}
   - {fileID: 6561946647055485846}
-  - {fileID: 6313376552760315958}
   m_Father: {fileID: 6561946646809981252}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -506,24 +457,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponFirePos: {fileID: 32085969656399599}
-  weaponForwardPos: {fileID: 6561946647055485846}
-  weaponFinalDirection: {fileID: 6313376552760315958}
+  targetFinder: {fileID: 6561946647055485846}
   bullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
   audioSource: {fileID: 0}
   shotSound: {fileID: 0}
-  bulletImpactSound: {fileID: 0}
   usedByPlayer: 1
   automaticFire: 0
   bulletSpeed: 40
-  fireRate: 0.1
-  range: 200
+  fireRate: 0.5
   damage: 5
-  bulletsPerSpread: 1
-  spreadAngle: 0
+  bulletsPerSpread: 10
+  spreadAngle: 10
   bulletsPerBurst: 1
   burstFireDelay: 0
   infiniteAmmo: 0
-  currentAmmo: 30
+  currentAmmo: 50
   maxAmmo: 100
 --- !u!1 &6561946646809981255
 GameObject:
