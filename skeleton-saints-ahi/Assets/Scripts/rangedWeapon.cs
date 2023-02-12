@@ -66,6 +66,21 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     {
         return ((currentAmmo == maxAmmo) || infiniteAmmo);
     }
+    
+    public bool isAmmoInfinite()
+    {
+        return infiniteAmmo;
+    }
+    
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return maxAmmo;
+    }
 
     /// <summary>
     /// Decreases the weapon's ammo by the given amount. 
