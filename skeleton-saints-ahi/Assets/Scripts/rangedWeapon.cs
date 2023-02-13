@@ -7,7 +7,6 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     #region Member Fields
     [Header("----- Components -----")]
     [SerializeField] Transform weaponFirePos;
-    [SerializeField] Transform targetFinder;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip shotSound;
@@ -34,11 +33,15 @@ public class rangedWeapon : MonoBehaviour, IWeapon
 
     // If this weapon is being used by an enemy, access 
     Enemy enemyScript;
+    GameObject targetFinder;
 
     #endregion
 
     private void Start()
     {
+        // Instantiate a new object in front of the Fire Position. This object will be used to find the angle with which to fire bullets
+        targetFinder = Instantiate(weaponFirePos.gameObject, (weaponFirePos.position + weaponFirePos.forward), weaponFirePos.rotation, weaponFirePos);
+
         // If this weapon is being used an enemy, set a reference to its Enemy script to toggle its isShooting bool
         if (!usedByPlayer)
             enemyScript = transform.parent.GetComponent<Enemy>();
@@ -123,7 +126,7 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     /// </summary>
     public void shootForward()
     {
-        shoot(targetFinder.position - weaponFirePos.position);
+        shoot(targetFinder.transform.position - weaponFirePos.position);
     }
 
     /// <summary>
@@ -155,16 +158,16 @@ public class rangedWeapon : MonoBehaviour, IWeapon
         for (int i = 0; i < bulletsPerSpread; i++)
         {
             // Find the rotation that will be applied to the new bullet
-            targetFinder.rotation.SetLookRotation(fireDirection, Vector3.up);
+            targetFinder.transform.rotation.SetLookRotation(fireDirection, Vector3.up);
             if (spreadAngle > 0)
                 getRandomSpreadTarget();
 
             // Instantiate a bullet at the Fire Position with the targetFinder's rotation and give it forward velocity
             // Reset the targetFinder's rotation for the next fired bullet
-            GameObject newBullet = Instantiate(bullet, weaponFirePos.position, targetFinder.rotation);
+            GameObject newBullet = Instantiate(bullet, weaponFirePos.position, targetFinder.transform.rotation);
             newBullet.GetComponent<bullet>().bulletDmg = damage;
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed;
-            targetFinder.rotation = weaponFirePos.rotation;
+            targetFinder.transform.rotation = weaponFirePos.rotation;
         }
 
         spendAmmo(1);
@@ -188,7 +191,7 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     // Get a random angle within a cone from the gun. Used for spread shots.
     void getRandomSpreadTarget()
     {
-        targetFinder.Rotate(Mathf.Pow(Random.Range(-1.0f, 1.0f), 3) * spreadAngle,
+        targetFinder.transform.Rotate(Mathf.Pow(Random.Range(-1.0f, 1.0f), 3) * spreadAngle,
                             Mathf.Pow(Random.Range(-1.0f, 1.0f), 3) * spreadAngle,
                             Random.Range(0.0f, 360.0f),
                             Space.Self);
