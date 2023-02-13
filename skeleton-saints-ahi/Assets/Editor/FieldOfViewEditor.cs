@@ -24,6 +24,10 @@ public class FieldOfViewEditor : Editor
         Handles.color = Color.red;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.WalkDetectRadius);
 
+        // Draw circle around player to display ShootDetectRadius
+        Handles.color = Color.magenta;
+        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.ShootDetectRadius);
+
         // Get the angle from DirectionFromAngle() to get right and left angle from the Enemy's transform 
         Vector3 leftViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.ViewAngle / 2);
         Vector3 rightViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, fov.ViewAngle / 2);

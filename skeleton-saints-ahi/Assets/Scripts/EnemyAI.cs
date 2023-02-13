@@ -34,6 +34,7 @@ public class EnemyAI : MonoBehaviour
      public int ViewRadius;
      public int SprintDetectRadius;
      public int WalkDetectRadius;
+     public int ShootDetectRadius;
      public bool CanDetectPlayer = false;
 
     [Header("----- Fallback AI (buggy) -----")] 
@@ -148,8 +149,8 @@ public class EnemyAI : MonoBehaviour
                 // - the player is within the SprintDetectRadius and is Sprinting
                 // - the player is within the WalkDetectRadius
                 if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
-                    (distanceToPlayer <= SprintDetectRadius && gameManager.instance.playerScript.isSprinting) ||
-                    distanceToPlayer <= WalkDetectRadius)
+                    (distanceToPlayer <= SprintDetectRadius && IsPlayerSprinting()) ||
+                    distanceToPlayer <= WalkDetectRadius || distanceToPlayer <= ShootDetectRadius && IsPlayerShooting())
                 {
                     // Checks if an Obstacle with the Obstacle layer mask is between the Enemy and Player
                     // If no Obstacle was detected, runs the if, else the Enemy can't see the Player
@@ -235,6 +236,22 @@ public class EnemyAI : MonoBehaviour
         playerDirection.y = 0f;
         Quaternion rot = Quaternion.LookRotation(playerDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * _turnSpeed);
+    }
+
+    /// <summary>
+    /// Check if Player is Shooting
+    /// </summary>
+    private bool IsPlayerShooting()
+    {
+        return gameManager.instance.playerScript.isShooting;
+    }
+
+    /// <summary>
+    /// Check if Player is Sprinting
+    /// </summary>
+    private bool IsPlayerSprinting()
+    {
+        return gameManager.instance.playerScript.isSprinting;
     }
 
     /// <summary>
