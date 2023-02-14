@@ -69,7 +69,6 @@ public class playerController : MonoBehaviour, IDamage
     public int currentHealth;
 
     bool canPlayFootsteps = true;
-    public IWeapon weaponInterface;
     int currWepIndex = 0;
 
     #endregion
@@ -86,8 +85,6 @@ public class playerController : MonoBehaviour, IDamage
         updatePlayerStaminaBar();
 
         rangedWeaponPickup(startingWeapon);
-
-        weaponInterface = currentWeapon.GetComponent<IWeapon>();
     }
 
     // Update is called once per frame
@@ -216,12 +213,12 @@ public class playerController : MonoBehaviour, IDamage
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
             Vector3 directionToTarget = (hit.point - weaponFirePos.transform.position);
             Debug.DrawRay(transform.position, directionToTarget);
-            weaponInterface.shoot(directionToTarget.normalized);
+            currentWeapon.shoot(directionToTarget.normalized);
         }
         else
         {
             // If the raycast didn't hit anything, fire a bullet straight forwards
-            weaponInterface.shootForward();
+            currentWeapon.shootForward();
         }
     }
 
@@ -284,7 +281,6 @@ public class playerController : MonoBehaviour, IDamage
 
         currWepIndex = weaponIndex;
         currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
-        weaponInterface = currentWeapon.GetComponent<IWeapon>();
 
         currentWeapon.gameObject.SetActive(true);
         currentWeapon.onSwitch();
@@ -375,13 +371,13 @@ public class playerController : MonoBehaviour, IDamage
     { return currentStamina; }
 
     public int GetCurrentAmmo()
-    { return weaponInterface.GetCurrentAmmo(); }
+    { return currentWeapon.GetCurrentAmmo(); }
 
     public int GetMaxAmmo()
-    { return weaponInterface.GetMaxAmmo(); }
+    { return currentWeapon.GetMaxAmmo(); }
 
     public bool isAmmoInfinite()
-    { return weaponInterface.isAmmoInfinite(); }
+    { return currentWeapon.isAmmoInfinite(); }
 
     IEnumerator playFootstep()
     {

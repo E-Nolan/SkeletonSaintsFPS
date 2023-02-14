@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rangedWeapon : MonoBehaviour, IWeapon
+public class rangedWeapon : MonoBehaviour
 {
     #region Member Fields
     [Header("----- Components -----")]
