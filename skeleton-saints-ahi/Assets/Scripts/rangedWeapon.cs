@@ -237,6 +237,7 @@ public class rangedWeapon : MonoBehaviour
 
     public void offSwitch()
     {
-        weaponFirePos.gameObject.SetActive(false);
+        if (gunModel)
+            gunModel.SetActive(false);
     }
 }

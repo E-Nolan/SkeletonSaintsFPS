@@ -64,6 +64,9 @@ public class playerController : MonoBehaviour, IDamage
     public bool isSprinting = false;
     public bool isShooting = false;
 
+    bool isSwitchingWeapons = false;
+    float weaponSwitchCooldown = 0.1f;
+
     public float currentStamina;
     public int jumpsCurrent = 0;
     public int currentHealth;
@@ -103,6 +106,20 @@ public class playerController : MonoBehaviour, IDamage
         {
             shoot();
         }
+
+        // If the player scrolls the mouse wheel, switch to the next weapon for up, or the previous weapon for down.
+        if (!isSwitchingWeapons)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                StartCoroutine(nextWeapon());
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                StartCoroutine(prevWeapon());
+            }
+        }
+
 
         // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
         if (staminaRegenTimer <= 0)
@@ -245,7 +262,11 @@ public class playerController : MonoBehaviour, IDamage
     public void rangedWeaponPickup(weaponStats newWeaponStats)
     {
         GameObject newWeapon = new GameObject(newWeaponStats.name, typeof(rangedWeapon), typeof(AudioSource));
-        GameObject newFirePos = Instantiate(weaponFirePos.gameObject, weaponFirePos.position, weaponFirePos.rotation, playerCamera.transform);
+        newWeapon.transform.parent = playerCamera.transform;
+        newWeapon.transform.position = playerCamera.transform.position;
+        newWeapon.transform.rotation = playerCamera.transform.rotation;
+
+        GameObject newFirePos = Instantiate(weaponFirePos.gameObject, weaponFirePos.position, weaponFirePos.rotation, newWeapon.transform);
         newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(newWeaponStats, newFirePos.transform, true);
 
         // Add the new weapon to the player's inventory, then switch their current weapon to the new one.
@@ -253,31 +274,42 @@ public class playerController : MonoBehaviour, IDamage
         switchToWeapon(weaponInventory.Count - 1);
     }
 
-    void nextWeapon()
+    IEnumerator nextWeapon()
     {
+        isSwitchingWeapons = true;
         // Switch to the weapon after the current one in the List
         // Switch to the first weapon if the index goes out of bounds
         if (currWepIndex + 1 >= weaponInventory.Count)
             switchToWeapon(0);
         else
             switchToWeapon(currWepIndex + 1);
+
+        yield return new WaitForSeconds(weaponSwitchCooldown);
+        isSwitchingWeapons = false;
     }
 
-    void prevWeapon()
+    IEnumerator prevWeapon()
     {
+        isSwitchingWeapons = true;
         // Switch to the weapon before the current one in the List
         // Switch to the last weapon if the index goes out of bounds
         if (currWepIndex - 1 < 0)
             switchToWeapon(weaponInventory.Count - 1);
         else
             switchToWeapon(currWepIndex - 1);
+
+        yield return new WaitForSeconds(weaponSwitchCooldown);
+        isSwitchingWeapons = false;
     }
 
     void switchToWeapon(int weaponIndex)
     {
         // Switch to the weapon at the given index, update currWepIndex to the new weapon's index, and turn the old weapon off
         if (currentWeapon)
+        {
             currentWeapon.offSwitch();
+            currentWeapon.gameObject.SetActive(false);
+        }
 
         currWepIndex = weaponIndex;
         currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();

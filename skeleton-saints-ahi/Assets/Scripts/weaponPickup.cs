@@ -5,6 +5,7 @@ using UnityEngine;
 public class weaponPickup : MonoBehaviour
 {
     [SerializeField] weaponStats weapon;
+    [SerializeField] AudioClip pickupSound;
     [Range(0,360)] [SerializeField] int rotationSpeed;
 
     private void Update()
@@ -17,6 +18,9 @@ public class weaponPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameManager.instance.playerScript.rangedWeaponPickup(weapon);
+            if (pickupSound)
+                gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
+
             Destroy(gameObject);
         }
     }
