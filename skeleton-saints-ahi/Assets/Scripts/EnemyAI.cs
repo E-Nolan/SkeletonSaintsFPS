@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
@@ -23,8 +24,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private EnemyLookAt _enemyLookAt;
 
     [Header("----- Misc -----")]
-    [Range(1, 10)] [SerializeField] private int _turnSpeed;
-    [Range(1, 10)] [SerializeField] private int _roamingDelay;
+    [Range(1, 20)] [SerializeField] private int _turnSpeed;
+    [Range(1, 20)] [SerializeField] private int _roamingDelay;
     [SerializeField] private Vector3 playerDirection;
     [SerializeField] private Enemy _enemyScript;
 
@@ -43,6 +44,13 @@ public class EnemyAI : MonoBehaviour
 
     private Vector2 smoothDeltaPosition;
     private Vector2 velocity;
+    private float originalStoppingDistance;
+    private bool destinationChosen = false;
+
+    void Awake()
+    {
+        destinationChosen = false;
+    }
 
     void Start()
     {
@@ -73,10 +81,14 @@ public class EnemyAI : MonoBehaviour
             GetComponent<EnemyLookAt>();
 
         _agent.updatePosition = false;
+        originalStoppingDistance = _agent.stoppingDistance;
     }
 
     void Update()
     {
+
+        //if (_agent.remainingDistance <= 0.1f)
+        //    destinationChosen = false;
         // As long as the Player exists, Enemy will roam with specified delay
         if (PlayerGameObject != null)
             StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
@@ -84,8 +96,8 @@ public class EnemyAI : MonoBehaviour
         {
             // If no player is detected for whatever reason, script destroys itself
             // on enemy so it doesnt continue checking (save minimal performance in edge cases)
-            Debug.Log($"{gameObject.name} did not detect player, destroying EnemyAI script");
-            Destroy(GetComponent<EnemyAI>());
+            Debug.Log($"{gameObject.name} did not detect player, disabling EnemyAI");
+            enabled = false;
         }
 
         // --- ANIMATION STUFF ---
@@ -99,7 +111,7 @@ public class EnemyAI : MonoBehaviour
         Vector2 deltaPosition = new Vector2 (dx, dy);
 
         // Low-pass filter the deltaMove
-        float smooth = Mathf.Min(1.0f, Time.deltaTime/0.15f);
+        float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
         smoothDeltaPosition = Vector2.Lerp (smoothDeltaPosition, deltaPosition, smooth);
 
         // Update velocity if time advances
@@ -150,7 +162,7 @@ public class EnemyAI : MonoBehaviour
                 // - the player is within the WalkDetectRadius
                 if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
                     (distanceToPlayer <= SprintDetectRadius && IsPlayerSprinting()) ||
-                    distanceToPlayer <= WalkDetectRadius || distanceToPlayer <= ShootDetectRadius && IsPlayerShooting())
+                    distanceToPlayer <= WalkDetectRadius || (distanceToPlayer <= ShootDetectRadius && IsPlayerShooting()))
                 {
                     // Checks if an Obstacle with the Obstacle layer mask is between the Enemy and Player
                     // If no Obstacle was detected, runs the if, else the Enemy can't see the Player
@@ -158,7 +170,12 @@ public class EnemyAI : MonoBehaviour
                     {
                         // Player detected, move Enemy towards Player
                         CanDetectPlayer = true;
-                        _agent.SetDestination(playerTransform.position);
+
+                        if (NavMesh.SamplePosition(playerTransform.position, out NavMeshHit hit, ViewRadius, -1))
+                        {
+                            _agent.SetDestination(hit.position);
+                            _agent.stoppingDistance = originalStoppingDistance;
+                        }
 
                         // If the Player is within the stopping distance of the Enemy,
                         // change rotation of the Enemy to face the Player
@@ -175,22 +192,20 @@ public class EnemyAI : MonoBehaviour
                     }
                 }
                 else
-                {
                     CanDetectPlayer = false;
-                }
             }
             else if (CanDetectPlayer)
                 CanDetectPlayer = false;
 
             // If the Player was not detected, start Roaming with a delay
-            if (CanDetectPlayer == false)
-                StartCoroutine(RandomNavMeshLocationWithDelay(_roamingDelay));
+            if (!CanDetectPlayer && !destinationChosen && _agent.remainingDistance < 0.1f)
+                StartCoroutine(RandomNavMeshLocation(ViewRadius, _roamingDelay));
             #endregion
         }
         else
         {
             #region FALLBACK_AI
-            if (canSeePlayer() && !_enemyScript.isShooting)
+            if (CanSeePlayer() && !_enemyScript.isShooting)
             {
                 _agent.SetDestination(gameManager.instance.player.transform.position);
 
@@ -208,13 +223,13 @@ public class EnemyAI : MonoBehaviour
     /// Fallback AI usage: Check if the Player is within viewing distance and angle of the Enemy
     /// </summary>
     /// <returns></returns>
-    bool canSeePlayer()
+    bool CanSeePlayer()
     {
         playerDirection = gameManager.instance.player.transform.position - _headPosition.position;
         float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
 
         Debug.Log(angleToPlayer);
-        Debug.DrawRay(_headPosition.position, playerDirection);
+        //Debug.DrawRay(_headPosition.position, playerDirection);
 
         RaycastHit hit;
         if(Physics.Raycast(_headPosition.position, playerDirection, out hit))
@@ -255,44 +270,36 @@ public class EnemyAI : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets a random location on the NavMesh within a given radius and sets the _agent's destination to that location for roaming
-    /// </summary>
-    public void RandomNavMeshLocation(float radius)
-    {
-        if (_agent.remainingDistance >= _agent.stoppingDistance)
-            return;
-
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
-        Vector3 finalPosition = Vector3.zero;
-        randomDirection += transform.position;
-
-
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1))
-            finalPosition = hit.position;
-
-        _agent.SetDestination(finalPosition);
-    }
-
-    /// <summary>
     /// Go to last known location of the location given with optional delay 
     /// </summary>
     private IEnumerator GoToLastKnownLocation(Vector3 location, float delay = 0f)
     {
-        float originalStoppingDistance = _agent.stoppingDistance;
         _agent.stoppingDistance = 0f;
-        _agent.SetDestination(PlayerGameObject.transform.position);
-        yield return new WaitForSeconds(_roamingDelay);
-        if (_agent.remainingDistance >= _agent.stoppingDistance)
-            _agent.stoppingDistance = originalStoppingDistance;
+
+        if (NavMesh.SamplePosition(location, out NavMeshHit hit, ViewRadius, -1)) 
+            _agent.SetDestination(hit.position);
+
+        Debug.Log($"{name}'s PathStatus: " + _agent.pathStatus);
+        yield return new WaitForSeconds(delay);
     }
 
     /// <summary>
-    /// RandomNavMeshLocation(ViewRadius) with delay
+    /// Move Enemy within radius from Enemy with optional delay
     /// </summary>
-    private IEnumerator RandomNavMeshLocationWithDelay(float delay)
+    private IEnumerator RandomNavMeshLocation(float radius, float delay = 0f)
     {
+        _agent.stoppingDistance = 0f;
+        destinationChosen = true;
         yield return new WaitForSeconds(delay);
-        RandomNavMeshLocation(ViewRadius);
+        destinationChosen = false;
+
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+
+        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1))
+            _agent.SetDestination(hit.position);
+
+        Debug.Log($"{name} is now roaming");
     }
 
     /// <summary>
@@ -300,7 +307,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private IEnumerator CheckForPlayerWithDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
         CheckForPlayer();
+        yield return new WaitForSeconds(delay);
     }
 }

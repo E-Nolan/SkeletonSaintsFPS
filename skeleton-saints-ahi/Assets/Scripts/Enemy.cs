@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour, IDamage
     void Start()
     {
         gameManager.instance.updateEnemyCounter();
+
         if (_material == null)
             _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
 
