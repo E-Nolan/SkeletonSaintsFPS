@@ -42,8 +42,12 @@ public class Enemy : MonoBehaviour, IDamage
 
     void OnDestroy()
     {
-        Debug.Log($"{gameObject.name} has died");
-        gameManager.instance.updateGameGoal(-1);
+        // Health check so game goal doesn't go wonky
+        if (_health <= 0)
+        {
+            Debug.Log($"{gameObject.name} has died");
+            gameManager.instance.updateGameGoal(-1);
+        }
     }
 
     public void TakeDamage(int damage)
