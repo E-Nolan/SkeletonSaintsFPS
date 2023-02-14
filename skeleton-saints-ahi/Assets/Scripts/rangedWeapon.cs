@@ -30,6 +30,7 @@ public class rangedWeapon : MonoBehaviour
     [Tooltip("Will be rounded down if it exceeds maxAmmo.")]
     [Range(0, 200)] [SerializeField] int currentAmmo;
     [Range(0, 200)] [SerializeField] int maxAmmo;
+    [Range(0, 40)] [SerializeField] int ammoRecovery;
 
     // If this weapon is being used by an enemy, access 
     Enemy enemyScript;
@@ -99,13 +100,13 @@ public class rangedWeapon : MonoBehaviour
     }
 
     /// <summary>
-    /// Increases the weapon's ammo by the given amount.
+    /// Increases the weapon's ammo by an amount specific to the weapon, multiplied by the given amount
     /// </summary>
     /// <param name="amount"></param>
-    public void giveAmmo(int amount)
+    public void giveAmmo(int amount = 1)
     {
         if (!infiniteAmmo)
-            updateAmmo(amount);
+            updateAmmo(amount * ammoRecovery);
     }
 
     // Add or subtract from the player's ammo count then update the Ammo Display on the UI
@@ -222,6 +223,7 @@ public class rangedWeapon : MonoBehaviour
         infiniteAmmo = _stats.infiniteAmmo;
         currentAmmo = _stats.startingAmmo;
         maxAmmo = _stats.maxAmmo;
+        ammoRecovery = _stats.ammoRecovery;
     }
 
     public void onSwitch()
@@ -231,7 +233,7 @@ public class rangedWeapon : MonoBehaviour
 
         if (usedByPlayer)
         {
-            // TODO: Update the ammo display to show this weapon's ammo
+            updateAmmoDisplay();
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class collectiblePickup : MonoBehaviour
 {
-    [Range(0,100)] [SerializeField] int ammoRecovery;
+    [Range(0,100)] [SerializeField] int ammoRecoveryMultiplier;
     [Range(0,100)] [SerializeField] int healthRecovery;
     [Tooltip("Positive = Clockwise | Negative = Counter-Clockwise")]
     [Range(-360, 360)] [SerializeField] int rotationSpeed;
@@ -20,9 +20,9 @@ public class collectiblePickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // The pickup can only be collected if the respective resource isn't already full
-            if ((ammoRecovery > 0 && !gameManager.instance.playerScript.currentWeapon.isAmmoFull()) || (healthRecovery > 0 && !gameManager.instance.playerScript.isHealthFull()))
+            if ((ammoRecoveryMultiplier > 0 && !gameManager.instance.playerScript.currentWeapon.isAmmoFull()) || (healthRecovery > 0 && !gameManager.instance.playerScript.isHealthFull()))
             {
-                gameManager.instance.playerScript.currentWeapon.giveAmmo(ammoRecovery);
+                gameManager.instance.playerScript.currentWeapon.giveAmmo(ammoRecoveryMultiplier);
                 gameManager.instance.playerScript.GiveHealth(healthRecovery);
 
                 gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
