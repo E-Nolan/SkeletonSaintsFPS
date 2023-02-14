@@ -753,7 +753,7 @@ Animator:
   m_GameObject: {fileID: 5358488325615739627}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 204833aeee0ccad499819dd6c3089b1d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -807,14 +807,15 @@ MonoBehaviour:
     m_Bits: 256
   _animator: {fileID: 5358488325625090225}
   _enemyLookAt: {fileID: 5358488325625090229}
-  _turnSpeed: 6
-  _roamingDelay: 1
+  _turnSpeed: 7
+  _roamingDelay: 4
   playerDirection: {x: 0, y: 0, z: 0}
   _enemyScript: {fileID: 5358488325625090235}
   ViewAngle: 100
   ViewRadius: 25
   SprintDetectRadius: 20
   WalkDetectRadius: 15
+  ShootDetectRadius: 22
   CanDetectPlayer: 0
   _useFallbackAi: 0
 --- !u!114 &5358488325625090229
@@ -854,7 +855,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &5358488325625090231
 CapsuleCollider:

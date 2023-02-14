@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour, IDamage
     void Start()
     {
         gameManager.instance.updateEnemyCounter();
+
         if (_material == null)
             _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
 
@@ -39,17 +40,19 @@ public class Enemy : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
     }
 
+    void OnDestroy()
+    {
+        Debug.Log($"{gameObject.name} has died");
+        gameManager.instance.updateGameGoal(-1);
+    }
+
     public void TakeDamage(int damage)
     {
         _health -= damage;
         StartCoroutine(FlashMaterial());
 
         if (_health <= 0)
-        {
-            Debug.Log($"{gameObject.name} has died");
-            gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
-        }
     }
 
     public IEnumerator Shoot()
