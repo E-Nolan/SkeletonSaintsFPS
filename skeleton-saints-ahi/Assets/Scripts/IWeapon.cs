@@ -13,7 +13,8 @@ public interface IWeapon
     int GetMaxAmmo();
     void giveAmmo(int amount);
 
-    // This function will be called when the weapon is switched to from another one
-    // Useful for updating UI elements
+    void copyFromWeaponStats(weaponStats _stats, Transform _weaponFirePos, bool _isUsedByPlayer);
+
     void onSwitch();
+    void offSwitch();
 }

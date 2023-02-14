@@ -7,12 +7,12 @@ public class playerController : MonoBehaviour, IDamage
     #region Member Fields
     // Components used by this script
     [Header("----- Components -----")]
+    [SerializeField] weaponStats startingWeapon;
     [SerializeField] CharacterController controller;
     public AudioSource audioSource;
     [SerializeField] Transform weaponFirePos;
     //[SerializeField] GameObject bullet;
     [SerializeField] List<GameObject> weaponInventory;
-    [SerializeField] GameObject currentWeapon;
     [SerializeField] Camera playerCamera;
 
     // Stats that determine player movement
@@ -59,6 +59,7 @@ public class playerController : MonoBehaviour, IDamage
     int defaultSpeed;
     float staminaRegenTimer;
 
+    public rangedWeapon currentWeapon;
     public bool isDashing = false;
     public bool isSprinting = false;
     public bool isShooting = false;
@@ -69,6 +70,7 @@ public class playerController : MonoBehaviour, IDamage
 
     bool canPlayFootsteps = true;
     public IWeapon weaponInterface;
+    int currWepIndex = 0;
 
     #endregion
 
@@ -82,6 +84,8 @@ public class playerController : MonoBehaviour, IDamage
 
         updatePlayerHealthBar();
         updatePlayerStaminaBar();
+
+        rangedWeaponPickup(startingWeapon);
 
         weaponInterface = currentWeapon.GetComponent<IWeapon>();
     }
@@ -241,6 +245,51 @@ public class playerController : MonoBehaviour, IDamage
         StartCoroutine(flashDamage());
     }
 
+    public void rangedWeaponPickup(weaponStats newWeaponStats)
+    {
+        GameObject newWeapon = new GameObject(newWeaponStats.name, typeof(rangedWeapon), typeof(AudioSource));
+        GameObject newFirePos = Instantiate(weaponFirePos.gameObject, weaponFirePos.position, weaponFirePos.rotation, playerCamera.transform);
+        newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(newWeaponStats, newFirePos.transform, true);
+
+        // Add the new weapon to the player's inventory, then switch their current weapon to the new one.
+        weaponInventory.Add(newWeapon);
+        switchToWeapon(weaponInventory.Count - 1);
+    }
+
+    void nextWeapon()
+    {
+        // Switch to the weapon after the current one in the List
+        // Switch to the first weapon if the index goes out of bounds
+        if (currWepIndex + 1 >= weaponInventory.Count)
+            switchToWeapon(0);
+        else
+            switchToWeapon(currWepIndex + 1);
+    }
+
+    void prevWeapon()
+    {
+        // Switch to the weapon before the current one in the List
+        // Switch to the last weapon if the index goes out of bounds
+        if (currWepIndex - 1 < 0)
+            switchToWeapon(weaponInventory.Count - 1);
+        else
+            switchToWeapon(currWepIndex - 1);
+    }
+
+    void switchToWeapon(int weaponIndex)
+    {
+        // Switch to the weapon at the given index, update currWepIndex to the new weapon's index, and turn the old weapon off
+        if (currentWeapon)
+            currentWeapon.offSwitch();
+
+        currWepIndex = weaponIndex;
+        currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
+        weaponInterface = currentWeapon.GetComponent<IWeapon>();
+
+        currentWeapon.gameObject.SetActive(true);
+        currentWeapon.onSwitch();
+    }
+
     IEnumerator flashDamage()
     {
         gameManager.instance.damageFlashScreen.SetActive(true);
@@ -306,31 +355,33 @@ public class playerController : MonoBehaviour, IDamage
         updatePlayerStaminaBar();
     }
 
+
     public void updatePlayerStaminaBar()
     {
         gameManager.instance.playerStaminaBar.fillAmount = (float) currentStamina / (float) maxStamina;
     }
 
-    
     public int GetMaxHealth()
-    {
-        return maxHealth;
-    }
-
-    public int GetMaxStamina()
-    {
-        return maxStamina;
-    }
+    { return maxHealth; }
 
     public int GetCurrentHealth()
-    {
-        return currentHealth;
-    }
+    { return currentHealth; }
+
+    public int GetMaxStamina()
+    { return maxStamina; }
+
 
     public float GetCurrentStamina()
-    {
-        return currentStamina;
-    }
+    { return currentStamina; }
+
+    public int GetCurrentAmmo()
+    { return weaponInterface.GetCurrentAmmo(); }
+
+    public int GetMaxAmmo()
+    { return weaponInterface.GetMaxAmmo(); }
+
+    public bool isAmmoInfinite()
+    { return weaponInterface.isAmmoInfinite(); }
 
     IEnumerator playFootstep()
     {
@@ -343,6 +394,5 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.35f);
         canPlayFootsteps = true;
     }
-
 
 }

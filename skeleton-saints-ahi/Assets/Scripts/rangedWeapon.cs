@@ -6,6 +6,7 @@ public class rangedWeapon : MonoBehaviour, IWeapon
 {
     #region Member Fields
     [Header("----- Components -----")]
+    [SerializeField] GameObject gunModel;
     [SerializeField] Transform weaponFirePos;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioSource audioSource;
@@ -13,7 +14,6 @@ public class rangedWeapon : MonoBehaviour, IWeapon
 
     [Header("----- Settings -----")]
     [SerializeField] bool usedByPlayer;
-    [SerializeField] bool automaticFire;
 
     [Header("----- Stats -----")]
     [Range(5, 200)] [SerializeField] int bulletSpeed;
@@ -40,7 +40,10 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     private void Start()
     {
         // Instantiate a new object in front of the Fire Position. This object will be used to find the angle with which to fire bullets
-        targetFinder = Instantiate(weaponFirePos.gameObject, (weaponFirePos.position + weaponFirePos.forward), weaponFirePos.rotation, weaponFirePos);
+        targetFinder = new GameObject("Target Finder");
+        targetFinder.transform.rotation = weaponFirePos.rotation;
+        targetFinder.transform.position = weaponFirePos.position + weaponFirePos.forward;
+        targetFinder.transform.parent = weaponFirePos;
 
         // If this weapon is being used an enemy, set a reference to its Enemy script to toggle its isShooting bool
         if (!usedByPlayer)
@@ -198,11 +201,42 @@ public class rangedWeapon : MonoBehaviour, IWeapon
     }
     #endregion
 
+    public void copyFromWeaponStats(weaponStats _stats, Transform _weaponFirePos, bool _isUsedByPlayer)
+    {
+        weaponFirePos = _weaponFirePos;
+        if (_stats.weaponModel)
+            Instantiate(_stats.weaponModel, weaponFirePos);
+
+        usedByPlayer = _isUsedByPlayer;
+        bullet = _stats.bullet;
+        shotSound = _stats.shotSound;
+
+        bulletSpeed = _stats.bulletSpeed;
+        fireRate = _stats.fireRate;
+        damage = _stats.damage;
+        bulletsPerSpread = _stats.bulletsPerSpread;
+        spreadAngle = _stats.spreadAngle;
+        bulletsPerBurst = _stats.bulletsPerBurst;
+        burstFireDelay = _stats.burstFireDelay;
+
+        infiniteAmmo = _stats.infiniteAmmo;
+        currentAmmo = _stats.startingAmmo;
+        maxAmmo = _stats.maxAmmo;
+    }
+
     public void onSwitch()
     {
+        if (gunModel)
+            gunModel.SetActive(true);
+
         if (usedByPlayer)
         {
-
+            // TODO: Update the ammo display to show this weapon's ammo
         }
+    }
+
+    public void offSwitch()
+    {
+        weaponFirePos.gameObject.SetActive(false);
     }
 }
