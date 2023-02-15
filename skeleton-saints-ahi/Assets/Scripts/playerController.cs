@@ -77,7 +77,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public float currentStamina { get; private set; }
     public int jumpsCurrent { get; private set; } = 0;
-    public int currentHealth { get; private set; }
+    public int currentHealth; //{ get; private set; }
     public float currentArmor; //{ get; private set; }
 
     bool canPlayFootsteps = true;
@@ -380,7 +380,7 @@ public class playerController : MonoBehaviour, IDamage
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, int.MinValue, maxHealth);
         updatePlayerHealthBar();
-        if (currentHealth == 0)
+        if (currentHealth <= 0)
             gameManager.instance.playerDead();
     }
 
