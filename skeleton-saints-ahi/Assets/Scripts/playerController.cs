@@ -16,22 +16,29 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] Camera playerCamera;
 
     // Stats that determine player movement
-    [Header("----- Player Stats -----")]
+    [Header("----- Stats -----")]
     [Range(5, 30)] [SerializeField] int playerSpeed;
     [Range(0, 50)] [SerializeField] int gravity;
-    [Range(1, 100)] [SerializeField] int maxHealth;
+
+    [Header("----- Stamina -----")]
     [Range(10, 500)] [SerializeField] int maxStamina;
     [Range(0.0f, 100.0f)] [SerializeField] int staminaRegenSpeed;
     [Tooltip("This is how long (in seconds) the player will have to stop using stamina in order for their stamina to regenerate")]
     [Range(0.0f, 5.0f)] [SerializeField] float staminaRegenCooldown;
 
-    [Header("----- Jump Stats -----")]
+    [Header("----- Health and Armor -----")]
+    [Range(1, 100)] [SerializeField] int maxHealth;
+    [Range(0, 5)] [SerializeField] int maxArmor;
+    [Range(0.0f, 10.0f)] [SerializeField] float armorRegenSpeed;
+    [Range(0.0f, 5.0f)] [SerializeField] float armorRegenCooldown;
+
+    [Header("----- Jump -----")]
     [Range(3, 50)] [SerializeField] int jumpSpeed;
     [Range(0, 3)] [SerializeField] int maxJumps;
     [Range(0, 100)] [SerializeField] int jumpStaminaCost;
 
     // Stats for player dashing
-    [Header("----- Dash Stats -----")]
+    [Header("----- Dash -----")]
     [Range(15, 100)] [SerializeField] int dashSpeed;
     [Tooltip("This should be longer or equal to Dash Duration")]
     [Range(0.0f, 20.0f)] [SerializeField] float dashCooldown;
@@ -39,9 +46,9 @@ public class playerController : MonoBehaviour, IDamage
     [Range(0.0f, 5.0f)] [SerializeField] float dashDuration;
     [Range(0, 100)] [SerializeField] int dashStaminaCost;
 
-    [Header("----- Sprint Stats -----")]
+    [Header("----- Sprint -----")]
     [Tooltip("This should ideally be between normal Speed and Dash Speed")]
-    [Range(10,60)] [SerializeField] int sprintSpeed;
+    [Range(10, 60)] [SerializeField] int sprintSpeed;
     [Range(0.0f, 50.0f)] [SerializeField] int sprintStaminaDrain;
 
     [Header("----- Sound Effects -----")]
@@ -58,18 +65,20 @@ public class playerController : MonoBehaviour, IDamage
     Vector3 playerVelocity;
     int defaultSpeed;
     float staminaRegenTimer;
+    float armorRegenTimer;
 
     public rangedWeapon currentWeapon;
-    public bool isDashing = false;
-    public bool isSprinting = false;
+    public bool isDashing { get; private set; } = false;
+    public bool isSprinting { get; private set; } = false;
     public bool isShooting = false;
 
     bool isSwitchingWeapons = false;
     float weaponSwitchCooldown = 0.1f;
 
-    public float currentStamina;
-    public int jumpsCurrent = 0;
-    public int currentHealth;
+    public float currentStamina { get; private set; }
+    public int jumpsCurrent { get; private set; } = 0;
+    public int currentHealth { get; private set; }
+    public float currentArmor; //{ get; private set; }
 
     bool canPlayFootsteps = true;
     int currWepIndex = 0;
@@ -83,6 +92,7 @@ public class playerController : MonoBehaviour, IDamage
         defaultSpeed = playerSpeed;
         currentHealth = maxHealth;
         currentStamina = maxStamina;
+        currentArmor = maxArmor;
 
         updatePlayerHealthBar();
         updatePlayerStaminaBar();
@@ -96,6 +106,10 @@ public class playerController : MonoBehaviour, IDamage
         // Decrement the stamina regen timer. If any stamina is used this frame, the timer will be reset
         if (staminaRegenTimer > 0.0f)
             staminaRegenTimer -= Time.deltaTime;
+        // Decrement the armor regen timer. If any damage is taken this frame, the timer will be reset
+        if (armorRegenTimer > 0.0f)
+            armorRegenTimer -= Time.deltaTime;
+
 
         // Handle movement for the player
         movement();
@@ -124,6 +138,9 @@ public class playerController : MonoBehaviour, IDamage
         // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
         if (staminaRegenTimer <= 0)
             giveStamina(staminaRegenSpeed * Time.deltaTime);
+        // If the player hasn't taken damage for the duration of the regen cooldown, regenerate their armor over time
+        if (armorRegenTimer <= 0)
+            giveArmor(armorRegenSpeed * Time.deltaTime);
     }
 
     #region movement functions
@@ -254,9 +271,28 @@ public class playerController : MonoBehaviour, IDamage
     /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
+        takeArmorDamage(ref damage);
         updateHealth(-damage);
         updatePlayerHealthBar();
         StartCoroutine(flashDamage());
+    }
+
+    void takeArmorDamage(ref int damage)
+    {
+        // Deal damage to the player's armor, if the damage exceeds their armor, the excess will be dealt to their health.
+        currentArmor -= damage;
+        if (currentArmor < 0)
+        {
+            damage = (Mathf.CeilToInt(-currentArmor));
+            currentArmor = 0;
+        }
+        else
+            damage = 0;
+
+        updateArmorDisplay();
+        // Reset the armor regen cooldown
+        armorRegenTimer = armorRegenCooldown;
+
     }
 
     public void rangedWeaponPickup(weaponStats newWeaponStats)
@@ -389,11 +425,29 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.playerStaminaBar.fillAmount = (float) currentStamina / (float) maxStamina;
     }
 
+    public void giveArmor(float armorGain)
+    {
+        currentArmor += armorGain;
+        currentArmor = Mathf.Clamp(currentArmor, 0.0f, maxArmor);
+        updateArmorDisplay();
+    }
+
+    public void updateArmorDisplay()
+    {
+
+    }
+
     public int GetMaxHealth()
     { return maxHealth; }
 
     public int GetCurrentHealth()
     { return currentHealth; }
+
+    public int GetMaxArmor()
+    { return maxArmor; }
+
+    public float GetCurrentArmor()
+    { return currentArmor; }
 
     public int GetMaxStamina()
     { return maxStamina; }
@@ -416,7 +470,7 @@ public class playerController : MonoBehaviour, IDamage
         if (isSprinting)
             audioSource.PlayOneShot(runSoundsGroup[Random.Range(0, runSoundsGroup.Length)]);
         else
-            audioSource.PlayOneShot(walkSoundsGroup[Random.Range(0, walkSoundsGroup.Length)]);
+            audioSource.PlayOneShot(walkSoundsGroup[Random.Range(0, walkSoundsGroup.Length)], 0.5f);
 
         canPlayFootsteps = false;
         yield return new WaitForSeconds(0.35f);

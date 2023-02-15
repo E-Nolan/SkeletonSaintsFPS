@@ -103,10 +103,13 @@ MonoBehaviour:
   playerCamera: {fileID: 6561946646809981253}
   playerSpeed: 10
   gravity: 16
-  maxHealth: 10
   maxStamina: 100
   staminaRegenSpeed: 50
   staminaRegenCooldown: 0.5
+  maxHealth: 10
+  maxArmor: 3
+  armorRegenSpeed: 0.5
+  armorRegenCooldown: 2
   jumpSpeed: 8
   maxJumps: 1
   jumpStaminaCost: 0
@@ -143,12 +146,7 @@ MonoBehaviour:
   gunshotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   raycastRange: 100
   currentWeapon: {fileID: 0}
-  isDashing: 0
-  isSprinting: 0
   isShooting: 0
-  currentStamina: 0
-  jumpsCurrent: 0
-  currentHealth: 0
 --- !u!82 &3768964609929772061
 AudioSource:
   m_ObjectHideFlags: 0
