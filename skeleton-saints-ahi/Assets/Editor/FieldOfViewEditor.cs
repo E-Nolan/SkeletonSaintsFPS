@@ -29,19 +29,27 @@ public class FieldOfViewEditor : Editor
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.ShootDetectRadius);
 
         // Get the angle from DirectionFromAngle() to get right and left angle from the Enemy's transform 
+        // for DrawLine(s) below
         Vector3 leftViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.ViewAngle / 2);
         Vector3 rightViewAngle = DirectionFromAngle(fov.transform.eulerAngles.y, fov.ViewAngle / 2);
+        Vector3 leftShootAngle = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.FireAngle / 2);
+        Vector3 rightShootAngle = DirectionFromAngle(fov.transform.eulerAngles.y, fov.FireAngle / 4);
 
-        // Draw lines showing the angles returned from DirectionFromAngle() to show the Enemy's ViewRadius
+        // Draw lines showing the angles returned from DirectionFromAngle() to show the Enemy's ViewAngle
         Handles.color = Color.yellow;
         Handles.DrawLine(fov.transform.position, fov.transform.position + leftViewAngle * fov.ViewRadius);
         Handles.DrawLine(fov.transform.position, fov.transform.position + rightViewAngle * fov.ViewRadius);
+
+        // Draw lines showing the angles returned from DirectionFromAngle() to show the Enemy's ShootAngle
+        Handles.color = Color.black;
+        Handles.DrawLine(fov.transform.position, fov.transform.position + leftShootAngle * fov.ViewRadius);
+        Handles.DrawLine(fov.transform.position, fov.transform.position + rightShootAngle * fov.ViewRadius);
 
         // If Enemy can see Player, draw a green line to the Player to visualize detection in Editor
         if (fov.CanDetectPlayer)
         {
             Handles.color = Color.green;
-            Handles.DrawLine(fov.transform.position, fov.PlayerGameObject.transform.position);
+            Handles.DrawLine(fov.transform.position, gameManager.instance.player.transform.position);
         }
     }
 

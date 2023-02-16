@@ -12,7 +12,6 @@ public class EnemyAI : MonoBehaviour
 {
     [Header("----- Objects/Transforms -----")]
     [SerializeField] private NavMeshAgent _agent;
-    [SerializeField] public GameObject PlayerGameObject;
     [SerializeField] private Transform _headPosition;
 
     [Header("----- Masks -----")]
@@ -29,14 +28,16 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Vector3 playerDirection;
     [SerializeField] private Enemy _enemyScript;
 
-    [Header("----- FieldOfView Publics -----")]
+    [Header("----- Publics -----")]
     // Public for the FieldOfViewEditor Editor script
      [Range(0,360)] public float ViewAngle;
+     [Range(0,360)] public float FireAngle;
      public int ViewRadius;
      public int SprintDetectRadius;
      public int WalkDetectRadius;
      public int ShootDetectRadius;
      public bool CanDetectPlayer = false;
+     public bool CanShoot = false;
 
     [Header("----- Fallback AI (buggy) -----")] 
     [SerializeField] private bool _useFallbackAi;
@@ -54,19 +55,12 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        // Component initializations
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();
 
         // Check if there is a Game Manager present
         if (gameManager.instance == null)
             Debug.Log("EnemyAI: There is no GameManager. Not using a GameManager will lead to unsupported behavior.");
-        else
-        {
-            // Using PlayerGameObject so the FieldOfViewEditor script can access the player via reference with this script
-            if(PlayerGameObject == null)
-                PlayerGameObject = gameManager.instance.player;
-        }
 
         _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
         _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
@@ -80,21 +74,18 @@ public class EnemyAI : MonoBehaviour
         if (_enemyLookAt == null)
             GetComponent<EnemyLookAt>();
 
+        _animator.applyRootMotion = false;
         _agent.updatePosition = false;
         originalStoppingDistance = _agent.stoppingDistance;
     }
 
     void Update()
     {
-
-        //if (_agent.remainingDistance <= 0.1f)
-        //    destinationChosen = false;
-        // As long as the Player exists, Enemy will roam with specified delay
-        if (PlayerGameObject != null)
+        if (!CanDetectPlayer || _agent.destination != gameManager.instance.player.transform.position)
             StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
         else
         {
-            // If no player is detected for whatever reason, script destroys itself
+            // If no player is detected for whatever reason, script disables itself
             // on enemy so it doesnt continue checking (save minimal performance in edge cases)
             Debug.Log($"{gameObject.name} did not detect player, disabling EnemyAI");
             enabled = false;
@@ -107,7 +98,8 @@ public class EnemyAI : MonoBehaviour
         // Map worldDeltaPosition to local space
         float dx = Vector3.Dot(transform.right, worldDeltaPosition);
         float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
-        // Use Vector2 because z isnt needed for our purpose (yet)
+
+        // Use Vector2 because worldspace-y isnt needed for this
         Vector2 deltaPosition = new Vector2 (dx, dy);
 
         // Low-pass filter the deltaMove
@@ -121,17 +113,27 @@ public class EnemyAI : MonoBehaviour
         bool shouldMove = velocity.magnitude > 0.5f && _agent.remainingDistance > _agent.radius;
 
         // Update animation parameters
-        _animator.SetBool("isWalking", shouldMove);
-        _animator.SetFloat ("xVelocity", velocity.x);
-        _animator.SetFloat ("yVelocity", velocity.y);
+        if (_agent.velocity.magnitude >= 0.1f)
+        {
+            _animator.SetFloat("xVelocity", velocity.normalized.x, 0.1f, Time.deltaTime);
+            _animator.SetFloat("yVelocity", velocity.normalized.y, 0.1f, Time.deltaTime);
+        }
+        else
+        {
+            // Enemy would continue current animation when should be idling, so if the agent has no velocity,
+            // manually set the parameters
+            _animator.SetFloat("xVelocity", 0f, 0.1f, Time.deltaTime);
+            _animator.SetFloat("yVelocity", 0f, 0.1f, Time.deltaTime);
+        }
 
         if(_enemyLookAt != null)
             _enemyLookAt.lookAtFuturePosition = _agent.steeringTarget + transform.forward;
     }
 
+    // Having this on object sets animator's 
     void OnAnimatorMove ()
     {
-        // Update position to agent position
+        // Update object position to agent position
         transform.position = _agent.nextPosition;
     }
 
@@ -158,17 +160,18 @@ public class EnemyAI : MonoBehaviour
 
                 // Enter the if when:
                 // - the Player is in the viewing angle of the Enemy
-                // - the player is within the SprintDetectRadius and is Sprinting
-                // - the player is within the WalkDetectRadius
+                // - the Player is within the SprintDetectRadius and is Sprinting
+                // - the Player is within the ShootDetectRadius and is Shooting
+                // - the Player is within the WalkDetectRadius
                 if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
-                    (distanceToPlayer <= SprintDetectRadius && IsPlayerSprinting()) ||
-                    distanceToPlayer <= WalkDetectRadius || (distanceToPlayer <= ShootDetectRadius && IsPlayerShooting()))
+                    (distanceToPlayer <= SprintDetectRadius && IsPlayerSprinting()) || 
+                    (distanceToPlayer <= ShootDetectRadius && IsPlayerShooting()) ||
+                    distanceToPlayer <= WalkDetectRadius)
                 {
                     // Checks if an Obstacle with the Obstacle layer mask is between the Enemy and Player
                     // If no Obstacle was detected, runs the if, else the Enemy can't see the Player
                     if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
                     {
-                        // Player detected, move Enemy towards Player
                         CanDetectPlayer = true;
 
                         if (NavMesh.SamplePosition(playerTransform.position, out NavMeshHit hit, ViewRadius, -1))
@@ -181,6 +184,11 @@ public class EnemyAI : MonoBehaviour
                         // change rotation of the Enemy to face the Player
                         if (_agent.remainingDistance <= _agent.stoppingDistance)
                             FacePlayer();
+
+                        float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
+
+                        // Set CanShoot bool to the result of (angleToPlayer <= FireAngle), if the Player is within the FireAngle
+                        CanShoot = angleToPlayer <= FireAngle;
                     }
                     else
                     {
@@ -288,18 +296,21 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private IEnumerator RandomNavMeshLocation(float radius, float delay = 0f)
     {
-        _agent.stoppingDistance = 0f;
-        destinationChosen = true;
-        yield return new WaitForSeconds(delay);
-        destinationChosen = false;
+        if (!destinationChosen && _agent.remainingDistance <= 0.1f)
+        {
+            _agent.stoppingDistance = 0f;
+            destinationChosen = true;
+            yield return new WaitForSeconds(delay);
+            destinationChosen = false;
 
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
-        randomDirection += transform.position;
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+            randomDirection += transform.position;
 
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1))
-            _agent.SetDestination(hit.position);
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1))
+                _agent.SetDestination(hit.position);
 
-        Debug.Log($"{name} is now roaming");
+            Debug.Log($"{name} is now roaming");
+        }
     }
 
     /// <summary>

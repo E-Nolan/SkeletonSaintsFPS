@@ -752,11 +752,11 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5358488325615739627}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 193db46d09ced664a8f1010a1bc7b423, type: 3}
   m_Controller: {fileID: 9100000, guid: 204833aeee0ccad499819dd6c3089b1d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -782,7 +782,7 @@ MonoBehaviour:
   bulletSpeed: 50
   _materialFlashSpeed: 0.2
   _material: {fileID: 2100000, guid: 27ec51287c78bfb479fe3729111634a4, type: 2}
-  _health: 3
+  _health: 5
   isShooting: 0
 --- !u!114 &5358488325625090228
 MonoBehaviour:
@@ -797,7 +797,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 5358488325625090230}
-  PlayerGameObject: {fileID: 1039499385259922016, guid: f0a45f5d7a551dc4b93e486c1832a564, type: 3}
   _headPosition: {fileID: 5358488325615320923}
   _playerMask:
     serializedVersion: 2
@@ -807,16 +806,18 @@ MonoBehaviour:
     m_Bits: 256
   _animator: {fileID: 5358488325625090225}
   _enemyLookAt: {fileID: 5358488325625090229}
-  _turnSpeed: 7
-  _roamingDelay: 4
+  _turnSpeed: 4
+  _roamingDelay: 3
   playerDirection: {x: 0, y: 0, z: 0}
   _enemyScript: {fileID: 5358488325625090235}
   ViewAngle: 100
+  FireAngle: 40
   ViewRadius: 25
   SprintDetectRadius: 20
   WalkDetectRadius: 15
   ShootDetectRadius: 22
   CanDetectPlayer: 0
+  CanShoot: 0
   _useFallbackAi: 0
 --- !u!114 &5358488325625090229
 MonoBehaviour:
@@ -845,10 +846,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 4.75
   m_Acceleration: 7
   avoidancePriority: 50
-  m_AngularSpeed: 100
+  m_AngularSpeed: 95
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
