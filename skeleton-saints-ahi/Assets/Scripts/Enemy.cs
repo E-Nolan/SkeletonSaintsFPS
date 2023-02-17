@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour, IDamage
 
     public bool isShooting = false;
 
+    private Vector3 playerDirection;
+
     // Property to update _health field
     public int Health
     {
@@ -63,7 +65,7 @@ public class Enemy : MonoBehaviour, IDamage
     {
         isShooting = true;
         GameObject bulletClone = Instantiate(bullet, firePosition.transform.position, bullet.transform.rotation);
-        bulletClone.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
+        bulletClone.GetComponent<Rigidbody>().velocity = new Vector3(_enemyAi.playerDirection.x, 0f, _enemyAi.playerDirection.z) * bulletSpeed;
 
         yield return new WaitForSeconds(fireRate);
         isShooting = false;

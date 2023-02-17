@@ -25,7 +25,7 @@ public class EnemyAI : MonoBehaviour
     [Header("----- Misc -----")]
     [Range(1, 20)] [SerializeField] private int _turnSpeed;
     [Range(1, 20)] [SerializeField] private int _roamingDelay;
-    [SerializeField] private Vector3 playerDirection;
+    [SerializeField] public Vector3 playerDirection;
     [SerializeField] private Enemy _enemyScript;
 
     [Header("----- Publics -----")]
@@ -153,7 +153,7 @@ public class EnemyAI : MonoBehaviour
                 Transform playerTransform = targetsInViewRange[0].transform;
 
                 // Get the direction the player is from the Enemy
-                playerDirection = playerTransform.position - transform.position;
+                playerDirection = (playerTransform.position - transform.position).normalized;
 
                 // Get the distance between the Enemy and the Player
                 float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
