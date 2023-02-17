@@ -1,0 +1,324 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using Unity.Burst.CompilerServices;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Animations;
+
+public class EnemyAI : MonoBehaviour
+{
+    [Header("----- Objects/Transforms -----")]
+    [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private Transform _headPosition;
+
+    [Header("----- Masks -----")]
+    [SerializeField] private LayerMask _playerMask;
+    [SerializeField] private LayerMask _obstacleMask;
+
+    [Header("----- Animation -----")] 
+    [SerializeField] private Animator _animator;
+    [SerializeField] private EnemyLookAt _enemyLookAt;
+
+    [Header("----- Misc -----")]
+    [Range(1, 20)] [SerializeField] private int _turnSpeed;
+    [Range(1, 20)] [SerializeField] private int _roamingDelay;
+    [SerializeField] public Vector3 playerDirection;
+    [SerializeField] private Enemy _enemyScript;
+
+    [Header("----- Publics -----")]
+    // Public for the FieldOfViewEditor Editor script
+     [Range(0,360)] public float ViewAngle;
+     [Range(0,360)] public float FireAngle;
+     public int ViewRadius;
+     public int SprintDetectRadius;
+     public int WalkDetectRadius;
+     public int ShootDetectRadius;
+     public bool CanDetectPlayer = false;
+     public bool CanShoot = false;
+
+    [Header("----- Fallback AI (buggy) -----")] 
+    [SerializeField] private bool _useFallbackAi;
+
+
+    private Vector2 smoothDeltaPosition;
+    private Vector2 velocity;
+    private float originalStoppingDistance;
+    private bool destinationChosen = false;
+
+    void Awake()
+    {
+        destinationChosen = false;
+    }
+
+    void Start()
+    {
+        if(_agent == null)
+            _agent = GetComponent<NavMeshAgent>();
+
+        // Check if there is a Game Manager present
+        if (gameManager.instance == null)
+            Debug.Log("EnemyAI: There is no GameManager. Not using a GameManager will lead to unsupported behavior.");
+
+        _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
+        _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
+
+        if (_headPosition == null)
+            GameObject.FindGameObjectWithTag("PlayerHeadPosition");
+
+        if (_animator == null)
+            GetComponent<Animator>();
+
+        if (_enemyLookAt == null)
+            GetComponent<EnemyLookAt>();
+
+        _animator.applyRootMotion = false;
+        _agent.updatePosition = false;
+        originalStoppingDistance = _agent.stoppingDistance;
+    }
+
+    void Update()
+    {
+        if (!CanDetectPlayer || _agent.destination != gameManager.instance.player.transform.position)
+            StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
+        else
+        {
+            // If no player is detected for whatever reason, script disables itself
+            // on enemy so it doesnt continue checking (save minimal performance in edge cases)
+            Debug.Log($"{gameObject.name} did not detect player, disabling EnemyAI");
+            enabled = false;
+        }
+
+        // --- ANIMATION STUFF ---
+        // Get how far enemy is from its next position
+        Vector3 worldDeltaPosition = _agent.nextPosition - transform.position;
+
+        // Map worldDeltaPosition to local space
+        float dx = Vector3.Dot(transform.right, worldDeltaPosition);
+        float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
+
+        // Use Vector2 because worldspace-y isnt needed for this
+        Vector2 deltaPosition = new Vector2 (dx, dy);
+
+        // Low-pass filter the deltaMove
+        float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
+        smoothDeltaPosition = Vector2.Lerp (smoothDeltaPosition, deltaPosition, smooth);
+
+        // Update velocity if time advances
+        if (Time.deltaTime > 1e-5f)
+            velocity = smoothDeltaPosition / Time.deltaTime;
+
+        bool shouldMove = velocity.magnitude > 0.5f && _agent.remainingDistance > _agent.radius;
+
+        // Update animation parameters
+        if (_agent.velocity.magnitude >= 0.1f)
+        {
+            _animator.SetFloat("xVelocity", velocity.normalized.x, 0.1f, Time.deltaTime);
+            _animator.SetFloat("yVelocity", velocity.normalized.y, 0.1f, Time.deltaTime);
+        }
+        else
+        {
+            // Enemy would continue current animation when should be idling, so if the agent has no velocity,
+            // manually set the parameters
+            _animator.SetFloat("xVelocity", 0f, 0.1f, Time.deltaTime);
+            _animator.SetFloat("yVelocity", 0f, 0.1f, Time.deltaTime);
+        }
+
+        if(_enemyLookAt != null)
+            _enemyLookAt.lookAtFuturePosition = _agent.steeringTarget + transform.forward;
+    }
+
+    // Having this on object sets animator's 
+    void OnAnimatorMove ()
+    {
+        // Update object position to agent position
+        transform.position = _agent.nextPosition;
+    }
+
+    private void CheckForPlayer()
+    {
+        if (!_useFallbackAi)
+        {
+            #region CUSTOM_AI
+            // Checks in a sphere around the Enemy's position in a given radius (ViewRadius)
+            // Looks in only the Player layer mask so nothing other than Player is detected
+            Collider[] targetsInViewRange = Physics.OverlapSphere(transform.position, ViewRadius, _playerMask);
+
+            // Run as long as the Player was detected within the OverlapSphere()
+            if (targetsInViewRange.Length != 0)
+            {
+                // OverlapSphere() only returns an array of Colliders so only take the first array entry (should only be one player)
+                Transform playerTransform = targetsInViewRange[0].transform;
+
+                // Get the direction the player is from the Enemy
+                playerDirection = (playerTransform.position - transform.position).normalized;
+
+                // Get the distance between the Enemy and the Player
+                float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+                // Enter the if when:
+                // - the Player is in the viewing angle of the Enemy
+                // - the Player is within the SprintDetectRadius and is Sprinting
+                // - the Player is within the ShootDetectRadius and is Shooting
+                // - the Player is within the WalkDetectRadius
+                if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
+                    (distanceToPlayer <= SprintDetectRadius && IsPlayerSprinting()) || 
+                    (distanceToPlayer <= ShootDetectRadius && IsPlayerShooting()) ||
+                    distanceToPlayer <= WalkDetectRadius)
+                {
+                    // Checks if an Obstacle with the Obstacle layer mask is between the Enemy and Player
+                    // If no Obstacle was detected, runs the if, else the Enemy can't see the Player
+                    if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
+                    {
+                        CanDetectPlayer = true;
+
+                        if (NavMesh.SamplePosition(playerTransform.position, out NavMeshHit hit, ViewRadius, -1))
+                        {
+                            _agent.SetDestination(hit.position);
+                            _agent.stoppingDistance = originalStoppingDistance;
+                        }
+
+                        // If the Player is within the stopping distance of the Enemy,
+                        // change rotation of the Enemy to face the Player
+                        if (_agent.remainingDistance <= _agent.stoppingDistance)
+                            FacePlayer();
+
+                        float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
+
+                        // Set CanShoot bool to the result of (angleToPlayer <= FireAngle), if the Player is within the FireAngle
+                        CanShoot = angleToPlayer <= FireAngle;
+                    }
+                    else
+                    {
+                        // If Enemy detected the Player previously but can't currently detect the Player, go to last known location
+                        if (CanDetectPlayer)
+                            StartCoroutine(GoToLastKnownLocation(playerTransform.position, _roamingDelay));
+
+                        CanDetectPlayer = false;
+                    }
+                }
+                else
+                    CanDetectPlayer = false;
+            }
+            else if (CanDetectPlayer)
+                CanDetectPlayer = false;
+
+            // If the Player was not detected, start Roaming with a delay
+            if (!CanDetectPlayer && !destinationChosen && _agent.remainingDistance < 0.1f)
+                StartCoroutine(RandomNavMeshLocation(ViewRadius, _roamingDelay));
+            #endregion
+        }
+        else
+        {
+            #region FALLBACK_AI
+            if (CanSeePlayer() && !_enemyScript.isShooting)
+            {
+                _agent.SetDestination(gameManager.instance.player.transform.position);
+
+                if (_agent.remainingDistance < _agent.stoppingDistance)
+                    FacePlayer();
+
+                if (!_enemyScript.isShooting)
+                    StartCoroutine(_enemyScript.Shoot());
+            }
+            #endregion
+        }
+    }
+
+    /// <summary>
+    /// Fallback AI usage: Check if the Player is within viewing distance and angle of the Enemy
+    /// </summary>
+    /// <returns></returns>
+    bool CanSeePlayer()
+    {
+        playerDirection = gameManager.instance.player.transform.position - _headPosition.position;
+        float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
+
+        Debug.Log(angleToPlayer);
+        //Debug.DrawRay(_headPosition.position, playerDirection);
+
+        RaycastHit hit;
+        if(Physics.Raycast(_headPosition.position, playerDirection, out hit))
+        {
+            if(hit.collider.CompareTag("Player") && angleToPlayer <= ViewAngle)
+            {
+                _agent.SetDestination(gameManager.instance.player.transform.position);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Rotate the Enemy to face the Player with _turnSpeed
+    /// </summary>
+    void FacePlayer()
+    {
+        playerDirection.y = 0f;
+        Quaternion rot = Quaternion.LookRotation(playerDirection);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * _turnSpeed);
+    }
+
+    /// <summary>
+    /// Check if Player is Shooting
+    /// </summary>
+    private bool IsPlayerShooting()
+    {
+        return gameManager.instance.playerScript.isShooting;
+    }
+
+    /// <summary>
+    /// Check if Player is Sprinting
+    /// </summary>
+    private bool IsPlayerSprinting()
+    {
+        return gameManager.instance.playerScript.isSprinting;
+    }
+
+    /// <summary>
+    /// Go to last known location of the location given with optional delay 
+    /// </summary>
+    private IEnumerator GoToLastKnownLocation(Vector3 location, float delay = 0f)
+    {
+        _agent.stoppingDistance = 0f;
+
+        if (NavMesh.SamplePosition(location, out NavMeshHit hit, ViewRadius, -1)) 
+            _agent.SetDestination(hit.position);
+
+        Debug.Log($"{name}'s PathStatus: " + _agent.pathStatus);
+        yield return new WaitForSeconds(delay);
+    }
+
+    /// <summary>
+    /// Move Enemy within radius from Enemy with optional delay
+    /// </summary>
+    private IEnumerator RandomNavMeshLocation(float radius, float delay = 0f)
+    {
+        if (!destinationChosen && _agent.remainingDistance <= 0.1f)
+        {
+            _agent.stoppingDistance = 0f;
+            destinationChosen = true;
+            yield return new WaitForSeconds(delay);
+            destinationChosen = false;
+
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+            randomDirection += transform.position;
+
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1))
+                _agent.SetDestination(hit.position);
+
+            Debug.Log($"{name} is now roaming");
+        }
+    }
+
+    /// <summary>
+    /// CheckForPlayer() with delay
+    /// </summary>
+    private IEnumerator CheckForPlayerWithDelay(float delay)
+    {
+        CheckForPlayer();
+        yield return new WaitForSeconds(delay);
+    }
+}
