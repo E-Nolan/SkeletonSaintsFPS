@@ -22,8 +22,36 @@ public class buttonFunctions : MonoBehaviour
         Application.Quit();
     }
 
-    public void givePlayerHP(int amount)
+    public void startGame()
     {
-        gameManager.instance.playerScript.GiveHealth(2);
+        gameManager.instance.activeMenu = null;
+        gameManager.instance.activeMenu = gameManager.instance.difficultyMenu;
     }
+
+    public void credits()
+    {
+        gameManager.instance.activeMenu = gameManager.instance.creditsMenu;
+
+    }
+
+    public void easyGame()
+    {
+
+    }
+
+    public void normalGame()
+    {
+        SceneManager.LoadScene("Prototype Level");
+    }
+
+    public void hardGame()
+    {
+
+    }
+
+    public void menuBack()
+    {
+
+    }
+
 }
