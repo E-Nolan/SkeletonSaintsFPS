@@ -22,18 +22,6 @@ public class buttonFunctions : MonoBehaviour
         Application.Quit();
     }
 
-    public void startGame()
-    {
-        gameManager.instance.activeMenu = null;
-        gameManager.instance.activeMenu = gameManager.instance.difficultyMenu;
-    }
-
-    public void credits()
-    {
-        gameManager.instance.activeMenu = gameManager.instance.creditsMenu;
-
-    }
-
     public void easyGame()
     {
 
@@ -45,11 +33,6 @@ public class buttonFunctions : MonoBehaviour
     }
 
     public void hardGame()
-    {
-
-    }
-
-    public void menuBack()
     {
 
     }

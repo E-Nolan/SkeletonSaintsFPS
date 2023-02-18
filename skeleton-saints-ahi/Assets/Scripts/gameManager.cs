@@ -38,7 +38,7 @@ public class gameManager : MonoBehaviour
         {
             activeMenu = mainMenu;
             activeMenu.SetActive(true);
-            Time.timeScale = 0;
+            Time.timeScale = 3;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             GameObject.Find("Reticle").SetActive(false);
@@ -51,11 +51,6 @@ public class gameManager : MonoBehaviour
             instance = this;
             player = GameObject.FindGameObjectWithTag("Player");
             playerScript = player.GetComponent<playerController>();
-            unPause();
-            GameObject.Find("Reticle").SetActive(true);
-            GameObject.Find("PlayerStats").SetActive(true);
-            GameObject.Find("EnemyStats").SetActive(true);
-            GameObject.Find("WeaponStats").SetActive(true);
         }
     }
 
