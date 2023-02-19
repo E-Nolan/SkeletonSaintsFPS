@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class weaponPickup : MonoBehaviour
 {
-    [SerializeField] weaponStats weapon;
+    [SerializeField] public weaponStats weapon;
     [SerializeField] AudioClip pickupSound;
     [Range(0,360)] [SerializeField] int rotationSpeed;
 

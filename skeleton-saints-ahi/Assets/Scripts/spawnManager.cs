@@ -5,6 +5,7 @@ using UnityEngine;
 public class spawnManager : MonoBehaviour
 {
     [SerializeField] GameObject[] enemyTypes;
+    [SerializeField] GameObject[] weaponTypes;
     [Range(1,10)] [SerializeField] int spawnMaxNum;
     [Range(0.0f, 10.0f)] [SerializeField] float spawnCooldown;
     [SerializeField] Transform[] spawnPos;
@@ -44,7 +45,11 @@ public class spawnManager : MonoBehaviour
         enemiesSpawned++;
 
         Transform newSpawnPos;
-        GameObject newEnemy;
+        GameObject tempEnemy;
+
+        int weaponIndex = Random.Range(0, weaponTypes.Length);
+        GameObject newWeapon = weaponTypes[weaponIndex];
+
         // If the spawner uses random spawn Positions, it will choose a random spawn Position to spawn the next enemy
         // Otherwise it will iterate/loop through the spawnPos array
         if (spawnInRandomPositions)
@@ -62,16 +67,18 @@ public class spawnManager : MonoBehaviour
         // Otherwise it will iterate/loop through the enemyTypes array
         if (spawnRandomEnemyTypes)
         {
-            newEnemy = enemyTypes[Random.Range(0, enemyTypes.Length)];
+            tempEnemy = enemyTypes[Random.Range(0, enemyTypes.Length)];
         }
         else
         {
-            newEnemy = enemyTypes[enemyIter++];
+            tempEnemy = enemyTypes[enemyIter++];
             if (enemyIter >= enemyTypes.Length)
                 enemyIter = 0;
         }
 
-        Instantiate(newEnemy, newSpawnPos.position, newEnemy.transform.rotation);
+        GameObject newEnemy = Instantiate(tempEnemy, newSpawnPos.position, tempEnemy.transform.rotation);
+        if(newEnemy != null)
+            newEnemy.GetComponent<Enemy>().PickupWeapon(newWeapon.GetComponent<weaponPickup>().weapon);
 
         yield return new WaitForSeconds(spawnCooldown);
         isSpawning = false;

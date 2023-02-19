@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
+  m_Name: SMG
+  m_EditorClassIdentifier: 
+  weaponType: 0
+  weaponModel: {fileID: 2224924473164388108, guid: cad92df68b3ea394182b1155daa4f94c, type: 3}
+  gunBullet: {fileID: 2442857871477385035, guid: e905b6323b0c1884f92ad9deecdd15df, type: 3}
+  shotSound: {fileID: 0}
+  bulletSpeed: 40
+  fireRate: 0.1
+  damage: 1
+  bulletsPerSpread: 1
+  spreadAngle: 5
+  bulletsPerBurst: 1
+  burstFireDelay: 0
+  infiniteAmmo: 1
+  startingAmmo: 40
+  maxAmmo: 160
+  ammoRecovery: 25
+  range: 0

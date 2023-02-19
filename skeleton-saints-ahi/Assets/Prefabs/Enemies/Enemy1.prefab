@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 144720254028570836}
+  - component: {fileID: 1504258560}
   m_Layer: 0
-  m_Name: FirePosition
+  m_Name: GunPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23,14 +24,27 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144720254028570827}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.16, y: 1.56, z: 0.292}
+  m_LocalRotation: {x: 0.035730924, y: 0.5730305, z: -0.025019057, w: 0.8183724}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5358488325615320779}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 5358488325615320847}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 5, y: 70, z: 0}
+--- !u!135 &1504258560
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144720254028570827}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5358488325615739585
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,7 +75,7 @@ Transform:
   m_Children:
   - {fileID: 5358488325615320867}
   m_Father: {fileID: 5358488325615320847}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5358488325615739587
 GameObject:
@@ -187,7 +201,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5358488325615320847}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5358488325615739595
 GameObject:
@@ -219,7 +233,7 @@ Transform:
   m_Children:
   - {fileID: 5358488325615320877}
   m_Father: {fileID: 5358488325615320847}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5358488325615739597
 GameObject:
@@ -315,7 +329,7 @@ Transform:
   m_Children:
   - {fileID: 5358488325615320883}
   m_Father: {fileID: 5358488325615320847}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5358488325615739603
 GameObject:
@@ -442,7 +456,7 @@ Transform:
   m_Children:
   - {fileID: 5358488325615320891}
   m_Father: {fileID: 5358488325615320847}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5358488325615739611
 GameObject:
@@ -739,7 +753,6 @@ Transform:
   - {fileID: 5358488325615320919}
   - {fileID: 5358488325615320921}
   - {fileID: 5358488325615320777}
-  - {fileID: 144720254028570836}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -776,14 +789,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAi: {fileID: 5358488325625090228}
-  firePosition: {fileID: 144720254028570827}
-  bullet: {fileID: 2442857871477385035, guid: e905b6323b0c1884f92ad9deecdd15df, type: 3}
-  fireRate: 0.4
-  bulletSpeed: 50
+  gunPosition: {fileID: 144720254028570836}
+  handTransform: {fileID: 5358488325615320847}
   _materialFlashSpeed: 0.2
   _material: {fileID: 2100000, guid: 27ec51287c78bfb479fe3729111634a4, type: 2}
   _health: 5
   isShooting: 0
+  currentWeapon: {fileID: 0}
+  acquiringWeapon: 0
 --- !u!114 &5358488325625090228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,6 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 5358488325625090230}
   _headPosition: {fileID: 5358488325615320923}
+  _weaponFirePosition: {fileID: 144720254028570836}
   _playerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -1012,7 +1026,7 @@ Transform:
   m_Children:
   - {fileID: 5358488325615320789}
   m_Father: {fileID: 5358488325615320847}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5358488325615739637
 GameObject:
@@ -1963,6 +1977,7 @@ Transform:
   m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 144720254028570836}
   - {fileID: 5358488325615320881}
   - {fileID: 5358488325615320889}
   - {fileID: 5358488325615320865}

@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 29307427}
+  - component: {fileID: 1801210165}
   m_Layer: 0
-  m_Name: 'FirePosition '
+  m_Name: 'GunPosition '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23,14 +24,27 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 29307426}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.16, y: 1.56, z: 0.292}
-  m_LocalScale: {x: 1.5625, y: 1.5625, z: 1.5625}
+  m_LocalRotation: {x: 0.035730924, y: 0.5730305, z: -0.025019057, w: 0.8183724}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1189593153148512016}
+  m_Father: {fileID: 1189593153148511956}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 5, y: 70, z: 0}
+--- !u!135 &1801210165
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29307426}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1189593153148091040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,6 +1769,7 @@ Transform:
   - {fileID: 1189593153148511986}
   - {fileID: 1189593153148511984}
   - {fileID: 1189593153148512008}
+  - {fileID: 29307427}
   m_Father: {fileID: 1189593153148511952}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2719,7 +2734,6 @@ Transform:
   - {fileID: 1189593153148511884}
   - {fileID: 1189593153148511874}
   - {fileID: 1189593153148512018}
-  - {fileID: 29307427}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2756,14 +2770,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAi: {fileID: 4238305480919217940}
-  firePosition: {fileID: 29307426}
-  bullet: {fileID: 2442857871477385035, guid: e905b6323b0c1884f92ad9deecdd15df, type: 3}
-  fireRate: 0.4
-  bulletSpeed: 50
+  gunPosition: {fileID: 29307427}
+  handTransform: {fileID: 1189593153148511956}
   _materialFlashSpeed: 0.2
   _material: {fileID: 2100000, guid: 27ec51287c78bfb479fe3729111634a4, type: 2}
   _health: 1
   isShooting: 0
+  currentWeapon: {fileID: 0}
+  acquiringWeapon: 0
 --- !u!114 &4238305480919217940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2778,6 +2792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 763896551054958285}
   _headPosition: {fileID: 1189593153148511872}
+  _weaponFirePosition: {fileID: 29307427}
   _playerMask:
     serializedVersion: 2
     m_Bits: 8

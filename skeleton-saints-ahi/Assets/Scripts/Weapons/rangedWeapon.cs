@@ -7,7 +7,7 @@ public class rangedWeapon : MonoBehaviour
     #region Member Fields
     [Header("----- Components -----")]
     [SerializeField] GameObject gunModel;
-    [SerializeField] protected Transform weaponFirePos;
+    [SerializeField] public Transform weaponFirePos;
     [SerializeField] protected GameObject gunBullet;
     [SerializeField] AudioSource audioSource;
     [SerializeField] protected AudioClip shotSound;
@@ -48,7 +48,7 @@ public class rangedWeapon : MonoBehaviour
 
         // If this weapon is being used an enemy, set a reference to its Enemy script to toggle its isShooting bool
         if (!usedByPlayer)
-            enemyScript = transform.parent.GetComponent<Enemy>();
+            enemyScript = transform.root.GetComponent<Enemy>();
         else
         {
             updateAmmoDisplay();

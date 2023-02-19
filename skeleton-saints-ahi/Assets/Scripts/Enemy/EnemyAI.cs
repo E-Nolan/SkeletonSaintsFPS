@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour
     [Header("----- Objects/Transforms -----")]
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Transform _headPosition;
+    [SerializeField] private Transform _weaponFirePosition;
 
     [Header("----- Masks -----")]
     [SerializeField] private LayerMask _playerMask;
@@ -46,6 +47,7 @@ public class EnemyAI : MonoBehaviour
     private Vector2 smoothDeltaPosition;
     private Vector2 velocity;
     private float originalStoppingDistance;
+    private int originalTurnSpeed;
     private bool destinationChosen = false;
 
     void Awake()
@@ -77,6 +79,7 @@ public class EnemyAI : MonoBehaviour
         _animator.applyRootMotion = false;
         _agent.updatePosition = false;
         originalStoppingDistance = _agent.stoppingDistance;
+        originalTurnSpeed = _turnSpeed;
     }
 
     void Update()
@@ -178,6 +181,7 @@ public class EnemyAI : MonoBehaviour
                         {
                             _agent.SetDestination(hit.position);
                             _agent.stoppingDistance = originalStoppingDistance;
+                            IncreaseTurnSpeed();
                         }
 
                         // If the Player is within the stopping distance of the Enemy,
@@ -197,17 +201,28 @@ public class EnemyAI : MonoBehaviour
                             StartCoroutine(GoToLastKnownLocation(playerTransform.position, _roamingDelay));
 
                         CanDetectPlayer = false;
+                        DecreaseTurnSpeed();
                     }
                 }
                 else
+                {
                     CanDetectPlayer = false;
+                    DecreaseTurnSpeed();
+                }
             }
             else if (CanDetectPlayer)
+            {
                 CanDetectPlayer = false;
+                DecreaseTurnSpeed();
+            }
 
             // If the Player was not detected, start Roaming with a delay
             if (!CanDetectPlayer && !destinationChosen && _agent.remainingDistance < 0.1f)
+            {
                 StartCoroutine(RandomNavMeshLocation(ViewRadius, _roamingDelay));
+                DecreaseTurnSpeed();
+            }
+
             #endregion
         }
         else
@@ -221,7 +236,7 @@ public class EnemyAI : MonoBehaviour
                     FacePlayer();
 
                 if (!_enemyScript.isShooting)
-                    StartCoroutine(_enemyScript.Shoot());
+                    _enemyScript.Shoot();
             }
             #endregion
         }
@@ -237,7 +252,6 @@ public class EnemyAI : MonoBehaviour
         float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
 
         Debug.Log(angleToPlayer);
-        //Debug.DrawRay(_headPosition.position, playerDirection);
 
         RaycastHit hit;
         if(Physics.Raycast(_headPosition.position, playerDirection, out hit))
@@ -256,6 +270,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     void FacePlayer()
     {
+        
         playerDirection.y = 0f;
         Quaternion rot = Quaternion.LookRotation(playerDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * _turnSpeed);
@@ -277,6 +292,7 @@ public class EnemyAI : MonoBehaviour
         return gameManager.instance.playerScript.isSprinting;
     }
 
+    #region IENUMERATORS
     /// <summary>
     /// Go to last known location of the location given with optional delay 
     /// </summary>
@@ -313,6 +329,18 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void IncreaseTurnSpeed()
+    {
+        if(_turnSpeed == originalTurnSpeed)
+            _turnSpeed *= 2;
+    }
+
+    private void DecreaseTurnSpeed()
+    {
+        if (_turnSpeed != originalTurnSpeed)
+        _turnSpeed /= 2;
+    }
+
     /// <summary>
     /// CheckForPlayer() with delay
     /// </summary>
@@ -321,4 +349,5 @@ public class EnemyAI : MonoBehaviour
         CheckForPlayer();
         yield return new WaitForSeconds(delay);
     }
+    #endregion
 }

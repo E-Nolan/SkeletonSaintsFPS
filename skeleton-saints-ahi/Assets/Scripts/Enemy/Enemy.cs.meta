@@ -4,7 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - _material: {fileID: 2100000, guid: 5c1a7e854f7dd1e40a3900f0ee9a6b4f, type: 2}
+  - _enemyAi: {instanceID: 0}
+  - firePosition: {instanceID: 0}
+  - bullet: {instanceID: 0}
+  - _material: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
