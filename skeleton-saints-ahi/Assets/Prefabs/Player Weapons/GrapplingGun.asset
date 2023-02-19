@@ -27,4 +27,4 @@ MonoBehaviour:
   startingAmmo: 0
   maxAmmo: 0
   ammoRecovery: 0
-  range: 30
+  range: 40

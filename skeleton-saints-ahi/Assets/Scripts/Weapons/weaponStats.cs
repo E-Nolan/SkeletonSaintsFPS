@@ -15,6 +15,8 @@ public class weaponStats : ScriptableObject
 
     public GameObject weaponModel;
     public GameObject gunBullet;
+    public Sprite activeweaponIcon;
+    public Sprite inactiveweaponIcon;
     public AudioClip shotSound;
 
     [Range(5,200)] public int bulletSpeed;
