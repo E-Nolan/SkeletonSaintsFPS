@@ -11,7 +11,6 @@ public class explosion : MonoBehaviour
     [SerializeField] int explosionDamage;
 
     MeshRenderer meshRender;
-    bool exploding = false;
 
     void Awake()
     {
@@ -35,7 +34,6 @@ public class explosion : MonoBehaviour
 
     public void explode()
     {
-        exploding = true;
         meshRender.enabled = true;
         transform.localScale = Vector3.one * fullExplosionScale;
         Destroy(gameObject, explosionTime);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Grenade Launcher
   m_EditorClassIdentifier: 
   weaponModel: {fileID: 7530913169747578161, guid: b20b13bdfbde41a49b7e0b049458f4f1, type: 3}
-  bullet: {fileID: 4571660264418509419, guid: b462c1df4ed8c2a488a63df6573bbd52, type: 3}
+  gunBullet: {fileID: 4571660264418509419, guid: b462c1df4ed8c2a488a63df6573bbd52, type: 3}
   shotSound: {fileID: 0}
   bulletSpeed: 15
   fireRate: 1

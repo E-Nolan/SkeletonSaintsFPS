@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   weaponModel: {fileID: 435293601273996754, guid: f19bf70895e921849bdd437a9321e6f5, type: 3}
-  bullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
+  gunBullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
   shotSound: {fileID: 0}
   bulletSpeed: 45
   fireRate: 0.3

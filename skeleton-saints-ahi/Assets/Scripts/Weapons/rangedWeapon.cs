@@ -7,17 +7,17 @@ public class rangedWeapon : MonoBehaviour
     #region Member Fields
     [Header("----- Components -----")]
     [SerializeField] GameObject gunModel;
-    [SerializeField] Transform weaponFirePos;
-    [SerializeField] GameObject bullet;
+    [SerializeField] protected Transform weaponFirePos;
+    [SerializeField] protected GameObject gunBullet;
     [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip shotSound;
+    [SerializeField] protected AudioClip shotSound;
 
     [Header("----- Settings -----")]
     [SerializeField] bool usedByPlayer;
 
     [Header("----- Stats -----")]
-    [Range(5, 200)] [SerializeField] int bulletSpeed;
-    [Range(0.0f, 5.0f)] [SerializeField] float fireRate; // in seconds
+    [Range(5, 200)] [SerializeField] protected int bulletSpeed;
+    [Range(0.0f, 5.0f)] [SerializeField] protected float fireRate; // in seconds
     [Range(1, 20)] [SerializeField] int damage;
     [Range(1, 20)] [SerializeField] int bulletsPerSpread;
     [Range(0, 60)] [SerializeField] int spreadAngle;
@@ -34,7 +34,7 @@ public class rangedWeapon : MonoBehaviour
 
     // If this weapon is being used by an enemy, access 
     Enemy enemyScript;
-    GameObject targetFinder;
+    protected GameObject targetFinder;
 
     #endregion
 
@@ -128,7 +128,7 @@ public class rangedWeapon : MonoBehaviour
     /// <summary>
     /// Shoots a bullet using the gun's forward direction
     /// </summary>
-    public void shootForward()
+    virtual public void shootForward()
     {
         shoot(targetFinder.transform.position - weaponFirePos.position);
     }
@@ -137,7 +137,7 @@ public class rangedWeapon : MonoBehaviour
     /// Fires a round from the weapon in the direction of the given normalized vector
     /// </summary>
     /// <param name="fireDirection"></param>
-    public void shoot(Vector3 fireDirection)
+    virtual public void shoot(Vector3 fireDirection)
     {
         // Check to see whether or not the weapon has enough ammo to shoot
         // If it does, fire a bullet in the provided direction
@@ -168,7 +168,7 @@ public class rangedWeapon : MonoBehaviour
 
             // Instantiate a bullet at the Fire Position with the targetFinder's rotation and give it forward velocity
             // Reset the targetFinder's rotation for the next fired bullet
-            GameObject newBullet = Instantiate(bullet, weaponFirePos.position, targetFinder.transform.rotation);
+            GameObject newBullet = Instantiate(gunBullet, weaponFirePos.position, targetFinder.transform.rotation);
             newBullet.GetComponent<bullet>().bulletDmg = damage;
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed;
             targetFinder.transform.rotation = weaponFirePos.rotation;
@@ -202,14 +202,14 @@ public class rangedWeapon : MonoBehaviour
     }
     #endregion
 
-    public void copyFromWeaponStats(weaponStats _stats, Transform _weaponFirePos, bool _isUsedByPlayer)
+    virtual public void copyFromWeaponStats(weaponStats _stats, Transform _weaponFirePos, bool _isUsedByPlayer)
     {
         weaponFirePos = _weaponFirePos;
         if (_stats.weaponModel)
             Instantiate(_stats.weaponModel, weaponFirePos);
 
         usedByPlayer = _isUsedByPlayer;
-        bullet = _stats.bullet;
+        gunBullet = _stats.gunBullet;
         shotSound = _stats.shotSound;
 
         bulletSpeed = _stats.bulletSpeed;
@@ -226,7 +226,7 @@ public class rangedWeapon : MonoBehaviour
         ammoRecovery = _stats.ammoRecovery;
     }
 
-    public void onSwitch()
+    virtual public void onSwitch()
     {
         if (gunModel)
             gunModel.SetActive(true);
@@ -237,7 +237,7 @@ public class rangedWeapon : MonoBehaviour
         }
     }
 
-    public void offSwitch()
+    virtual public void offSwitch()
     {
         if (gunModel)
             gunModel.SetActive(false);

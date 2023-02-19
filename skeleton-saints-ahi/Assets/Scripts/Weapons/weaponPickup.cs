@@ -17,7 +17,7 @@ public class weaponPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.playerScript.rangedWeaponPickup(weapon);
+            gameManager.instance.playerScript.rangedWeaponPickup(weapon, weapon.weaponType);
             if (pickupSound)
                 gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
 

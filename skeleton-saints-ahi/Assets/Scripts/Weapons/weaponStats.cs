@@ -5,8 +5,16 @@ using UnityEngine;
 [CreateAssetMenu]
 public class weaponStats : ScriptableObject
 {
+    public enum weaponStatsType
+    {
+        Gun,
+        GrappleGun
+    }
+
+    public weaponStatsType weaponType;
+
     public GameObject weaponModel;
-    public GameObject bullet;
+    public GameObject gunBullet;
     public AudioClip shotSound;
 
     [Range(5,200)] public int bulletSpeed;
@@ -21,4 +29,6 @@ public class weaponStats : ScriptableObject
     [Range(0,200)] public int startingAmmo;
     [Range(0, 200)] public int maxAmmo;
     [Range(0, 40)] public int ammoRecovery;
+    [Tooltip("Currently only used for grapple gun range")]
+    [Range(5, 100)] public int range;
 }

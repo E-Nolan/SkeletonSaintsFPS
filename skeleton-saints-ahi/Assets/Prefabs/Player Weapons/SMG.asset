@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SMG
   m_EditorClassIdentifier: 
   weaponModel: {fileID: 2224924473164388108, guid: 9af9cda301534264b9f0f018183b0f87, type: 3}
-  bullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
+  gunBullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
   shotSound: {fileID: 0}
   bulletSpeed: 40
   fireRate: 0.1

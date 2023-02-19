@@ -97,7 +97,7 @@ public class playerController : MonoBehaviour, IDamage
         updatePlayerHealthBar();
         updatePlayerStaminaBar();
 
-        rangedWeaponPickup(startingWeapon);
+        rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
     }
 
     // Update is called once per frame
@@ -246,7 +246,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
             Vector3 directionToTarget = (hit.point - weaponFirePos.transform.position);
-            Debug.DrawRay(transform.position, directionToTarget);
+            Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
             currentWeapon.shoot(directionToTarget.normalized);
         }
         else
@@ -295,15 +295,41 @@ public class playerController : MonoBehaviour, IDamage
 
     }
 
-    public void rangedWeaponPickup(weaponStats newWeaponStats)
+    public void rangedWeaponPickup(weaponStats newWeaponStats, weaponStats.weaponStatsType weaponType)
     {
-        GameObject newWeapon = new GameObject(newWeaponStats.name, typeof(rangedWeapon), typeof(AudioSource));
+        // turn isShooting off to prevent a bug where picking up a weapon while shooting could disable shooting entirely
+        isShooting = false;
+        GameObject newWeapon;
+
+        // Depending on what type of gun is being picked up, create a weapon of that type.
+        switch(weaponType)
+        {
+            case weaponStats.weaponStatsType.GrappleGun:
+                newWeapon = new GameObject(newWeaponStats.name, typeof(grappleGun), typeof(AudioSource));
+                break;
+
+            default:
+                newWeapon = new GameObject(newWeaponStats.name, typeof(rangedWeapon), typeof(AudioSource));
+                break;
+        }
+
         newWeapon.transform.parent = playerCamera.transform;
         newWeapon.transform.position = playerCamera.transform.position;
         newWeapon.transform.rotation = playerCamera.transform.rotation;
 
         GameObject newFirePos = Instantiate(weaponFirePos.gameObject, weaponFirePos.position, weaponFirePos.rotation, newWeapon.transform);
-        newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(newWeaponStats, newFirePos.transform, true);
+
+        // Different types of guns have different copy functions
+        switch (weaponType)
+        {
+            case weaponStats.weaponStatsType.GrappleGun:
+                newWeapon.GetComponent<grappleGun>().copyFromWeaponStats(newWeaponStats, newFirePos.transform, true);
+                break;
+
+            default:
+                newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(newWeaponStats, newFirePos.transform, true);
+                break;
+        }
 
         // Add the new weapon to the player's inventory, then switch their current weapon to the new one.
         weaponInventory.Add(newWeapon);
