@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
   m_Name: SMG
   m_EditorClassIdentifier: 
+  weaponType: 0
   weaponModel: {fileID: 2224924473164388108, guid: 9af9cda301534264b9f0f018183b0f87, type: 3}
   gunBullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
   shotSound: {fileID: 0}
@@ -26,3 +27,4 @@ MonoBehaviour:
   startingAmmo: 40
   maxAmmo: 160
   ammoRecovery: 25
+  range: 5

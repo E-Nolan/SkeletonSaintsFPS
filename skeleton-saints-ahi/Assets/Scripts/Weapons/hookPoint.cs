@@ -10,6 +10,8 @@ public class hookPoint : MonoBehaviour
     grappleGun grappleGunScript;
     BoxCollider hookCollider;
     bool retracting = false;
+    bool pulling = false;
+    float pullSpeed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,23 +25,28 @@ public class hookPoint : MonoBehaviour
     {
         if (retracting)
             gradualRetract();
+
+        else if (pulling)
+            gradualPull();
+
+        else if (!gameManager.instance.playerScript.isGrappling && (transform.position - grappleGunScript.transform.position).magnitude >= grappleGunScript.hookRange)
+            beginRetracting();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!retracting)
+        // If the hook collides with a grapple point, freeze the hook in place and accelerate the player towards the hook
+        if (collision.transform.CompareTag("GrapplePoint"))
         {
-            // If the hook collides with a grapple point, freeze the hook in place and accelerate the player towards the hook
-            if (collision.transform.CompareTag("GrapplePoint"))
-            {
-
-            }
-            // If the hook collided with something else, retract it
-            else
-            {
-
-            }
+            rb.isKinematic = true;
+            beginPulling();
         }
+        // If the hook collided with something else, retract it
+        else
+        {
+            beginRetracting();
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -67,16 +74,31 @@ public class hookPoint : MonoBehaviour
         grappleGunScript = _grappleGunScript;
     }
 
-    void beginRetracting()
+    void beginPulling()
+    {
+        pulling = true;
+        hookCollider.enabled = false;
+        rb.velocity = Vector3.zero;
+        gameManager.instance.playerScript.isGrappling = true;
+    }
+
+    void gradualPull()
+    {
+        Vector3 addedForce = (transform.position - grappleGunScript.transform.position) * Time.deltaTime * pullSpeed;
+        gameManager.instance.playerScript.giveExternalVelocity(addedForce);
+    }
+
+    public void beginRetracting()
     {
         retracting = true;
         hookCollider.enabled = false;
+        gameManager.instance.playerScript.isGrappling = false;
     }
 
-    public void gradualRetract()
+    void gradualRetract()
     {
         transform.position = Vector3.Lerp(transform.position, weaponFirePos.transform.position, Time.deltaTime * 20);
-        if ((transform.position - weaponFirePos.transform.position).magnitude <= 0.4f)
+        if ((transform.position - weaponFirePos.transform.position).magnitude <= 1.5f)
         {
             instantRetract();
         }
@@ -89,8 +111,11 @@ public class hookPoint : MonoBehaviour
         transform.parent = grappleGunScript.gameObject.transform;
         grappleGunScript.hookIsOut = false;
         retracting = false;
+        pulling = false;
         grappleGunScript.lineRender.enabled = false;
+        rb.isKinematic = true;
 
+        // Release whatever object the hook is attached to
         if (currentCatch)
         {
             currentCatch.transform.parent = null;
@@ -104,7 +129,10 @@ public class hookPoint : MonoBehaviour
         grappleGunScript.hookIsOut = true;
         transform.parent = null;
         transform.rotation = _firePosRot;
+
+        rb.isKinematic = false;
         rb.velocity = transform.forward * _velocity;
+
         hookCollider.enabled = true;
         grappleGunScript.lineRender.enabled = true;
     }

@@ -60,9 +60,11 @@ public class playerController : MonoBehaviour, IDamage
 
     [Header("Miscellaneous")]
     [Range(1, 200)] [SerializeField] int raycastRange;
+    [Range(1, 20)] [SerializeField] int externalVelocityDecay;
     // Private variables used within the script to facilitate movement and actions
     Vector3 moveInput;
     Vector3 playerVelocity;
+    Vector3 externalVelocity = Vector3.zero;
     int defaultSpeed;
     float staminaRegenTimer;
     float armorRegenTimer;
@@ -71,6 +73,7 @@ public class playerController : MonoBehaviour, IDamage
     public bool isDashing { get; private set; } = false;
     public bool isSprinting { get; private set; } = false;
     public bool isShooting = false;
+    public bool isGrappling = false;
 
     bool isSwitchingWeapons = false;
     float weaponSwitchCooldown = 0.1f;
@@ -172,8 +175,12 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Dash") && !isDashing && currentStamina >= dashStaminaCost)
             StartCoroutine(startDash());
 
+        // Lerp external velocity back down to zero over time only if the player isn't actively grappling
+        if (!isGrappling)
+            externalVelocity = Vector3.Lerp(externalVelocity, Vector3.zero, Time.deltaTime * externalVelocityDecay);
+
         // Set the player's vertical velocity to 0 if they are standing on ground
-        if (controller.isGrounded && playerVelocity.y <= 0)
+        if (isGrappling || (controller.isGrounded && playerVelocity.y <= 0))
         {
             playerVelocity.y = 0;
             jumpsCurrent = 0;
@@ -202,7 +209,7 @@ public class playerController : MonoBehaviour, IDamage
 
         // Accelerate the player downward via gravity
         playerVelocity.y -= (gravity * Time.deltaTime);
-        controller.Move(playerVelocity * Time.deltaTime);
+        controller.Move((playerVelocity + externalVelocity) * Time.deltaTime);
     }
 
     IEnumerator startDash()
@@ -387,6 +394,11 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.damageFlashScreen.SetActive(false);
     }
 
+    public void giveExternalVelocity(Vector3 _extraVelocity)
+    {
+        externalVelocity += _extraVelocity;
+    }
+
     /// <summary>
     /// Heal the player by an amount. Their health can not exceed their max health
     /// </summary>
@@ -460,7 +472,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public void updateArmorDisplay()
     {
-
+        // TODO
     }
 
     public int GetMaxHealth()

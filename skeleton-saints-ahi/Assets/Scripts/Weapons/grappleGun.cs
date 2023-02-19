@@ -7,6 +7,7 @@ public class grappleGun : rangedWeapon
     GameObject grappleHookPoint;
     hookPoint grappleHookScript;
     public LineRenderer lineRender;
+    public int hookRange;
 
     public bool hookIsOut = false;
 
@@ -34,14 +35,15 @@ public class grappleGun : rangedWeapon
 
     override public void shoot(Vector3 fireDirection)
     {
+        StartCoroutine(startShootCooldown());
         if (hookIsOut)
         {
             // If the grappling hook is out, bring it back to the fire pos
+            grappleHookScript.beginRetracting();
         }
         else
         {
             // Otherwise, send the grappling hook out
-            StartCoroutine(startShootCooldown());
             shootGrapplingHook(fireDirection);
         }
     }
@@ -69,6 +71,7 @@ public class grappleGun : rangedWeapon
 
         bulletSpeed = _stats.bulletSpeed;
         fireRate = _stats.fireRate;
+        hookRange = _stats.range;
 
         grappleHookPoint = Instantiate(_stats.gunBullet, weaponFirePos.position, weaponFirePos.rotation, weaponFirePos);
         grappleHookPoint.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);

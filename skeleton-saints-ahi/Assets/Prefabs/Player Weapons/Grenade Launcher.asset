@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
   m_Name: Grenade Launcher
   m_EditorClassIdentifier: 
+  weaponType: 0
   weaponModel: {fileID: 7530913169747578161, guid: b20b13bdfbde41a49b7e0b049458f4f1, type: 3}
   gunBullet: {fileID: 4571660264418509419, guid: b462c1df4ed8c2a488a63df6573bbd52, type: 3}
   shotSound: {fileID: 0}
@@ -26,3 +27,4 @@ MonoBehaviour:
   startingAmmo: 5
   maxAmmo: 20
   ammoRecovery: 3
+  range: 5
