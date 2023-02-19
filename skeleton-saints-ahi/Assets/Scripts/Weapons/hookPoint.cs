@@ -11,7 +11,7 @@ public class hookPoint : MonoBehaviour
     BoxCollider hookCollider;
     bool retracting = false;
     bool pulling = false;
-    float pullSpeed = 1.0f;
+    float pullSpeed = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +86,8 @@ public class hookPoint : MonoBehaviour
     {
         Vector3 addedForce = (transform.position - grappleGunScript.transform.position) * Time.deltaTime * pullSpeed;
         gameManager.instance.playerScript.giveExternalVelocity(addedForce);
+        if ((transform.position - gameManager.instance.player.transform.position).magnitude <= 2.5f)
+            beginRetracting();
     }
 
     public void beginRetracting()

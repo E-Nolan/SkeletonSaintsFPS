@@ -152,7 +152,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         // Drain the player's stamina while they're sprinting
         // Stop their sprint if they run out of stamina
-        if (isSprinting)
+        if (isSprinting && !isGrappling)
         {
             useStamina(sprintStaminaDrain * Time.deltaTime);
             if (currentStamina <= 0)
@@ -187,8 +187,8 @@ public class playerController : MonoBehaviour, IDamage
         }
 
         // Move the character via arrow keys/WASD input
-        moveInput = (transform.right * Input.GetAxis("Horizontal") + 
-                transform.forward * Input.GetAxis("Vertical"));
+        if (!isGrappling)
+            moveInput = (transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical"));
         
         // Play walk sound effects if the player is walking on ground
         // Play run sound effects if the player is sprinting on ground
@@ -198,8 +198,7 @@ public class playerController : MonoBehaviour, IDamage
         controller.Move(moveInput * Time.deltaTime * playerSpeed);
 
         // Allow the player to jump if they haven't exceeded their maximum amount of jumps
-        // TODO: Prevent the player from being able to perform a mid-air jump after falling off a ledge
-        if (Input.GetButtonDown("Jump") && jumpsCurrent < maxJumps)
+        if (!isGrappling && Input.GetButtonDown("Jump") && jumpsCurrent < maxJumps)
         {
             jumpsCurrent++;
             playerVelocity.y = jumpSpeed;
