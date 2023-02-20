@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 217518931}
   - component: {fileID: 217518930}
   - component: {fileID: 217518929}
+  - component: {fileID: 217518932}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -101,6 +102,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &217518932
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217518927}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 1
 --- !u!1 &673042245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1451,6 +1464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyAi: {fileID: 2994258001100710613}
   gunPosition: {fileID: 2440600270585246498}
+  _animator: {fileID: 0}
   healthBarUI: {fileID: 217518927}
   _healthBar: {fileID: 1988962075}
   handTransform: {fileID: 388288328662625624}
@@ -1460,7 +1474,8 @@ MonoBehaviour:
   isShooting: 0
   currentWeapon: {fileID: 0}
   acquiringWeapon: 0
-  hopefullyChildrenInstantiated: 0
+  isDead: 0
+  isDamaged: 0
 --- !u!114 &2994258001100710613
 MonoBehaviour:
   m_ObjectHideFlags: 0

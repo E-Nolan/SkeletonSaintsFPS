@@ -17,7 +17,7 @@ public class rangedWeapon : MonoBehaviour
 
     [Header("----- Stats -----")]
     [Range(5, 200)] [SerializeField] protected int bulletSpeed;
-    [Range(0.0f, 5.0f)] [SerializeField] protected float fireRate; // in seconds
+    [Range(0.0f, 5.0f)] [SerializeField] public float fireRate; // in seconds
     [Range(1, 20)] [SerializeField] int damage;
     [Range(1, 20)] [SerializeField] int bulletsPerSpread;
     [Range(0, 60)] [SerializeField] int spreadAngle;

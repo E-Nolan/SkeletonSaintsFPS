@@ -11,6 +11,7 @@ public class bullet : MonoBehaviour
     [SerializeField] int timer;
 
     [SerializeField] AudioSource bulletImpactSound;
+    [SerializeField] private Transform damagePopupPrefab;
 
    
     void Start()
@@ -25,6 +26,10 @@ public class bullet : MonoBehaviour
         if (other.GetComponent<IDamage>() != null)
         {
             other.GetComponent<IDamage>().TakeDamage(bulletDmg);
+            Transform damageNumber = Instantiate(damagePopupPrefab, 
+                GetComponent<Rigidbody>().transform.position, Quaternion.identity);
+            DamagePopup damagePopup = damageNumber.GetComponent<DamagePopup>();
+            damagePopup.Setup(bulletDmg);
         }
 
         if (bulletImpactSound)

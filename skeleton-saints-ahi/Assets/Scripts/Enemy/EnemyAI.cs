@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour
      public bool CanDetectPlayer = false;
      public bool CanShoot = false;
 
-    [Header("----- Fallback AI (buggy) -----")] 
+     [Header("----- Fallback AI (buggy) -----")] 
     [SerializeField] private bool _useFallbackAi;
 
 
@@ -84,53 +84,56 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (!CanDetectPlayer || _agent.destination != gameManager.instance.player.transform.position)
-            StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
-        else
+        if (_agent.enabled)
         {
-            // If no player is detected for whatever reason, script disables itself
-            // on enemy so it doesnt continue checking (save minimal performance in edge cases)
-            Debug.Log($"{gameObject.name} did not detect player, disabling EnemyAI");
-            enabled = false;
+            if (!CanDetectPlayer || _agent.destination != gameManager.instance.player.transform.position)
+                StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
+            else
+            {
+                // If no player is detected for whatever reason, script disables itself
+                // on enemy so it doesnt continue checking (save minimal performance in edge cases)
+                Debug.Log($"{gameObject.name} did not detect player, disabling EnemyAI");
+                enabled = false;
+            }
+
+            // --- ANIMATION STUFF ---
+            // Get how far enemy is from its next position
+            Vector3 worldDeltaPosition = _agent.nextPosition - transform.position;
+
+            // Map worldDeltaPosition to local space
+            float dx = Vector3.Dot(transform.right, worldDeltaPosition);
+            float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
+
+            // Use Vector2 because worldspace-y isnt needed for this
+            Vector2 deltaPosition = new Vector2(dx, dy);
+
+            // Low-pass filter the deltaMove
+            float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
+            smoothDeltaPosition = Vector2.Lerp(smoothDeltaPosition, deltaPosition, smooth);
+
+            // Update velocity if time advances
+            if (Time.deltaTime > 1e-5f)
+                velocity = smoothDeltaPosition / Time.deltaTime;
+
+            bool shouldMove = velocity.magnitude > 0.5f && _agent.remainingDistance > _agent.radius;
+
+            // Update animation parameters
+            if (_agent.velocity.magnitude >= 0.1f)
+            {
+                _animator.SetFloat("xVelocity", velocity.normalized.x, 0.1f, Time.deltaTime);
+                _animator.SetFloat("yVelocity", velocity.normalized.y, 0.1f, Time.deltaTime);
+            }
+            else
+            {
+                // Enemy would continue current animation when should be idling, so if the agent has no velocity,
+                // manually set the parameters
+                _animator.SetFloat("xVelocity", 0f, 0.1f, Time.deltaTime);
+                _animator.SetFloat("yVelocity", 0f, 0.1f, Time.deltaTime);
+            }
+
+            if (_enemyLookAt != null)
+                _enemyLookAt.lookAtFuturePosition = _agent.steeringTarget + transform.forward;
         }
-
-        // --- ANIMATION STUFF ---
-        // Get how far enemy is from its next position
-        Vector3 worldDeltaPosition = _agent.nextPosition - transform.position;
-
-        // Map worldDeltaPosition to local space
-        float dx = Vector3.Dot(transform.right, worldDeltaPosition);
-        float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
-
-        // Use Vector2 because worldspace-y isnt needed for this
-        Vector2 deltaPosition = new Vector2 (dx, dy);
-
-        // Low-pass filter the deltaMove
-        float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
-        smoothDeltaPosition = Vector2.Lerp (smoothDeltaPosition, deltaPosition, smooth);
-
-        // Update velocity if time advances
-        if (Time.deltaTime > 1e-5f)
-            velocity = smoothDeltaPosition / Time.deltaTime;
-
-        bool shouldMove = velocity.magnitude > 0.5f && _agent.remainingDistance > _agent.radius;
-
-        // Update animation parameters
-        if (_agent.velocity.magnitude >= 0.1f)
-        {
-            _animator.SetFloat("xVelocity", velocity.normalized.x, 0.1f, Time.deltaTime);
-            _animator.SetFloat("yVelocity", velocity.normalized.y, 0.1f, Time.deltaTime);
-        }
-        else
-        {
-            // Enemy would continue current animation when should be idling, so if the agent has no velocity,
-            // manually set the parameters
-            _animator.SetFloat("xVelocity", 0f, 0.1f, Time.deltaTime);
-            _animator.SetFloat("yVelocity", 0f, 0.1f, Time.deltaTime);
-        }
-
-        if(_enemyLookAt != null)
-            _enemyLookAt.lookAtFuturePosition = _agent.steeringTarget + transform.forward;
     }
 
     // Having this on object sets animator's 
@@ -338,7 +341,7 @@ public class EnemyAI : MonoBehaviour
     private void DecreaseTurnSpeed()
     {
         if (_turnSpeed != originalTurnSpeed)
-        _turnSpeed /= 2;
+            _turnSpeed /= 2;
     }
 
     /// <summary>

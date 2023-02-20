@@ -51,6 +51,7 @@ MonoBehaviour:
   bulletDmg: 1
   timer: 3
   bulletImpactSound: {fileID: -8182369143020667357}
+  damagePopupPrefab: {fileID: 5156991524456792442, guid: 48bf4594a2656ef49afe5d660714f3c4, type: 3}
 --- !u!135 &8102728227395328950
 SphereCollider:
   m_ObjectHideFlags: 0

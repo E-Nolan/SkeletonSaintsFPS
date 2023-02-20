@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IDamage
 {
     [SerializeField] private EnemyAI _enemyAi;
     [SerializeField] private Transform gunPosition;
+    [SerializeField] private Animator _animator;
     [SerializeField] private GameObject healthBarUI;
     [SerializeField] private Slider _healthBar;
     [SerializeField] private Transform handTransform;
@@ -16,7 +18,9 @@ public class Enemy : MonoBehaviour, IDamage
     public bool isShooting = false;
     public rangedWeapon currentWeapon;
     public bool acquiringWeapon;
-    public bool hopefullyChildrenInstantiated;
+    public bool isDead = false;
+    public bool isDamaged = false;
+    public bool fadeHealthBar = false;
 
     private float _maxHealth;
 
@@ -40,27 +44,21 @@ public class Enemy : MonoBehaviour, IDamage
         if(_enemyAi == null)
             _enemyAi = GetComponent<EnemyAI>();
 
+        if(_animator == null)
+            _animator = GetComponent<Animator>();
+
         acquiringWeapon = false;
-        hopefullyChildrenInstantiated = false;
     }
 
     void Update()
     {
         // If not shooting and can see the player
-        if(isShooting == false && _enemyAi.CanDetectPlayer && _enemyAi.CanShoot) 
+        if(isShooting == false && _enemyAi.CanDetectPlayer && _enemyAi.CanShoot && !isDead) 
             Shoot();
 
-
-    }
-
-    void OnDestroy()
-    {
-        // Health check so game goal doesn't go wonky
-        if (_health <= 0)
-        {
-            Debug.Log($"{gameObject.name} has died");
-            gameManager.instance.updateGameGoal(-1);
-        }
+        if(fadeHealthBar)
+            healthBarUI.GetComponent<CanvasGroup>().alpha =
+                Mathf.MoveTowards(healthBarUI.GetComponent<CanvasGroup>().alpha, 0, Time.deltaTime * 2f);
     }
 
     private float CalculateHealth()
@@ -71,8 +69,8 @@ public class Enemy : MonoBehaviour, IDamage
     public void TakeDamage(int damage)
     {
         _health -= damage;
+        _animator.SetTrigger("Damage");
         StartCoroutine(FlashMaterial());
-
         _healthBar.value = CalculateHealth();
 
         if (_health > _maxHealth)
@@ -85,7 +83,16 @@ public class Enemy : MonoBehaviour, IDamage
             healthBarUI.SetActive(false);
 
         if (_health <= 0)
-            Destroy(gameObject);
+        {
+            isDead = true;
+            _animator.SetBool("Dead", true);
+            GetComponent<NavMeshAgent>().enabled = false;
+            GetComponent<CapsuleCollider>().enabled = false;
+            Debug.Log($"{gameObject.name} has died");
+            gameManager.instance.updateGameGoal(-1);
+            fadeHealthBar = true;
+            Destroy(gameObject, 5f);
+        }
     }
 
     public void PickupWeapon(weaponStats newWeaponStats)
@@ -103,11 +110,8 @@ public class Enemy : MonoBehaviour, IDamage
 
             weaponObject.GetComponent<rangedWeapon>().copyFromWeaponStats(newWeaponStats,
                 weaponObject.transform, false);
-            //weaponObject.GetComponent<rangedWeapon>().copyFromWeaponStats(newWeaponStats,
-            //        weaponObject.transform.GetChild(0).GetChild(0).transform, false);
 
             currentWeapon = weaponObject.GetComponent<rangedWeapon>();
-
             currentWeapon.weaponFirePos = weaponObject.transform.GetChild(0).GetChild(0).transform;
 
             // this took 4 hours to realize
@@ -121,14 +125,17 @@ public class Enemy : MonoBehaviour, IDamage
             return;
 
         Vector3 directionToTarget = (gameManager.instance.player.transform.position - gunPosition.transform.position);
+
+        _animator.SetFloat("fireSpeed", currentWeapon.fireRate * 250f); // Sets the multiplier for firing animation
+        _animator.SetTrigger("Shoot");
         currentWeapon.shoot(directionToTarget.normalized);
-        }
+    }
 
     private IEnumerator FlashMaterial()
     {
         // Made a new material so the original material isn't touched and possibly kept altered should it be interupted
         Material flashMaterial = Instantiate(_material);
-        flashMaterial.color = Color.red;
+        flashMaterial.color = Color.white;
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = flashMaterial;
         yield return new WaitForSeconds(_materialFlashSpeed);
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = _material;
