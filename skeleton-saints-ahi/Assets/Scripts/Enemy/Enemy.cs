@@ -1,22 +1,27 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IDamage
 {
     [SerializeField] private EnemyAI _enemyAi;
     [SerializeField] private Transform gunPosition;
+    [SerializeField] private GameObject healthBarUI;
+    [SerializeField] private Slider _healthBar;
     [SerializeField] private Transform handTransform;
     [SerializeField] float _materialFlashSpeed;
     [SerializeField] Material _material;
-    [Range(0,10)] [SerializeField] private int _health;
+    [Range(0,10)] [SerializeField] private float _health;
 
     public bool isShooting = false;
     public rangedWeapon currentWeapon;
     public bool acquiringWeapon;
     public bool hopefullyChildrenInstantiated;
 
+    private float _maxHealth;
+
     // Property to update _health field
-    public int Health
+    public float Health
     {
         get { return _health; }
         private set { _health = value; }
@@ -25,6 +30,9 @@ public class Enemy : MonoBehaviour, IDamage
     void Start()
     {
         gameManager.instance.updateEnemyCounter();
+
+        _maxHealth = _health;
+        _healthBar.value = CalculateHealth();
 
         if (_material == null)
             _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
@@ -41,6 +49,8 @@ public class Enemy : MonoBehaviour, IDamage
         // If not shooting and can see the player
         if(isShooting == false && _enemyAi.CanDetectPlayer && _enemyAi.CanShoot) 
             Shoot();
+
+
     }
 
     void OnDestroy()
@@ -53,10 +63,26 @@ public class Enemy : MonoBehaviour, IDamage
         }
     }
 
+    private float CalculateHealth()
+    {
+        return _health / _maxHealth;
+    }
+
     public void TakeDamage(int damage)
     {
         _health -= damage;
         StartCoroutine(FlashMaterial());
+
+        _healthBar.value = CalculateHealth();
+
+        if (_health > _maxHealth)
+            _health = _maxHealth;
+        
+        if(_health < _maxHealth)
+            healthBarUI.SetActive(true);
+
+        if(_health == _maxHealth)
+            healthBarUI.SetActive(false);
 
         if (_health <= 0)
             Destroy(gameObject);
