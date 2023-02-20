@@ -172,8 +172,13 @@ public class playerController : MonoBehaviour, IDamage
 
         // If the player presses the Dash button, and they aren't currently dashing, initiate a dash
         // If the player continues holding the dash button, they will start sprinting
-        if (Input.GetButtonDown("Dash") && !isDashing && currentStamina >= dashStaminaCost)
-            StartCoroutine(startDash());
+        if (Input.GetButtonDown("Dash"))
+        {
+            if (!isDashing && currentStamina >= dashStaminaCost)
+                StartCoroutine(startDash());
+            else
+                isSprinting = true;
+        }
 
         // Lerp external velocity back down to zero over time only if the player isn't actively grappling
         if (!isGrappling)
@@ -234,13 +239,18 @@ public class playerController : MonoBehaviour, IDamage
         // If the player is still holding the dash button down after the dash ends, they will continue sprinting at an increased speed
         if (Input.GetButton("Dash"))
         {
-            playerSpeed = sprintSpeed;
-            isSprinting = true;
+            startSprint();
         }
         else
         {
             playerSpeed = defaultSpeed;
         }
+    }
+
+    void startSprint()
+    {
+        playerSpeed = sprintSpeed;
+        isSprinting = true;
     }
 
     #endregion

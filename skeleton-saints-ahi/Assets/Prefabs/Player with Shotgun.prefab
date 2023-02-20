@@ -145,8 +145,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 32cec9cc9a2b59544834839747e558b2, type: 3}
   gunshotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   raycastRange: 100
+  externalVelocityDecay: 4
   currentWeapon: {fileID: 0}
   isShooting: 0
+  isGrappling: 0
+  currentHealth: 0
+  currentArmor: 0
 --- !u!82 &3768964609929772061
 AudioSource:
   m_ObjectHideFlags: 0
