@@ -11,6 +11,7 @@ public class explosion : MonoBehaviour
     [SerializeField] int explosionDamage;
 
     MeshRenderer meshRender;
+    bool exploding = false;
 
     void Awake()
     {
@@ -21,21 +22,22 @@ public class explosion : MonoBehaviour
             explosionTime = 0.01f;
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if (exploding)
-    //    {
-    //        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * fullExplosionScale, Time.deltaTime * (1.0f / explosionTime));
-    //        if (transform.localScale.magnitude >= (Vector3.one * fullExplosionScale).magnitude - 0.05f)
-    //            Destroy(gameObject, 0.1f);
-    //    }
-    //}
+     //Update is called once per frame
+    void Update()
+    {
+        if (exploding)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * fullExplosionScale, Time.deltaTime * (1.0f / explosionTime));
+            if (transform.localScale.magnitude >= (Vector3.one * fullExplosionScale).magnitude - 0.05f)
+                Destroy(gameObject, 0.1f);
+        }
+    }
 
     public void explode()
     {
         meshRender.enabled = true;
-        transform.localScale = Vector3.one * fullExplosionScale;
+        exploding = true;
+        //transform.localScale = Vector3.one * fullExplosionScale;
         Destroy(gameObject, explosionTime);
     }
 
