@@ -23,20 +23,22 @@ public class gameManager : MonoBehaviour
     public GameObject creditsMenu;
     public Image playerHealthBar;
     public Image playerStaminaBar;
+    public Image playerArmorBar;
     public TextMeshProUGUI playerAmmoText;
+    public TextMeshProUGUI keyCard01Text;
+    public TextMeshProUGUI keyCard02Text;
     public TextMeshProUGUI enemiesCounter;
     public GameObject damageFlashScreen;
     public Image card01;
     public Image card02;
-    public Image card03;
-    public Image card04;
 
     [Header("----- Game Goals -----")]
     public int enemiesRemaining;
     public GameObject keyCard01;
+    [SerializeField] public bool kCard01;
     public GameObject keyCard02;
-    public GameObject keyCard03;
-    public GameObject keyCard04;
+    [SerializeField] public bool kCard02;
+
     public bool isPaused;
 
     private void Awake()

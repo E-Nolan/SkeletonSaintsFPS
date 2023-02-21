@@ -24,18 +24,14 @@ public class IKey : MonoBehaviour
                 case "Card01":
                     Destroy(gameObject);
                     gameManager.instance.card01.color = new Color(gameManager.instance.card01.color.r, gameManager.instance.card01.color.g, gameManager.instance.card01.color.b, 1f);
+                    gameManager.instance.keyCard01Text.color = new Color(gameManager.instance.keyCard01Text.color.r, gameManager.instance.keyCard01Text.color.g, gameManager.instance.keyCard01Text.color.b, 1f);
+                    gameManager.instance.kCard01 = !gameManager.instance.kCard01;
                     return;
                 case "Card02":
                     Destroy(gameObject);
                     gameManager.instance.card02.color = new Color(gameManager.instance.card02.color.r, gameManager.instance.card02.color.g, gameManager.instance.card02.color.b, 1f);
-                    return;
-                case "Card03":
-                    Destroy(gameObject);
-                    gameManager.instance.card03.color = new Color(gameManager.instance.card03.color.r, gameManager.instance.card03.color.g, gameManager.instance.card03.color.b, 1f);
-                    return;
-                case "Card04":
-                    Destroy(gameObject);
-                    gameManager.instance.card04.color = new Color(gameManager.instance.card04.color.r, gameManager.instance.card04.color.g, gameManager.instance.card04.color.b, 1f);
+                    gameManager.instance.keyCard02Text.color = new Color(gameManager.instance.keyCard02Text.color.r, gameManager.instance.keyCard02Text.color.g, gameManager.instance.keyCard02Text.color.b, 1f);
+                    gameManager.instance.kCard02 = !gameManager.instance.kCard02;
                     return;
 
             }
