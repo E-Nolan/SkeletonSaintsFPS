@@ -21,8 +21,8 @@ MonoBehaviour:
   bulletSpeed: 40
   fireRate: 0.5
   damage: 1
-  bulletsPerSpread: 8
-  spreadAngle: 8
+  bulletsPerSpread: 15
+  spreadAngle: 12
   bulletsPerBurst: 1
   burstFireDelay: 0
   infiniteAmmo: 0

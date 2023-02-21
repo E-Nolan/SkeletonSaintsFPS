@@ -20,13 +20,13 @@ MonoBehaviour:
   shotSound: {fileID: 0}
   bulletSpeed: 40
   fireRate: 0.1
-  damage: 1
+  damage: 2
   bulletsPerSpread: 1
-  spreadAngle: 5
+  spreadAngle: 3
   bulletsPerBurst: 1
   burstFireDelay: 0
   infiniteAmmo: 0
-  startingAmmo: 40
-  maxAmmo: 160
+  startingAmmo: 50
+  maxAmmo: 200
   ammoRecovery: 25
   range: 5

@@ -19,7 +19,7 @@ MonoBehaviour:
   inactiveweaponIcon: {fileID: 21300000, guid: 19f4f065ff056b8429ce734ac0f56c18, type: 3}
   shotSound: {fileID: 0}
   bulletSpeed: 45
-  fireRate: 0.3
+  fireRate: 0.4
   damage: 2
   bulletsPerSpread: 1
   spreadAngle: 0

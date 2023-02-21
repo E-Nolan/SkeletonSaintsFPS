@@ -18,13 +18,13 @@ MonoBehaviour:
   activeweaponIcon: {fileID: 0}
   inactiveweaponIcon: {fileID: 0}
   shotSound: {fileID: 0}
-  bulletSpeed: 50
-  fireRate: 0.3
+  bulletSpeed: 35
+  fireRate: 0.6
   damage: 2
   bulletsPerSpread: 1
   spreadAngle: 0
   bulletsPerBurst: 3
-  burstFireDelay: 0.05
+  burstFireDelay: 0.1
   infiniteAmmo: 1
   startingAmmo: 30
   maxAmmo: 120

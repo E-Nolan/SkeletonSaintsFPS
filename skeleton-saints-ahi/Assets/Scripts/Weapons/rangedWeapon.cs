@@ -162,6 +162,9 @@ public class rangedWeapon : MonoBehaviour
         for (int i = 0; i < bulletsPerSpread; i++)
         {
             // Find the rotation that will be applied to the new bullet
+            if (!usedByPlayer)
+                targetFinder.transform.LookAt(gameManager.instance.player.transform);
+
             targetFinder.transform.rotation.SetLookRotation(fireDirection, Vector3.up);
             if (spreadAngle > 0)
                 getRandomSpreadTarget();
@@ -171,6 +174,7 @@ public class rangedWeapon : MonoBehaviour
             GameObject newBullet = Instantiate(gunBullet, weaponFirePos.position, targetFinder.transform.rotation);
             newBullet.GetComponent<bullet>().bulletDmg = damage;
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed;
+            Debug.DrawRay(weaponFirePos.position, targetFinder.transform.forward * 10.0f, Color.blue, 1.0f);
             targetFinder.transform.rotation = weaponFirePos.rotation;
         }
 
