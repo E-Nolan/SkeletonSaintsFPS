@@ -143,7 +143,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8, y: 4, z: 6}
+  m_Size: {x: 8, y: 8, z: 6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-4664017784550033859
 MonoBehaviour:
@@ -157,11 +157,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e2055f9752d848dcbf3f4e48d3d73b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gate: {fileID: 3708069520748341801}
-  entryLevel: 000000
-  endPos: {x: 0, y: 0, z: 0}
+  gate: {fileID: 5210469735924719254}
+  sensor: {fileID: 9162777715033459938}
+  entryLevel: 010000
+  gateUp: 5
   openingSpeed: 5
-  delay: 0
 --- !u!1 &9162777715033459938
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 102765982989376910}
   - component: {fileID: 3479401844621520336}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
