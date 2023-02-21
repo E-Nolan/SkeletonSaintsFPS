@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireball: {fileID: 0}
-  fullExplosionScale: 500
+  fullExplosionScale: 10
   explosionTime: 0.8
-  explosionDamage: 999999
+  explosionDamage: 20
+  explosionForce: 0

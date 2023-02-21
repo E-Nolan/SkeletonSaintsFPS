@@ -20,7 +20,7 @@ MonoBehaviour:
   shotSound: {fileID: 0}
   bulletSpeed: 35
   fireRate: 0.6
-  damage: 2
+  damage: 3
   bulletsPerSpread: 1
   spreadAngle: 0
   bulletsPerBurst: 3

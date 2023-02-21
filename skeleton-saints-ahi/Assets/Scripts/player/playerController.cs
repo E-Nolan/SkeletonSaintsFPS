@@ -31,6 +31,7 @@ public class playerController : MonoBehaviour, IDamage
     [Range(0, 5)] [SerializeField] int maxArmor;
     [Range(0.0f, 10.0f)] [SerializeField] float armorRegenSpeed;
     [Range(0.0f, 5.0f)] [SerializeField] float armorRegenCooldown;
+    [Range(0.0f, 2.0f)] [SerializeField] float invincibilityTime;
 
     [Header("----- Jump -----")]
     [Range(3, 50)] [SerializeField] int jumpSpeed;
@@ -68,6 +69,7 @@ public class playerController : MonoBehaviour, IDamage
     int defaultSpeed;
     float staminaRegenTimer;
     float armorRegenTimer;
+    float invincibilityTimer;
 
     public rangedWeapon currentWeapon;
     public bool isDashing { get; private set; } = false;
@@ -112,6 +114,9 @@ public class playerController : MonoBehaviour, IDamage
         // Decrement the armor regen timer. If any damage is taken this frame, the timer will be reset
         if (armorRegenTimer > 0.0f)
             armorRegenTimer -= Time.deltaTime;
+        // Decrement the invincibility timer.
+        if (invincibilityTimer > 0.0f)
+            invincibilityTimer -= Time.deltaTime;
 
 
         // Handle movement for the player
@@ -287,10 +292,14 @@ public class playerController : MonoBehaviour, IDamage
     /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
-        takeArmorDamage(ref damage);
-        updateHealth(-damage);
-        updatePlayerHealthBar();
-        StartCoroutine(flashDamage());
+        if (invincibilityTimer <= 0.0f)
+        {
+            takeArmorDamage(ref damage);
+            updateHealth(-damage);
+            updatePlayerHealthBar();
+            StartCoroutine(flashDamage());
+            invincibilityTimer = invincibilityTime;
+        }
     }
 
     void takeArmorDamage(ref int damage)

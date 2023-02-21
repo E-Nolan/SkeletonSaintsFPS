@@ -36,7 +36,7 @@ public class hookPoint : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // If the hook collides with a grapple point, freeze the hook in place and accelerate the player towards the hook
-        if (collision.transform.CompareTag("GrapplePoint"))
+        if (collision.transform.CompareTag("GrapplePoint") || collision.transform.CompareTag("Enemy"))
         {
             rb.isKinematic = true;
             beginPulling();

@@ -53,6 +53,9 @@ public class explosiveObject : MonoBehaviour, IDamage
             gameObject.GetComponent<MeshRenderer>().enabled = false;
         if (gameObject.GetComponent<Rigidbody>())
             gameObject.GetComponent<Rigidbody>().useGravity = false;
+        if (gameObject.GetComponent<Collider>())
+            gameObject.GetComponent<Collider>().enabled = false;
+        Destroy(gameObject, 5.0f);
 
         explosion.GetComponent<explosion>().explode();
     }

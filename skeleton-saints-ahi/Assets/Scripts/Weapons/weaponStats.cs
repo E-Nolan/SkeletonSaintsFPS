@@ -33,4 +33,5 @@ public class weaponStats : ScriptableObject
     [Range(0, 40)] public int ammoRecovery;
     [Tooltip("Currently only used for grapple gun range")]
     [Range(5, 100)] public int range;
+    public bool lobbedWeapon;
 }

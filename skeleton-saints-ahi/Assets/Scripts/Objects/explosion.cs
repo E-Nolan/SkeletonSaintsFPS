@@ -9,6 +9,7 @@ public class explosion : MonoBehaviour
     [Tooltip("In seconds")]
     [Range(0.01f, 1.0f)] [SerializeField] float explosionTime;
     [SerializeField] int explosionDamage;
+    [Range(0, 100)] [SerializeField] int explosionForce;
 
     MeshRenderer meshRender;
     bool exploding = false;
@@ -45,5 +46,7 @@ public class explosion : MonoBehaviour
     {
         if (other.GetComponent<IDamage>() != null)
             other.GetComponent<IDamage>().TakeDamage(explosionDamage);
+        if (other.CompareTag("Player"))
+            gameManager.instance.playerScript.giveExternalVelocity((gameManager.instance.player.transform.position - transform.position).normalized * explosionForce);
     }
 }

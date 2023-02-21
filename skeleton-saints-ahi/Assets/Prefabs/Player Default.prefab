@@ -110,6 +110,7 @@ MonoBehaviour:
   maxArmor: 3
   armorRegenSpeed: 0.5
   armorRegenCooldown: 2
+  invincibilityTime: 0.15
   jumpSpeed: 8
   maxJumps: 1
   jumpStaminaCost: 0
