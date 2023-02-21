@@ -15,6 +15,8 @@ MonoBehaviour:
   weaponType: 0
   weaponModel: {fileID: 4068021025288313986, guid: 35ca6e47c9bc8c04abcbe7c3a3fcbd50, type: 3}
   gunBullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
+  activeweaponIcon: {fileID: 21300000, guid: c07c2d980004210469708214b89f1d30, type: 3}
+  inactiveweaponIcon: {fileID: 0}
   shotSound: {fileID: 0}
   bulletSpeed: 50
   fireRate: 0.3
