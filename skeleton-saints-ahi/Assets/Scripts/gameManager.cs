@@ -26,10 +26,17 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI playerAmmoText;
     public TextMeshProUGUI enemiesCounter;
     public GameObject damageFlashScreen;
+    public Image card01;
+    public Image card02;
+    public Image card03;
+    public Image card04;
 
     [Header("----- Game Goals -----")]
     public int enemiesRemaining;
-
+    public GameObject keyCard01;
+    public GameObject keyCard02;
+    public GameObject keyCard03;
+    public GameObject keyCard04;
     public bool isPaused;
 
     private void Awake()
