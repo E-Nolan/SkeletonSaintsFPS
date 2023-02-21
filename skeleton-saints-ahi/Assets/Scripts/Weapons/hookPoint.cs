@@ -51,7 +51,7 @@ public class hookPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.GetComponent<collectiblePickup>())
+        if (other.transform.CompareTag("Collectible"))
         {
             // Set the pickup's parent to the hook, so that it will be moved with the hook, then retract the hook
             if (currentCatch == null)

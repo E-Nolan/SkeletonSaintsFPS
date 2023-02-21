@@ -9,6 +9,7 @@ TagManager:
   - PlayerHeadPosition
   - HeadPosition
   - GrapplePoint
+  - Collectible
   layers:
   - Default
   - TransparentFX
