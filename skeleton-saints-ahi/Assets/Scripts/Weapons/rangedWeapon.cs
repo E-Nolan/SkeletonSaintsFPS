@@ -119,7 +119,10 @@ public class rangedWeapon : MonoBehaviour
 
     void updateAmmoDisplay()
     {
-        gameManager.instance.playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
+        if (infiniteAmmo)
+            gameManager.instance.playerAmmoText.text = "";
+        else
+            gameManager.instance.playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
     }
 
     #endregion

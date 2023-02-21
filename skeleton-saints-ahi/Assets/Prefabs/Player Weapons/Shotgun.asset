@@ -27,6 +27,6 @@ MonoBehaviour:
   burstFireDelay: 0
   infiniteAmmo: 0
   startingAmmo: 20
-  maxAmmo: 80
+  maxAmmo: 50
   ammoRecovery: 10
-  range: 5
+  range: 10

@@ -74,6 +74,7 @@ MonoBehaviour:
   bulletDmg: 0
   timer: 15
   bulletImpactSound: {fileID: 0}
+  damagePopupPrefab: {fileID: 5156991524456792442, guid: 48bf4594a2656ef49afe5d660714f3c4, type: 3}
 --- !u!33 &4571660264417320555
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -468,6 +469,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireball: {fileID: 0}
-  fullExplosionScale: 3
-  explosionTime: 0.4
-  explosionDamage: 1
+  fullExplosionScale: 7
+  explosionTime: 0.5
+  explosionDamage: 20

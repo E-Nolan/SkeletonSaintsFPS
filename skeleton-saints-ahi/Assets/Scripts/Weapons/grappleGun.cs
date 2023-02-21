@@ -98,6 +98,6 @@ public class grappleGun : rangedWeapon
 
     void updateAmmoDisplay()
     {
-        gameManager.instance.playerAmmoText.SetText("Inf");
+        gameManager.instance.playerAmmoText.SetText("");
     }
 }

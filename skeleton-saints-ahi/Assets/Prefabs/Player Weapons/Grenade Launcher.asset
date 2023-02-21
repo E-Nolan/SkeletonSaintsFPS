@@ -25,7 +25,7 @@ MonoBehaviour:
   spreadAngle: 0
   bulletsPerBurst: 1
   burstFireDelay: 0
-  infiniteAmmo: 1
+  infiniteAmmo: 0
   startingAmmo: 4
   maxAmmo: 10
   ammoRecovery: 2

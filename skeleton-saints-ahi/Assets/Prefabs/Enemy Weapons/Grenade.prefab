@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -5934196093736069149}
   - component: {fileID: -2001142562765126421}
   - component: {fileID: 8791168434609082687}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,6 +74,7 @@ MonoBehaviour:
   bulletDmg: 0
   timer: 15
   bulletImpactSound: {fileID: 0}
+  damagePopupPrefab: {fileID: 0}
 --- !u!33 &4571660264417320555
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -370,7 +371,7 @@ GameObject:
   - component: {fileID: 1514255033872049166}
   - component: {fileID: 7282140164940744836}
   - component: {fileID: 1311152746299294199}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -468,6 +469,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireball: {fileID: 0}
-  fullExplosionScale: 3
-  explosionTime: 0.4
+  fullExplosionScale: 4
+  explosionTime: 0.6
   explosionDamage: 1
