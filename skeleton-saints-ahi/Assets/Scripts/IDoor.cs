@@ -10,7 +10,7 @@ public class IDoor : MonoBehaviour
     [SerializeField] GameObject sensor;
 
     [SerializeField] bool[] entryLevel = new bool[4];
-
+    
     [SerializeField] int door1X;
     [SerializeField] int door1Z;
 
