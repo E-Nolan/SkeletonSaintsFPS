@@ -101,6 +101,7 @@ public class playerController : MonoBehaviour, IDamage
 
         updatePlayerHealthBar();
         updatePlayerStaminaBar();
+        updatePlayerArmorBar();
 
         rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
     }
@@ -314,7 +315,7 @@ public class playerController : MonoBehaviour, IDamage
         else
             damage = 0;
 
-        updateArmorDisplay();
+        updatePlayerArmorBar();
         // Reset the armor regen cooldown
         armorRegenTimer = armorRegenCooldown;
 
@@ -485,12 +486,12 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentArmor += armorGain;
         currentArmor = Mathf.Clamp(currentArmor, 0.0f, maxArmor);
-        updateArmorDisplay();
+        updatePlayerArmorBar();
     }
 
-    public void updateArmorDisplay()
+    public void updatePlayerArmorBar()
     {
-        // TODO
+        gameManager.instance.playerArmorBar.fillAmount = (float)currentArmor / (float)maxArmor;
     }
 
     public int GetMaxHealth()

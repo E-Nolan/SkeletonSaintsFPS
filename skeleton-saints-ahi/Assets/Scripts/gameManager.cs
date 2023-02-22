@@ -25,12 +25,8 @@ public class gameManager : MonoBehaviour
     public Image playerStaminaBar;
     public Image playerArmorBar;
     public TextMeshProUGUI playerAmmoText;
-    public TextMeshProUGUI keyCard01Text;
-    public TextMeshProUGUI keyCard02Text;
-    public TextMeshProUGUI enemiesCounter;
-    public GameObject damageFlashScreen;
-    public Image card01;
-    public Image card02;
+    public Image playerActiveGun;
+    
 
     [Header("----- Game Goals -----")]
     public int enemiesRemaining;
@@ -38,6 +34,16 @@ public class gameManager : MonoBehaviour
     [SerializeField] public bool kCard01;
     public GameObject keyCard02;
     [SerializeField] public bool kCard02;
+    public GameObject keyCard03;
+    [SerializeField] public bool kCard03;
+    public TextMeshProUGUI keyCard01Text;
+    public TextMeshProUGUI keyCard02Text;
+    public TextMeshProUGUI keyCard03Text;
+    public TextMeshProUGUI enemiesCounter;
+    public GameObject damageFlashScreen;
+    public Image card01;
+    public Image card02;
+    public Image card03;
 
     public bool isPaused;
 
