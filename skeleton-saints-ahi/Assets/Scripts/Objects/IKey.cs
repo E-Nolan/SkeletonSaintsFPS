@@ -41,7 +41,7 @@ public class IKey : MonoBehaviour
                     Destroy(gameObject);
                     gameManager.instance.card03.color = new Color(gameManager.instance.card03.color.r, gameManager.instance.card03.color.g, gameManager.instance.card03.color.b, 1f);
                     gameManager.instance.keyCard03Text.color = new Color(gameManager.instance.keyCard03Text.color.r, gameManager.instance.keyCard03Text.color.g, gameManager.instance.keyCard03Text.color.b, 1f);
-                    gameManager.instance.keyCard[2] = !gameManager.instance.keyCard[];
+                    gameManager.instance.keyCard[2] = !gameManager.instance.keyCard[2];
                     return;
 
             }
