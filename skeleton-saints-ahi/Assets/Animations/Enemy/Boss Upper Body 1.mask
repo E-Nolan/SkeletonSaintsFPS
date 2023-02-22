@@ -1,0 +1,283 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Boss Upper Body 1
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/Floor
+    m_Weight: 1
+  - m_Path: Armature/Floor/Floor_end
+    m_Weight: 1
+  - m_Path: Armature/Head_Target
+    m_Weight: 1
+  - m_Path: Armature/Head_Target/Head_Target_end
+    m_Weight: 1
+  - m_Path: Armature/Leg_B_Guide_L
+    m_Weight: 0
+  - m_Path: Armature/Leg_B_Guide_L/Leg_B_Guide_L_end
+    m_Weight: 1
+  - m_Path: Armature/Leg_B_Guide_R
+    m_Weight: 0
+  - m_Path: Armature/Leg_B_Guide_R/Leg_B_Guide_R_end
+    m_Weight: 1
+  - m_Path: Armature/Leg_F_Guide_L
+    m_Weight: 0
+  - m_Path: Armature/Leg_F_Guide_L/Leg_F_Guide_L_end
+    m_Weight: 1
+  - m_Path: Armature/Leg_F_Guide_R
+    m_Weight: 0
+  - m_Path: Armature/Leg_F_Guide_R/Leg_F_Guide_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_L
+    m_Weight: 0
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_L/Leg_B_2_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_L/Leg_B_2_L/Leg_B_3_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_L/Leg_B_2_L/Leg_B_3_L/Leg_B_4_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_L/Leg_B_2_L/Leg_B_3_L/Leg_B_4_L/Leg_B_5_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_L/Leg_B_2_L/Leg_B_3_L/Leg_B_4_L/Leg_B_5_L/Leg_B_IK_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_L/Leg_B_2_L/Leg_B_3_L/Leg_B_4_L/Leg_B_5_L/Leg_B_IK_L/Leg_B_IK_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_R
+    m_Weight: 0
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_R/Leg_B_2_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_R/Leg_B_2_R/Leg_B_3_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_R/Leg_B_2_R/Leg_B_3_R/Leg_B_4_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_R/Leg_B_2_R/Leg_B_3_R/Leg_B_4_R/Leg_B_5_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_R/Leg_B_2_R/Leg_B_3_R/Leg_B_4_R/Leg_B_5_R/Leg_B_IK_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_B_1_R/Leg_B_2_R/Leg_B_3_R/Leg_B_4_R/Leg_B_5_R/Leg_B_IK_R/Leg_B_IK_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_L
+    m_Weight: 0
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_L/Leg_F_3_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_L/Leg_F_3_L/Leg_F_4_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_L/Leg_F_3_L/Leg_F_4_L/Leg_F_5_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_L/Leg_F_3_L/Leg_F_4_L/Leg_F_5_L/Leg_F_6_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_L/Leg_F_3_L/Leg_F_4_L/Leg_F_5_L/Leg_F_6_L/Leg_F_IK_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_L/Leg_F_3_L/Leg_F_4_L/Leg_F_5_L/Leg_F_6_L/Leg_F_IK_L/Leg_F_IK_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_R
+    m_Weight: 0
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_R/Leg_F_3_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_R/Leg_F_3_R/Leg_F_4_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_R/Leg_F_3_R/Leg_F_4_R/Leg_F_5_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_R/Leg_F_3_R/Leg_F_4_R/Leg_F_5_R/Leg_F_6_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_R/Leg_F_3_R/Leg_F_4_R/Leg_F_5_R/Leg_F_6_R/Leg_F_IK_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Leg_F_1_R/Leg_F_3_R/Leg_F_4_R/Leg_F_5_R/Leg_F_6_R/Leg_F_IK_R/Leg_F_IK_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L/Pincer_3_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L/Pincer_3_L/Pincer_4_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L/Pincer_3_L/Pincer_4_L/Pincer_Claw_1_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L/Pincer_3_L/Pincer_4_L/Pincer_Claw_1_L/Pincer_Claw_1_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L/Pincer_3_L/Pincer_4_L/Pincer_Claw_2_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L/Pincer_3_L/Pincer_4_L/Pincer_Claw_2_L/Pincer_Claw_2_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L/Pincer_3_L/Pincer_4_L/Pincer_IK_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_L/Pincer_2_L/Pincer_3_L/Pincer_4_L/Pincer_IK_L/Pincer_IK_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R/Pincer_3_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R/Pincer_3_R/Pincer_4_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R/Pincer_3_R/Pincer_4_R/Pincer_Claw_1_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R/Pincer_3_R/Pincer_4_R/Pincer_Claw_1_R/Pincer_Claw_1_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R/Pincer_3_R/Pincer_4_R/Pincer_Claw_2_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R/Pincer_3_R/Pincer_4_R/Pincer_Claw_2_R/Pincer_Claw_2_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R/Pincer_3_R/Pincer_4_R/Pincer_IK_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_1_R/Pincer_2_R/Pincer_3_R/Pincer_4_R/Pincer_IK_R/Pincer_IK_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_Target_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_Target_L/Pincer_Target_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_Target_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Pincer_Target_R/Pincer_Target_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Tail_1
+    m_Weight: 0
+  - m_Path: Armature/Root/Thorax_1/Tail_1/Tail_2
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Tail_1/Tail_2/Tail_2_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2
+    m_Weight: 0
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_L/Arm_2_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_L/Arm_2_L/Arm_3_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_L/Arm_2_L/Arm_3_L/Spike_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_L/Arm_2_L/Arm_3_L/Spike_L/Spike_IK_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_L/Arm_2_L/Arm_3_L/Spike_L/Spike_IK_L/Spike_IK_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_R/Arm_2_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_R/Arm_2_R/Arm_3_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_R/Arm_2_R/Arm_3_R/Spike_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_R/Arm_2_R/Arm_3_R/Spike_R/Spike_IK_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Arm_1_R/Arm_2_R/Arm_3_R/Spike_R/Spike_IK_R/Spike_IK_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Head_IK
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Head_IK/Head_IK_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Head_Look_IK
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Head_Look_IK/Head_Look_IK_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_B_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_B_L/Tooth_B_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_B_L/Tooth_B_L/Tooth_B_IK_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_B_L/Tooth_B_L/Tooth_B_IK_L/Tooth_B_IK_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_B_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_B_R/Tooth_B_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_B_R/Tooth_B_R/Tooth_B_IK_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_B_R/Tooth_B_R/Tooth_B_IK_R/Tooth_B_IK_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_F_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_F_L/Tooth_F_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_F_L/Tooth_F_L/Tooth_F_IK_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_F_L/Tooth_F_L/Tooth_F_IK_L/Tooth_F_IK_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_F_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_F_R/Tooth_F_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_F_R/Tooth_F_R/Tooth_F_IK_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_F_R/Tooth_F_R/Tooth_F_IK_R/Tooth_F_IK_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_M_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_M_L/Tooth_M_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_M_L/Tooth_M_L/Tooth_M_IK_L
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_M_L/Tooth_M_L/Tooth_M_IK_L/Tooth_M_IK_L_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_M_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_M_R/Tooth_M_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_M_R/Tooth_M_R/Tooth_M_IK_R
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mandible_M_R/Tooth_M_R/Tooth_M_IK_R/Tooth_M_IK_R_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mouth_Movement_Even
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mouth_Movement_Even/Mouth_Movement_Even_end
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mouth_Movement_Odd
+    m_Weight: 1
+  - m_Path: Armature/Root/Thorax_1/Thorax_2/Thorax_3/Head/Mouth_Movement_Odd/Mouth_Movement_Odd_end
+    m_Weight: 1
+  - m_Path: Armature/Spike_Guide_L
+    m_Weight: 1
+  - m_Path: Armature/Spike_Guide_L/Spike_Guide_L_end
+    m_Weight: 1
+  - m_Path: Armature/Spike_Guide_R
+    m_Weight: 1
+  - m_Path: Armature/Spike_Guide_R/Spike_Guide_R_end
+    m_Weight: 1
+  - m_Path: Armature/Tooth_B_Target_L
+    m_Weight: 1
+  - m_Path: Armature/Tooth_B_Target_L/Tooth_B_Target_L_end
+    m_Weight: 1
+  - m_Path: Armature/Tooth_B_Target_R
+    m_Weight: 1
+  - m_Path: Armature/Tooth_B_Target_R/Tooth_B_Target_R_end
+    m_Weight: 1
+  - m_Path: Armature/Tooth_F_Target_L
+    m_Weight: 1
+  - m_Path: Armature/Tooth_F_Target_L/Tooth_F_Target_L_end
+    m_Weight: 1
+  - m_Path: Armature/Tooth_F_Target_R
+    m_Weight: 1
+  - m_Path: Armature/Tooth_F_Target_R/Tooth_F_Target_R_end
+    m_Weight: 1
+  - m_Path: Armature/Tooth_M_Target_L
+    m_Weight: 1
+  - m_Path: Armature/Tooth_M_Target_L/Tooth_M_Target_L_end
+    m_Weight: 1
+  - m_Path: Armature/Tooth_M_Target_R
+    m_Weight: 1
+  - m_Path: Armature/Tooth_M_Target_R/Tooth_M_Target_R_end
+    m_Weight: 1
+  - m_Path: Eyes
+    m_Weight: 1
+  - m_Path: Rikayon
+    m_Weight: 1

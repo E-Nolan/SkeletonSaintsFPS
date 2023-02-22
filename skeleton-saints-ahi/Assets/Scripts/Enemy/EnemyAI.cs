@@ -1,12 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Animations;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -24,31 +19,37 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private EnemyLookAt _enemyLookAt;
 
     [Header("----- Misc -----")]
-    [Range(1, 20)] [SerializeField] private int _turnSpeed;
+    [Range(1, 20)] [SerializeField] private float _turnSpeed;
     [Range(1, 20)] [SerializeField] private int _roamingDelay;
     [SerializeField] public Vector3 playerDirection;
     [SerializeField] private Enemy _enemyScript;
 
     [Header("----- Publics -----")]
-    // Public for the FieldOfViewEditor Editor script
-     [Range(0,360)] public float ViewAngle;
-     [Range(0,360)] public float FireAngle;
-     public int ViewRadius;
-     public int SprintDetectRadius;
-     public int WalkDetectRadius;
-     public int ShootDetectRadius;
-     public bool CanDetectPlayer = false;
-     public bool CanShoot = false;
+    [Range(0,360)] public float ViewAngle;
+    [Range(0,360)] public float FireAngle;
+    public int ViewRadius;
+    public int SprintDetectRadius;
+    public int WalkDetectRadius;
+    public int ShootDetectRadius;
+    public bool CanDetectPlayer = false;
+    public bool CanAttack = false;
+    [Range(1,5)] public float chaseMultiplier;
+    [Range(1,5)] public float turnMultiplier;
+    public float originalTurnSpeed;
+    public float originalStoppingDistance;
+    public float originalSpeed;
+    public float originalAcceleration;
 
-     [Header("----- Fallback AI (buggy) -----")] 
+    [Header("----- Boss -----")]
+    public bool BossEnemy;
+    public int AttackDamage;
+
+    [Header("----- Fallback AI (buggy) -----")] 
     [SerializeField] private bool _useFallbackAi;
-
 
     private Vector2 smoothDeltaPosition;
     private Vector2 velocity;
-    private float originalStoppingDistance;
-    private int originalTurnSpeed;
-    private bool destinationChosen = false;
+    private bool destinationChosen;
 
     void Awake()
     {
@@ -57,6 +58,8 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        BossEnemy = name == "crab-monster";
+
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();
 
@@ -80,6 +83,8 @@ public class EnemyAI : MonoBehaviour
         _agent.updatePosition = false;
         originalStoppingDistance = _agent.stoppingDistance;
         originalTurnSpeed = _turnSpeed;
+        originalSpeed = _agent.speed;
+        originalAcceleration = _agent.acceleration;
     }
 
     void Update()
@@ -126,7 +131,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 // Enemy would continue current animation when should be idling, so if the agent has no velocity,
-                // manually set the parameters
+                    // manually set the parameters
                 _animator.SetFloat("xVelocity", 0f, 0.1f, Time.deltaTime);
                 _animator.SetFloat("yVelocity", 0f, 0.1f, Time.deltaTime);
             }
@@ -145,127 +150,90 @@ public class EnemyAI : MonoBehaviour
 
     private void CheckForPlayer()
     {
-        if (!_useFallbackAi)
+        #region CUSTOM_AI
+        // Checks in a sphere around the Enemy's position in a given radius (ViewRadius)
+        // Looks in only the Player layer mask so nothing other than Player is detected
+        Collider[] targetsInViewRange = Physics.OverlapSphere(transform.position, ViewRadius, _playerMask);
+
+        // Run as long as the Player was detected within the OverlapSphere()
+        if (targetsInViewRange.Length != 0)
         {
-            #region CUSTOM_AI
-            // Checks in a sphere around the Enemy's position in a given radius (ViewRadius)
-            // Looks in only the Player layer mask so nothing other than Player is detected
-            Collider[] targetsInViewRange = Physics.OverlapSphere(transform.position, ViewRadius, _playerMask);
+            // OverlapSphere() only returns an array of Colliders so only take the first array entry (should only be one player)
+            Transform playerTransform = targetsInViewRange[0].transform;
 
-            // Run as long as the Player was detected within the OverlapSphere()
-            if (targetsInViewRange.Length != 0)
+            // Get the direction the player is from the Enemy
+            playerDirection = (playerTransform.position - transform.position).normalized;
+
+            // Get the distance between the Enemy and the Player
+            float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+            // Enter the if when:
+            // - the Player is in the viewing angle of the Enemy
+            // - the Player is within the SprintDetectRadius and is Sprinting
+            // - the Player is within the ShootDetectRadius and is Shooting
+            // - the Player is within the WalkDetectRadius
+            if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
+                (distanceToPlayer <= SprintDetectRadius && IsPlayerSprinting()) || 
+                (distanceToPlayer <= ShootDetectRadius && IsPlayerShooting()) ||
+                distanceToPlayer <= WalkDetectRadius)
             {
-                // OverlapSphere() only returns an array of Colliders so only take the first array entry (should only be one player)
-                Transform playerTransform = targetsInViewRange[0].transform;
 
-                // Get the direction the player is from the Enemy
-                playerDirection = (playerTransform.position - transform.position).normalized;
+                if (distanceToPlayer <= WalkDetectRadius)
+                    FacePlayer();
 
-                // Get the distance between the Enemy and the Player
-                float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-                // Enter the if when:
-                // - the Player is in the viewing angle of the Enemy
-                // - the Player is within the SprintDetectRadius and is Sprinting
-                // - the Player is within the ShootDetectRadius and is Shooting
-                // - the Player is within the WalkDetectRadius
-                if (Vector3.Angle(transform.forward, playerDirection) < ViewAngle / 2 ||
-                    (distanceToPlayer <= SprintDetectRadius && IsPlayerSprinting()) || 
-                    (distanceToPlayer <= ShootDetectRadius && IsPlayerShooting()) ||
-                    distanceToPlayer <= WalkDetectRadius)
+                // Checks if an Obstacle with the Obstacle layer mask is between the Enemy and Player
+                // If no Obstacle was detected, runs the if, else the Enemy can't see the Player
+                if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
                 {
-                    // Checks if an Obstacle with the Obstacle layer mask is between the Enemy and Player
-                    // If no Obstacle was detected, runs the if, else the Enemy can't see the Player
-                    if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
+                    CanDetectPlayer = true;
+
+                    if (NavMesh.SamplePosition(playerTransform.position, out NavMeshHit hit, ViewRadius, -1))
                     {
-                        CanDetectPlayer = true;
-
-                        if (NavMesh.SamplePosition(playerTransform.position, out NavMeshHit hit, ViewRadius, -1))
-                        {
-                            _agent.SetDestination(hit.position);
-                            _agent.stoppingDistance = originalStoppingDistance;
-                            IncreaseTurnSpeed();
-                        }
-
-                        // If the Player is within the stopping distance of the Enemy,
-                        // change rotation of the Enemy to face the Player
-                        if (_agent.remainingDistance <= _agent.stoppingDistance)
-                            FacePlayer();
-
-                        float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
-
-                        // Set CanShoot bool to the result of (angleToPlayer <= FireAngle), if the Player is within the FireAngle
-                        CanShoot = angleToPlayer <= FireAngle;
+                        _agent.SetDestination(hit.position);
+                        _agent.stoppingDistance = originalStoppingDistance;
+                        SetupChase();
                     }
-                    else
-                    {
-                        // If Enemy detected the Player previously but can't currently detect the Player, go to last known location
-                        if (CanDetectPlayer)
-                            StartCoroutine(GoToLastKnownLocation(playerTransform.position, _roamingDelay));
 
-                        CanDetectPlayer = false;
-                        DecreaseTurnSpeed();
-                    }
+                    // If the Player is within the stopping distance of the Enemy,
+                    // change rotation of the Enemy to face the Player
+                    if (_agent.remainingDistance <= _agent.stoppingDistance)
+                        FacePlayer();
+
+                    float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
+
+                    // Set CanShoot bool to the result of (angleToPlayer <= FireAngle), if the Player is within the FireAngle
+                    //if(!BossEnemy)
+                        CanAttack = angleToPlayer <= FireAngle;
                 }
                 else
                 {
+                    // If Enemy detected the Player previously but can't currently detect the Player, go to last known location
+                    if (CanDetectPlayer)
+                        StartCoroutine(GoToLastKnownLocation(playerTransform.position, _roamingDelay));
+
                     CanDetectPlayer = false;
-                    DecreaseTurnSpeed();
+                    RevertChase();
                 }
             }
-            else if (CanDetectPlayer)
+            else
             {
                 CanDetectPlayer = false;
-                DecreaseTurnSpeed();
+                RevertChase();
             }
-
-            // If the Player was not detected, start Roaming with a delay
-            if (!CanDetectPlayer && !destinationChosen && _agent.remainingDistance < 0.1f)
-            {
-                StartCoroutine(RandomNavMeshLocation(ViewRadius, _roamingDelay));
-                DecreaseTurnSpeed();
-            }
-
-            #endregion
         }
-        else
+        else if (CanDetectPlayer)
         {
-            #region FALLBACK_AI
-            if (CanSeePlayer() && !_enemyScript.isShooting)
-            {
-                _agent.SetDestination(gameManager.instance.player.transform.position);
-
-                if (_agent.remainingDistance < _agent.stoppingDistance)
-                    FacePlayer();
-
-                if (!_enemyScript.isShooting)
-                    _enemyScript.Shoot();
-            }
-            #endregion
+            CanDetectPlayer = false;
+            RevertChase();
         }
-    }
 
-    /// <summary>
-    /// Fallback AI usage: Check if the Player is within viewing distance and angle of the Enemy
-    /// </summary>
-    /// <returns></returns>
-    bool CanSeePlayer()
-    {
-        playerDirection = gameManager.instance.player.transform.position - _headPosition.position;
-        float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
-
-        Debug.Log(angleToPlayer);
-
-        RaycastHit hit;
-        if(Physics.Raycast(_headPosition.position, playerDirection, out hit))
+        // If the Player was not detected, start Roaming with a delay
+        if (!CanDetectPlayer && !destinationChosen && _agent.remainingDistance < 0.1f)
         {
-            if(hit.collider.CompareTag("Player") && angleToPlayer <= ViewAngle)
-            {
-                _agent.SetDestination(gameManager.instance.player.transform.position);
-                return true;
-            }
+            StartCoroutine(RandomNavMeshLocation(ViewRadius, _roamingDelay));
+            RevertChase();
         }
-        return false;
+        #endregion
     }
 
     /// <summary>
@@ -273,7 +241,6 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     void FacePlayer()
     {
-        
         playerDirection.y = 0f;
         Quaternion rot = Quaternion.LookRotation(playerDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * _turnSpeed);
@@ -295,19 +262,93 @@ public class EnemyAI : MonoBehaviour
         return gameManager.instance.playerScript.isSprinting;
     }
 
+    private void IncreaseTurnSpeed()
+    {
+        if(Math.Abs(_turnSpeed - originalTurnSpeed) < 0.001f)
+            _turnSpeed *= turnMultiplier;
+    }
+
+    private void DecreaseTurnSpeed()
+    {
+        if (Math.Abs(_turnSpeed - originalTurnSpeed) > 0.001f)
+            _turnSpeed = originalTurnSpeed;
+    }
+
+    public void IncreaseAgentSpeed()
+    {
+        if(Math.Abs(_agent.speed - originalSpeed) < 0.001f)
+            _agent.speed *= chaseMultiplier;
+    }
+
+    public void DecreaseAgentSpeed()
+    {
+        if(Math.Abs(_agent.speed - originalSpeed) > 0.001f)
+            _agent.speed = originalSpeed;
+    }
+
+    public void IncreaseAgentAcceleration()
+    {
+        if(Math.Abs(_agent.acceleration - originalAcceleration) < 0.001f)
+            _agent.acceleration = 100f;
+    }
+
+    public void DecreaseAgentAcceleration()
+    {
+        if(Math.Abs(_agent.acceleration - originalAcceleration) > 0.001f)
+            _agent.acceleration = originalAcceleration;
+    }
+
+    public void RevertChase()
+    {
+        DecreaseTurnSpeed();
+        DecreaseAgentSpeed();
+        DecreaseAgentAcceleration();
+    }
+
+    public void SetupChase()
+    {
+        IncreaseTurnSpeed();
+        IncreaseAgentSpeed();
+        IncreaseAgentAcceleration();
+    }
+
+    public void SetAgentDestination(Vector3 destination)
+    {
+        _agent.SetDestination(destination);
+    }
+
+    public float GetAgentRemainingDistance()
+    {
+        return _agent.remainingDistance;
+    }
+
+    public float GetAgentStoppingDistance()
+    {
+        return _agent.stoppingDistance;
+    }
+
+    public NavMeshAgent GetAgent()
+    {
+        return _agent;
+    }
+
     #region IENUMERATORS
     /// <summary>
     /// Go to last known location of the location given with optional delay 
     /// </summary>
     private IEnumerator GoToLastKnownLocation(Vector3 location, float delay = 0f)
     {
-        _agent.stoppingDistance = 0f;
+        if (_agent.isActiveAndEnabled)
+        {
+            RevertChase();
+            _agent.stoppingDistance = 0f;
 
-        if (NavMesh.SamplePosition(location, out NavMeshHit hit, ViewRadius, -1)) 
-            _agent.SetDestination(hit.position);
+            if (NavMesh.SamplePosition(location, out NavMeshHit hit, ViewRadius, -1) && !CanDetectPlayer)
+                _agent.SetDestination(hit.position);
 
-        Debug.Log($"{name}'s PathStatus: " + _agent.pathStatus);
-        yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay);
+        }
+
     }
 
     /// <summary>
@@ -317,6 +358,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!destinationChosen && _agent.remainingDistance <= 0.1f)
         {
+            RevertChase();
             _agent.stoppingDistance = 0f;
             destinationChosen = true;
             yield return new WaitForSeconds(delay);
@@ -332,17 +374,6 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void IncreaseTurnSpeed()
-    {
-        if(_turnSpeed == originalTurnSpeed)
-            _turnSpeed *= 2;
-    }
-
-    private void DecreaseTurnSpeed()
-    {
-        if (_turnSpeed != originalTurnSpeed)
-            _turnSpeed /= 2;
-    }
 
     /// <summary>
     /// CheckForPlayer() with delay

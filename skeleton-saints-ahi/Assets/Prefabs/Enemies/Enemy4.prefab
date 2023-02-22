@@ -3214,6 +3214,8 @@ MonoBehaviour:
   acquiringWeapon: 0
   isDead: 0
   isDamaged: 0
+  isAttacking: 0
+  fadeHealthBar: 0
 --- !u!114 &4238305480919217940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3248,7 +3250,14 @@ MonoBehaviour:
   WalkDetectRadius: 20
   ShootDetectRadius: 27
   CanDetectPlayer: 0
-  CanShoot: 0
+  CanAttack: 0
+  chaseMultiplier: 1.25
+  turnMultiplier: 1.25
+  originalTurnSpeed: 0
+  originalStoppingDistance: 0
+  originalSpeed: 0
+  BossEnemy: 0
+  AttackDamage: 0
   _useFallbackAi: 0
 --- !u!114 &1511351483681650363
 MonoBehaviour:
