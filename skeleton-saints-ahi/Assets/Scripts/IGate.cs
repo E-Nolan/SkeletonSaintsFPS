@@ -92,7 +92,7 @@ public class IGate : MonoBehaviour
     {
         if(!isOpen && other.CompareTag("Player"))
         {
-            if (entryLevel[0] || entryLevel[1] && gameManager.instance.kCard01 == true || entryLevel[2] && gameManager.instance.kCard02 == true)
+            if (entryLevel[0] || entryLevel[1] && gameManager.instance.kCard01 == true || entryLevel[2] && gameManager.instance.kCard02 == true || entryLevel[3] && gameManager.instance.kCard03 == true)
             {
                 isOpen = !isOpen;
             }

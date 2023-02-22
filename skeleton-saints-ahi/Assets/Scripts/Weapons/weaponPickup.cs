@@ -27,9 +27,9 @@ public class weaponPickup : MonoBehaviour
             {
                 gameManager.instance.playerScript.rangedWeaponPickup(weapon, weapon.weaponType);
             }
+            if (pickupSound)
+                gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
+            Destroy(gameObject);
         }
-        if (pickupSound)
-            gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
-        Destroy(gameObject);
     }
 }
