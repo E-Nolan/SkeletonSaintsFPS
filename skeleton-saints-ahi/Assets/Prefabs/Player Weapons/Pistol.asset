@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
+  weaponName: Pistol
   weaponType: 0
   weaponModel: {fileID: 435293601273996754, guid: f19bf70895e921849bdd437a9321e6f5, type: 3}
   gunBullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
@@ -30,3 +31,4 @@ MonoBehaviour:
   maxAmmo: 0
   ammoRecovery: 0
   range: 5
+  lobbedWeapon: 0

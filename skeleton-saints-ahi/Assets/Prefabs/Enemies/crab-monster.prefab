@@ -3186,7 +3186,6 @@ MonoBehaviour:
   currentWeapon: {fileID: 0}
   acquiringWeapon: 0
   isDead: 0
-  isDamaged: 0
   isAttacking: 0
   fadeHealthBar: 0
 --- !u!114 &3106033540753420013
@@ -3224,7 +3223,7 @@ MonoBehaviour:
   ShootDetectRadius: 29
   CanDetectPlayer: 0
   CanAttack: 0
-  chaseMultiplier: 2.5
+  chaseMultiplier: 1.5
   turnMultiplier: 2.5
   originalTurnSpeed: 0
   originalStoppingDistance: 0
