@@ -159,8 +159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gate: {fileID: 5210469735924719254}
   sensor: {fileID: 9162777715033459938}
-  entryLevel: 010000
-  gateUp: 5
+  entryLevel: 01000000
+  gateY: 0
   openingSpeed: 5
 --- !u!1 &9162777715033459938
 GameObject:
