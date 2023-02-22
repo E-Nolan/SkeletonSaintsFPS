@@ -85,6 +85,7 @@ public class grappleGun : rangedWeapon
 
         activeImage = _stats.activeweaponIcon;
         inactiveImage = _stats.inactiveweaponIcon;
+        weaponName = _stats.weaponName;
     }
 
     override public void onSwitch()

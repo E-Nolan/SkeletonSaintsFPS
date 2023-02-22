@@ -39,6 +39,7 @@ public class rangedWeapon : MonoBehaviour
    
     public Sprite activeImage;
     public Sprite inactiveImage;
+    public string weaponName;
 
     #endregion
 
@@ -238,6 +239,7 @@ public class rangedWeapon : MonoBehaviour
         ammoRecovery = _stats.ammoRecovery;
         activeImage = _stats.activeweaponIcon;
         inactiveImage = _stats.activeweaponIcon;
+        weaponName = _stats.weaponName;
     }
 
     virtual public void onSwitch()
@@ -247,6 +249,7 @@ public class rangedWeapon : MonoBehaviour
 
         if (usedByPlayer)
         {
+            gameManager.instance.playerScript.isShooting = false;
             updateAmmoDisplay();
         }
     }

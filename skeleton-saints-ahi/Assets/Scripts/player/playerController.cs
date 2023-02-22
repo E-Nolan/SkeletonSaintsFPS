@@ -12,7 +12,7 @@ public class playerController : MonoBehaviour, IDamage
     public AudioSource audioSource;
     [SerializeField] Transform weaponFirePos;
     //[SerializeField] GameObject bullet;
-    [SerializeField] List<GameObject> weaponInventory;
+    [SerializeField] public List<GameObject> weaponInventory;
     [SerializeField] Camera playerCamera;
 
     // Stats that determine player movement
@@ -183,7 +183,7 @@ public class playerController : MonoBehaviour, IDamage
             if (!isDashing && currentStamina >= dashStaminaCost)
                 StartCoroutine(startDash());
             else
-                isSprinting = true;
+                startSprint();
         }
 
         // Lerp external velocity back down to zero over time only if the player isn't actively grappling

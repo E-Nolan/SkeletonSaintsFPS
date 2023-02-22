@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
   m_Name: Assault Rifle
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   weaponName: 
+=======
+  weaponName: Assault Rifle
+>>>>>>> refs/remotes/origin/main
   weaponType: 0
   weaponModel: {fileID: 4068021025288313986, guid: 35ca6e47c9bc8c04abcbe7c3a3fcbd50, type: 3}
   gunBullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
