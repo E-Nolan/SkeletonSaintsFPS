@@ -29,7 +29,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void normalGame()
     {
-        SceneManager.LoadScene("Prototype Level");
+        SceneManager.LoadScene("Level One");
     }
 
     public void hardGame()

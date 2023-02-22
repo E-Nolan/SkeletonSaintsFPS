@@ -13,7 +13,8 @@ public class gameManager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
 
-    [Header("----- UI -----")]
+
+    [Header ("----- Menu's -----")]
     public GameObject activeMenu;
     public GameObject pauseMenu;
     public GameObject winMenu;
@@ -21,36 +22,52 @@ public class gameManager : MonoBehaviour
     public GameObject mainMenu;
     public GameObject difficultyMenu;
     public GameObject creditsMenu;
+
+    [Header("----- UI -----")]
+    
     public Image playerHealthBar;
     public Image playerStaminaBar;
     public Image playerArmorBar;
     public TextMeshProUGUI playerAmmoText;
     public Image playerActiveGun;
-    
 
+    public Image card01;
+    public TextMeshProUGUI keyCard01Text;
+    public Image card02;
+    public TextMeshProUGUI keyCard02Text;
+    public Image card03;
+    public TextMeshProUGUI keyCard03Text;
+    
     [Header("----- Game Goals -----")]
     public int enemiesRemaining;
-    public GameObject keyCard01;
-    [SerializeField] public bool kCard01;
-    public GameObject keyCard02;
-    [SerializeField] public bool kCard02;
-    public GameObject keyCard03;
-    [SerializeField] public bool kCard03;
-    public TextMeshProUGUI keyCard01Text;
-    public TextMeshProUGUI keyCard02Text;
-    public TextMeshProUGUI keyCard03Text;
     public TextMeshProUGUI enemiesCounter;
-    public GameObject damageFlashScreen;
-    public Image card01;
-    public Image card02;
-    public Image card03;
+    [SerializeField] public bool[] keyCard = new bool[3];
 
+    [Header ("----- MISC -----")]
+    public GameObject damageFlashScreen;
+
+    /// <summary>
+    /// Extra resources needed for gameManager tools
+    /// </summary>
+    
     public bool isPaused;
+    public bool isUIActive;
+    float maxHealth;
+    float currentHealth;
+    float maxStamina;
+    float currentStamina;
+    float maxArmor;
+    float currentArmor;
 
     private void Awake()
-    {   
+    {
+        /// <summary>
+        /// if mainmenu is active scenet then disable the ui additions so that
+        /// only one thing is availble to be seen and interacted with
+        /// </summary>
         if(SceneManager.GetActiveScene().name == "Main Menu")
         {
+            isUIActive = !isUIActive;
             activeMenu = mainMenu;
             activeMenu.SetActive(true);
             Time.timeScale = 3;
@@ -60,12 +77,22 @@ public class gameManager : MonoBehaviour
             GameObject.Find("PlayerStats").SetActive(false);
             GameObject.Find("EnemyStats").SetActive(false);
             GameObject.Find("WeaponStats").SetActive(false);
+            GameObject.Find("Key Cards").SetActive(false);
         }
+        //when not main menu, should be operating normally
         else
         {
             instance = this;
             player = GameObject.FindGameObjectWithTag("Player");
             playerScript = player.GetComponent<playerController>();
+            Time.timeScale = 1;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            GameObject.Find("Reticle").SetActive(true);
+            GameObject.Find("PlayerStats").SetActive(true);
+            GameObject.Find("EnemyStats").SetActive(true);
+            GameObject.Find("WeaponStats").SetActive(true);
+            GameObject.Find("Key Cards").SetActive(true);
         }
     }
 
@@ -83,7 +110,14 @@ public class gameManager : MonoBehaviour
                 unPause();
         }
 
-        updateActiveGun();
+        if(!isUIActive)
+        {
+            updatePlayerHealthBar();
+            updatePlayerStaminaBar();
+            updatePlayerArmorBar();
+            updateActiveGun();
+        }
+        
     }
 
     public void pause()
@@ -126,6 +160,28 @@ public class gameManager : MonoBehaviour
         activeMenu = loseMenu;
         activeMenu.SetActive(true);
     }
+
+    public void updatePlayerHealthBar()
+    {
+        currentHealth = gameManager.instance.playerScript.GetCurrentHealth();
+        maxHealth = gameManager.instance.playerScript.GetMaxHealth();
+        playerHealthBar.fillAmount = currentHealth / maxHealth;
+    }
+
+    public void updatePlayerStaminaBar()
+    {
+        currentStamina = gameManager.instance.playerScript.GetCurrentStamina();
+        maxStamina = gameManager.instance.playerScript.GetMaxStamina();
+        playerStaminaBar.fillAmount = currentStamina / maxStamina;
+    }
+
+    public void updatePlayerArmorBar()
+    {
+        currentArmor = gameManager.instance.playerScript.GetCurrentArmor();
+        maxArmor = gameManager.instance.playerScript.GetMaxArmor();
+        playerArmorBar.fillAmount = currentArmor / maxArmor;
+    }
+
 
     public void updateActiveGun()
     {

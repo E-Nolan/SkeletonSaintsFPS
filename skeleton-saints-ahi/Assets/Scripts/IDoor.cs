@@ -122,7 +122,7 @@ public class IDoor : MonoBehaviour
     {
         if (!isOpen && other.CompareTag("Player"))
         {
-            if (entryLevel[0] || entryLevel[1] && gameManager.instance.kCard01 == true || entryLevel[2] && gameManager.instance.kCard02 == true)
+            if (entryLevel[0] || entryLevel[1] && gameManager.instance.keyCard[0] == true || entryLevel[2] && gameManager.instance.keyCard[1] == true || entryLevel[3] && gameManager.instance.keyCard[2])
             {
                 isOpen = !isOpen;
             }

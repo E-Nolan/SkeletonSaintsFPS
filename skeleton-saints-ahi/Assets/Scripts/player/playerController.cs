@@ -99,9 +99,9 @@ public class playerController : MonoBehaviour, IDamage
         currentStamina = maxStamina;
         currentArmor = maxArmor;
 
-        updatePlayerHealthBar();
-        updatePlayerStaminaBar();
-        updatePlayerArmorBar();
+        gameManager.instance.updatePlayerHealthBar();
+        gameManager.instance.updatePlayerStaminaBar();
+        gameManager.instance.updatePlayerArmorBar();
 
         rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
     }
@@ -297,7 +297,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             takeArmorDamage(ref damage);
             updateHealth(-damage);
-            updatePlayerHealthBar();
+            gameManager.instance.updatePlayerHealthBar();
             StartCoroutine(flashDamage());
             invincibilityTimer = invincibilityTime;
         }
@@ -315,7 +315,7 @@ public class playerController : MonoBehaviour, IDamage
         else
             damage = 0;
 
-        updatePlayerArmorBar();
+        gameManager.instance.updatePlayerArmorBar();
         // Reset the armor regen cooldown
         armorRegenTimer = armorRegenCooldown;
 
@@ -436,14 +436,9 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, int.MinValue, maxHealth);
-        updatePlayerHealthBar();
+        gameManager.instance.updatePlayerHealthBar();
         if (currentHealth <= 0)
             gameManager.instance.playerDead();
-    }
-
-    public void updatePlayerHealthBar()
-    {
-        gameManager.instance.playerHealthBar.fillAmount = (float) currentHealth / (float) maxHealth;
     }
 
     /// <summary>
@@ -473,25 +468,15 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentStamina += amount;
         currentStamina = Mathf.Clamp(currentStamina, 0.0f, (float)maxStamina);
-        updatePlayerStaminaBar();
-    }
-
-
-    public void updatePlayerStaminaBar()
-    {
-        gameManager.instance.playerStaminaBar.fillAmount = (float) currentStamina / (float) maxStamina;
+        gameManager.instance.updatePlayerStaminaBar();
+        
     }
 
     public void giveArmor(float armorGain)
     {
         currentArmor += armorGain;
         currentArmor = Mathf.Clamp(currentArmor, 0.0f, maxArmor);
-        updatePlayerArmorBar();
-    }
-
-    public void updatePlayerArmorBar()
-    {
-        gameManager.instance.playerArmorBar.fillAmount = (float)currentArmor / (float)maxArmor;
+        gameManager.instance.updatePlayerArmorBar();
     }
 
     public int GetMaxHealth()
@@ -508,7 +493,6 @@ public class playerController : MonoBehaviour, IDamage
 
     public int GetMaxStamina()
     { return maxStamina; }
-
 
     public float GetCurrentStamina()
     { return currentStamina; }
