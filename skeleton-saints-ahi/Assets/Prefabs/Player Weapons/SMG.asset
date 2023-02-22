@@ -23,12 +23,12 @@ MonoBehaviour:
   fireRate: 0.1
   damage: 2
   bulletsPerSpread: 1
-  spreadAngle: 3
+  spreadAngle: 8
   bulletsPerBurst: 1
   burstFireDelay: 0
   infiniteAmmo: 0
-  startingAmmo: 80
+  startingAmmo: 60
   maxAmmo: 200
-  ammoRecovery: 40
+  ammoRecovery: 30
   range: 5
   lobbedWeapon: 0

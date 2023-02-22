@@ -23,6 +23,9 @@ public class IKey : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            if (pickupSound)
+                gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
+
             switch (gameObject.name)
             {
                 case "Card01":
@@ -45,7 +48,6 @@ public class IKey : MonoBehaviour
                     return;
 
             }
-            
         }
     }
 }

@@ -1227,12 +1227,11 @@ MonoBehaviour:
   handTransform: {fileID: 5358488325615320847}
   _materialFlashSpeed: 0.2
   _material: {fileID: 2100000, guid: 27ec51287c78bfb479fe3729111634a4, type: 2}
-  _health: 10
+  _health: 30
   isShooting: 0
   currentWeapon: {fileID: 0}
   acquiringWeapon: 0
   isDead: 0
-  isDamaged: 0
   isAttacking: 0
   fadeHealthBar: 0
 --- !u!114 &5358488325625090228
@@ -1275,6 +1274,7 @@ MonoBehaviour:
   originalTurnSpeed: 0
   originalStoppingDistance: 0
   originalSpeed: 0
+  originalAcceleration: 0
   BossEnemy: 0
   AttackDamage: 0
   _useFallbackAi: 0

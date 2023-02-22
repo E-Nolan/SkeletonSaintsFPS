@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: c25fec7d022e7ac47bc84a7e7caeddbb, type: 2}
-  pickupSound: {fileID: 0}
+  pickupSound: {fileID: 8300000, guid: cd4903704c36e3140b491a89902671d9, type: 3}
   rotationSpeed: 90
 --- !u!135 &2458024468041302751
 SphereCollider:

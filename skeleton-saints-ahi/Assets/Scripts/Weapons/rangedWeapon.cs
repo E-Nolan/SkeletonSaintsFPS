@@ -167,6 +167,9 @@ public class rangedWeapon : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+        if (shotSound)
+            audioSource.PlayOneShot(shotSound);
+
         // Fire a bullet for each bullet in the spread.
         for (int i = 0; i < bulletsPerSpread; i++)
         {

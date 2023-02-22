@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 69
-  pickupSound: {fileID: 0}
+  pickupSound: {fileID: 8300000, guid: ad19aa4b0bba9884db9e5ccad69074e3, type: 3}
 --- !u!54 &3371348667280081728
 Rigidbody:
   m_ObjectHideFlags: 0

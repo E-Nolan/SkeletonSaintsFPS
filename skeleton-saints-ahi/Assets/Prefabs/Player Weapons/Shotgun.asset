@@ -27,8 +27,8 @@ MonoBehaviour:
   bulletsPerBurst: 1
   burstFireDelay: 0
   infiniteAmmo: 0
-  startingAmmo: 20
+  startingAmmo: 18
   maxAmmo: 50
-  ammoRecovery: 10
+  ammoRecovery: 6
   range: 10
   lobbedWeapon: 0

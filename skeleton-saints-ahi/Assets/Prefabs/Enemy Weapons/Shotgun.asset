@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
+  weaponName: 
   weaponType: 0
   weaponModel: {fileID: 8074397515884566237, guid: ed46d5f6acf10a7459a960c056136eae, type: 3}
   gunBullet: {fileID: 2442857871477385035, guid: e905b6323b0c1884f92ad9deecdd15df, type: 3}
   activeweaponIcon: {fileID: 0}
   inactiveweaponIcon: {fileID: 0}
   shotSound: {fileID: 0}
-  bulletSpeed: 25
+  bulletSpeed: 15
   fireRate: 0.8
   damage: 3
   bulletsPerSpread: 8
-  spreadAngle: 6
+  spreadAngle: 10
   bulletsPerBurst: 1
   burstFireDelay: 0
   infiniteAmmo: 1
@@ -30,3 +31,4 @@ MonoBehaviour:
   maxAmmo: 80
   ammoRecovery: 10
   range: 0
+  lobbedWeapon: 0
