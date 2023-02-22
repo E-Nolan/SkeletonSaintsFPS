@@ -71,7 +71,7 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetButtonDown("Cancel") && activeMenu == null)
+        if (Input.GetButtonDown("Cancel") && activeMenu == null)
         {
             isPaused = !isPaused;
             activeMenu = pauseMenu;
@@ -82,6 +82,8 @@ public class gameManager : MonoBehaviour
             else
                 unPause();
         }
+
+        updateActiveGun();
     }
 
     public void pause()
@@ -123,5 +125,10 @@ public class gameManager : MonoBehaviour
         pause();
         activeMenu = loseMenu;
         activeMenu.SetActive(true);
+    }
+
+    public void updateActiveGun()
+    {
+        playerActiveGun.GetComponent<Image>().sprite = gameManager.instance.playerScript.currentWeapon.activeImage;
     }
 }

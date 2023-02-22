@@ -686,7 +686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5703869759449634726
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7295,6 +7295,14 @@ MonoBehaviour:
   playerStaminaBar: {fileID: 8968009673629124204}
   playerArmorBar: {fileID: 6562783501220031807}
   playerAmmoText: {fileID: 2046007034360370564}
+  playerActiveGun: {fileID: 2448617483555808949}
+  enemiesRemaining: 0
+  keyCard01: {fileID: 8873350526565115659, guid: 7eecb095d7f8b496b8c5d75d593d02ab, type: 3}
+  kCard01: 0
+  keyCard02: {fileID: 3371348667280081738, guid: 9e20215bdbc534dc4aae2563e685e023, type: 3}
+  kCard02: 0
+  keyCard03: {fileID: 3371348667280081738, guid: fc7d78946b74640578d27e9aa28aaf7a, type: 3}
+  kCard03: 0
   keyCard01Text: {fileID: 4322227393235908822}
   keyCard02Text: {fileID: 7174582150341778190}
   keyCard03Text: {fileID: 8464366563928439085}
@@ -7303,13 +7311,6 @@ MonoBehaviour:
   card01: {fileID: 1940211124784523287}
   card02: {fileID: 5094268223545505001}
   card03: {fileID: 5449275295459477552}
-  enemiesRemaining: 0
-  keyCard01: {fileID: 8873350526565115659, guid: 7eecb095d7f8b496b8c5d75d593d02ab, type: 3}
-  kCard01: 0
-  keyCard02: {fileID: 3371348667280081738, guid: 9e20215bdbc534dc4aae2563e685e023, type: 3}
-  kCard02: 0
-  keyCard03: {fileID: 3371348667280081738, guid: fc7d78946b74640578d27e9aa28aaf7a, type: 3}
-  kCard03: 0
   isPaused: 0
 --- !u!1 &8968009675176533943
 GameObject:

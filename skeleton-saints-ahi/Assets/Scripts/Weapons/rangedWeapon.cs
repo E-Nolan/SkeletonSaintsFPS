@@ -36,6 +36,7 @@ public class rangedWeapon : MonoBehaviour
     Enemy enemyScript;
     protected GameObject targetFinder;
 
+   
     public Sprite activeImage;
     public Sprite inactiveImage;
 
@@ -56,6 +57,7 @@ public class rangedWeapon : MonoBehaviour
         {
             updateAmmoDisplay();
         }
+        
     }
 
     #region Ammo Functions
