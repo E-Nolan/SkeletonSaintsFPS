@@ -36,6 +36,9 @@ public class rangedWeapon : MonoBehaviour
     Enemy enemyScript;
     protected GameObject targetFinder;
 
+    public Sprite activeImage;
+    public Sprite inactiveImage;
+
     #endregion
 
     private void Start()
@@ -231,6 +234,8 @@ public class rangedWeapon : MonoBehaviour
         currentAmmo = _stats.startingAmmo;
         maxAmmo = _stats.maxAmmo;
         ammoRecovery = _stats.ammoRecovery;
+        activeImage = _stats.activeweaponIcon;
+        inactiveImage = _stats.activeweaponIcon;
     }
 
     virtual public void onSwitch()

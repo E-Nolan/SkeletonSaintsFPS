@@ -11,6 +11,7 @@ public class weaponStats : ScriptableObject
         GrappleGun
     }
 
+    public string weaponName;
     public weaponStatsType weaponType;
 
     public GameObject weaponModel;

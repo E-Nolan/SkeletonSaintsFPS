@@ -82,6 +82,9 @@ public class grappleGun : rangedWeapon
 
         lineRender = grappleHookPoint.GetComponent<LineRenderer>();
         lineRender.positionCount = 2;
+
+        activeImage = _stats.activeweaponIcon;
+        inactiveImage = _stats.inactiveweaponIcon;
     }
 
     override public void onSwitch()
