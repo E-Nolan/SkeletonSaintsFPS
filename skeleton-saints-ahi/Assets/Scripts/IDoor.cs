@@ -37,7 +37,7 @@ public class IDoor : MonoBehaviour
         door1StartPos = door1.transform.position;
         door2StartPos = door2.transform.position;
         door1EndPos = new Vector3(door1.transform.position.x + door1X, door1.transform.position.y, door1.transform.position.z + door1Z);
-        door2EndPos = new Vector3(door2.transform.position.x + door2X, door2.transform.position.y, door2.transform.position.z + door1Z);
+        door2EndPos = new Vector3(door2.transform.position.x + door2X, door2.transform.position.y, door2.transform.position.z + door2Z);
         go = Resources.Load("Materials/KeyCards/Go", typeof(Material)) as Material;
         card1 = Resources.Load("Materials/KeyCards/Card01", typeof(Material)) as Material;
         card2 = Resources.Load("Materials/KeyCards/Card02", typeof(Material)) as Material;

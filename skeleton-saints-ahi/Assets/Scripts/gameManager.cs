@@ -24,7 +24,6 @@ public class gameManager : MonoBehaviour
     public GameObject creditsMenu;
 
     [Header("----- UI -----")]
-    
     public Image playerHealthBar;
     public Image playerStaminaBar;
     public Image playerArmorBar;
@@ -42,6 +41,9 @@ public class gameManager : MonoBehaviour
     public int enemiesRemaining;
     public TextMeshProUGUI enemiesCounter;
     [SerializeField] public bool[] keyCard = new bool[3];
+    [SerializeField] public float easyMode;
+    [SerializeField] public float normalMode;
+    [SerializeField] public float hardMode;
 
     [Header ("----- MISC -----")]
     public GameObject damageFlashScreen;
@@ -190,5 +192,20 @@ public class gameManager : MonoBehaviour
     public void updateActiveGun()
     {
         playerActiveGun.GetComponent<Image>().sprite = gameManager.instance.playerScript.currentWeapon.activeImage;
+    }
+
+    public IEnumerator setEasyMode()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+
+    public IEnumerator setNormalMode()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+
+    public IEnumerator setHardMode()
+    {
+        yield return new WaitForSeconds(1f);
     }
 }
