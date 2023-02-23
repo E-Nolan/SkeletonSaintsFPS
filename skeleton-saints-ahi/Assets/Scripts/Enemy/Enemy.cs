@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] private Transform handTransform;
     [SerializeField] float _materialFlashSpeed;
     [SerializeField] Material _material;
+    [SerializeField] private float _easyHealthMultiplier;
+    [SerializeField] private float _HardHealthMultiplier;
+
     [Range(0,100)] [SerializeField] private float _health;
 
     public bool isShooting = false;
@@ -25,6 +28,7 @@ public class Enemy : MonoBehaviour, IDamage
     private float _maxHealth;
     private bool isBossEnemy;
     private int attackDamage;
+    private gameManager.gameDifficulty _difficulty;
 
     // Property to update _health field
     public float Health
@@ -35,6 +39,23 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Start()
     {
+        _difficulty = gameManager.instance.currentDifficulty;
+
+        switch (_difficulty)
+        {
+            case gameManager.gameDifficulty.Easy:
+                _health *= _easyHealthMultiplier;
+                break;
+            case gameManager.gameDifficulty.Hard:
+                _health *= _HardHealthMultiplier;
+                break;
+            case gameManager.gameDifficulty.Normal:
+                break;
+            default:
+                break;
+
+        }
+
         if (_enemyAi.BossEnemy)
         {
             isBossEnemy = true;

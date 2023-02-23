@@ -994,6 +994,8 @@ MonoBehaviour:
   handTransform: {fileID: 4965651216935190523}
   _materialFlashSpeed: 0.2
   _material: {fileID: 2100000, guid: 6fcd9d698ea07974abf39f90181445d2, type: 2}
+  _easyHealthMultiplier: 0.5
+  _HardHealthMultiplier: 1.75
   _health: 15
   isShooting: 0
   currentWeapon: {fileID: 0}
@@ -1001,6 +1003,7 @@ MonoBehaviour:
   isDead: 0
   isAttacking: 0
   fadeHealthBar: 0
+  _difficulty: 1
 --- !u!114 &4965651216935190054
 MonoBehaviour:
   m_ObjectHideFlags: 0
