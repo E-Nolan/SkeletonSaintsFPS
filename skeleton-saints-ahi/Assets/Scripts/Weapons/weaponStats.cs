@@ -35,4 +35,11 @@ public class weaponStats : ScriptableObject
     [Tooltip("Currently only used for grapple gun range")]
     [Range(5, 100)] public int range;
     public bool lobbedWeapon;
+
+    [Header("Enemy Difficulty")]
+    public int bulletSpeedBonus;
+    public float fireRateBonus;
+    public int damageBonus;
+    public int bulletsPerSpreadBonus;
+    public int spreadAngleBonus;
 }

@@ -61,6 +61,8 @@ public class gameManager : MonoBehaviour
     float maxArmor;
     float currentArmor;
 
+    public gameDifficulty currentDifficulty;
+
     public float modifer;
 
     private void Awake()
@@ -192,19 +194,23 @@ public class gameManager : MonoBehaviour
         playerActiveGun.GetComponent<Image>().sprite = gameManager.instance.playerScript.currentWeapon.activeImage;
     }
 
-
-    public enum setEasyMode
+    public enum gameDifficulty
     {
-
+        Easy, Normal, Hard
     }
 
-    public enum setNormalMode
+    public void setEasyMode()
     {
-
+        currentDifficulty = gameDifficulty.Easy;
     }
 
-    public enum setHardMode
+    public void setNormalMode()
     {
+        currentDifficulty = gameDifficulty.Normal;
+    }
 
+    public void setHardMode()
+    {
+        currentDifficulty = gameDifficulty.Hard;
     }
 }
