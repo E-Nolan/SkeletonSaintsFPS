@@ -47,7 +47,7 @@ public class gameManager : MonoBehaviour
     public GameObject damageFlashScreen;
 
     /// <summary>
-    /// Extra resources needed for gameManager tools
+    /// Extra resources needed for gameManager tools 
     /// </summary>
     
     public bool isPaused;
@@ -58,6 +58,10 @@ public class gameManager : MonoBehaviour
     float currentStamina;
     float maxArmor;
     float currentArmor;
+
+    public Vector3 labOneSpawn;
+    public Vector3 labTwoSpawn;
+    public Vector3 labThreeSpawn;
 
     private void Awake()
     {
