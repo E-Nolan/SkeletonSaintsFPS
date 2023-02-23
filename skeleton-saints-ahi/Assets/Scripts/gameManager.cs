@@ -62,6 +62,7 @@ public class gameManager : MonoBehaviour
 
     private void Awake()
     {
+            instance = this;
         /// <summary>
         /// if mainmenu is active scenet then disable the ui additions so that
         /// only one thing is availble to be seen and interacted with
@@ -82,7 +83,6 @@ public class gameManager : MonoBehaviour
         //when not main menu, should be operating normally
         else
         {
-            instance = this;
             player = GameObject.FindGameObjectWithTag("Player");
             playerScript = player.GetComponent<playerController>();
             Time.timeScale = 1;
