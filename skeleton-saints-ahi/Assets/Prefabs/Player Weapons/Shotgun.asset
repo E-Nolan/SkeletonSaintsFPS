@@ -18,7 +18,7 @@ MonoBehaviour:
   gunBullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
   activeweaponIcon: {fileID: 21300000, guid: bb02c42c2e27c934d9c6a7ff4cf5e1c0, type: 3}
   inactiveweaponIcon: {fileID: 21300000, guid: c2de3e17c0c504f4283756a943c389c2, type: 3}
-  shotSound: {fileID: 0}
+  shotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   bulletSpeed: 40
   fireRate: 0.5
   damage: 1
@@ -32,3 +32,8 @@ MonoBehaviour:
   ammoRecovery: 6
   range: 10
   lobbedWeapon: 0
+  bulletSpeedBonus: 0
+  fireRateBonus: 0
+  damageBonus: 0
+  bulletsPerSpreadBonus: 0
+  spreadAngleBonus: 0

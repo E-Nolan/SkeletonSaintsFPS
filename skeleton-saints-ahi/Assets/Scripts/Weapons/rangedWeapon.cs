@@ -243,6 +243,11 @@ public class rangedWeapon : MonoBehaviour
         activeImage = _stats.activeweaponIcon;
         inactiveImage = _stats.activeweaponIcon;
         weaponName = _stats.weaponName;
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.spatialBlend = 1.0f;
+        if (usedByPlayer)
+            audioSource.volume = 0.5f;
     }
 
     virtual public void onSwitch()
