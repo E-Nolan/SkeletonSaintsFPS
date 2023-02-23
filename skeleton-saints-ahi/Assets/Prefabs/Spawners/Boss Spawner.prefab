@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTypes:
   - {fileID: 3106033540753516968, guid: a621d650f769e9849a03d823f7bf56a0, type: 3}
-  weaponTypes: []
+  weaponTypes:
+  - {fileID: 2615637619668773366, guid: 96bcb387263fecb438530623ec288cb7, type: 3}
   spawnMaxNum: 1
   spawnCooldown: 0
   spawnPos:

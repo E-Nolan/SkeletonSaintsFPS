@@ -26,8 +26,8 @@ public class bullet : MonoBehaviour
         if (other.GetComponent<IDamage>() != null)
         {
             other.GetComponent<IDamage>().TakeDamage(bulletDmg);
-            Vector3 direction = new Vector3(other.transform.position.x, 0, 
-                other.transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z);
+            Vector3 direction = new Vector3(transform.position.x, 0, 
+                transform.position.z) - new Vector3(other.transform.position.x, 0, other.transform.position.z);
             Transform damageNumber = Instantiate(damagePopupPrefab, 
                 GetComponent<Rigidbody>().transform.position, Quaternion.LookRotation(direction));
             DamagePopup damagePopup = damageNumber.GetComponent<DamagePopup>();
