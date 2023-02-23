@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
   m_Name: Assault Rifle
   m_EditorClassIdentifier: 
+  weaponName: 
   weaponType: 0
   weaponModel: {fileID: 4068021025288313986, guid: 406781cd9251dc94095e58f54a7139b0, type: 3}
   gunBullet: {fileID: 2442857871477385035, guid: e905b6323b0c1884f92ad9deecdd15df, type: 3}
@@ -30,3 +31,9 @@ MonoBehaviour:
   maxAmmo: 120
   ammoRecovery: 15
   range: 0
+  lobbedWeapon: 0
+  bulletSpeedBonus: 5
+  fireRateBonus: 0.1
+  damageBonus: 1
+  bulletsPerSpreadBonus: 0
+  spreadAngleBonus: 3

@@ -37,9 +37,9 @@ public class weaponStats : ScriptableObject
     public bool lobbedWeapon;
 
     [Header("Enemy Difficulty")]
-    public int bulletSpeedBonus;
-    public float fireRateBonus;
-    public int damageBonus;
-    public int bulletsPerSpreadBonus;
-    public int spreadAngleBonus;
+    [Range(0,200)] public int bulletSpeedBonus;
+    [Range(0.0f, 5.0f)] public float fireRateBonus;
+    [Range(0, 20)] public int damageBonus;
+    [Range(0, 20)] public int bulletsPerSpreadBonus;
+    [Range(0, 60)]public int spreadAngleBonus;
 }

@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
   m_Name: Grenade Launcher
   m_EditorClassIdentifier: 
+  weaponName: 
   weaponType: 0
   weaponModel: {fileID: 7530913169747578161, guid: b20b13bdfbde41a49b7e0b049458f4f1, type: 3}
   gunBullet: {fileID: 4571660264418509419, guid: f5ffbaf2dbe37b84e9c11c37f7c3ef3d, type: 3}
+  activeweaponIcon: {fileID: 0}
+  inactiveweaponIcon: {fileID: 0}
   shotSound: {fileID: 0}
   bulletSpeed: 15
   fireRate: 1
-  damage: 1
+  damage: 0
   bulletsPerSpread: 1
   spreadAngle: 0
   bulletsPerBurst: 1
@@ -28,3 +31,9 @@ MonoBehaviour:
   maxAmmo: 20
   ammoRecovery: 3
   range: 0
+  lobbedWeapon: 1
+  bulletSpeedBonus: 0
+  fireRateBonus: 0.3
+  damageBonus: 0
+  bulletsPerSpreadBonus: 0
+  spreadAngleBonus: 0

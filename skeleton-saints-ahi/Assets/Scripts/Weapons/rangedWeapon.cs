@@ -229,7 +229,7 @@ public class rangedWeapon : MonoBehaviour
         shotSound = _stats.shotSound;
 
         bulletSpeed = _stats.bulletSpeed + _stats.bulletSpeedBonus * (int)gameManager.instance.currentDifficulty;
-        fireRate = _stats.fireRate + _stats.fireRateBonus * (int)gameManager.instance.currentDifficulty;
+        fireRate = _stats.fireRate - _stats.fireRateBonus * (int)gameManager.instance.currentDifficulty;
         damage = _stats.damage + _stats.damageBonus * (int)gameManager.instance.currentDifficulty;
         bulletsPerSpread = _stats.bulletsPerSpread + _stats.bulletsPerSpreadBonus * (int)gameManager.instance.currentDifficulty;
         spreadAngle = _stats.spreadAngle + _stats.spreadAngleBonus * (int)gameManager.instance.currentDifficulty;

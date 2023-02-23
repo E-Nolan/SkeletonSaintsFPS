@@ -32,3 +32,8 @@ MonoBehaviour:
   ammoRecovery: 25
   range: 0
   lobbedWeapon: 0
+  bulletSpeedBonus: 0
+  fireRateBonus: 0.03
+  damageBonus: 0
+  bulletsPerSpreadBonus: 0
+  spreadAngleBonus: 3
