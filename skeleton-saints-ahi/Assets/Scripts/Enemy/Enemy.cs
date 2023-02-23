@@ -95,7 +95,9 @@ public class Enemy : MonoBehaviour, IDamage
         if (!isBossEnemy || (isBossEnemy && _maxHealth % _health <= _maxHealth / 4))
         {
             _animator.SetTrigger("Damage");
-            _animator.SetFloat("HitRandom", UnityEngine.Random.Range(0f, 1f));
+
+            if(isBossEnemy)
+                _animator.SetFloat("HitRandom", UnityEngine.Random.Range(0f, 1f));
         }
 
         StartCoroutine(FlashMaterial());
