@@ -367,10 +367,8 @@ public class EnemyAI : MonoBehaviour
             Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
             randomDirection += transform.position;
 
-            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1))
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, -1) && _agent.isActiveAndEnabled)
                 _agent.SetDestination(hit.position);
-
-            Debug.Log($"{name} is now roaming");
         }
     }
 

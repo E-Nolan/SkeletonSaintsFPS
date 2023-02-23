@@ -137,7 +137,6 @@ public class Enemy : MonoBehaviour, IDamage
             _animator.SetBool("Dead", true);
             GetComponent<NavMeshAgent>().enabled = false;
             GetComponent<CapsuleCollider>().enabled = false;
-            Debug.Log($"{gameObject.name} has died");
             gameManager.instance.updateGameGoal(-1);
             fadeHealthBar = true;
             Destroy(gameObject, 5f);
