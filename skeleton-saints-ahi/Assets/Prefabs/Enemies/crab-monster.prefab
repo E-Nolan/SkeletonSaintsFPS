@@ -3115,6 +3115,7 @@ GameObject:
   - component: {fileID: 3106033540753420011}
   - component: {fileID: 3106033540762868617}
   - component: {fileID: 3106033540762868616}
+  - component: {fileID: 1522300949019540403}
   m_Layer: 6
   m_Name: crab-monster
   m_TagString: Enemy
@@ -3182,16 +3183,15 @@ MonoBehaviour:
   handTransform: {fileID: 0}
   _materialFlashSpeed: 0
   _material: {fileID: 2100000, guid: e061968e56112fe4ca8c0ad3347c2a0d, type: 2}
-  _easyHealthMultiplier: 0.5
-  _HardHealthMultiplier: 1.75
-  _health: 100
+  _easyHealthMultiplier: 0.8
+  _HardHealthMultiplier: 2
+  _health: 250
   isShooting: 0
   currentWeapon: {fileID: 0}
   acquiringWeapon: 0
   isDead: 0
   isAttacking: 0
   fadeHealthBar: 0
-  _difficulty: 1
 --- !u!114 &3106033540753420013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3227,7 +3227,7 @@ MonoBehaviour:
   ShootDetectRadius: 29
   CanDetectPlayer: 0
   CanAttack: 0
-  chaseMultiplier: 1.5
+  chaseMultiplier: 1.75
   turnMultiplier: 2.5
   originalTurnSpeed: 0
   originalStoppingDistance: 0
@@ -3302,6 +3302,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.25, z: 4}
   m_Center: {x: 0.15, y: 0.5, z: 2.6}
+--- !u!114 &1522300949019540403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3106033540753516968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b99ad3b2ec929340a5084a0366e01bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extraHealth: 0
 --- !u!1 &3106033540753516970
 GameObject:
   m_ObjectHideFlags: 0

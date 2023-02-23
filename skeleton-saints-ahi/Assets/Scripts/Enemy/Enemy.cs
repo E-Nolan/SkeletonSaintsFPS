@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] Material _material;
     [Range(0, 1)] [SerializeField] private float _easyHealthMultiplier;
     [Range(1, 5)] [SerializeField] private float _HardHealthMultiplier;
-    [Range(0,100)] [SerializeField] private float _health;
+    [Range(0, 1000)] [SerializeField] private float _health;
 
     public bool isShooting = false;
     public rangedWeapon currentWeapon;

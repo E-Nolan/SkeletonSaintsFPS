@@ -93,6 +93,8 @@ public class gameManager : MonoBehaviour
             GameObject.Find("PlayerStats").SetActive(true);
             GameObject.Find("WeaponStats").SetActive(true);
             GameObject.Find("Key Cards").SetActive(true);
+
+            instance.currentDifficulty = difficultyStorer.instance.currentGameDifficulty;
         }
     }
 
@@ -203,15 +205,18 @@ public class gameManager : MonoBehaviour
     public void setEasyMode()
     {
         currentDifficulty = GameDifficulty.Easy;
+        difficultyStorer.instance.currentGameDifficulty = GameDifficulty.Easy;
     }
 
     public void setNormalMode()
     {
         currentDifficulty = GameDifficulty.Normal;
+        difficultyStorer.instance.currentGameDifficulty = GameDifficulty.Normal;
     }
 
     public void setHardMode()
     {
         currentDifficulty = GameDifficulty.Hard;
+        difficultyStorer.instance.currentGameDifficulty = GameDifficulty.Hard;
     }
 }
