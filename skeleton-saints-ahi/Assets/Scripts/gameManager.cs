@@ -61,9 +61,9 @@ public class gameManager : MonoBehaviour
     float maxArmor;
     float currentArmor;
 
-    public gameDifficulty currentDifficulty;
+    public GameDifficulty currentDifficulty;
 
-    public float modifer;
+    public float currentModifer;
 
     private void Awake()
     {
@@ -73,7 +73,7 @@ public class gameManager : MonoBehaviour
         /// </summary>
         if(SceneManager.GetActiveScene().name == "Main Menu")
         {
-            isUIActive = !isUIActive;
+            isUIActive = false;
             activeMenu = mainMenu;
             activeMenu.SetActive(true);
             Time.timeScale = 3;
@@ -81,7 +81,6 @@ public class gameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             GameObject.Find("Reticle").SetActive(false);
             GameObject.Find("PlayerStats").SetActive(false);
-            GameObject.Find("EnemyStats").SetActive(false);
             GameObject.Find("WeaponStats").SetActive(false);
             GameObject.Find("Key Cards").SetActive(false);
         }
@@ -94,9 +93,9 @@ public class gameManager : MonoBehaviour
             Time.timeScale = 1;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            isUIActive = true;
             GameObject.Find("Reticle").SetActive(true);
             GameObject.Find("PlayerStats").SetActive(true);
-            GameObject.Find("EnemyStats").SetActive(true);
             GameObject.Find("WeaponStats").SetActive(true);
             GameObject.Find("Key Cards").SetActive(true);
         }
@@ -116,7 +115,7 @@ public class gameManager : MonoBehaviour
                 unPause();
         }
 
-        if(!isUIActive)
+        if(isUIActive == true)
         {
             updatePlayerHealthBar();
             updatePlayerStaminaBar();
@@ -194,23 +193,26 @@ public class gameManager : MonoBehaviour
         playerActiveGun.GetComponent<Image>().sprite = gameManager.instance.playerScript.currentWeapon.activeImage;
     }
 
-    public enum gameDifficulty
+    public enum GameDifficulty
     {
         Easy, Normal, Hard
     }
 
     public void setEasyMode()
     {
-        currentDifficulty = gameDifficulty.Easy;
+        currentDifficulty = GameDifficulty.Easy;
+        currentModifer = easyMode;
     }
 
     public void setNormalMode()
     {
-        currentDifficulty = gameDifficulty.Normal;
+        currentDifficulty = GameDifficulty.Normal;
+        currentModifer = normalMode;
     }
 
     public void setHardMode()
     {
-        currentDifficulty = gameDifficulty.Hard;
+        currentDifficulty = GameDifficulty.Hard;
+        currentModifer = hardMode;
     }
 }

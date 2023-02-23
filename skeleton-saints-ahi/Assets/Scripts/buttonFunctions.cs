@@ -24,17 +24,21 @@ public class buttonFunctions : MonoBehaviour
 
     public void easyGame()
     {
+        gameManager.instance.setEasyMode();
+        SceneManager.LoadScene("Prototype 2 Final");
 
     }
 
     public void normalGame()
     {
-        SceneManager.LoadScene("Level One");
+        gameManager.instance.setNormalMode();
+        SceneManager.LoadScene("Prototype 2 Final");
     }
 
     public void hardGame()
     {
-
+        gameManager.instance.setHardMode();
+        SceneManager.LoadScene("Prototype 2 Final");
     }
 
 }
