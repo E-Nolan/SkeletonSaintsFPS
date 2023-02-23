@@ -61,9 +61,7 @@ public class gameManager : MonoBehaviour
     float maxArmor;
     float currentArmor;
 
-    public Vector3 labOneSpawn;
-    public Vector3 labTwoSpawn;
-    public Vector3 labThreeSpawn;
+    public float modifer;
 
     private void Awake()
     {
@@ -194,18 +192,19 @@ public class gameManager : MonoBehaviour
         playerActiveGun.GetComponent<Image>().sprite = gameManager.instance.playerScript.currentWeapon.activeImage;
     }
 
-    public IEnumerator setEasyMode()
+
+    public enum setEasyMode
     {
-        yield return new WaitForSeconds(1f);
+
     }
 
-    public IEnumerator setNormalMode()
+    public enum setNormalMode
     {
-        yield return new WaitForSeconds(1f);
+
     }
 
-    public IEnumerator setHardMode()
+    public enum setHardMode
     {
-        yield return new WaitForSeconds(1f);
+
     }
 }
