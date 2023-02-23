@@ -58,7 +58,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        BossEnemy = name == "crab-monster";
+        //BossEnemy = (name == "crab-monster") || (name == "crab-monster(Clone)");
 
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();

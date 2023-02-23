@@ -139,7 +139,14 @@ public class Enemy : MonoBehaviour, IDamage
             GetComponent<CapsuleCollider>().enabled = false;
             gameManager.instance.updateGameGoal(-1);
             fadeHealthBar = true;
+
+            // If the enemy was a boss, give the player a win after they're destroyed
+            if (_enemyAi.BossEnemy)
+            {
+                gameManager.instance.queuePlayerVictory(5.1f);
+            }
             Destroy(gameObject, 5f);
+
         }
 
         if(_enemyAi.GetAgent().isActiveAndEnabled)
@@ -234,5 +241,4 @@ public class Enemy : MonoBehaviour, IDamage
 
         Destroy(flashMaterial);
     }
-
 }

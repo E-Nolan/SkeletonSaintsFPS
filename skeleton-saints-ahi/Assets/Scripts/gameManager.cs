@@ -145,6 +145,17 @@ public class gameManager : MonoBehaviour
         activeMenu.SetActive(true);
     }
 
+    public void queuePlayerVictory(float timer)
+    {
+        StartCoroutine(playerVictoryTimer(timer));
+    }
+
+    public IEnumerator playerVictoryTimer(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        instance.winGame();
+    }
+
     public void updateGameGoal(int amount)
     {
         //enemiesRemaining += amount;
