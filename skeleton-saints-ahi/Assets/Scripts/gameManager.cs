@@ -41,9 +41,6 @@ public class gameManager : MonoBehaviour
     public int enemiesRemaining;
     public TextMeshProUGUI enemiesCounter;
     [SerializeField] public bool[] keyCard = new bool[3];
-    [Range(.1f,2.0f)][SerializeField] public float easyMode;
-    [Range(.1f, 2.0f)] [SerializeField] public float normalMode;
-    [Range(.1f, 2.0f)] [SerializeField] public float hardMode;
 
     [Header ("----- MISC -----")]
     public GameObject damageFlashScreen;
@@ -62,8 +59,6 @@ public class gameManager : MonoBehaviour
     float currentArmor;
 
     public GameDifficulty currentDifficulty;
-
-    public float currentModifer;
 
     private void Awake()
     {
@@ -201,18 +196,15 @@ public class gameManager : MonoBehaviour
     public void setEasyMode()
     {
         currentDifficulty = GameDifficulty.Easy;
-        currentModifer = easyMode;
     }
 
     public void setNormalMode()
     {
         currentDifficulty = GameDifficulty.Normal;
-        currentModifer = normalMode;
     }
 
     public void setHardMode()
     {
         currentDifficulty = GameDifficulty.Hard;
-        currentModifer = hardMode;
     }
 }
