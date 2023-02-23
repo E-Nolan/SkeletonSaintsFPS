@@ -602,6 +602,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level 2 Assault Rifle Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5225804314777869367, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8754657140160543882, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: spawnMaxNum
       value: 2
@@ -1276,6 +1280,10 @@ PrefabInstance:
     - target: {fileID: 5225804314777869366, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: m_Name
       value: Level 4 Pistol Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225804314777869367, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
+      propertyPath: m_Radius
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8754657140160543882, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: spawnMaxNum
@@ -7299,6 +7307,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level 2 Shotgun Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5225804314777869367, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8754657140160543882, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: spawnMaxNum
       value: 2
@@ -8524,7 +8536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5225804314777869367, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: m_Radius
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8754657140160543882, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: spawnMaxNum
@@ -12738,6 +12750,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level 2 SMG Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5225804314777869367, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8754657140160543882, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: spawnMaxNum
       value: 1
@@ -12858,7 +12874,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792497959}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 12.25, y: 0, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14961,6 +14977,10 @@ PrefabInstance:
     - target: {fileID: 5225804314777869366, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: m_Name
       value: Level 2 Pistol Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225804314777869367, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
+      propertyPath: m_Radius
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8754657140160543882, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: spawnMaxNum
@@ -18834,6 +18854,10 @@ PrefabInstance:
     - target: {fileID: 5225804314777869366, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: m_Name
       value: Level 1 Shotgun Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225804314777869367, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
+      propertyPath: m_Radius
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8754657140160543882, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: spawnMaxNum
@@ -31940,6 +31964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level 1 SMG Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5225804314777869367, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8754657140160543882, guid: 1e0eb06aa8f7a994e908972354bf29c2, type: 3}
       propertyPath: spawnMaxNum
       value: 6
@@ -33103,7 +33131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5192571517189885341}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -7.5, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

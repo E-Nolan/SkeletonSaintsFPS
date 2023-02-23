@@ -136,17 +136,24 @@ public class gameManager : MonoBehaviour
         activeMenu = null;
     }
 
+    public void winGame()
+    {
+        pause();
+        activeMenu = winMenu;
+        activeMenu.SetActive(true);
+    }
+
     public void updateGameGoal(int amount)
     {
-        enemiesRemaining += amount;
-
-        if(enemiesRemaining <= 0)
-        {
-            pause();
-            activeMenu = winMenu;
-            activeMenu.SetActive(true);
-        }
-        updateEnemyCounter();
+        //enemiesRemaining += amount;
+        //
+        //if(enemiesRemaining <= 0)
+        //{
+        //    pause();
+        //    activeMenu = winMenu;
+        //    activeMenu.SetActive(true);
+        //}
+        //updateEnemyCounter();
     }
 
     public void updateEnemyCounter()
