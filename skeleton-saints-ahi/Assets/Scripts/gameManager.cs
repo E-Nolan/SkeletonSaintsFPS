@@ -41,9 +41,9 @@ public class gameManager : MonoBehaviour
     public int enemiesRemaining;
     public TextMeshProUGUI enemiesCounter;
     [SerializeField] public bool[] keyCard = new bool[3];
-    [SerializeField] public float easyMode;
-    [SerializeField] public float normalMode;
-    [SerializeField] public float hardMode;
+    [Range(.1f,2.0f)][SerializeField] public float easyMode;
+    [Range(.1f, 2.0f)] [SerializeField] public float normalMode;
+    [Range(.1f, 2.0f)] [SerializeField] public float hardMode;
 
     [Header ("----- MISC -----")]
     public GameObject damageFlashScreen;
