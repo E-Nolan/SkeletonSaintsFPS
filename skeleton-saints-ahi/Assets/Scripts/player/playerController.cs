@@ -413,15 +413,15 @@ public class playerController : MonoBehaviour, IDamage
 
     public void extSwitchToWeapon(int weaponIndex)
     {
-        //if (gameManager.instance.playStarted())
-        //{
-        //    Debug.Log("Outside assignment of currentWeapon is invalid \n Only playerController and GM may call this");
-        //    return;
-        //}
-        //else
-        //{
-            switchToWeapon(weaponIndex);
-        //}
+        if (gameManager.instance.playStarted())
+        {
+            Debug.Log("Outside assignment of currentWeapon is invalid \n Only playerController and GM may call this");
+            return;
+        }
+        else
+        {
+          switchToWeapon(weaponIndex);
+        }
     }
 
 
