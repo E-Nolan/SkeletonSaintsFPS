@@ -86,7 +86,7 @@ public class playerController : MonoBehaviour, IDamage
     public float currentArmor; //{ get; private set; }
 
     bool canPlayFootsteps = true;
-    int currWepIndex = 0;
+    public int currWepIndex { get; private set; } = 0;
 
     #endregion
 
@@ -103,7 +103,8 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.updatePlayerStaminaBar();
         gameManager.instance.updatePlayerArmorBar();
 
-        rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
+        if (startingWeapon)
+            rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
     }
 
     // Update is called once per frame
@@ -368,9 +369,9 @@ public class playerController : MonoBehaviour, IDamage
         // Switch to the weapon after the current one in the List
         // Switch to the first weapon if the index goes out of bounds
         if (currWepIndex + 1 >= weaponInventory.Count)
-            switchToWeapon(0);
+            extSwitchToWeapon(0);
         else
-            switchToWeapon(currWepIndex + 1);
+            extSwitchToWeapon(currWepIndex + 1);
 
         yield return new WaitForSeconds(weaponSwitchCooldown);
         isSwitchingWeapons = false;
@@ -382,9 +383,9 @@ public class playerController : MonoBehaviour, IDamage
         // Switch to the weapon before the current one in the List
         // Switch to the last weapon if the index goes out of bounds
         if (currWepIndex - 1 < 0)
-            switchToWeapon(weaponInventory.Count - 1);
+            extSwitchToWeapon(weaponInventory.Count - 1);
         else
-            switchToWeapon(currWepIndex - 1);
+            extSwitchToWeapon(currWepIndex - 1);
 
         yield return new WaitForSeconds(weaponSwitchCooldown);
         isSwitchingWeapons = false;
@@ -392,19 +393,37 @@ public class playerController : MonoBehaviour, IDamage
 
     void switchToWeapon(int weaponIndex)
     {
-        // Switch to the weapon at the given index, update currWepIndex to the new weapon's index, and turn the old weapon off
-        if (currentWeapon)
+        // Don't switch the weapon if it's already currently being held. This should only occur if it is the player's only weapon.
+        if (currentWeapon != weaponInventory[weaponIndex])
         {
-            currentWeapon.offSwitch();
-            currentWeapon.gameObject.SetActive(false);
+            // Switch to the weapon at the given index, update currWepIndex to the new weapon's index, and turn the old weapon off
+            if (currentWeapon)
+            {
+                currentWeapon.offSwitch();
+                currentWeapon.gameObject.SetActive(false);
+            }
+
+            currWepIndex = weaponIndex;
+            currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
+
+            currentWeapon.gameObject.SetActive(true);
+            currentWeapon.onSwitch();
         }
-
-        currWepIndex = weaponIndex;
-        currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
-
-        currentWeapon.gameObject.SetActive(true);
-        currentWeapon.onSwitch();
     }
+
+    public void extSwitchToWeapon(int weaponIndex)
+    {
+        //if (gameManager.instance.playStarted())
+        //{
+        //    Debug.Log("Outside assignment of currentWeapon is invalid \n Only playerController and GM may call this");
+        //    return;
+        //}
+        //else
+        //{
+            switchToWeapon(weaponIndex);
+        //}
+    }
+
 
     IEnumerator flashDamage()
     {
