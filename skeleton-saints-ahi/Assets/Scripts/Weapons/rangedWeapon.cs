@@ -196,14 +196,14 @@ public class rangedWeapon : MonoBehaviour
      IEnumerator startShootCooldown()
      {
         if (usedByPlayer)
-            gameManager.instance.playerScript.isShooting = true;
+            gameManager.instance.playerScript.isPrimaryShooting = true;
         else
             enemyScript.isShooting = true;
 
          yield return new WaitForSeconds(fireRate);
 
         if (usedByPlayer)
-            gameManager.instance.playerScript.isShooting = false;
+            gameManager.instance.playerScript.isPrimaryShooting = false;
         else
             enemyScript.isShooting = false;
      }
@@ -257,7 +257,7 @@ public class rangedWeapon : MonoBehaviour
 
         if (usedByPlayer)
         {
-            gameManager.instance.playerScript.isShooting = false;
+            gameManager.instance.playerScript.isPrimaryShooting = false;
             updateAmmoDisplay();
         }
     }

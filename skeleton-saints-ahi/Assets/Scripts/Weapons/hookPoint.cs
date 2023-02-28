@@ -116,6 +116,7 @@ public class hookPoint : MonoBehaviour
         pulling = false;
         grappleGunScript.lineRender.enabled = false;
         rb.isKinematic = true;
+        gameManager.instance.playerScript.isGrappling = false;
 
         // Release whatever object the hook is attached to
         if (currentCatch)

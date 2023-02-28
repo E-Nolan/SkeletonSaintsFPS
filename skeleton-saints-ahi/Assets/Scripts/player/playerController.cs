@@ -10,9 +10,11 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] weaponStats startingWeapon;
     [SerializeField] CharacterController controller;
     public AudioSource audioSource;
-    [SerializeField] Transform weaponFirePos;
+    [SerializeField] Transform leftFirePos;
+    [SerializeField] Transform rightFirePos;
     //[SerializeField] GameObject bullet;
     [SerializeField] public List<GameObject> weaponInventory;
+    [SerializeField] public GameObject offHandWeapon;
     [SerializeField] Camera playerCamera;
 
     // Stats that determine player movement
@@ -71,10 +73,12 @@ public class playerController : MonoBehaviour, IDamage
     float armorRegenTimer;
     float invincibilityTimer;
 
-    public rangedWeapon currentWeapon;
+    public rangedWeapon currentWeapon { get; private set; }
+    public rangedWeapon currentSecondary { get; private set; }
     public bool isDashing { get; private set; } = false;
     public bool isSprinting { get; private set; } = false;
-    public bool isShooting = false;
+    public bool isPrimaryShooting = false;
+    public bool isSecondaryShooting = false;
     public bool isGrappling = false;
 
     bool isSwitchingWeapons = false;
@@ -126,9 +130,14 @@ public class playerController : MonoBehaviour, IDamage
 
         // If the player presses the Shoot Button, they will fire at whatever they are looking at
         // They can not fire if they do not have ammo
-        if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.isPaused)
+        if (Input.GetButton("Fire1") && !isPrimaryShooting && !gameManager.instance.isPaused && currentWeapon)
         {
-            shoot();
+            shoot(currentWeapon);
+        }
+        // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
+        if (Input.GetButton("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
+        {
+            shoot(currentSecondary);
         }
 
         // If the player scrolls the mouse wheel, switch to the next weapon for up, or the previous weapon for down.
@@ -262,20 +271,20 @@ public class playerController : MonoBehaviour, IDamage
 
     #endregion
 
-    void shoot()
+    void shoot(rangedWeapon _shotWeapon)
     {
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, raycastRange))
         {
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
-            Vector3 directionToTarget = (hit.point - weaponFirePos.transform.position);
+            Vector3 directionToTarget = (hit.point - leftFirePos.transform.position);
             Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
-            currentWeapon.shoot(directionToTarget.normalized);
+            _shotWeapon.shoot(directionToTarget.normalized);
         }
         else
         {
             // If the raycast didn't hit anything, fire a bullet straight forwards
-            currentWeapon.shootForward();
+            _shotWeapon.shootForward();
         }
     }
 
@@ -322,45 +331,39 @@ public class playerController : MonoBehaviour, IDamage
 
     }
 
-    public void rangedWeaponPickup(weaponStats newWeaponStats, weaponStats.weaponStatsType weaponType)
+    public void rangedWeaponPickup(weaponStats _newWeaponStats, weaponStats.weaponStatsType _weaponType)
     {
         // turn isShooting off to prevent a bug where picking up a weapon while shooting could disable shooting entirely
-        isShooting = false;
-        GameObject newWeapon;
+        isPrimaryShooting = false;
+        GameObject _newWeapon;
+        GameObject _newFirePos;
 
-        // Depending on what type of gun is being picked up, create a weapon of that type.
-        switch(weaponType)
+        // If the picked up object is a grapple gun, add it to the player's off hand (right)
+        // Otherwise, add it to their primary hand (left)
+        switch (_weaponType)
         {
             case weaponStats.weaponStatsType.GrappleGun:
-                newWeapon = new GameObject(newWeaponStats.name, typeof(grappleGun), typeof(AudioSource));
+                _newWeapon = new GameObject(_newWeaponStats.name, typeof (grappleGun), typeof(AudioSource));
+                _newWeapon.transform.parent = playerCamera.transform;
+                _newWeapon.transform.SetPositionAndRotation(playerCamera.transform.position, playerCamera.transform.rotation);
+
+                _newFirePos = Instantiate(rightFirePos.gameObject, rightFirePos.position, rightFirePos.rotation, _newWeapon.transform);
+                _newWeapon.GetComponent<grappleGun>().copyFromWeaponStats(_newWeaponStats, _newFirePos.transform, true);
+                offHandWeapon = _newWeapon;
+                currentSecondary = offHandWeapon.GetComponent<grappleGun>();
                 break;
 
             default:
-                newWeapon = new GameObject(newWeaponStats.name, typeof(rangedWeapon), typeof(AudioSource));
+                _newWeapon = new GameObject(_newWeaponStats.name, typeof(rangedWeapon), typeof(AudioSource));
+                _newWeapon.transform.parent = playerCamera.transform;
+                _newWeapon.transform.SetPositionAndRotation(playerCamera.transform.position, playerCamera.transform.rotation);
+
+                _newFirePos = Instantiate(leftFirePos.gameObject, leftFirePos.position, leftFirePos.rotation, _newWeapon.transform);
+                _newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(_newWeaponStats, _newFirePos.transform, true);
+                weaponInventory.Add(_newWeapon);
+                extSwitchToWeapon(weaponInventory.Count - 1);
                 break;
         }
-
-        newWeapon.transform.parent = playerCamera.transform;
-        newWeapon.transform.position = playerCamera.transform.position;
-        newWeapon.transform.rotation = playerCamera.transform.rotation;
-
-        GameObject newFirePos = Instantiate(weaponFirePos.gameObject, weaponFirePos.position, weaponFirePos.rotation, newWeapon.transform);
-
-        // Different types of guns have different copy functions
-        switch (weaponType)
-        {
-            case weaponStats.weaponStatsType.GrappleGun:
-                newWeapon.GetComponent<grappleGun>().copyFromWeaponStats(newWeaponStats, newFirePos.transform, true);
-                break;
-
-            default:
-                newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(newWeaponStats, newFirePos.transform, true);
-                break;
-        }
-
-        // Add the new weapon to the player's inventory, then switch their current weapon to the new one.
-        weaponInventory.Add(newWeapon);
-        switchToWeapon(weaponInventory.Count - 1);
     }
 
     IEnumerator nextWeapon()
@@ -411,6 +414,10 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    /// <summary>
+    /// Switch the player's weapon to a chosen index in the player's inventory.
+    /// </summary>
+    /// <param name="weaponIndex"></param>
     public void extSwitchToWeapon(int weaponIndex)
     {
         if (gameManager.instance.playStarted())
@@ -498,6 +505,7 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.updatePlayerArmorBar();
     }
 
+    #region Public Member Accessors
     public int GetMaxHealth()
     { return maxHealth; }
 
@@ -524,6 +532,16 @@ public class playerController : MonoBehaviour, IDamage
 
     public bool isAmmoInfinite()
     { return currentWeapon.isAmmoInfinite(); }
+
+    public bool IsPlayerShooting()
+    { return (isPrimaryShooting || isSecondaryShooting); }
+
+    public bool IsPrimaryShooting()
+    { return isPrimaryShooting; }
+
+    public bool IsSecondaryShooting()
+    { return isSecondaryShooting; }
+    #endregion
 
     IEnumerator playFootstep()
     {

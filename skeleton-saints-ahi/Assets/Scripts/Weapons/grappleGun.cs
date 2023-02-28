@@ -56,9 +56,9 @@ public class grappleGun : rangedWeapon
 
     IEnumerator startShootCooldown()
     {
-        gameManager.instance.playerScript.isShooting = true;
+        gameManager.instance.playerScript.isSecondaryShooting = true;
         yield return new WaitForSeconds(fireRate);
-        gameManager.instance.playerScript.isShooting = false;
+        gameManager.instance.playerScript.isSecondaryShooting = false;
     }
 
     override public void copyFromWeaponStats(weaponStats _stats, Transform _weaponFirePos, bool _isUsedByPlayer)
