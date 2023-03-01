@@ -96,7 +96,7 @@ public class Enemy : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player") && isBossEnemy)
         {
-            gameManager.instance.playerScript.TakeDamage(attackDamage);
+            gameManager.instance.PlayerScript().TakeDamage(attackDamage);
         }
     }
 
@@ -150,7 +150,7 @@ public class Enemy : MonoBehaviour, IDamage
         }
 
         if(_enemyAi.GetAgent().isActiveAndEnabled)
-            _enemyAi.SetAgentDestination(gameManager.instance.player.transform.position);
+            _enemyAi.SetAgentDestination(gameManager.instance.playerInstance.transform.position);
     }
 
     public void PickupWeapon(weaponStats newWeaponStats)
@@ -186,7 +186,7 @@ public class Enemy : MonoBehaviour, IDamage
         if (!isBossEnemy)
         {
             Vector3 directionToTarget =
-                (gameManager.instance.player.transform.position - gunPosition.transform.position);
+                (gameManager.instance.playerInstance.transform.position - gunPosition.transform.position);
 
             _animator.SetFloat("fireSpeed", currentWeapon.fireRate * 250f); // Sets the multiplier for firing animation
             _animator.SetTrigger("Shoot");

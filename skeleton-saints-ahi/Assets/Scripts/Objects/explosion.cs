@@ -47,6 +47,7 @@ public class explosion : MonoBehaviour
         if (other.GetComponent<IDamage>() != null)
             other.GetComponent<IDamage>().TakeDamage(explosionDamage);
         if (other.CompareTag("Player"))
-            gameManager.instance.playerScript.giveExternalVelocity((gameManager.instance.player.transform.position - transform.position).normalized * explosionForce);
+            gameManager.instance.PlayerScript().giveExternalVelocity((gameManager.instance.playerInstance.transform.position - transform.position).normalized * explosionForce);
     }
 }
+

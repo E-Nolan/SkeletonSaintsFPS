@@ -24,26 +24,26 @@ public class IKey : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             if (pickupSound)
-                gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
+                gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
 
             switch (gameObject.name)
             {
                 case "Card01":
                     Destroy(gameObject);
-                    gameManager.instance.card01.color = new Color(gameManager.instance.card01.color.r, gameManager.instance.card01.color.g, gameManager.instance.card01.color.b, 1f);
-                    gameManager.instance.keyCard01Text.color = new Color(gameManager.instance.keyCard01Text.color.r, gameManager.instance.keyCard01Text.color.g, gameManager.instance.keyCard01Text.color.b, 1f);
+                    hUDManager.instance.card01.color = new Color(hUDManager.instance.card01.color.r, hUDManager.instance.card01.color.g, hUDManager.instance.card01.color.b, 1f);
+                    hUDManager.instance.keyCard01Text.color = new Color(hUDManager.instance.keyCard01Text.color.r, hUDManager.instance.keyCard01Text.color.g, hUDManager.instance.keyCard01Text.color.b, 1f);
                     gameManager.instance.keyCard[0] = !gameManager.instance.keyCard[0];
                     return;
                 case "Card02":
                     Destroy(gameObject);
-                    gameManager.instance.card02.color = new Color(gameManager.instance.card02.color.r, gameManager.instance.card02.color.g, gameManager.instance.card02.color.b, 1f);
-                    gameManager.instance.keyCard02Text.color = new Color(gameManager.instance.keyCard02Text.color.r, gameManager.instance.keyCard02Text.color.g, gameManager.instance.keyCard02Text.color.b, 1f);
+                    hUDManager.instance.card02.color = new Color(hUDManager.instance.card02.color.r, hUDManager.instance.card02.color.g, hUDManager.instance.card02.color.b, 1f);
+                    hUDManager.instance.keyCard02Text.color = new Color(hUDManager.instance.keyCard02Text.color.r, hUDManager.instance.keyCard02Text.color.g, hUDManager.instance.keyCard02Text.color.b, 1f);
                     gameManager.instance.keyCard[1] = !gameManager.instance.keyCard[1];
                     return;
                 case "Card03":
                     Destroy(gameObject);
-                    gameManager.instance.card03.color = new Color(gameManager.instance.card03.color.r, gameManager.instance.card03.color.g, gameManager.instance.card03.color.b, 1f);
-                    gameManager.instance.keyCard03Text.color = new Color(gameManager.instance.keyCard03Text.color.r, gameManager.instance.keyCard03Text.color.g, gameManager.instance.keyCard03Text.color.b, 1f);
+                    hUDManager.instance.card03.color = new Color(hUDManager.instance.card03.color.r, hUDManager.instance.card03.color.g, hUDManager.instance.card03.color.b, 1f);
+                    hUDManager.instance.keyCard03Text.color = new Color(hUDManager.instance.keyCard03Text.color.r, hUDManager.instance.keyCard03Text.color.g, hUDManager.instance.keyCard03Text.color.b, 1f);
                     gameManager.instance.keyCard[2] = !gameManager.instance.keyCard[2];
                     return;
 

@@ -56,9 +56,9 @@ public class grappleGun : rangedWeapon
 
     IEnumerator startShootCooldown()
     {
-        gameManager.instance.playerScript.isSecondaryShooting = true;
+        gameManager.instance.PlayerScript().isSecondaryShooting = true;
         yield return new WaitForSeconds(fireRate);
-        gameManager.instance.playerScript.isSecondaryShooting = false;
+        gameManager.instance.PlayerScript().isSecondaryShooting = false;
     }
 
     override public void copyFromWeaponStats(weaponStats _stats, Transform _weaponFirePos, bool _isUsedByPlayer)
@@ -102,6 +102,6 @@ public class grappleGun : rangedWeapon
 
     void updateAmmoDisplay()
     {
-        gameManager.instance.playerAmmoText.SetText("");
+        hUDManager.instance.playerAmmoText.SetText("");
     }
 }

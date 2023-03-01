@@ -91,7 +91,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (_agent.enabled)
         {
-            if (!CanDetectPlayer || _agent.destination != gameManager.instance.player.transform.position)
+            if (!CanDetectPlayer || _agent.destination != gameManager.instance.playerInstance.transform.position)
                 StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
             else
             {
@@ -251,7 +251,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private bool IsPlayerShooting()
     {
-        return gameManager.instance.playerScript.IsPlayerShooting();
+        return gameManager.instance.PlayerScript().IsPlayerShooting();
     }
 
     /// <summary>
@@ -259,7 +259,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private bool IsPlayerSprinting()
     {
-        return gameManager.instance.playerScript.isSprinting;
+        return gameManager.instance.PlayerScript().isSprinting;
     }
 
     private void IncreaseTurnSpeed()

@@ -1,44 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
-    public void resume()
+    #region Game Menu Buttons
+    public void Resume()
     {
-        gameManager.instance.unPause();
-        gameManager.instance.isPaused = !gameManager.instance.isPaused;
+        gameManager.instance.toggleGameMenu();
     }
-
-    public void restart()
+    public void Continue()
     {
-        gameManager.instance.unPause();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameManager.instance.continueGame();
     }
-
-    public void quit()
+    public void Restart()
+    {
+        gameManager.instance.toggleGameMenu();
+        gameManager.instance.restartLevel();
+    }
+    public void Respawn()
+    {
+        gameManager.instance.respawn();
+    }
+    public void Quit()
     {
         Application.Quit();
     }
+    public void QuitToMenu()
+    {
+        gameManager.instance.restartGame();
+    }
+    #endregion
 
-    public void easyGame()
+    #region Main Menu Buttons
+    public void StartLevel()
+    {
+        //Get rid of main menu camera
+        Destroy(Camera.main.gameObject);
+        gameManager.instance.InitializePlay();
+    }
+    public void OpenDifficultyMenu()
+    {
+        menuManager.instance.DisplayDifficultyMenu();
+    }
+    public void OpenCreditsPanel()
+    {
+        menuManager.instance.DisplayCreditsMenu();
+    }
+    #endregion
+    public void SetEasyGame()
     {
         gameManager.instance.setEasyMode();
-        SceneManager.LoadScene("Prototype 2 Final");
 
     }
-
-    public void normalGame()
+    public void SetNormalGame()
     {
         gameManager.instance.setNormalMode();
-        SceneManager.LoadScene("Prototype 2 Final");
     }
 
-    public void hardGame()
+    public void SetHardGame()
     {
         gameManager.instance.setHardMode();
-        SceneManager.LoadScene("Prototype 2 Final");
     }
-
 }

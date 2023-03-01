@@ -17,7 +17,7 @@ public class homingMissile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        toPlayerDir = (gameManager.instance.player.transform.position - transform.position).normalized;
+        toPlayerDir = (gameManager.instance.playerInstance.transform.position - transform.position).normalized;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(toPlayerDir), Time.deltaTime * turnSpeed);
         rb.velocity = transform.forward * (rb.velocity.magnitude + accelerationRate * Time.deltaTime);
     }

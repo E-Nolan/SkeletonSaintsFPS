@@ -11,7 +11,7 @@ public class teleporter : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<CharacterController>().enabled = false;
-            gameManager.instance.player.transform.position = teleporterExit.position;
+            gameManager.instance.playerInstance.transform.position = teleporterExit.position;
             other.GetComponent<CharacterController>().enabled = true;
         }
     }

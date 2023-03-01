@@ -101,6 +101,8 @@ MonoBehaviour:
   audioSource: {fileID: 1287622297081860505}
   leftFirePos: {fileID: 2149102234595140003}
   rightFirePos: {fileID: 3701471476233141395}
+  weaponInventory: []
+  offHandWeapon: {fileID: 0}
   playerCamera: {fileID: 9115346416793984193}
   playerSpeed: 10
   gravity: 16
@@ -122,7 +124,7 @@ MonoBehaviour:
   sprintSpeed: 15
   sprintStaminaDrain: 20
   jumpSound: {fileID: 8300000, guid: 9375ea157ec82eb4781108a5a021b21d, type: 3}
-  dashSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  dashSound: {fileID: 8300000, guid: 889d2eb53925269428382214fa4ccfa2, type: 3}
   walkSoundsGroup:
   - {fileID: 8300000, guid: ec9b7482c3dda8c41a8444c30906c9e5, type: 3}
   - {fileID: 8300000, guid: cd876558cdd0c4c4a90583eadf2de4b1, type: 3}

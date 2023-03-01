@@ -20,12 +20,12 @@ public class collectiblePickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // The pickup can only be collected if the respective resource isn't already full
-            if ((ammoRecoveryMultiplier > 0 && !gameManager.instance.playerScript.currentWeapon.isAmmoFull()) || (healthRecovery > 0 && !gameManager.instance.playerScript.isHealthFull()))
+            if ((ammoRecoveryMultiplier > 0 && !gameManager.instance.PlayerScript().currentWeapon.isAmmoFull()) || (healthRecovery > 0 && !gameManager.instance.PlayerScript().isHealthFull()))
             {
-                gameManager.instance.playerScript.currentWeapon.giveAmmo(ammoRecoveryMultiplier);
-                gameManager.instance.playerScript.GiveHealth(healthRecovery);
+                gameManager.instance.PlayerScript().currentWeapon.giveAmmo(ammoRecoveryMultiplier);
+                gameManager.instance.PlayerScript().GiveHealth(healthRecovery);
 
-                gameManager.instance.playerScript.audioSource.PlayOneShot(pickupSound);
+                gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
 
                 Destroy(gameObject);
             }

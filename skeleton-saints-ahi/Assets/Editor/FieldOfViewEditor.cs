@@ -49,7 +49,7 @@ public class FieldOfViewEditor : Editor
         if (fov.CanDetectPlayer)
         {
             Handles.color = Color.green;
-            Handles.DrawLine(fov.transform.position, gameManager.instance.player.transform.position);
+            Handles.DrawLine(fov.transform.position, gameManager.instance.playerInstance.transform.position);
         }
     }
 

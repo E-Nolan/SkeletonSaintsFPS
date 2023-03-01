@@ -361,7 +361,7 @@ public class playerController : MonoBehaviour, IDamage
                 _newFirePos = Instantiate(leftFirePos.gameObject, leftFirePos.position, leftFirePos.rotation, _newWeapon.transform);
                 _newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(_newWeaponStats, _newFirePos.transform, true);
                 weaponInventory.Add(_newWeapon);
-                extSwitchToWeapon(weaponInventory.Count - 1);
+                switchToWeapon(weaponInventory.Count - 1);
                 break;
         }
     }
@@ -372,9 +372,9 @@ public class playerController : MonoBehaviour, IDamage
         // Switch to the weapon after the current one in the List
         // Switch to the first weapon if the index goes out of bounds
         if (currWepIndex + 1 >= weaponInventory.Count)
-            extSwitchToWeapon(0);
+            switchToWeapon(0);
         else
-            extSwitchToWeapon(currWepIndex + 1);
+            switchToWeapon(currWepIndex + 1);
 
         yield return new WaitForSeconds(weaponSwitchCooldown);
         isSwitchingWeapons = false;
@@ -386,9 +386,9 @@ public class playerController : MonoBehaviour, IDamage
         // Switch to the weapon before the current one in the List
         // Switch to the last weapon if the index goes out of bounds
         if (currWepIndex - 1 < 0)
-            extSwitchToWeapon(weaponInventory.Count - 1);
+            switchToWeapon(weaponInventory.Count - 1);
         else
-            extSwitchToWeapon(currWepIndex - 1);
+            switchToWeapon(currWepIndex - 1);
 
         yield return new WaitForSeconds(weaponSwitchCooldown);
         isSwitchingWeapons = false;
@@ -420,23 +420,23 @@ public class playerController : MonoBehaviour, IDamage
     /// <param name="weaponIndex"></param>
     public void extSwitchToWeapon(int weaponIndex)
     {
-        if (gameManager.instance.playStarted())
+        if (gameManager.instance.PlayStarted())
         {
             Debug.Log("Outside assignment of currentWeapon is invalid \n Only playerController and GM may call this");
             return;
         }
         else
         {
-          switchToWeapon(weaponIndex);
+            switchToWeapon(weaponIndex);
         }
     }
 
 
     IEnumerator flashDamage()
     {
-        gameManager.instance.damageFlashScreen.SetActive(true);
+        hUDManager.instance.damageFlashScreen.SetActive(true);
         yield return new WaitForSeconds(0.1f);
-        gameManager.instance.damageFlashScreen.SetActive(false);
+        hUDManager.instance.damageFlashScreen.SetActive(false);
     }
 
     public void giveExternalVelocity(Vector3 _extraVelocity)

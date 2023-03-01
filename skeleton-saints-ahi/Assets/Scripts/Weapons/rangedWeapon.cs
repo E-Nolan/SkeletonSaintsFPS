@@ -126,9 +126,9 @@ public class rangedWeapon : MonoBehaviour
     void updateAmmoDisplay()
     {
         if (infiniteAmmo)
-            gameManager.instance.playerAmmoText.text = "";
+            hUDManager.instance.playerAmmoText.text = "";
         else
-            gameManager.instance.playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
+            hUDManager.instance.playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
     }
 
     #endregion
@@ -175,7 +175,7 @@ public class rangedWeapon : MonoBehaviour
         {
             // Find the rotation that will be applied to the new bullet
             if (!usedByPlayer)
-                targetFinder.transform.LookAt(gameManager.instance.player.transform);
+                targetFinder.transform.LookAt(gameManager.instance.playerInstance.transform);
 
             targetFinder.transform.rotation.SetLookRotation(fireDirection, Vector3.up);
             if (spreadAngle > 0)
@@ -196,14 +196,14 @@ public class rangedWeapon : MonoBehaviour
      IEnumerator startShootCooldown()
      {
         if (usedByPlayer)
-            gameManager.instance.playerScript.isPrimaryShooting = true;
+            gameManager.instance.PlayerScript().isPrimaryShooting = true;
         else
             enemyScript.isShooting = true;
 
          yield return new WaitForSeconds(fireRate);
 
         if (usedByPlayer)
-            gameManager.instance.playerScript.isPrimaryShooting = false;
+            gameManager.instance.PlayerScript().isPrimaryShooting = false;
         else
             enemyScript.isShooting = false;
      }
@@ -257,7 +257,7 @@ public class rangedWeapon : MonoBehaviour
 
         if (usedByPlayer)
         {
-            gameManager.instance.playerScript.isPrimaryShooting = false;
+            gameManager.instance.PlayerScript().isPrimaryShooting = false;
             updateAmmoDisplay();
         }
     }
