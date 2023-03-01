@@ -251,7 +251,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private bool IsPlayerShooting()
     {
-        return gameManager.instance.playerScript.isShooting;
+        return gameManager.instance.playerScript.IsPlayerShooting();
     }
 
     /// <summary>
