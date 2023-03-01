@@ -541,6 +541,9 @@ public class playerController : MonoBehaviour, IDamage
 
     public bool IsSecondaryShooting()
     { return isSecondaryShooting; }
+
+    public Vector3 GetPlayerVelocity()
+    { return controller.velocity + externalVelocity; }
     #endregion
 
     IEnumerator playFootstep()
