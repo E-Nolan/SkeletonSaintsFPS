@@ -139,7 +139,7 @@ public class rangedWeapon : MonoBehaviour
     /// </summary>
     virtual public void shootForward()
     {
-        shoot(targetFinder.transform.position - weaponFirePos.position);
+        shoot(targetFinder.transform.position);
     }
 
     /// <summary>
@@ -170,12 +170,26 @@ public class rangedWeapon : MonoBehaviour
         if (shotSound)
             audioSource.PlayOneShot(shotSound);
 
+        // If the bullet is from a player's burst weapon, reacquire the target with a raycast
+        if (usedByPlayer && delay >= 0.0f)
+        {
+            RaycastHit hit;
+            if (gameManager.instance.PlayerScript().GetCurrentReticleHit(out hit))
+            {
+                _fireTarget = hit.point;
+            }
+            else
+            {
+                _fireTarget = targetFinder.transform.position;
+            }
+        }
+
         // Fire a bullet for each bullet in the spread.
         for (int i = 0; i < bulletsPerSpread; i++)
         {
             // Find the rotation that will be applied to the new bullet
 
-            targetFinder.transform.rotation.SetLookRotation(_fireTarget, Vector3.up);
+            targetFinder.transform.rotation = Quaternion.LookRotation(_fireTarget - weaponFirePos.position);
             if (spreadAngle > 0)
                 getRandomSpreadTarget();
 

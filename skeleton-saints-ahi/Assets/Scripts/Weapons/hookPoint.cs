@@ -12,6 +12,7 @@ public class hookPoint : MonoBehaviour
     bool retracting = false;
     bool pulling = false;
     float pullSpeed = 5.0f;
+    public float retractSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class hookPoint : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // If the hook collides with a grapple point, freeze the hook in place and accelerate the player towards the hook
-        if (collision.transform.CompareTag("GrapplePoint") || collision.transform.CompareTag("Enemy"))
+        if (collision.transform.CompareTag("GrapplePoint") || collision.transform.CompareTag("Enemy") && currentCatch == null)
         {
             rb.isKinematic = true;
             beginPulling();
@@ -94,13 +95,14 @@ public class hookPoint : MonoBehaviour
     {
         retracting = true;
         hookCollider.enabled = false;
+        rb.velocity = Vector3.zero;
         gameManager.instance.PlayerScript().isGrappling = false;
     }
 
     void gradualRetract()
     {
-        transform.position = Vector3.Lerp(transform.position, weaponFirePos.transform.position, Time.deltaTime * 20);
-        if ((transform.position - weaponFirePos.transform.position).magnitude <= 1.5f)
+        transform.position = Vector3.MoveTowards(transform.position, weaponFirePos.transform.position, retractSpeed * Time.deltaTime);
+        if ((transform.position - weaponFirePos.transform.position).magnitude <= 0.5f)
         {
             instantRetract();
         }

@@ -274,19 +274,27 @@ public class playerController : MonoBehaviour, IDamage
     void shoot(rangedWeapon _shotWeapon)
     {
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, raycastRange))
+        if (GetCurrentReticleHit(out hit))
         {
             Debug.Log($"The player is shooting at {hit.point}");
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
             Vector3 directionToTarget = (hit.point - leftFirePos.transform.position);
             Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
-            _shotWeapon.shoot(directionToTarget.normalized);
+            _shotWeapon.shoot(hit.point);
         }
         else
         {
             // If the raycast didn't hit anything, fire a bullet straight forwards
             _shotWeapon.shootForward();
         }
+    }
+
+    public bool GetCurrentReticleHit(out RaycastHit _hit)
+    {
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out _hit, raycastRange))
+            return true;
+        else
+            return false;
     }
 
     /// <summary>

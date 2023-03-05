@@ -30,10 +30,10 @@ public class grappleGun : rangedWeapon
 
     override public void shootForward()
     {
-        shoot(targetFinder.transform.position - weaponFirePos.position);
+        shoot(targetFinder.transform.position);
     }
 
-    override public void shoot(Vector3 fireDirection)
+    override public void shoot(Vector3 _fireTarget)
     {
         StartCoroutine(startShootCooldown());
         if (hookIsOut)
@@ -41,16 +41,16 @@ public class grappleGun : rangedWeapon
             // If the grappling hook is out, bring it back to the fire pos
             grappleHookScript.beginRetracting();
         }
-        else
+        else 
         {
             // Otherwise, send the grappling hook out
-            shootGrapplingHook(fireDirection);
+            shootGrapplingHook(_fireTarget);
         }
     }
 
-    void shootGrapplingHook(Vector3 fireDirection)
+    void shootGrapplingHook(Vector3 _fireTarget)
     {
-        targetFinder.transform.rotation.SetLookRotation(fireDirection, Vector3.up);
+        targetFinder.transform.rotation = Quaternion.LookRotation(_fireTarget - weaponFirePos.position);
         grappleHookScript.fireHook(targetFinder.transform.rotation, bulletSpeed);
     }
 
@@ -79,6 +79,7 @@ public class grappleGun : rangedWeapon
         grappleHookScript = grappleHookPoint.GetComponent<hookPoint>();
         grappleHookScript.getGrappleGunScript(gameObject.GetComponent<grappleGun>());
         grappleHookScript.getWeaponFirePosition(weaponFirePos.gameObject);
+        grappleHookScript.retractSpeed = _stats.bulletSpeed * 2;
 
         lineRender = grappleHookPoint.GetComponent<LineRenderer>();
         lineRender.positionCount = 2;
