@@ -27,13 +27,15 @@ public class weaponStats : ScriptableObject
     [Range(0,60)] public int spreadAngle;
     [Range(1,10)] public int bulletsPerBurst;
     [Range(0.0f, 0.5f)] public float burstFireDelay;
+    [Range(0.0f, 100.0f)] public float recoilForce;
 
     public bool infiniteAmmo;
     [Range(0,200)] public int startingAmmo;
     [Range(0, 200)] public int maxAmmo;
+    [Range(0, 100)] public int maxClipSize;
     [Range(0, 40)] public int ammoRecovery;
     [Tooltip("Currently only used for grapple gun range")]
-    [Range(5, 100)] public int range;
+    [Range(5, 1000)] public int range;
     public bool lobbedWeapon;
 
     [Header("Enemy Difficulty")]

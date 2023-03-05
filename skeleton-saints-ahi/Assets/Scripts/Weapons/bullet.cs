@@ -7,17 +7,29 @@ public class bullet : MonoBehaviour
     // Dmg for the bullet
     public int bulletDmg;
 
-    // Timer for how long the before the bullet is destroyed if no hit occurs
-    [SerializeField] int timer;
-
     [SerializeField] AudioSource bulletImpactSound;
     [SerializeField] private Transform damagePopupPrefab;
 
-   
-    void Start()
+    public void setTimer(float _timer)
     {
-        // Destroys the bullet after X amount of time
-        Destroy(gameObject, timer);
+        StartCoroutine(timerWait(_timer));
+    }
+
+    IEnumerator timerWait(float _timer)
+    {
+        yield return new WaitForSeconds(_timer);
+        stopBullet();
+    }
+
+    void stopBullet()
+    {
+        GetComponent<SphereCollider>().enabled = false;
+        if (GetComponent<MeshRenderer>())
+            GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+
+        Destroy(gameObject, 5.0f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,13 +48,7 @@ public class bullet : MonoBehaviour
 
         if (bulletImpactSound)
             bulletImpactSound.Play();
-        GetComponent<SphereCollider>().enabled = false;
-        if (GetComponent<MeshRenderer>())
-            GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-
-
-        Destroy(gameObject, 5.0f);
+        stopBullet();
     }
 
 

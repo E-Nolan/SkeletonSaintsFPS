@@ -24,12 +24,15 @@ public class rangedWeapon : MonoBehaviour
     [Range(1, 10)] [SerializeField] int bulletsPerBurst;
     [Tooltip("For burst fire weapons, this is the time between each shot in a round")]
     [Range(0.0f, 0.5f)] [SerializeField] float burstFireDelay;
+    [Range(5, 1000)] [SerializeField] int range;
+    [Range(0.0f, 100.0f)] [SerializeField] float recoilForce;
 
     [Header("----- Ammo -----")]
     [SerializeField] bool infiniteAmmo;
     [Tooltip("Will be rounded down if it exceeds maxAmmo.")]
     [Range(0, 200)] [SerializeField] int currentAmmo;
     [Range(0, 200)] [SerializeField] int maxAmmo;
+    [Range(0, 100)] [SerializeField] int maxClipSize;
     [Range(0, 40)] [SerializeField] int ammoRecovery;
 
     // If this weapon is being used by an enemy, access 
@@ -40,6 +43,7 @@ public class rangedWeapon : MonoBehaviour
     public Sprite activeImage;
     public Sprite inactiveImage;
     public string weaponName;
+    int currentClip;
 
     #endregion
 
@@ -194,12 +198,31 @@ public class rangedWeapon : MonoBehaviour
                 getRandomSpreadTarget();
 
             // Instantiate a bullet at the Fire Position with the targetFinder's rotation and give it forward velocity
+            // If the player is shooting a bullet while moving, add the player's velocity to that bullet (without changing the direction of the bullet)
+            // Destroy the bullet after it has travelled its range distance
             // Reset the targetFinder's rotation for the next fired bullet
             GameObject newBullet = Instantiate(gunBullet, weaponFirePos.position, targetFinder.transform.rotation);
-            newBullet.GetComponent<bullet>().bulletDmg = damage;
-            newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed;
+            bullet newBulletScript = newBullet.GetComponent<bullet>();
+            newBulletScript.bulletDmg = damage;
+
+            if (usedByPlayer)
+                newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed + Vector3.Project(gameManager.instance.PlayerScript().GetPlayerVelocity(), newBullet.transform.forward);
+            else
+                newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed;
+            newBulletScript.setTimer((float)range / bulletSpeed);
+
+            // Recoil:
+            // Push the player in the opposite direction of the shot
+            // Force the camera to tilt up slightly
+            if (usedByPlayer)
+            {
+                gameManager.instance.PlayerScript().giveExternalVelocity((weaponFirePos.position - targetFinder.transform.position) * (recoilForce / bulletsPerSpread));
+                gameManager.instance.CameraControls().startRecoil(recoilForce);
+            }
+
             Debug.DrawRay(weaponFirePos.position, targetFinder.transform.forward * 10.0f, Color.blue, 1.0f);
             targetFinder.transform.rotation = weaponFirePos.rotation;
+
         }
 
         spendAmmo(1);
@@ -247,6 +270,8 @@ public class rangedWeapon : MonoBehaviour
         spreadAngle = _stats.spreadAngle + _stats.spreadAngleBonus * (int)gameManager.instance.currentDifficulty;
         bulletsPerBurst = _stats.bulletsPerBurst;
         burstFireDelay = _stats.burstFireDelay;
+        range = _stats.range;
+        recoilForce = _stats.recoilForce;
 
         infiniteAmmo = _stats.infiniteAmmo;
         currentAmmo = _stats.startingAmmo;
@@ -255,6 +280,7 @@ public class rangedWeapon : MonoBehaviour
         activeImage = _stats.activeweaponIcon;
         inactiveImage = _stats.activeweaponIcon;
         weaponName = _stats.weaponName;
+        maxClipSize = _stats.maxClipSize;
 
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1.0f;

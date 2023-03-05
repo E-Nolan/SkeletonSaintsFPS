@@ -21,16 +21,18 @@ MonoBehaviour:
   shotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   bulletSpeed: 40
   fireRate: 0.5
-  damage: 1
+  damage: 2
   bulletsPerSpread: 15
   spreadAngle: 12
   bulletsPerBurst: 1
   burstFireDelay: 0
+  recoilForce: 8
   infiniteAmmo: 0
-  startingAmmo: 18
-  maxAmmo: 50
+  startingAmmo: 12
+  maxAmmo: 36
+  maxClipSize: 2
   ammoRecovery: 6
-  range: 10
+  range: 20
   lobbedWeapon: 0
   bulletSpeedBonus: 0
   fireRateBonus: 0

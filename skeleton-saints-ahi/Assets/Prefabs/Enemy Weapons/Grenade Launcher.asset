@@ -26,11 +26,13 @@ MonoBehaviour:
   spreadAngle: 0
   bulletsPerBurst: 1
   burstFireDelay: 0
+  recoilForce: 0
   infiniteAmmo: 1
   startingAmmo: 5
   maxAmmo: 20
+  maxClipSize: 0
   ammoRecovery: 3
-  range: 0
+  range: 100
   lobbedWeapon: 1
   bulletSpeedBonus: 0
   fireRateBonus: 0.3

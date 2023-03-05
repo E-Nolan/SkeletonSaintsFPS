@@ -12,7 +12,15 @@ public class cameraControls : MonoBehaviour
 
     [SerializeField] bool invertX;
 
+
+    [SerializeField] float recoilAngleModifier;
     float xRotation;
+
+    bool recoilUp = false;
+    bool recoilDown = false;
+    float recoilSpeed = 0.0f;
+    float remainingRecoilAngle = 0.0f;
+    float recoilAngle = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,14 +41,55 @@ public class cameraControls : MonoBehaviour
         else
             xRotation -= mouseY;
 
+        doRecoil();
 
+        rotateVertical();
+
+        //rotate the player on its T-axis
+        transform.parent.Rotate(Vector3.up * mouseX);
+    }
+
+    void rotateVertical()
+    {
         //clamp the camera rotation
         xRotation = Mathf.Clamp(xRotation, lockVerMin, lockVerMax);
 
         //rotatate the camera on the X-axis
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+    }
+    public void startRecoil(float _force)
+    {
+        recoilSpeed = _force * -recoilAngleModifier;
+        recoilUp = true;
+        recoilDown = false;
+        recoilAngle = recoilSpeed / recoilAngleModifier;
+        remainingRecoilAngle = recoilAngle;
+    }
 
-        //rotate the playe ron its T-axis
-        transform.parent.Rotate(Vector3.up * mouseX);
+    void doRecoil()
+    {
+        // If the gun is recoiling, rotate the camera up or down accordingly
+        if (recoilUp)
+        {
+            xRotation += recoilSpeed * Time.deltaTime;
+            remainingRecoilAngle -= recoilSpeed * Time.deltaTime;
+
+            if (remainingRecoilAngle >= 0.0f)
+            {
+                recoilUp = false;
+                recoilDown = true;
+                remainingRecoilAngle = -recoilAngle / 2.0f;
+                recoilSpeed /= 1.5f;
+            }
+        }
+        else if (recoilDown)
+        {
+            xRotation -= recoilSpeed * Time.deltaTime;
+            remainingRecoilAngle += recoilSpeed * Time.deltaTime;
+            if (remainingRecoilAngle <= 0.0f)
+            {
+                recoilDown = false;
+            }
+        }
     }
 }

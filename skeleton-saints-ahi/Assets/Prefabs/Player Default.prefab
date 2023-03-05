@@ -498,3 +498,4 @@ MonoBehaviour:
   lockVerMin: -60
   lockVerMax: 60
   invertX: 0
+  recoilAngleModifier: 8

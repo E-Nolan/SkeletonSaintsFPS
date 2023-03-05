@@ -209,7 +209,11 @@ public class playerController : MonoBehaviour, IDamage
 
         // Move the character via arrow keys/WASD input
         if (!isGrappling)
+        {
             moveInput = (transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical"));
+            if (moveInput.magnitude > 1.0f)
+                moveInput = moveInput.normalized;
+        }
         
         // Play walk sound effects if the player is walking on ground
         // Play run sound effects if the player is sprinting on ground
@@ -291,7 +295,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public bool GetCurrentReticleHit(out RaycastHit _hit)
     {
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out _hit, raycastRange))
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out _hit, raycastRange) && _hit.distance >= 1.0f)
             return true;
         else
             return false;
@@ -552,7 +556,7 @@ public class playerController : MonoBehaviour, IDamage
     { return isSecondaryShooting; }
 
     public Vector3 GetPlayerVelocity()
-    { return controller.velocity + externalVelocity; }
+    { return controller.velocity + moveInput * playerSpeed + externalVelocity; }
     #endregion
 
     IEnumerator playFootstep()

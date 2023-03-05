@@ -19,18 +19,20 @@ MonoBehaviour:
   activeweaponIcon: {fileID: 21300000, guid: 396aa81835ad1034ba7d75e03bb32c3c, type: 3}
   inactiveweaponIcon: {fileID: 21300000, guid: 00404e8de82c87e419123156133754d2, type: 3}
   shotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
-  bulletSpeed: 15
+  bulletSpeed: 35
   fireRate: 1
   damage: 0
   bulletsPerSpread: 1
   spreadAngle: 0
   bulletsPerBurst: 1
   burstFireDelay: 0
+  recoilForce: 16
   infiniteAmmo: 0
   startingAmmo: 4
   maxAmmo: 10
+  maxClipSize: 1
   ammoRecovery: 2
-  range: 5
+  range: 1000
   lobbedWeapon: 0
   bulletSpeedBonus: 0
   fireRateBonus: 0
