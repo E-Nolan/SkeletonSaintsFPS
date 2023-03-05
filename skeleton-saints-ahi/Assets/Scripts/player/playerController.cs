@@ -276,6 +276,7 @@ public class playerController : MonoBehaviour, IDamage
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, raycastRange))
         {
+            Debug.Log($"The player is shooting at {hit.point}");
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
             Vector3 directionToTarget = (hit.point - leftFirePos.transform.position);
             Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);

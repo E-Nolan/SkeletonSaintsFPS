@@ -143,10 +143,10 @@ public class rangedWeapon : MonoBehaviour
     }
 
     /// <summary>
-    /// Fires a round from the weapon in the direction of the given normalized vector
+    /// Fires a round from the weapon at the position of the given target
     /// </summary>
     /// <param name="fireDirection"></param>
-    virtual public void shoot(Vector3 fireDirection)
+    virtual public void shoot(Vector3 fireTarget)
     {
         // Check to see whether or not the weapon has enough ammo to shoot
         // If it does, fire a bullet in the provided direction
@@ -156,14 +156,14 @@ public class rangedWeapon : MonoBehaviour
             // For each shot in a burst, fire a bullet with a delay between each shot
             for (int i = 0; i  < bulletsPerBurst; i++)
             {
-                StartCoroutine(shootBullet(fireDirection, i * burstFireDelay));
+                StartCoroutine(shootBullet(fireTarget, i * burstFireDelay));
             }
         }
     }
 
     // Fire a bullet after a delay. A delay of 0 will fire immediately
     // Delays greater than 0 are used for guns with burst fire, and delay is equal to the time between each shot
-    IEnumerator shootBullet(Vector3 fireDirection, float delay = 0.0f)
+    IEnumerator shootBullet(Vector3 _fireTarget, float delay = 0.0f)
     {
         yield return new WaitForSeconds(delay);
 
@@ -174,10 +174,8 @@ public class rangedWeapon : MonoBehaviour
         for (int i = 0; i < bulletsPerSpread; i++)
         {
             // Find the rotation that will be applied to the new bullet
-            if (!usedByPlayer)
-                targetFinder.transform.LookAt(gameManager.instance.playerInstance.transform);
 
-            targetFinder.transform.rotation.SetLookRotation(fireDirection, Vector3.up);
+            targetFinder.transform.rotation.SetLookRotation(_fireTarget, Vector3.up);
             if (spreadAngle > 0)
                 getRandomSpreadTarget();
 
