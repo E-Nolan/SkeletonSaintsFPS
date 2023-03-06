@@ -23,7 +23,10 @@ public class bullet : MonoBehaviour
 
     void stopBullet()
     {
-        GetComponent<SphereCollider>().enabled = false;
+        if(GetComponent<SphereCollider>())
+            GetComponent<SphereCollider>().enabled = false;
+        if(GetComponent<CapsuleCollider>())
+            GetComponent<CapsuleCollider>().enabled = false;
         if (GetComponent<MeshRenderer>())
             GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;

@@ -1,13 +1,13 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(EnemyAI))]
-public class FieldOfViewEditor : Editor
+[CustomEditor(typeof(Turret))]
+public class TurretFieldOfViewEditor : Editor
 {
     // To show the cone of view of the Enemy in only the Editor
     private void OnSceneGUI()
     {
-        EnemyAI fov = (EnemyAI)target;
+        Turret fov = (Turret)target;
 
         // Draw circle around player to display ViewRadius
         Handles.color = Color.white;
@@ -46,7 +46,7 @@ public class FieldOfViewEditor : Editor
         if (fov.CanDetectPlayer)
         {
             Handles.color = Color.green;
-            Handles.DrawLine(fov.transform.position, gameManager.instance.playerInstance.transform.position);
+            Handles.DrawLine(fov.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
         }
     }
 

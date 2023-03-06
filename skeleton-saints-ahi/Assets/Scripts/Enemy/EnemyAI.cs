@@ -202,8 +202,7 @@ public class EnemyAI : MonoBehaviour
                     float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
 
                     // Set CanShoot bool to the result of (angleToPlayer <= FireAngle), if the Player is within the FireAngle
-                    //if(!BossEnemy)
-                        CanAttack = angleToPlayer <= FireAngle;
+                    CanAttack = angleToPlayer <= FireAngle;
                 }
                 else
                 {

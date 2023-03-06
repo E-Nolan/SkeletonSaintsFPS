@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     public bool isShooting = false;
     public rangedWeapon currentWeapon;
+    public GameObject Bullet;
     public bool acquiringWeapon;
     public bool isDead = false;
     public bool isAttacking;
@@ -185,12 +186,16 @@ public class Enemy : MonoBehaviour, IDamage
 
         if (!isBossEnemy)
         {
-            Vector3 directionToTarget =
-                (gameManager.instance.playerInstance.transform.position - gunPosition.transform.position);
+            //Vector3 directionToTarget =
+            //    (gameManager.instance.playerInstance.transform.position - gunPosition.transform.position);
 
             _animator.SetFloat("fireSpeed", currentWeapon.fireRate * 250f); // Sets the multiplier for firing animation
             _animator.SetTrigger("Shoot");
-            currentWeapon.shoot(directionToTarget.normalized);
+            Vector3 distanceToPlayer =
+                (gameManager.instance.playerInstance.transform.position - gunPosition.transform.position);
+            currentWeapon.shoot(gameManager.instance.playerInstance.transform.position + 
+                                new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-3f, 3f)));
+            //currentWeapon.shoot(aim);
         }
         else
         {

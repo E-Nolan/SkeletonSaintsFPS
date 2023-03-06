@@ -8,7 +8,7 @@ public class rangedWeapon : MonoBehaviour
     [Header("----- Components -----")]
     [SerializeField] GameObject gunModel;
     [SerializeField] public Transform weaponFirePos;
-    [SerializeField] protected GameObject gunBullet;
+    [SerializeField] public GameObject gunBullet;
     [SerializeField] AudioSource audioSource;
     [SerializeField] protected AudioClip shotSound;
 
@@ -16,7 +16,7 @@ public class rangedWeapon : MonoBehaviour
     [SerializeField] bool usedByPlayer;
 
     [Header("----- Stats -----")]
-    [Range(5, 200)] [SerializeField] protected int bulletSpeed;
+    [Range(5, 200)] [SerializeField] public int bulletSpeed;
     [Range(0.0f, 5.0f)] [SerializeField] public float fireRate; // in seconds
     [Range(1, 20)] [SerializeField] int damage;
     [Range(1, 20)] [SerializeField] int bulletsPerSpread;
