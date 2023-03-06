@@ -40,7 +40,8 @@ public class EnemyAI : MonoBehaviour
     public float originalSpeed;
     public float originalAcceleration;
 
-    [Header("----- Boss -----")]
+    [Header("----- Mutant/Boss -----")]
+    public bool IsMutant;
     public bool BossEnemy;
     public int AttackDamage;
 
@@ -58,8 +59,6 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        //BossEnemy = (name == "crab-monster") || (name == "crab-monster(Clone)");
-
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();
 
@@ -125,15 +124,29 @@ public class EnemyAI : MonoBehaviour
             // Update animation parameters
             if (_agent.velocity.magnitude >= 0.1f)
             {
-                _animator.SetFloat("xVelocity", velocity.normalized.x, 0.1f, Time.deltaTime);
-                _animator.SetFloat("yVelocity", velocity.normalized.y, 0.1f, Time.deltaTime);
+                if (!IsMutant)
+                {
+                    _animator.SetFloat("xVelocity", velocity.normalized.x, 0.1f, Time.deltaTime);
+                    _animator.SetFloat("yVelocity", velocity.normalized.y, 0.1f, Time.deltaTime);
+                }
+                else
+                {
+                    _animator.SetFloat("speed", velocity.normalized.magnitude, 0.1f, Time.deltaTime);
+                }
             }
             else
             {
                 // Enemy would continue current animation when should be idling, so if the agent has no velocity,
-                    // manually set the parameters
-                _animator.SetFloat("xVelocity", 0f, 0.1f, Time.deltaTime);
-                _animator.SetFloat("yVelocity", 0f, 0.1f, Time.deltaTime);
+                // manually set the parameters
+                if (!IsMutant)
+                {
+                    _animator.SetFloat("xVelocity", 0f, 0.1f, Time.deltaTime);
+                    _animator.SetFloat("yVelocity", 0f, 0.1f, Time.deltaTime);
+                }
+                else
+                {
+                    _animator.SetFloat("speed", 0f, 0.1f, Time.deltaTime);
+                }
             }
 
             if (_enemyLookAt != null)
@@ -287,7 +300,7 @@ public class EnemyAI : MonoBehaviour
 
     public void IncreaseAgentAcceleration()
     {
-        if(Math.Abs(_agent.acceleration - originalAcceleration) < 0.001f)
+        if (Math.Abs(_agent.acceleration - originalAcceleration) < 0.001f)
             _agent.acceleration = 100f;
     }
 

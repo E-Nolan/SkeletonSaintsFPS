@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour, IDamage
     public bool fadeHealthBar = false;
     private float _maxHealth;
     private bool isBossEnemy;
+    private bool isMutant;
     private int attackDamage;
     private gameManager.GameDifficulty _difficulty;
 
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Start()
     {
+        isAttacking = false;
         _difficulty = gameManager.instance.currentDifficulty;
 
         switch (_difficulty)
@@ -55,14 +57,18 @@ public class Enemy : MonoBehaviour, IDamage
                 break;
         }
 
-        if (_enemyAi.BossEnemy)
+        if (_enemyAi.BossEnemy || _enemyAi.IsMutant)
         {
-            isBossEnemy = true;
+            if(_enemyAi.BossEnemy) 
+                isBossEnemy = true;
+            else if (_enemyAi.IsMutant)
+                isMutant = true;
             attackDamage = _enemyAi.AttackDamage;
         }
         else
         {
             isBossEnemy = false;
+            isMutant = false;
         }
 
         gameManager.instance.updateEnemyCounter();
@@ -95,7 +101,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && isBossEnemy)
+        if (other.CompareTag("Player") && (isBossEnemy || isMutant))
         {
             gameManager.instance.PlayerScript().TakeDamage(attackDamage);
         }
@@ -112,11 +118,11 @@ public class Enemy : MonoBehaviour, IDamage
 
         // Only show damaged animation for every enemy normal enemy hit or
         // every quarter of Boss health
-        if (!isBossEnemy || (isBossEnemy && _maxHealth % _health <= _maxHealth / 4))
+        if (!isBossEnemy || ((isBossEnemy || isMutant) && Math.Abs(_maxHealth % _health - _maxHealth / 4) < 0.001f))
         {
             _animator.SetTrigger("Damage");
 
-            if(isBossEnemy)
+            if(isBossEnemy || isMutant)
                 _animator.SetFloat("HitRandom", UnityEngine.Random.Range(0f, 1f));
         }
 
@@ -180,22 +186,17 @@ public class Enemy : MonoBehaviour, IDamage
 
     public void Attack()
     {
-        if (currentWeapon == null && !isBossEnemy)
+        if (currentWeapon == null && !isBossEnemy && !isMutant)
             return;
 
-
-        if (!isBossEnemy)
+        if (!isBossEnemy && !isMutant)
         {
-            //Vector3 directionToTarget =
-            //    (gameManager.instance.playerInstance.transform.position - gunPosition.transform.position);
-
             _animator.SetFloat("fireSpeed", currentWeapon.fireRate * 250f); // Sets the multiplier for firing animation
             _animator.SetTrigger("Shoot");
             Vector3 distanceToPlayer =
                 (gameManager.instance.playerInstance.transform.position - gunPosition.transform.position);
             currentWeapon.shoot(gameManager.instance.playerInstance.transform.position + 
                                 new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-3f, 3f)));
-            //currentWeapon.shoot(aim);
         }
         else
         {
@@ -204,7 +205,7 @@ public class Enemy : MonoBehaviour, IDamage
                 if (_enemyAi.GetAgentRemainingDistance() <= _enemyAi.GetAgentStoppingDistance())
                 {
                     _animator.SetTrigger("Attacking");
-                    _animator.SetFloat("AttackRandom", UnityEngine.Random.Range(-1f, 1f));
+                    _animator.SetFloat("AttackRandom", UnityEngine.Random.Range(-1, 2));
                     _enemyAi.IncreaseAgentSpeed();
                 }
             }
@@ -239,7 +240,7 @@ public class Enemy : MonoBehaviour, IDamage
     {
         // Made a new material so the original material isn't touched and possibly kept altered should it be interupted
         Material flashMaterial = Instantiate(_material);
-        flashMaterial.color = Color.white;
+        flashMaterial.color = !isMutant ? Color.white : Color.red;
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = flashMaterial;
         yield return new WaitForSeconds(_materialFlashSpeed);
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = _material;
