@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8950,6 +8950,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &546525796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2229425041981397057, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
+  m_PrefabInstance: {fileID: 2229425042524585289}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &547348290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30931,6 +30942,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2229425043056236780, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
+      propertyPath: playerHealthBar
+      value: 
+      objectReference: {fileID: 546525796}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
 --- !u!1001 &3334397026345702695

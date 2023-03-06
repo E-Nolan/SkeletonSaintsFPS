@@ -156,7 +156,7 @@ public class gameManager : MonoBehaviour
 	{
 		unPause();
 		//if we are respawning because the player died, just un-set the flash screen and toggle the menu
-		if (playerScript.GetCurrentHealth() <= 0)
+		if (playerScript.GetCurrentStamina() <= 0)
 		{
 			hUDManager.instance.DamageFlashScreen().SetActive(false);
 			toggleGameMenu();
@@ -189,7 +189,7 @@ public class gameManager : MonoBehaviour
 		playerPreferences.instance.SavedWeapons.Clear();
 
 
-		if (playerScript.GetCurrentHealth() <= 0)
+		if (playerScript.GetCurrentStamina() <= 0)
 		{
 			hUDManager.instance.DamageFlashScreen().SetActive(false);
 			toggleGameMenu();
@@ -270,20 +270,17 @@ public class gameManager : MonoBehaviour
 		instance.winGame();
 	}
     #region Merged Functions
+	public void createUIBar()
+    {
+		hUDManager.instance.createPlayerHealthBar();
+		hUDManager.instance.createPlayerStaminaBar();
+		hUDManager.instance.createPlayerArmorBar();
+	}
     public void updatePlayerHealthBar()
     {
 		hUDManager.instance.updatePlayerHealthBar();
 
 	}
-	public void updateEnemyCounter()
-	{
-		hUDManager.instance.enemiesCounter.text = $"{enemiesRemaining}";
-	}
-	public void updateActiveGun()
-	{
-		hUDManager.instance.updateActiveGun();
-	}
-
 	public void updatePlayerStaminaBar()
 	{
 		hUDManager.instance.updatePlayerStaminaBar();
@@ -292,6 +289,15 @@ public class gameManager : MonoBehaviour
 	public void updatePlayerArmorBar()
 	{
 		hUDManager.instance.updatePlayerArmorBar();
+	}
+
+	public void updateEnemyCounter()
+	{
+		hUDManager.instance.enemiesCounter.text = $"{enemiesRemaining}";
+	}
+	public void updateActiveGun()
+	{
+		hUDManager.instance.updateActiveGun();
 	}
 	#endregion
 	public void setEasyMode()

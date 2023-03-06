@@ -103,9 +103,7 @@ public class playerController : MonoBehaviour, IDamage
         currentStamina = maxStamina;
         currentArmor = maxArmor;
 
-        gameManager.instance.updatePlayerHealthBar();
-        gameManager.instance.updatePlayerStaminaBar();
-        gameManager.instance.updatePlayerArmorBar();
+        gameManager.instance.createUIBar();
 
         if (startingWeapon)
             rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
@@ -159,7 +157,11 @@ public class playerController : MonoBehaviour, IDamage
             giveStamina(staminaRegenSpeed * Time.deltaTime);
         // If the player hasn't taken damage for the duration of the regen cooldown, regenerate their armor over time
         if (armorRegenTimer <= 0)
+        { 
             giveArmor(armorRegenSpeed * Time.deltaTime);
+        }
+
+            
     }
 
     #region movement functions
@@ -214,7 +216,7 @@ public class playerController : MonoBehaviour, IDamage
             if (moveInput.magnitude > 1.0f)
                 moveInput = moveInput.normalized;
         }
-        
+
         // Play walk sound effects if the player is walking on ground
         // Play run sound effects if the player is sprinting on ground
         if (controller.isGrounded && moveInput.magnitude >= 0.1 && canPlayFootsteps)
@@ -356,7 +358,7 @@ public class playerController : MonoBehaviour, IDamage
         switch (_weaponType)
         {
             case weaponStats.weaponStatsType.GrappleGun:
-                _newWeapon = new GameObject(_newWeaponStats.name, typeof (grappleGun), typeof(AudioSource));
+                _newWeapon = new GameObject(_newWeaponStats.name, typeof(grappleGun), typeof(AudioSource));
                 _newWeapon.transform.parent = playerCamera.transform;
                 _newWeapon.transform.SetPositionAndRotation(playerCamera.transform.position, playerCamera.transform.rotation);
 
@@ -497,7 +499,7 @@ public class playerController : MonoBehaviour, IDamage
     public void useStamina(float staminaCost)
     {
         updateStamina(-staminaCost);
-    
+
         if (staminaCost > 0.0f)
             staminaRegenTimer = staminaRegenCooldown;
     }
@@ -508,7 +510,7 @@ public class playerController : MonoBehaviour, IDamage
         currentStamina += amount;
         currentStamina = Mathf.Clamp(currentStamina, 0.0f, (float)maxStamina);
         gameManager.instance.updatePlayerStaminaBar();
-        
+
     }
 
     public void giveArmor(float armorGain)

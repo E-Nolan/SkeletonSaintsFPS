@@ -110,6 +110,7 @@ MonoBehaviour:
   maxArmor: 3
   armorRegenSpeed: 0.5
   armorRegenCooldown: 2
+  invincibilityTime: 0
   jumpSpeed: 8
   maxJumps: 1
   jumpStaminaCost: 0
@@ -120,7 +121,7 @@ MonoBehaviour:
   sprintSpeed: 15
   sprintStaminaDrain: 20
   jumpSound: {fileID: 8300000, guid: 9375ea157ec82eb4781108a5a021b21d, type: 3}
-  dashSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  dashSound: {fileID: 8300000, guid: 889d2eb53925269428382214fa4ccfa2, type: 3}
   walkSoundsGroup:
   - {fileID: 8300000, guid: ec9b7482c3dda8c41a8444c30906c9e5, type: 3}
   - {fileID: 8300000, guid: cd876558cdd0c4c4a90583eadf2de4b1, type: 3}
