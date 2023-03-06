@@ -14,17 +14,18 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] private Transform handTransform;
     [SerializeField] float _materialFlashSpeed;
     [SerializeField] Material _material;
+    [SerializeField] private Material _flashMaterial;
     [Range(0, 1)] [SerializeField] private float _easyHealthMultiplier;
     [Range(1, 5)] [SerializeField] private float _HardHealthMultiplier;
     [Range(0, 1000)] [SerializeField] private float _health;
 
     public bool isShooting = false;
     public rangedWeapon currentWeapon;
-    public GameObject Bullet;
     public bool acquiringWeapon;
     public bool isDead = false;
     public bool isAttacking;
     public bool fadeHealthBar = false;
+    private bool shrinkAway = false;
     private float _maxHealth;
     private bool isBossEnemy;
     private bool isMutant;
@@ -97,6 +98,13 @@ public class Enemy : MonoBehaviour, IDamage
         if(fadeHealthBar && !isBossEnemy)
             healthBarUI.GetComponent<CanvasGroup>().alpha =
                 Mathf.MoveTowards(healthBarUI.GetComponent<CanvasGroup>().alpha, 0, Time.deltaTime * 2f);
+
+        if (shrinkAway)
+        {
+            transform.localScale = Vector3.MoveTowards(transform.localScale, Vector3.zero, Time.deltaTime);
+            if(transform.localScale.x <= 0f)
+                Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -152,8 +160,6 @@ public class Enemy : MonoBehaviour, IDamage
             {
                 gameManager.instance.queuePlayerVictory(5.1f);
             }
-            Destroy(gameObject, 5f);
-
         }
 
         if(_enemyAi.GetAgent().isActiveAndEnabled)
@@ -236,15 +242,44 @@ public class Enemy : MonoBehaviour, IDamage
         isAttacking = false;
     }
 
+    private void ShrinkAway()
+    {
+        shrinkAway = true;
+    }
+
     private IEnumerator FlashMaterial()
     {
         // Made a new material so the original material isn't touched and possibly kept altered should it be interupted
-        Material flashMaterial = Instantiate(_material);
-        flashMaterial.color = !isMutant ? Color.white : Color.red;
-        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = flashMaterial;
-        yield return new WaitForSeconds(_materialFlashSpeed);
-        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = _material;
+        //Material flashMaterial = Instantiate(_material);
+        //flashMaterial.color = !isMutant ? Color.white : Color.red;
+        //if(!isMutant)
+        //    flashMaterial.SetColor("_Color", Color.white);
+        //else
+        //    flashMaterial.SetColor("_Color", Color.red);
 
-        Destroy(flashMaterial);
+        if (!isBossEnemy && !isMutant)
+        {
+            foreach (SkinnedMeshRenderer rend in GetComponentsInChildren<SkinnedMeshRenderer>())
+                rend.material = _flashMaterial;
+        }
+        else
+        {
+            gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = _flashMaterial;
+        }
+
+        yield return new WaitForSeconds(_materialFlashSpeed);
+
+        if (!isBossEnemy && !isMutant)
+        {
+            foreach (SkinnedMeshRenderer rend in GetComponentsInChildren<SkinnedMeshRenderer>())
+                rend.material = _material;
+        }
+        else
+        {
+            gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = _material;
+        }
+
+        //Destroy(flashMaterial);
+        //Destroy(originalMaterial);
     }
 }

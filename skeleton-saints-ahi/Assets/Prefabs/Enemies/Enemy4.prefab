@@ -3208,6 +3208,7 @@ MonoBehaviour:
   handTransform: {fileID: 1189593153148511956}
   _materialFlashSpeed: 0.2
   _material: {fileID: 2100000, guid: 27ec51287c78bfb479fe3729111634a4, type: 2}
+  _flashMaterial: {fileID: 2100000, guid: 60a1c512e8742e0499b4ead0e3c45891, type: 2}
   _easyHealthMultiplier: 0.5
   _HardHealthMultiplier: 1.75
   _health: 3
@@ -3217,7 +3218,6 @@ MonoBehaviour:
   isDead: 0
   isAttacking: 0
   fadeHealthBar: 0
-  _difficulty: 1
 --- !u!114 &4238305480919217940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3259,6 +3259,7 @@ MonoBehaviour:
   originalStoppingDistance: 0
   originalSpeed: 0
   originalAcceleration: 0
+  IsMutant: 0
   BossEnemy: 0
   AttackDamage: 0
   _useFallbackAi: 0

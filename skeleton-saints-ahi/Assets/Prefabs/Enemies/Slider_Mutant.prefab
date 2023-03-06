@@ -2233,12 +2233,12 @@ MonoBehaviour:
   handTransform: {fileID: 0}
   _materialFlashSpeed: 0.25
   _material: {fileID: 2100000, guid: ef13cfa4472295049a476211589069a1, type: 2}
+  _flashMaterial: {fileID: 2100000, guid: c38f19bd67a1c974d9e5703cde859cb9, type: 2}
   _easyHealthMultiplier: 0.75
   _HardHealthMultiplier: 1.5
   _health: 25
   isShooting: 0
   currentWeapon: {fileID: 0}
-  Bullet: {fileID: 0}
   acquiringWeapon: 0
   isDead: 0
   isAttacking: 0
