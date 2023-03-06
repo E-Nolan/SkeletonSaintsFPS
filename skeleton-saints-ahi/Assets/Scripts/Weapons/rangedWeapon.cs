@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class rangedWeapon : MonoBehaviour
 {
@@ -39,9 +40,11 @@ public class rangedWeapon : MonoBehaviour
     Enemy enemyScript;
     protected GameObject targetFinder;
 
-   
+
     public Sprite activeImage;
     public Sprite inactiveImage;
+    public GameObject bulletIcon;
+
     public string weaponName;
     int currentClip;
 
@@ -62,7 +65,7 @@ public class rangedWeapon : MonoBehaviour
         {
             updateAmmoDisplay();
         }
-        
+
     }
 
     #region Ammo Functions
@@ -83,12 +86,12 @@ public class rangedWeapon : MonoBehaviour
     {
         return ((currentAmmo == maxAmmo) || infiniteAmmo);
     }
-    
+
     public bool isAmmoInfinite()
     {
         return infiniteAmmo;
     }
-    
+
     public int GetCurrentAmmo()
     {
         return currentAmmo;
@@ -135,6 +138,12 @@ public class rangedWeapon : MonoBehaviour
             hUDManager.instance.playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
     }
 
+    public int GetCurrentClipSize()
+    { return currentClip; }
+
+    public int GetMaxClipSize()
+    { return maxClipSize; }
+
     #endregion
 
     #region Shoot Functions
@@ -158,7 +167,7 @@ public class rangedWeapon : MonoBehaviour
         {
             StartCoroutine(startShootCooldown());
             // For each shot in a burst, fire a bullet with a delay between each shot
-            for (int i = 0; i  < bulletsPerBurst; i++)
+            for (int i = 0; i < bulletsPerBurst; i++)
             {
                 StartCoroutine(shootBullet(fireTarget, i * burstFireDelay));
             }
@@ -228,20 +237,20 @@ public class rangedWeapon : MonoBehaviour
         spendAmmo(1);
     }
 
-     IEnumerator startShootCooldown()
-     {
+    IEnumerator startShootCooldown()
+    {
         if (usedByPlayer)
             gameManager.instance.PlayerScript().isPrimaryShooting = true;
         else
             enemyScript.isShooting = true;
 
-         yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(fireRate);
 
         if (usedByPlayer)
             gameManager.instance.PlayerScript().isPrimaryShooting = false;
         else
             enemyScript.isShooting = false;
-     }
+    }
 
     // Get a random angle within a cone from the gun. Used for spread shots.
     void getRandomSpreadTarget()
@@ -281,6 +290,9 @@ public class rangedWeapon : MonoBehaviour
         inactiveImage = _stats.activeweaponIcon;
         weaponName = _stats.weaponName;
         maxClipSize = _stats.maxClipSize;
+
+        bulletIcon = new GameObject("Bullet Icon", typeof(Image));
+        bulletIcon.GetComponent<Image>().sprite = _stats.bulletIcon;
 
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1.0f;
