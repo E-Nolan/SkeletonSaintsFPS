@@ -45,9 +45,14 @@ public class spawnManager : MonoBehaviour
 
         Transform newSpawnPos;
         GameObject tempEnemy;
+        int weaponIndex = 0;
+        GameObject newWeapon = null;
 
-        int weaponIndex = Random.Range(0, weaponTypes.Length);
-        GameObject newWeapon = weaponTypes[weaponIndex];
+        if (weaponTypes.Length > 0)
+        {
+            weaponIndex = Random.Range(0, weaponTypes.Length);
+            newWeapon = weaponTypes[weaponIndex];
+        }
 
         // If the spawner uses random spawn Positions, it will choose a random spawn Position to spawn the next enemy
         // Otherwise it will iterate/loop through the spawnPos array
@@ -76,7 +81,7 @@ public class spawnManager : MonoBehaviour
         }
 
         GameObject newEnemy = Instantiate(tempEnemy, newSpawnPos.position, tempEnemy.transform.rotation);
-        if(newEnemy != null)
+        if(newEnemy != null && weaponTypes.Length > 0 && newWeapon != null)
             newEnemy.GetComponent<Enemy>().PickupWeapon(newWeapon.GetComponent<weaponPickup>().weapon);
 
         yield return new WaitForSeconds(spawnCooldown);
