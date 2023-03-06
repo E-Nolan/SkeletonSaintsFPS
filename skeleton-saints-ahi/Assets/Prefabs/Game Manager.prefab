@@ -4173,14 +4173,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83918cf07e734d444ba5dcbbf78474cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealthBar: {fileID: 1577740742263339581, guid: 7e32d50d37f3f43cab79cba42b04c821, type: 3}
-  parentHealth: {fileID: 4142488994828009365}
+  playerHealthBar: {fileID: 2184162781242559859, guid: 7e32d50d37f3f43cab79cba42b04c821, type: 3}
+  parentHealth: {fileID: 4224709204925373613}
   playerHealthTick: []
-  playerStaminaBar: {fileID: 3572053944354923385, guid: 5d9699038ee9949fab466e679342ecf9, type: 3}
-  parentStamina: {fileID: 3615594275122889132}
+  playerStaminaBar: {fileID: 8141005102326688096, guid: 5d9699038ee9949fab466e679342ecf9, type: 3}
+  parentStamina: {fileID: 8754890917135110817}
   playerStaminaTick: []
-  playerArmorBar: {fileID: 4310115298902193716, guid: cd53c928809d94ecea833a2f8cb63bf1, type: 3}
-  parentArmor: {fileID: 4360370867814189934}
+  playerArmorBar: {fileID: 1618408071019964126, guid: cd53c928809d94ecea833a2f8cb63bf1, type: 3}
+  parentArmor: {fileID: 2269968813188779947}
   playerArmorTick: []
   reticle: {fileID: 2229425042314457151}
   playerAmmoText: {fileID: 2229425043552443521}
@@ -8004,8 +8004,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 450.60852, y: 266}
-  m_SizeDelta: {x: 150, y: 100}
+  m_AnchoredPosition: {x: 693.8064, y: 266}
+  m_SizeDelta: {x: 60, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1183993266752134763
 CanvasRenderer:
@@ -8080,8 +8080,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 734, y: 266}
-  m_SizeDelta: {x: 400, y: 100}
+  m_AnchoredPosition: {x: 836, y: 266}
+  m_SizeDelta: {x: 190, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8153577511900965425
 CanvasRenderer:
@@ -8190,8 +8190,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 734, y: 212}
-  m_SizeDelta: {x: 400, y: 100}
+  m_AnchoredPosition: {x: 836, y: 216.6651}
+  m_SizeDelta: {x: 190, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8168814979831301537
 CanvasRenderer:
