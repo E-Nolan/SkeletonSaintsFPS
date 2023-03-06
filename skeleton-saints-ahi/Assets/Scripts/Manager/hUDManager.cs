@@ -107,17 +107,21 @@ public class hUDManager : MonoBehaviour
         maxStamina = gameManager.instance.PlayerScript().GetMaxStamina();
         int currentTick = (int)currentStamina / 10;
         int diff = playerStaminaTick.Count - currentTick;
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         if ((gameManager.instance.PlayerScript().isDashing || gameManager.instance.PlayerScript().isSprinting) && currentStamina > 0)
         {
             for (int i = 0; i < diff; i++)
             {
-                playerStaminaTick[(playerStaminaTick.Count - 1) - i].SetActive(false);
+                int index = (playerStaminaTick.Count - 1) - i;
+                if (index >= 0)
+                    playerStaminaTick[index].SetActive(false);
             }
         }
         else if ((!gameManager.instance.PlayerScript().isDashing && !gameManager.instance.PlayerScript().isSprinting) || currentStamina == maxStamina)
         {
-            if (diff >= 0)
+            if (diff >= 0 && diff < playerStaminaTick.Count)
                 playerStaminaTick[(playerStaminaTick.Count - 1) - diff].SetActive(true);
+
         }
     }
 
@@ -140,7 +144,7 @@ public class hUDManager : MonoBehaviour
         int currentTick = (int)currentArmor;
         int diff = currentTick - playerArmorTick.Count;
         currentArmor = Mathf.Clamp(currentArmor, 0, maxArmor);
-        for (int i = 0; i < currentTick; i++)
+        for (int i = 0; i < currentTick && i < playerArmorTick.Count; i++)
         {
             playerArmorTick[i].SetActive(true);
         }
@@ -148,9 +152,10 @@ public class hUDManager : MonoBehaviour
         {
             playerArmorTick[i].SetActive(false);
         }
-        if (diff >= 0)
+        if (diff >= 0 && (playerArmorTick.Count - 1) - diff < playerArmorTick.Count)
             playerArmorTick[(playerArmorTick.Count - 1) - diff].SetActive(true);
     }
+
 
 
     public void updateActiveGun()
