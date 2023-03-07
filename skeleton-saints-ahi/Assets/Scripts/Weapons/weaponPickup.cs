@@ -17,19 +17,26 @@ public class weaponPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Check to see if the player already has the weapon. If they do, give them ammo for the respective weapon instead
-            GameObject duplicateWeapon = gameManager.instance.PlayerScript().weaponInventory.Find(x => x.GetComponent<rangedWeapon>().weaponName == weapon.weaponName);
-            if (duplicateWeapon)
+            if(gameManager.instance.PlayerScript().weaponInventory.Count <3)
             {
-                duplicateWeapon.GetComponent<rangedWeapon>().giveAmmo(2);
+                // Check to see if the player already has the weapon. If they do, give them ammo for the respective weapon instead
+                GameObject duplicateWeapon = gameManager.instance.PlayerScript().weaponInventory.Find(x => x.GetComponent<rangedWeapon>().weaponName == weapon.weaponName);
+                if (duplicateWeapon)
+                {
+                    duplicateWeapon.GetComponent<rangedWeapon>().giveAmmo(2);
+                }
+                else
+                {
+                    gameManager.instance.PlayerScript().rangedWeaponPickup(weapon, weapon.weaponType);
+                }
+                if (pickupSound)
+                    gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
+                Destroy(gameObject);
             }
             else
             {
-                gameManager.instance.PlayerScript().rangedWeaponPickup(weapon, weapon.weaponType);
+                hUDManager.instance.displayWeaponPickUpText();
             }
-            if (pickupSound)
-                gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
-            Destroy(gameObject);
         }
     }
 }

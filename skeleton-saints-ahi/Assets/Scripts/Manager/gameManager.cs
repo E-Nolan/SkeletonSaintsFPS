@@ -276,8 +276,6 @@ public class gameManager : MonoBehaviour
 		hUDManager.instance.createPlayerHealthBar();
 		hUDManager.instance.createPlayerStaminaBar();
 		hUDManager.instance.createPlayerArmorBar();
-		updateActiveGun();
-		updateInactiveGun1();
 	}
     public void updatePlayerHealthBar()
     {
@@ -299,20 +297,10 @@ public class gameManager : MonoBehaviour
 		hUDManager.instance.enemiesCounter.text = $"{enemiesRemaining}";
 	}
 
-	public void updateActiveGun()
-	{
-		hUDManager.instance.updateActiveGun();
-	}
-
-	public void updateInactiveGun1()
+	public void updateWeaaponDisplay()
     {
-		hUDManager.instance.updateInactiveGun1();
+		hUDManager.instance.updateWeaponDisplay();
     }
-
-	public void updateInactiveGun2()
-	{
-
-	}
 	#endregion
 	public void setEasyMode()
 	{

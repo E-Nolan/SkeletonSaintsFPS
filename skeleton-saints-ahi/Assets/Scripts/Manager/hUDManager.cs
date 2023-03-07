@@ -27,13 +27,9 @@ public class hUDManager : MonoBehaviour
     public Image activeGun;
     public TextMeshProUGUI activeClip;
     public TextMeshProUGUI activeReserve;
-    public TextMeshProUGUI pistolReserve;
+    public Image pistolReserve;
     public Image inactiveGun1;
-    public TextMeshProUGUI inactiveClip1;
-    public TextMeshProUGUI inactiveReserve1;
     public Image inactiveGun2;
-    public TextMeshProUGUI inactiveClip2;
-    public TextMeshProUGUI inactiveReserve2;
     public Image reticle;
 
     [Header("----- KeyCard UI -----")]
@@ -58,6 +54,7 @@ public class hUDManager : MonoBehaviour
     float maxArmor;
     int armorTick;
     float currentArmor;
+    int currentClip;
 
     void Awake()
     {
@@ -171,26 +168,33 @@ public class hUDManager : MonoBehaviour
             playerArmorTick[(playerArmorTick.Count - 1) - diff].SetActive(true);
     }
 
-
-
-    public void updateActiveGun()
+    public void updateWeaponDisplay()
     {
+        Debug.Log((gameManager.instance.PlayerScript().currentWeapon.GetCurrentClipSize()).ToString());
         activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
-    }
-
-    public void updateInactiveGun1()
-    {
-        if (gameManager.instance.PlayerScript().currentSecondary == null)
+        activeClip.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.GetCurrentClipSize()}";
+        if(gameManager.instance.PlayerScript().currentWeapon.weaponName == "Pistol")
         {
-            inactiveClip1.text = "";
+            activeReserve.enabled = false;
+            pistolReserve.enabled = true;
         }
+        else
+        {
+            pistolReserve.enabled = false;
+            activeReserve.enabled = true;
+        }
+        if(gameManager.instance.PlayerScript().inactiveWeapon1 != null)
+            inactiveGun1.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon1.inactiveImage;
 
+        if (gameManager.instance.PlayerScript().inactiveWeapon2 != null)
+            inactiveGun2.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon2.inactiveImage;
     }
 
-    public void updateInactiveGun2()
+    public void displayWeaponPickUpText()
     {
-        activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
+        Debug.Log("Press button to pickup weapon");
     }
+
 
     public void toggleCursorVisibility()
     {

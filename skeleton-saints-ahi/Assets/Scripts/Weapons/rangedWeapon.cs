@@ -132,7 +132,7 @@ public class rangedWeapon : MonoBehaviour
 
     void updateAmmoDisplay()
     {
-       
+        
     }
 
     public int GetCurrentClipSize()
