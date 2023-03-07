@@ -172,11 +172,11 @@ public class hUDManager : MonoBehaviour
     {
         activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
         activeClip.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.GetCurrentClipSize()}";
-        if(gameManager.instance.PlayerScript().inactiveWeapon1 != null)
+        if (gameManager.instance.PlayerScript().inactiveWeapon1 != null)
             inactiveGun1.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon1.inactiveImage;
-        /*
         if (gameManager.instance.PlayerScript().inactiveWeapon2 != null)
             inactiveGun2.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon2.inactiveImage;
+        /*
         if(gameManager.instance.PlayerScript().currentWeapon.weaponName == "Pistol")
         {
             activeReserve.enabled = false;

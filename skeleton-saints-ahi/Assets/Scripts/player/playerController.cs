@@ -453,7 +453,7 @@ public class playerController : MonoBehaviour, IDamage
             switchToWeapon(0); 
         else
             switchToWeapon(currWepIndex + 1);
-
+        
         yield return new WaitForSeconds(weaponSwitchCooldown);
         isSwitchingWeapons = false;
     }
@@ -487,18 +487,37 @@ public class playerController : MonoBehaviour, IDamage
             currWepIndex = weaponIndex;
             currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
 
-            /*
-            if (currWepIndex + 1  <= weaponInventory.Count && currentWeapon != weaponInventory[currWepIndex + 1])
-            {
-                inactiveWeapon1 = weaponInventory[0].GetComponent<rangedWeapon>();
-            }
-            */
-
             currentWeapon.gameObject.SetActive(true);
             currentWeapon.onSwitch();
 
-            gameManager.instance.updateWeaaponDisplay();
+            if (weaponInventory.Count == 2)
+            {
+                if (currWepIndex + 1 >= weaponInventory.Count)
+                    inactiveWeapon1 = weaponInventory[0].GetComponent<rangedWeapon>();
+                else
+                    inactiveWeapon1 = weaponInventory[1].GetComponent<rangedWeapon>();
+            }
+            if (weaponInventory.Count == 3)
+            {
+                if (currWepIndex + 1 >= weaponInventory.Count)
+                {
+                    inactiveWeapon1 = weaponInventory[0].GetComponent<rangedWeapon>();
+                    inactiveWeapon2 = weaponInventory[1].GetComponent<rangedWeapon>();
+                }
+                else if(currWepIndex + 2 >= weaponInventory.Count)
+                {
+                    inactiveWeapon1 = weaponInventory[2].GetComponent<rangedWeapon>();
+                    inactiveWeapon2 = weaponInventory[0].GetComponent<rangedWeapon>();
+                }
+                else
+                {
+                    inactiveWeapon1 = weaponInventory[1].GetComponent<rangedWeapon>();
+                    inactiveWeapon2 = weaponInventory[2].GetComponent<rangedWeapon>();
+                }
+            }
         }
+
+        gameManager.instance.updateWeaaponDisplay();
     }
 
     /// <summary>
