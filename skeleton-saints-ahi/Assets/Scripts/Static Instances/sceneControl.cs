@@ -16,17 +16,19 @@ public sealed class sceneControl
     public void LoadMainMenuScene()
     {
         //Load 1st scene in build order which should be made sure is the main menu scene. Can also do this by name once that is stuctrued but could be slower
-        SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
+        AsyncOperation control = SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
+        control.completed += (sceneComplete) => {
+            menuManager.instance.InitializeMenusText();
+        };
+
     }
 
     public void LoadMainLevel()
     {
         //Unload Main Menu Scene
-        if (SceneManager.GetSceneByName("Main Menu").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("Main Menu");
-        }
-        AsyncOperation control = SceneManager.LoadSceneAsync("Main Level", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("Main Menu");
+
+        AsyncOperation control = SceneManager.LoadSceneAsync("Level One", LoadSceneMode.Additive);
         control.completed += (sceneComplete) => {
             gameManager.instance.FetchEvents();
             gameManager.instance.LevelSetup();

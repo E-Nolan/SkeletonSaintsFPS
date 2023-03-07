@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class difficultyStorer : MonoBehaviour
 {
-    public gameManager.GameDifficulty currentGameDifficulty = gameManager.GameDifficulty.Easy;
+
+    gameManager.GameDifficulty currentGameDifficulty;
     public static difficultyStorer instance;
+
+    public gameManager.GameDifficulty GameDifficulty
+    {
+        get 
+        {
+            return currentGameDifficulty;
+        }
+        set
+        {
+            currentGameDifficulty = value;
+        }
+    }
     private void Awake()
     {
         instance = this;

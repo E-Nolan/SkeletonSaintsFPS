@@ -10,6 +10,8 @@ TagManager:
   - HeadPosition
   - GrapplePoint
   - Collectible
+  - Player Spawn
+  - Player Initial Spawn
   layers:
   - Default
   - TransparentFX

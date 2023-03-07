@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class menuManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class menuManager : MonoBehaviour
 
 	[Header("UI Panels")]
     public GameObject MainMenuPanel;
-	public GameObject DifficultyMenu;
+	public GameObject SettingsMenu;
 	public GameObject PauseMenu;
 	public GameObject CreditsPanel;
 	public GameObject WinMenu;
@@ -29,6 +30,19 @@ public class menuManager : MonoBehaviour
 	[SerializeField]
 	private bool gameMenuIsUp;
 
+
+	[Header("Settings Panel UI")]
+	public TextMeshProUGUI masterVolume_Value;
+	public TextMeshProUGUI musicVolume_Value, sfxVolume_Value;
+
+	public TextMeshProUGUI cameraSensitivityHorizontal_Value, cameraSensitivityVertical_Value;
+	public Toggle invertX;
+	public Slider masterVolume_Slider, musicVolume_Slider, sfxVolume_Slider;
+	public Slider cameraSensitivityHorizontal_Slider, cameraSensitivityVertical_Slider;
+
+	bool changesSaved;
+	[Header("Asset References")]
+	public AudioMixer MasterAudioMixer;
 	#region Menu Access Methods
 	public bool CanToggleGameMenu
 	{
@@ -45,11 +59,6 @@ public class menuManager : MonoBehaviour
 	private void Awake()
     {
 		instance = this;
-    }
-    private void Start()
-    {
-		//here temorarily till menu and loading is set up
-		canToggleGameMenu = true;
     }
 	private void LateUpdate()
 	{
@@ -73,8 +82,8 @@ public class menuManager : MonoBehaviour
     {
 		if (MainMenuPanel.activeInHierarchy)
 			MainMenuPanel.SetActive(false);
-		if (DifficultyMenu.activeInHierarchy)
-			DifficultyMenu.SetActive(false);
+		if (SettingsMenu.activeInHierarchy)
+			SettingsMenu.SetActive(false);
 		if (PauseMenu.activeInHierarchy)
 		{
 			PauseMenu.SetActive(false);
@@ -87,27 +96,100 @@ public class menuManager : MonoBehaviour
 			return;
 		else
 		{
-			//Temp object for active menu
-			GameObject panelHolder;
-
-			panelHolder = activeMenuPanel;
-			activeMenuPanel.gameObject.SetActive(false);
-
-			activeMenuPanel = previousMenuPanel;
-			activeMenuPanel.gameObject.SetActive(true);
-
-			previousMenuPanel = panelHolder;
+			if (activeMenuPanel == SettingsMenu && !changesSaved)
+            {
+				RevertSettings();
+            } else if (activeMenuPanel == SettingsMenu && changesSaved)
+            {
+				SetPlayerPreferencesFromText();
+			}
+			CloseActiveMenuPanel(false);
+			DisplayMenu(previousMenuPanel);
 		}
 	}
 
     public void InitializeMenusText()
     {
-		//placeholder for initializing menu settings
+		SetTextFromPlayerPreferences();
 	}
-    #endregion
+	public void RevertSettings()
+    {
+		MasterAudioMixer.SetFloat("masterVolume",Mathf.Log10(playerPreferences.instance.masterVolume) * 20);
+		MasterAudioMixer.SetFloat("musicVolume", Mathf.Log10(playerPreferences.instance.musicVolume) * 20);
+		MasterAudioMixer.SetFloat("sfxVolume", Mathf.Log10(playerPreferences.instance.sfxVolume) * 20);
 
-    #region Internal Menu Mehods
-    private void DisplayMenu(GameObject menuPanel)
+		gameManager.instance.currentDifficulty = difficultyStorer.instance.GameDifficulty;
+
+		SetTextFromPlayerPreferences();
+	}
+	public void SetTextFromPlayerPreferences()
+	{
+		masterVolume_Value.text = playerPreferences.instance.masterVolume.ToString();
+		masterVolume_Slider.value = float.Parse(masterVolume_Value.text);
+
+		musicVolume_Value.text = playerPreferences.instance.musicVolume.ToString();
+		musicVolume_Slider.value = float.Parse(musicVolume_Value.text);
+
+		
+		sfxVolume_Value.text = playerPreferences.instance.sfxVolume.ToString();
+		sfxVolume_Slider.value = float.Parse(sfxVolume_Value.text);
+
+
+		cameraSensitivityHorizontal_Value.text = playerPreferences.instance.sensitivity_Horizontal.ToString();
+		cameraSensitivityHorizontal_Slider.value = float.Parse(cameraSensitivityHorizontal_Value.text);
+
+		cameraSensitivityVertical_Value.text = playerPreferences.instance.sensitivity_Vertical.ToString();
+		cameraSensitivityVertical_Slider.value = float.Parse(cameraSensitivityVertical_Value.text);
+		
+		invertX.isOn = playerPreferences.instance.invertX;
+	}
+
+	public void SetPlayerPreferencesFromText()
+	{
+		playerPreferences.instance.masterVolume = float.Parse(masterVolume_Value.text);
+		playerPreferences.instance.musicVolume = float.Parse(musicVolume_Value.text);
+		playerPreferences.instance.sfxVolume = float.Parse(sfxVolume_Value.text);
+
+
+		playerPreferences.instance.sensitivity_Horizontal = float.Parse(cameraSensitivityHorizontal_Value.text);
+		playerPreferences.instance.sensitivity_Vertical = float.Parse(cameraSensitivityVertical_Value.text);
+		
+		playerPreferences.instance.invertX = invertX.isOn;
+
+		difficultyStorer.instance.GameDifficulty = gameManager.instance.currentDifficulty;
+
+		changesSaved = true;
+	}
+	public void DisplayPauseMenu()
+	{
+		//Close existing menu if up
+		CloseActiveMenuPanel();
+		DisplayMenu(PauseMenu);
+		//Ensure toggle of game menu is enabled
+		canToggleGameMenu = true;
+		//Enable bool for in-game menu
+		gameMenuIsUp = true;
+	}
+	public void ClosePauseMenu()
+	{
+		//Only if the game menu is active
+		if (gameMenuIsUp)
+		{
+			CloseActiveMenuPanel();
+			//Ensure toggle of game menu is enabled
+			canToggleGameMenu = true;
+			//Disable bool for in-game menu
+			gameMenuIsUp = false;
+		}
+	}
+	public void Invert_X()
+	{
+		playerPreferences.instance.invertX = invertX.isOn;
+	}
+	#endregion
+
+	#region Internal Menu Mehods
+	private void DisplayMenu(GameObject menuPanel)
 	{
 		if (activeMenuPanel != null)
 		{
@@ -118,13 +200,18 @@ public class menuManager : MonoBehaviour
 		activeMenuPanel.gameObject.SetActive(true);
 
 	}
-	private void CloseActiveMenuPanel()
+	private void CloseActiveMenuPanel(bool trackprevious = true)
 	{
 		if (activeMenuPanel == null)
 			return;
 		else
 		{
-			previousMenuPanel = activeMenuPanel;
+			if (trackprevious)
+			{
+				previousMenuPanel = activeMenuPanel;
+			}
+
+
 			activeMenuPanel.gameObject.SetActive(false);
 			activeMenuPanel = null;
 		}
@@ -135,13 +222,6 @@ public class menuManager : MonoBehaviour
 	public void DisplayMainMenu()
 	{
 		DisplayMenu(MainMenuPanel);
-		//Ensure in-game menu toggling is disabled while main menu is up.
-		canToggleGameMenu = false;
-	}
-
-	public void DisplayDifficultyMenu()
-	{
-		DisplayMenu(DifficultyMenu);
 		//Ensure in-game menu toggling is disabled while main menu is up.
 		canToggleGameMenu = false;
 	}
@@ -176,31 +256,36 @@ public class menuManager : MonoBehaviour
 
 		canToggleGameMenu = true;
 	}
-
-	#endregion
-
-	#region In-Game Menu Methods
-	public void DisplayPauseMenu()
+	public void DisplaySettingsMenu()
 	{
-		//Close existing menu if up
-		CloseActiveMenuPanel();
-		DisplayMenu(PauseMenu);
-		//Ensure toggle of game menu is enabled
-		canToggleGameMenu = true;
-		//Enable bool for in-game menu
-		gameMenuIsUp = true;
+		DisplayMenu(SettingsMenu);
+		canToggleGameMenu = false;
+		changesSaved = false;
 	}
-	public void ClosePauseMenu()
+	#endregion
+	#region SliderFunctions
+	public void UpdateMasterVolumeSlider()
 	{
-		//Only if the game menu is active
-		if (gameMenuIsUp)
-		{
-			CloseActiveMenuPanel();
-			//Ensure toggle of game menu is enabled
-			canToggleGameMenu = true;
-			//Disable bool for in-game menu
-			gameMenuIsUp = false;
-		}
+		masterVolume_Value.text = masterVolume_Slider.value.ToString();
+		MasterAudioMixer.SetFloat("masterVolume", Mathf.Log10(float.Parse(masterVolume_Value.text)) * 20);
+	}
+	public void UpdateMusicSlider()
+	{
+		musicVolume_Value.text = musicVolume_Slider.value.ToString();
+		MasterAudioMixer.SetFloat("musicVolume", Mathf.Log10(float.Parse(musicVolume_Value.text)) * 20);
+	}
+	public void UpdateSFXSlider()
+	{
+		sfxVolume_Value.text = sfxVolume_Slider.value.ToString();
+		MasterAudioMixer.SetFloat("sfxVolume", Mathf.Log10(float.Parse(sfxVolume_Value.text)) * 20);
+	}
+	public void UpdateHorizontalSlider()
+	{
+		cameraSensitivityHorizontal_Value.text = cameraSensitivityHorizontal_Slider.value.ToString("F0");
+	}
+	public void UpdateVerticalSlider()
+	{
+		cameraSensitivityVertical_Value.text = cameraSensitivityVertical_Slider.value.ToString("F0");
 	}
 	#endregion
 }

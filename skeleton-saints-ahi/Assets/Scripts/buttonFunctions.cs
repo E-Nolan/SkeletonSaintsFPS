@@ -39,27 +39,27 @@ public class buttonFunctions : MonoBehaviour
         Destroy(Camera.main.gameObject);
         gameManager.instance.InitializePlay();
     }
-    public void OpenDifficultyMenu()
-    {
-        menuManager.instance.DisplayDifficultyMenu();
-    }
     public void OpenCreditsPanel()
     {
         menuManager.instance.DisplayCreditsMenu();
     }
+    public void OpenSettingsPanel()
+    {
+        menuManager.instance.DisplaySettingsMenu();
+    }
     #endregion
     public void SetEasyGame()
     {
-        gameManager.instance.setEasyMode();
+        gameManager.instance.currentDifficulty = gameManager.GameDifficulty.Easy;
 
     }
     public void SetNormalGame()
     {
-        gameManager.instance.setNormalMode();
+        gameManager.instance.currentDifficulty = gameManager.GameDifficulty.Normal;
     }
 
     public void SetHardGame()
     {
-        gameManager.instance.setHardMode();
+        gameManager.instance.currentDifficulty = gameManager.GameDifficulty.Hard;
     }
 }

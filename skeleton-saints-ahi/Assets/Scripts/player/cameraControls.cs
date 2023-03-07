@@ -92,4 +92,9 @@ public class cameraControls : MonoBehaviour
             }
         }
     }
+    #region Accessors
+    public int Sensitivity_Horizontal { get { return sensHor; } set { sensHor = value; } }
+    public int Sensitivity_Vertical { get { return sensVer; } set { sensVer = value; } }
+    public bool Invert_X { get { return invertX; } set { invertX = value; } }
+    #endregion
 }

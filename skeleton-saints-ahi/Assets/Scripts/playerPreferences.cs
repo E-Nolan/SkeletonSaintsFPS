@@ -9,9 +9,11 @@ public sealed class playerPreferences: MonoBehaviour
     public void Awake()
     {
 		instance = this;
+		GetDefaultsFromFile();
     }
 	public List<weaponStats> SavedWeapons = new List<weaponStats>();
-	[Header("----- Stats -----")]
+
+	[Header("----- Player Stats -----")]
 	[Range(5, 30)]
 	public int playerSpeed;
 	[Range(0, 50)]
@@ -73,5 +75,52 @@ public sealed class playerPreferences: MonoBehaviour
 	public string Button_Sprint = "Sprint";
 	public string Button_Menu = "Cancel";
 	public string Button_FirePrimary = "Fire1";
+	#endregion
+
+	[Header("----- Camera Stats -----")]
+	[Range(400, 700)]
+	public float sensitivity_Horizontal;
+	[Range(300, 600)]
+	public float sensitivity_Vertical;
+	public bool invertX;
+
+	[Header("Sound Settings")]
+	[Range(0.0001f, 1)]
+	public float masterVolume;
+	[Range(0.0001f, 1)]
+	public float musicVolume;
+	[Range(0.0001f, 1)]
+	public float sfxVolume;
+	//These could be assigned from a json file at the start of the program if we wanted to have the settigns persist
+	//between closing and reopening
+	#region Defaults
+	//Sound
+	public float masterVolume_DEFAULT = 100f;
+	public float musicVolume_DEFAULT = 100f;
+	public float sfxVolume_DEFAULT = 100f;
+
+
+
+	//Camera
+    public float sensitivity_Horizontal_DEFAULT = 600f;
+	public float sensitivity_Vertical_DEFAULT = 500f;
+	public static bool invertX_DEFAULT = false;
     #endregion
+
+	public void AssignActivetoDefault()
+    {
+
+		masterVolume = masterVolume_DEFAULT;
+		musicVolume = musicVolume_DEFAULT;
+		sfxVolume = sfxVolume_DEFAULT;
+
+		sensitivity_Horizontal = sensitivity_Horizontal_DEFAULT;
+		sensitivity_Vertical =  sensitivity_Vertical_DEFAULT;
+		invertX = invertX_DEFAULT;
+
+	}
+	public void GetDefaultsFromFile(/*string fileName*/)
+    {
+		AssignActivetoDefault();
+	}
 }

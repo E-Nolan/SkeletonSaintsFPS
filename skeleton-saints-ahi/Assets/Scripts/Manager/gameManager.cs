@@ -75,12 +75,8 @@ public class gameManager : MonoBehaviour
 		{
 			menuManager.instance.DeactivateAllMenus();
 			sceneControl.instance.LoadMainLevel();
-		} else
-        {
-			instance.currentDifficulty = difficultyStorer.instance.currentGameDifficulty;
-			FetchEvents();
-			LevelSetup();
 		}
+		FetchEvents();
 		//either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
 		hUDManager.instance.showHUD();
 		playStarted = true;
@@ -100,6 +96,12 @@ public class gameManager : MonoBehaviour
 
     public void LevelSetup()
 	{
+		PlayerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn");
+		if (PlayerSpawnPos == null)
+        {
+			Debug.Log ("Player Spawn not found on level setup");
+        }
+
 		//Load player in and assign script components
 		playerInstance = Instantiate(PlayerPrefab, PlayerSpawnPos.transform.position, PlayerSpawnPos.transform.rotation);
 		
@@ -185,11 +187,7 @@ public class gameManager : MonoBehaviour
 	{
 		unPause();
 		clearLevel();
-		//Direct call here instead of on ClearLevel be
-		playerPreferences.instance.SavedWeapons.Clear();
-
-
-		if (playerScript.GetCurrentStamina() <= 0)
+		if (playerScript.GetCurrentHealth() <= 0)
 		{
 			hUDManager.instance.DamageFlashScreen().SetActive(false);
 			toggleGameMenu();
@@ -303,19 +301,16 @@ public class gameManager : MonoBehaviour
 	public void setEasyMode()
 	{
 		currentDifficulty = GameDifficulty.Easy;
-		difficultyStorer.instance.currentGameDifficulty = GameDifficulty.Easy;
 	}
 
 	public void setNormalMode()
 	{
 		currentDifficulty = GameDifficulty.Normal;
-		difficultyStorer.instance.currentGameDifficulty = GameDifficulty.Normal;
 	}
 
 	public void setHardMode()
 	{
 		currentDifficulty = GameDifficulty.Hard;
-		difficultyStorer.instance.currentGameDifficulty = GameDifficulty.Hard;
 	}
 	#endregion
 
@@ -331,9 +326,6 @@ public class gameManager : MonoBehaviour
 			deactivateUI();
 
 			sceneControl.instance.LoadMainMenuScene();
-
-			menuManager.instance.InitializeMenusText();
-
 			menuManager.instance.DisplayMainMenu();
 		}
 		else
@@ -376,9 +368,9 @@ public class gameManager : MonoBehaviour
 		}
 	}
 
-    private void clearLevel(bool restarting = false)
+    private void clearLevel(bool restartingGame = false)
     {
-		if (!restarting)
+		if (restartingGame)
 			playerPreferences.instance.SavedWeapons.Clear();
 
 		//gameEventManager.instance.ClearEventListUI();
