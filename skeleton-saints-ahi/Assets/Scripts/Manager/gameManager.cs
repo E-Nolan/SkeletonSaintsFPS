@@ -388,6 +388,9 @@ public class gameManager : MonoBehaviour
 	{
 		Easy, Normal, Hard
 	}
+	public enum EventClass {
+		Location, Interaction, Collection, Kill
+	};
 
 	#region Accessors
 	public playerController PlayerScript()
