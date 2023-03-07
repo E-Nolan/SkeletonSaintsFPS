@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class spawnManager : MonoBehaviour
 {
     [SerializeField] GameObject[] enemyTypes;
     [SerializeField] GameObject[] weaponTypes;
+    [SerializeField] GameObject[] particles;
     [Range(1,10)] [SerializeField] int spawnMaxNum;
     [Range(0.0f, 10.0f)] [SerializeField] float spawnCooldown;
     [SerializeField] Transform[] spawnPos;
@@ -81,8 +83,31 @@ public class spawnManager : MonoBehaviour
         }
 
         GameObject newEnemy = Instantiate(tempEnemy, newSpawnPos.position, tempEnemy.transform.rotation);
-        if(newEnemy != null && weaponTypes.Length > 0 && newWeapon != null)
-            newEnemy.GetComponent<Enemy>().PickupWeapon(newWeapon.GetComponent<weaponPickup>().weapon);
+        if (newEnemy != null)
+        {
+            if(weaponTypes.Length > 0 && newWeapon != null)
+                newEnemy.GetComponent<Enemy>().PickupWeapon(newWeapon.GetComponent<weaponPickup>().weapon);
+
+            if (particles.Length > 1)
+            {
+                Vector3 particleOffset = newEnemy.transform.position + new Vector3(0f, newEnemy.transform.localScale.y / 2, 1f);
+
+                foreach (GameObject particle in particles)
+                {
+                    GameObject temp = Instantiate(particle, particleOffset,
+                        Quaternion.Euler(newEnemy.transform.forward));
+                    Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+                }
+            } 
+            else if (particles.Length == 1)
+            {
+                Vector3 particleOffset = newEnemy.transform.position + new Vector3(0f, newEnemy.transform.localScale.y / 2, 1f);
+                GameObject temp = Instantiate(particles[0], particleOffset,
+                    Quaternion.Euler(newEnemy.transform.forward));
+                float duration = temp.GetComponent<ParticleSystem>().main.duration;
+                Destroy(temp, duration);
+            }
+        }
 
         yield return new WaitForSeconds(spawnCooldown);
         isSpawning = false;

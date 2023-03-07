@@ -51,6 +51,8 @@ MonoBehaviour:
   enemyTypes:
   - {fileID: 8290775159960538948, guid: 940e5830fffd60a41859665d3a1b3455, type: 3}
   weaponTypes: []
+  particles:
+  - {fileID: 8838047443534833383, guid: bc509a6cb5ee49043b9753cf76a44815, type: 3}
   spawnMaxNum: 3
   spawnCooldown: 0
   spawnPos:
