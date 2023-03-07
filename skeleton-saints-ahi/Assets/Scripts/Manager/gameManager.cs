@@ -8,6 +8,7 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
 
 	public bool BUILDMODE = false;
+	public bool QUICKPLAYMANAGMENT = false;
 
 	[Header("----- Player Information -----")]
 	[SerializeField]
@@ -77,6 +78,8 @@ public class gameManager : MonoBehaviour
 			sceneControl.instance.LoadMainLevel();
 		}
 		FetchEvents();
+		if (QUICKPLAYMANAGMENT)
+			LevelSetup();
 		//either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
 		hUDManager.instance.showHUD();
 		playStarted = true;

@@ -6681,7 +6681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a443fa24aa68b4c9811d5fbe8ea362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BUILDMODE: 1
+  BUILDMODE: 0
+  QUICKPLAYMANAGMENT: 1
   PlayerPrefab: {fileID: 3169843501779763172, guid: 4cb34049403758d428bd6f86c3628ab2, type: 3}
   PlayerSpawnPos: {fileID: 0}
   playerInstance: {fileID: 0}
