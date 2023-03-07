@@ -105,7 +105,7 @@ MonoBehaviour:
   offHandWeapon: {fileID: 0}
   playerCamera: {fileID: 9115346416793984193}
   playerSpeed: 10
-  gravity: 16
+  gravity: 24
   maxStamina: 100
   staminaRegenSpeed: 50
   staminaRegenCooldown: 0.5
@@ -113,14 +113,18 @@ MonoBehaviour:
   maxArmor: 3
   armorRegenSpeed: 1
   armorRegenCooldown: 1
-  invincibilityTime: 0.25
-  jumpSpeed: 8
+  invincibilityCooldown: 0.25
+  maxJumpVel: 8
+  jumpAcceleration: 50
   maxJumps: 1
   jumpStaminaCost: 0
+  coyoteTime: 0.2
+  jumpInputCooldown: 0
   dashSpeed: 25
   dashCooldown: 0.75
   dashDuration: 0.25
   dashStaminaCost: 30
+  dashInvincibilityTime: 0.05
   sprintSpeed: 15
   sprintStaminaDrain: 20
   jumpSound: {fileID: 8300000, guid: 9375ea157ec82eb4781108a5a021b21d, type: 3}
@@ -150,9 +154,14 @@ MonoBehaviour:
   gunshotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   raycastRange: 100
   externalVelocityDecay: 4
+  playerVelocity: {x: 0, y: 0, z: 0}
+  invincibilityTimer: 0
+  currCoyoteTimer: 0
+  isJumping: 0
   isPrimaryShooting: 0
   isSecondaryShooting: 0
   isGrappling: 0
+  jumpsCurrent: 0
   currentHealth: 0
   currentArmor: 0
 --- !u!82 &1287622297081860505
