@@ -630,6 +630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83918cf07e734d444ba5dcbbf78474cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerUISystem: {fileID: 9054488379626244088}
   playerHealthBar: {fileID: 2184162781242559859, guid: 7e32d50d37f3f43cab79cba42b04c821, type: 3}
   parentHealth: {fileID: 511492356700012040}
   playerHealthTick: []
