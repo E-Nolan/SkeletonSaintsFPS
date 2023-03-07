@@ -33,12 +33,15 @@ public class playerController : MonoBehaviour, IDamage
     [Range(0, 5)] [SerializeField] int maxArmor;
     [Range(0.0f, 10.0f)] [SerializeField] float armorRegenSpeed;
     [Range(0.0f, 5.0f)] [SerializeField] float armorRegenCooldown;
-    [Range(0.0f, 2.0f)] [SerializeField] float invincibilityTime;
+    [Range(0.0f, 2.0f)] [SerializeField] float invincibilityCooldown;
 
     [Header("----- Jump -----")]
-    [Range(3, 50)] [SerializeField] int jumpSpeed;
+    [Range(1.0f, 10.0f)] [SerializeField] float maxJumpVel;
+    [Range(0.05f, 1000.0f)] [SerializeField] float jumpAcceleration;
     [Range(0, 3)] [SerializeField] int maxJumps;
     [Range(0, 100)] [SerializeField] int jumpStaminaCost;
+    [Range(0.0f, 1.0f)] [SerializeField] float coyoteTime;
+    [Range(0.0f, 1.0f)] [SerializeField] float jumpInputCooldown;
 
     // Stats for player dashing
     [Header("----- Dash -----")]
@@ -48,6 +51,7 @@ public class playerController : MonoBehaviour, IDamage
     [Tooltip("This should be shorter or equal to Dash Cooldown")]
     [Range(0.0f, 5.0f)] [SerializeField] float dashDuration;
     [Range(0, 100)] [SerializeField] int dashStaminaCost;
+    [Range(0.0f, 1.0f)] [SerializeField] float dashInvincibilityTime;
 
     [Header("----- Sprint -----")]
     [Tooltip("This should ideally be between normal Speed and Dash Speed")]
@@ -66,12 +70,15 @@ public class playerController : MonoBehaviour, IDamage
     [Range(1, 20)] [SerializeField] int externalVelocityDecay;
     // Private variables used within the script to facilitate movement and actions
     Vector3 moveInput;
-    Vector3 playerVelocity;
+    [SerializeField] Vector3 playerVelocity;
     Vector3 externalVelocity = Vector3.zero;
     int defaultSpeed;
-    float staminaRegenTimer;
-    float armorRegenTimer;
-    float invincibilityTimer;
+    float staminaRegenTimer = 0.0f;
+    float armorRegenTimer = 0.0f;
+    [SerializeField] float invincibilityTimer = 0.0f;
+    [SerializeField] float currCoyoteTimer = 0.0f;
+    bool canInputJump = false;
+    [SerializeField] bool isJumping = false;
 
     public rangedWeapon currentWeapon { get; private set; }
     public rangedWeapon currentSecondary { get; private set; }
@@ -85,7 +92,7 @@ public class playerController : MonoBehaviour, IDamage
     float weaponSwitchCooldown = 0.1f;
 
     public float currentStamina { get; private set; }
-    public int jumpsCurrent { get; private set; } = 0;
+    public int jumpsCurrent; // { get; private set; } = 0;
     public float currentHealth; //{ get; private set; }
     public float currentArmor; //{ get; private set; }
 
@@ -112,15 +119,15 @@ public class playerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        // Decrement the stamina regen timer. If any stamina is used this frame, the timer will be reset
+        // Decrement any ongoing timers
         if (staminaRegenTimer > 0.0f)
             staminaRegenTimer -= Time.deltaTime;
-        // Decrement the armor regen timer. If any damage is taken this frame, the timer will be reset
         if (armorRegenTimer > 0.0f)
             armorRegenTimer -= Time.deltaTime;
-        // Decrement the invincibility timer.
         if (invincibilityTimer > 0.0f)
             invincibilityTimer -= Time.deltaTime;
+        if (currCoyoteTimer > 0.0f)
+            currCoyoteTimer -= Time.deltaTime;
 
 
         // Handle movement for the player
@@ -157,11 +164,7 @@ public class playerController : MonoBehaviour, IDamage
             giveStamina(staminaRegenSpeed * Time.deltaTime);
         // If the player hasn't taken damage for the duration of the regen cooldown, regenerate their armor over time
         if (armorRegenTimer <= 0)
-        { 
             giveArmor(armorRegenSpeed * Time.deltaTime);
-        }
-
-            
     }
 
     #region movement functions
@@ -180,9 +183,9 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
 
-        // If the player releases the dash button while sprinting, return them to normal speed
+        // If the player releases the dash button while sprinting or stops moving while sprinting, return them to normal speed
         // Also stop their sprint if they ran out of stamina
-        if (isSprinting && !isDashing && !Input.GetButton("Dash"))
+        if (isSprinting && !isDashing && (!Input.GetButton("Dash") || moveInput.magnitude <= 0.05f))
         {
             playerSpeed = defaultSpeed;
             isSprinting = false;
@@ -202,11 +205,25 @@ public class playerController : MonoBehaviour, IDamage
         if (!isGrappling)
             externalVelocity = Vector3.Lerp(externalVelocity, Vector3.zero, Time.deltaTime * externalVelocityDecay);
 
-        // Set the player's vertical velocity to 0 if they are standing on ground
+        // If the player isn't grounded, start the coyote time timer.
+        // If the time has expired and they haven't used their first jump, take their first jump away
+        if (!controller.isGrounded)
+        {
+            if (currCoyoteTimer <= 0.0f && jumpsCurrent == 0)
+            {
+                jumpsCurrent = 1;
+            }
+        }
+
+        // Set the player's vertical velocity to 0 and reset their jumps if they are standing on ground
         if (isGrappling || (controller.isGrounded && playerVelocity.y <= 0))
         {
             playerVelocity.y = 0;
-            jumpsCurrent = 0;
+            if (!isGrappling)
+            {
+                currCoyoteTimer = coyoteTime;
+                jumpsCurrent = 0;
+            }
         }
 
         // Move the character via arrow keys/WASD input
@@ -224,17 +241,35 @@ public class playerController : MonoBehaviour, IDamage
 
         controller.Move(moveInput * Time.deltaTime * playerSpeed);
 
-        // Allow the player to jump if they haven't exceeded their maximum amount of jumps
-        if (!isGrappling && Input.GetButtonDown("Jump") && jumpsCurrent < maxJumps)
+        // If the player presses the jump button, initiate a jump
+        // Jump inputs have a cooldown
+        // When the player releases the jump button, stop the jump
+        if (Input.GetButtonDown("Jump") && jumpsCurrent < maxJumps && !canInputJump && jumpStaminaCost <= currentStamina)
         {
+            isJumping = true;
             jumpsCurrent++;
-            playerVelocity.y = jumpSpeed;
             useStamina(jumpStaminaCost);
             audioSource.PlayOneShot(jumpSound);
+            StartCoroutine(startJumpInputCooldown());
+        }
+        if (Input.GetButtonUp("Jump"))
+        {
+            isJumping = false;
+        }
+
+        // Allow the player to jump if they haven't exceeded their maximum amount of jumps
+        if (!isGrappling && Input.GetButton("Jump") && isJumping)
+        {
+            if (playerVelocity.y < 0.0f)
+                playerVelocity.y = 0.0f;
+            playerVelocity.y += jumpAcceleration * Time.deltaTime;
+            if (playerVelocity.y >= maxJumpVel)
+                isJumping = false;
         }
 
         // Accelerate the player downward via gravity
-        playerVelocity.y -= (gravity * Time.deltaTime);
+        if (!isJumping)
+            playerVelocity.y -= (gravity * Time.deltaTime);
         controller.Move((playerVelocity + externalVelocity) * Time.deltaTime);
     }
 
@@ -256,6 +291,9 @@ public class playerController : MonoBehaviour, IDamage
 
         // Increase the player's speed for the duration of the dash, then return it to normal
         playerSpeed = dashSpeed;
+        // The player also gains a brief moment of invincibility upon dashing
+        invincibilityTimer = Mathf.Clamp(dashInvincibilityTime, invincibilityTimer, invincibilityCooldown);
+
         yield return new WaitForSeconds(dashDuration);
 
         // If the player is still holding the dash button down after the dash ends, they will continue sprinting at an increased speed
@@ -273,6 +311,13 @@ public class playerController : MonoBehaviour, IDamage
     {
         playerSpeed = sprintSpeed;
         isSprinting = true;
+    }
+
+    IEnumerator startJumpInputCooldown()
+    {
+        canInputJump = true;
+        yield return new WaitForSeconds(jumpInputCooldown);
+        canInputJump = false;
     }
 
     #endregion
@@ -321,10 +366,26 @@ public class playerController : MonoBehaviour, IDamage
         if (invincibilityTimer <= 0.0f)
         {
             takeArmorDamage(ref damage);
+            fudgeDamage(ref damage);
             updateHealth(-damage);
             gameManager.instance.updatePlayerHealthBar();
             StartCoroutine(flashDamage());
-            invincibilityTimer = invincibilityTime;
+            invincibilityTimer = invincibilityCooldown;
+        }
+    }
+
+    void fudgeDamage(ref float damage)
+    {
+        // If the player is low on health, reduce the amount of damage being dealt to the player to help create tense moments
+        // Also, if the player would be dealt a killing blow while they're above 1 hp, reduce the damage to put them at 1 hp instead
+        if (damage >= (currentHealth * 0.5f))
+        {
+            damage = (damage + currentHealth) * 0.25f;
+
+            if (damage >= currentHealth && currentHealth > 1.0f)
+            {
+                damage = currentHealth - 1.0f;
+            }
         }
     }
 
@@ -572,5 +633,4 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.35f);
         canPlayFootsteps = true;
     }
-
 }
