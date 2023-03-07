@@ -5,7 +5,7 @@ using UnityEngine;
 public class bullet : MonoBehaviour
 {
     // Dmg for the bullet
-    public int bulletDmg;
+    public float bulletDmg;
 
     [SerializeField] AudioSource bulletImpactSound;
     [SerializeField] private Transform damagePopupPrefab;

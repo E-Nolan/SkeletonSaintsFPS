@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour, IDamage
         return _health / _maxHealth;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         _health -= damage;
 
