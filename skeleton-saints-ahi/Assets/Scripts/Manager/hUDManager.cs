@@ -163,6 +163,7 @@ public class hUDManager : MonoBehaviour
     {
         playerActiveGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
     }
+
     public void toggleCursorVisibility()
     {
         if (Cursor.visible == false)
