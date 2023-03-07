@@ -116,8 +116,6 @@ public class playerController : MonoBehaviour, IDamage
 
         if (startingWeapon)
             rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
-
-        gameManager.instance.updateWeaaponDisplay();
     }
 
     // Update is called once per frame
@@ -452,7 +450,7 @@ public class playerController : MonoBehaviour, IDamage
         // Switch to the weapon after the current one in the List
         // Switch to the first weapon if the index goes out of bounds
         if (currWepIndex + 1 >= weaponInventory.Count)
-            switchToWeapon(0);
+            switchToWeapon(0); 
         else
             switchToWeapon(currWepIndex + 1);
 
@@ -476,54 +474,32 @@ public class playerController : MonoBehaviour, IDamage
 
     void switchToWeapon(int weaponIndex)
     {
-        if (weaponInventory?.Count > 0 && weaponIndex >= 0 && weaponIndex < weaponInventory.Count)
+
+        if (currentWeapon != weaponInventory[weaponIndex])
         {
-            if (currentWeapon != weaponInventory[weaponIndex])
+            // Switch to the weapon at the given index, update currWepIndex to the new weapon's index, and turn the old weapon off
+            if (currentWeapon)
             {
-                if (currentWeapon)
-                {
-                    currentWeapon.offSwitch();
-                    currentWeapon.gameObject.SetActive(false);
-                }
-
-                currWepIndex = weaponIndex;
-                currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
-
-                currentWeapon.gameObject.SetActive(true);
-                currentWeapon.onSwitch();
-
-                if (weaponInventory.Count > 1)
-                {
-                    if (currWepIndex + 1 < weaponInventory.Count)
-                    {
-                        inactiveWeapon1 = weaponInventory[currWepIndex + 1].GetComponent<rangedWeapon>();
-                    }
-                    else
-                    {
-                        inactiveWeapon1 = weaponInventory[0].GetComponent<rangedWeapon>();
-                    }
-                }
-
-                if (weaponInventory.Count > 2)
-                {
-                    if (currWepIndex + 2 < weaponInventory.Count)
-                    {
-                        inactiveWeapon2 = weaponInventory[currWepIndex + 2].GetComponent<rangedWeapon>();
-                    }
-                    else
-                    {
-                        inactiveWeapon2 = weaponInventory[1].GetComponent<rangedWeapon>();
-                    }
-                }
+                currentWeapon.offSwitch();
+                currentWeapon.gameObject.SetActive(false);
             }
+
+            currWepIndex = weaponIndex;
+            currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
+
+            /*
+            if (currWepIndex + 1  <= weaponInventory.Count && currentWeapon != weaponInventory[currWepIndex + 1])
+            {
+                inactiveWeapon1 = weaponInventory[0].GetComponent<rangedWeapon>();
+            }
+            */
+
+            currentWeapon.gameObject.SetActive(true);
+            currentWeapon.onSwitch();
+
             gameManager.instance.updateWeaaponDisplay();
         }
-        else
-        {
-            Debug.LogError("Invalid weapon index or empty inventory");
-        }
     }
-
 
     /// <summary>
     /// Switch the player's weapon to a chosen index in the player's inventory.

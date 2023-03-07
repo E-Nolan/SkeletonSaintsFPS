@@ -170,24 +170,24 @@ public class hUDManager : MonoBehaviour
 
     public void updateWeaponDisplay()
     {
-        Debug.Log((gameManager.instance.PlayerScript().currentWeapon.GetCurrentClipSize()).ToString());
         activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
         activeClip.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.GetCurrentClipSize()}";
+        if(gameManager.instance.PlayerScript().inactiveWeapon1 != null)
+            inactiveGun1.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon1.inactiveImage;
+        /*
+        if (gameManager.instance.PlayerScript().inactiveWeapon2 != null)
+            inactiveGun2.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon2.inactiveImage;
         if(gameManager.instance.PlayerScript().currentWeapon.weaponName == "Pistol")
         {
             activeReserve.enabled = false;
-            pistolReserve.enabled = true;
+            pistolReserve.enabled = true;1
         }
         else
         {
             pistolReserve.enabled = false;
             activeReserve.enabled = true;
         }
-        if(gameManager.instance.PlayerScript().inactiveWeapon1 != null)
-            inactiveGun1.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon1.inactiveImage;
-
-        if (gameManager.instance.PlayerScript().inactiveWeapon2 != null)
-            inactiveGun2.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon2.inactiveImage;
+        */
     }
 
     public void displayWeaponPickUpText()
