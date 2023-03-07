@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class homingMissile : MonoBehaviour
 {
+    [SerializeField] private GameObject _explosionObject;
     [Range(0.0f, 10.0f)] [SerializeField] float turnSpeed;
     [Range(0.0f, 10.0f)] [SerializeField] float accelerationRate;
     [SerializeField] private float timer;
@@ -28,7 +29,13 @@ public class homingMissile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") || other.CompareTag("Ground") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-            Destroy(gameObject);
+        if (other.CompareTag("Player") || other.CompareTag("Ground") ||
+            other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            GameObject explosion = Instantiate(_explosionObject, transform.position, Quaternion.Euler(Vector3.up));
+            Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration);
+            GetComponentInChildren<MeshRenderer>().enabled = false;
+            //Destroy(gameObject);
+        }
     }
 }

@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 340e8257dd2d6f448ae9eb31a0c3ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionObject: {fileID: 6087298982043621310, guid: 9e9e14ab8204c09488a15fc46d293928, type: 3}
   turnSpeed: 2
   accelerationRate: 7.5
   timer: 5
