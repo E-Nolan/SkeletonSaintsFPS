@@ -339,12 +339,14 @@ public class gameManager : MonoBehaviour
 	}
 	private void pause()
     {
+		hUDManager.instance.closeHUD();
 		isPaused = true;
 		Time.timeScale = 0f;
 		Cursor.lockState = CursorLockMode.Confined;
 	}
 	private void unPause()
 	{
+		hUDManager.instance.showHUD();
 		isPaused = false;
 		Time.timeScale = 1f;
 		Cursor.lockState = CursorLockMode.Locked;

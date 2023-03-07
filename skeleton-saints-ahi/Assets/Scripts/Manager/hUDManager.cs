@@ -9,6 +9,7 @@ public class hUDManager : MonoBehaviour
     public static hUDManager instance;
 
     [Header("----- UI -----")]
+    public GameObject playerUISystem;
     public GameObject playerHealthBar;
     public GameObject parentHealth;
     public List<GameObject> playerHealthTick;
@@ -51,11 +52,11 @@ public class hUDManager : MonoBehaviour
     }
     #region Access Methods
 
-    //public Image PlayerHPBar
-    //{
-      //  get { return playerHealthBar; }
-        //set { playerHealthBar = value; }
-    //}
+    public GameObject PlayerUISystem
+    {
+        get { return playerUISystem; }
+        set { playerHealthBar = value; }
+    }
     #endregion
     #region Public Methods
     public void createPlayerHealthBar()
@@ -64,7 +65,7 @@ public class hUDManager : MonoBehaviour
         healthTick = (int)maxHealth / 1;
         for (int i = 0; i < healthTick; i++)
         {
-            GameObject tick = Instantiate(playerHealthBar, new Vector3(playerHealthBar.transform.position.x - (i * 18), playerHealthBar.transform.position.y, playerHealthBar.transform.position.z), Quaternion.identity, parentHealth.transform);
+            GameObject tick = Instantiate(playerHealthBar, new Vector3(playerHealthBar.transform.position.x - (i * 24), playerHealthBar.transform.position.y, playerHealthBar.transform.position.z), Quaternion.identity, parentHealth.transform);
             tick.SetActive(true);
             playerHealthTick.Add(tick);
         }
@@ -95,7 +96,7 @@ public class hUDManager : MonoBehaviour
         staminaTick = (int)maxStamina / 10;
         for (int i = 0; i < staminaTick; i++)
         {
-            GameObject tick = Instantiate(playerStaminaBar, new Vector2(playerStaminaBar.transform.position.x - (i * 18), playerStaminaBar.transform.position.y), Quaternion.identity, parentStamina.transform);
+            GameObject tick = Instantiate(playerStaminaBar, new Vector2(playerStaminaBar.transform.position.x - (i * 24), playerStaminaBar.transform.position.y), Quaternion.identity, parentStamina.transform);
             tick.SetActive(true);
             playerStaminaTick.Add(tick);
         }
@@ -131,7 +132,7 @@ public class hUDManager : MonoBehaviour
         armorTick = (int)maxArmor / 1;
         for (int i = 0; i < armorTick; i++)
         {
-            GameObject tick = Instantiate(playerArmorBar, new Vector2(playerArmorBar.transform.position.x - (i * 18), playerArmorBar.transform.position.y), Quaternion.identity, parentArmor.transform);
+            GameObject tick = Instantiate(playerArmorBar, new Vector2(playerArmorBar.transform.position.x - (i * 24), playerArmorBar.transform.position.y), Quaternion.identity, parentArmor.transform);
             tick.SetActive(true);
             playerArmorTick.Add(tick);
         }
@@ -179,13 +180,13 @@ public class hUDManager : MonoBehaviour
     }
     public void showHUD()
     {
-        playerHealthBar.gameObject.SetActive(true);
+        playerUISystem.gameObject.SetActive(true);
         reticle.gameObject.SetActive(true);
         //TaskList.gameObject.SetActive(true);
     }
     public void closeHUD()
     {
-        playerHealthBar.gameObject.SetActive(true);
+        playerUISystem.gameObject.SetActive(false);
         reticle.gameObject.SetActive(false);
         //TaskList.gameObject.SetActive(false);
     }
