@@ -132,10 +132,7 @@ public class rangedWeapon : MonoBehaviour
 
     void updateAmmoDisplay()
     {
-        if (infiniteAmmo)
-            hUDManager.instance.playerAmmoText.text = "";
-        else
-            hUDManager.instance.playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
+       
     }
 
     public int GetCurrentClipSize()

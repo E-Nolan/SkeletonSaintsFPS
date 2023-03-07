@@ -103,6 +103,6 @@ public class grappleGun : rangedWeapon
 
     void updateAmmoDisplay()
     {
-        hUDManager.instance.playerAmmoText.SetText("");
+       
     }
 }

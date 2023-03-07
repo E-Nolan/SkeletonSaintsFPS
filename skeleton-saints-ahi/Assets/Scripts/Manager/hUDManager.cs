@@ -8,7 +8,7 @@ public class hUDManager : MonoBehaviour
 {
     public static hUDManager instance;
 
-    [Header("----- UI -----")]
+    [Header("----- Player UI -----")]
     public GameObject playerUISystem;
     public GameObject playerHealthBar;
     public GameObject parentHealth;
@@ -19,10 +19,24 @@ public class hUDManager : MonoBehaviour
     public GameObject playerArmorBar;
     public GameObject parentArmor;
     public List<GameObject> playerArmorTick;
-    public Image reticle;
-    public TextMeshProUGUI playerAmmoText;
-    public Image playerActiveGun;
+    
+    
 
+    [Header("----- Weapon UI -----")]
+    public GameObject weaponUISystem;
+    public Image activeGun;
+    public TextMeshProUGUI activeClip;
+    public TextMeshProUGUI activeReserve;
+    public TextMeshProUGUI pistolReserve;
+    public Image inactiveGun1;
+    public TextMeshProUGUI inactiveClip1;
+    public TextMeshProUGUI inactiveReserve1;
+    public Image inactiveGun2;
+    public TextMeshProUGUI inactiveClip2;
+    public TextMeshProUGUI inactiveReserve2;
+    public Image reticle;
+
+    [Header("----- KeyCard UI -----")]
     public Image card01;
     public TextMeshProUGUI keyCard01Text;
     public Image card02;
@@ -30,9 +44,8 @@ public class hUDManager : MonoBehaviour
     public Image card03;
     public TextMeshProUGUI keyCard03Text;
 
+    [Header("----- Misc UI -----")]
     public GameObject damageFlashScreen;
-
-
     public int enemiesRemaining;
     public TextMeshProUGUI enemiesCounter;
 
@@ -57,6 +70,7 @@ public class hUDManager : MonoBehaviour
         get { return playerUISystem; }
         set { playerHealthBar = value; }
     }
+
     #endregion
     #region Public Methods
     public void createPlayerHealthBar()
@@ -161,7 +175,21 @@ public class hUDManager : MonoBehaviour
 
     public void updateActiveGun()
     {
-        playerActiveGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
+        activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
+    }
+
+    public void updateInactiveGun1()
+    {
+        if (gameManager.instance.PlayerScript().currentSecondary == null)
+        {
+            inactiveClip1.text = "";
+        }
+
+    }
+
+    public void updateInactiveGun2()
+    {
+        activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
     }
 
     public void toggleCursorVisibility()
@@ -182,12 +210,14 @@ public class hUDManager : MonoBehaviour
     public void showHUD()
     {
         playerUISystem.gameObject.SetActive(true);
+        weaponUISystem.gameObject.SetActive(true);
         reticle.gameObject.SetActive(true);
         //TaskList.gameObject.SetActive(true);
     }
     public void closeHUD()
     {
         playerUISystem.gameObject.SetActive(false);
+        weaponUISystem.gameObject.SetActive(false);
         reticle.gameObject.SetActive(false);
         //TaskList.gameObject.SetActive(false);
     }
