@@ -13,7 +13,7 @@ public class DamagePopup : MonoBehaviour
         _textMeshPro = GetComponent<TextMeshPro>();
     }
 
-    public void Setup(int damage)
+    public void Setup(float damage)
     {
         _textMeshPro.SetText(damage.ToString());
         StartCoroutine(FadeCoroutine());

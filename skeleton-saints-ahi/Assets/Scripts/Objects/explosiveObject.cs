@@ -13,7 +13,7 @@ public class explosiveObject : MonoBehaviour, IDamage
     [SerializeField] AudioSource explosionAud;
 
     bool detonated;
-    int currentHealth;
+    float currentHealth;
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class explosiveObject : MonoBehaviour, IDamage
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         // If the object explodes from damage, make it explode after its health is reduced to 0
         currentHealth -= damage;

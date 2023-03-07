@@ -5,7 +5,7 @@ using UnityEngine;
 public class collectiblePickup : MonoBehaviour
 {
     [Range(0,100)] [SerializeField] int ammoRecoveryMultiplier;
-    [Range(0,100)] [SerializeField] int healthRecovery;
+    [Range(0,100)] [SerializeField] float healthRecovery;
     [Tooltip("Positive = Clockwise | Negative = Counter-Clockwise")]
     [Range(-360, 360)] [SerializeField] int rotationSpeed;
     [SerializeField] AudioClip pickupSound;

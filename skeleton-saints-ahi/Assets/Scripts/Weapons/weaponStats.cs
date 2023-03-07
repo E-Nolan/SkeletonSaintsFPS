@@ -23,7 +23,7 @@ public class weaponStats : ScriptableObject
 
     [Range(5,200)] public int bulletSpeed;
     [Range(0.0f, 5.0f)] public float fireRate;
-    [Range(0, 20)] public int damage;
+    [Range(0, 20)] public float damage;
     [Range(1, 20)] public int bulletsPerSpread;
     [Range(0,60)] public int spreadAngle;
     [Range(1,10)] public int bulletsPerBurst;
@@ -42,7 +42,7 @@ public class weaponStats : ScriptableObject
     [Header("Enemy Difficulty")]
     [Range(0,200)] public int bulletSpeedBonus;
     [Range(0.0f, 5.0f)] public float fireRateBonus;
-    [Range(0, 20)] public int damageBonus;
+    [Range(0, 20)] public float damageBonus;
     [Range(0, 20)] public int bulletsPerSpreadBonus;
     [Range(0, 60)]public int spreadAngleBonus;
 }

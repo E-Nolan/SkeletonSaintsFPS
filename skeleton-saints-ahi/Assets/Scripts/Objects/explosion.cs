@@ -8,7 +8,7 @@ public class explosion : MonoBehaviour
     [SerializeField] float fullExplosionScale;
     [Tooltip("In seconds")]
     [Range(0.01f, 1.0f)] [SerializeField] float explosionTime;
-    [SerializeField] int explosionDamage;
+    [SerializeField] float explosionDamage;
     [Range(0, 100)] [SerializeField] int explosionForce;
 
     MeshRenderer meshRender;

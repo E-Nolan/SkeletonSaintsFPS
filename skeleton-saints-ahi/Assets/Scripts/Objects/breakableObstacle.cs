@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class breakableObstacle : MonoBehaviour, IDamage
 {
-    [Range(1, 10)] [SerializeField] int health;
+    [Range(1, 10)] [SerializeField] float health;
     
     [Header("----- Optional -----")]
     [SerializeField] GameObject droppedItem;
     [SerializeField] AudioSource destructionSound;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if (health <= 0)

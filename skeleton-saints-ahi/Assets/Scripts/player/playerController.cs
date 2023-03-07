@@ -86,7 +86,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public float currentStamina { get; private set; }
     public int jumpsCurrent { get; private set; } = 0;
-    public int currentHealth; //{ get; private set; }
+    public float currentHealth; //{ get; private set; }
     public float currentArmor; //{ get; private set; }
 
     bool canPlayFootsteps = true;
@@ -316,7 +316,7 @@ public class playerController : MonoBehaviour, IDamage
     /// Deal damage to the player, then kill them if their health reaches 0.
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (invincibilityTimer <= 0.0f)
         {
@@ -328,7 +328,7 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-    void takeArmorDamage(ref int damage)
+    void takeArmorDamage(ref float damage)
     {
         // Deal damage to the player's armor, if the damage exceeds their armor, the excess will be dealt to their health.
         currentArmor -= damage;
@@ -463,7 +463,7 @@ public class playerController : MonoBehaviour, IDamage
     /// Heal the player by an amount. Their health can not exceed their max health
     /// </summary>
     /// <param name="amount"></param>
-    public void GiveHealth(int amount)
+    public void GiveHealth(float amount)
     {
         updateHealth(amount);
     }
@@ -473,7 +473,7 @@ public class playerController : MonoBehaviour, IDamage
     /// Clamp it if it exceeds max health
     /// </summary>
     /// <param name="amount"></param>
-    void updateHealth(int amount)
+    void updateHealth(float amount)
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, int.MinValue, maxHealth);
@@ -524,7 +524,7 @@ public class playerController : MonoBehaviour, IDamage
     public int GetMaxHealth()
     { return maxHealth; }
 
-    public int GetCurrentHealth()
+    public float GetCurrentHealth()
     { return currentHealth; }
 
     public int GetMaxArmor()
