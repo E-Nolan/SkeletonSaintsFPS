@@ -141,6 +141,8 @@ public class playerController : MonoBehaviour, IDamage
         {
             shoot(currentWeapon);
         }
+    
+
         // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
         if (Input.GetButton("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
         {
@@ -486,7 +488,8 @@ public class playerController : MonoBehaviour, IDamage
 
             currWepIndex = weaponIndex;
             currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
-
+            
+        
             currentWeapon.gameObject.SetActive(true);
             currentWeapon.onSwitch();
 
@@ -638,6 +641,12 @@ public class playerController : MonoBehaviour, IDamage
 
     public bool isAmmoInfinite()
     { return currentWeapon.isAmmoInfinite(); }
+
+    public int GetMaxClipSize()
+    { return currentWeapon.GetMaxClip(); }
+
+    public int GetCurrentClip()
+    { return currentWeapon.GetCurrentClip(); }
 
     public bool IsPlayerShooting()
     { return (isPrimaryShooting || isSecondaryShooting); }

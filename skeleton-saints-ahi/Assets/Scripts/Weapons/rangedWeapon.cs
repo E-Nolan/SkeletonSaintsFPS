@@ -33,7 +33,8 @@ public class rangedWeapon : MonoBehaviour
     [Tooltip("Will be rounded down if it exceeds maxAmmo.")]
     [Range(0, 200)] [SerializeField] int currentAmmo;
     [Range(0, 200)] [SerializeField] int maxAmmo;
-    [Range(0, 100)] [SerializeField] int maxClipSize;
+    [Range(0, 100)] [SerializeField] int currentClip;
+    [Range(0, 100)] [SerializeField] int maxClip;
     [Range(0, 40)] [SerializeField] int ammoRecovery;
 
     // If this weapon is being used by an enemy, access 
@@ -46,7 +47,6 @@ public class rangedWeapon : MonoBehaviour
     public GameObject bulletIcon;
 
     public string weaponName;
-    int currentClip;
 
     #endregion
 
@@ -63,7 +63,7 @@ public class rangedWeapon : MonoBehaviour
             enemyScript = transform.root.GetComponent<Enemy>();
         else
         {
-            updateAmmoDisplay();
+            hUDManager.instance.updateWeaponText();
         }
 
     }
@@ -82,6 +82,12 @@ public class rangedWeapon : MonoBehaviour
     /// returns true if the current weapon's ammo is full or if the weapon has infinite ammo
     /// </summary>
     /// <returns></returns>
+
+    public bool isClipFull()
+    {
+        return ((currentClip == maxClip));
+    }
+
     public bool isAmmoFull()
     {
         return ((currentAmmo == maxAmmo) || infiniteAmmo);
@@ -127,19 +133,30 @@ public class rangedWeapon : MonoBehaviour
     {
         currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
         if (usedByPlayer)
-            updateAmmoDisplay();
+            hUDManager.instance.updateWeaponText();
     }
 
-    void updateAmmoDisplay()
-    {
-        
-    }
-
-    public int GetCurrentClipSize()
+    public int GetCurrentClip()
     { return currentClip; }
 
-    public int GetMaxClipSize()
-    { return maxClipSize; }
+    public int GetMaxClip()
+    { return maxClip; }
+
+    public void spendClip(int amount)
+    {
+        updateClip(-amount);
+    }
+
+    public void giveClip(int amount)
+    {
+        updateClip(amount);
+    }
+
+    void updateClip(int amount)
+    {
+        currentClip = Mathf.Clamp(currentClip + amount, 0, maxClip);
+        hUDManager.instance.updateWeaponText();
+    }
 
     #endregion
 
@@ -160,7 +177,7 @@ public class rangedWeapon : MonoBehaviour
     {
         // Check to see whether or not the weapon has enough ammo to shoot
         // If it does, fire a bullet in the provided direction
-        if (!isAmmoEmpty())
+        if (currentClip > 0)
         {
             StartCoroutine(startShootCooldown());
             // For each shot in a burst, fire a bullet with a delay between each shot
@@ -226,12 +243,12 @@ public class rangedWeapon : MonoBehaviour
                 gameManager.instance.CameraControls().startRecoil(recoilForce);
             }
 
-            Debug.DrawRay(weaponFirePos.position, targetFinder.transform.forward * 10.0f, Color.blue, 1.0f);
+            //Debug.DrawRay(weaponFirePos.position, targetFinder.transform.forward * 10.0f, Color.blue, 1.0f);
             targetFinder.transform.rotation = weaponFirePos.rotation;
 
         }
 
-        spendAmmo(1);
+        spendClip(1);
     }
 
     IEnumerator startShootCooldown()
@@ -286,7 +303,7 @@ public class rangedWeapon : MonoBehaviour
         activeImage = _stats.activeweaponIcon;
         inactiveImage = _stats.activeweaponIcon;
         weaponName = _stats.weaponName;
-        maxClipSize = _stats.maxClipSize;
+        maxClip = _stats.maxClipSize;
 
         bulletIcon = new GameObject("Bullet Icon", typeof(Image));
         bulletIcon.GetComponent<Image>().sprite = _stats.bulletIcon;
@@ -305,7 +322,7 @@ public class rangedWeapon : MonoBehaviour
         if (usedByPlayer)
         {
             gameManager.instance.PlayerScript().isPrimaryShooting = false;
-            updateAmmoDisplay();
+            hUDManager.instance.updateWeaponText();
         }
     }
 

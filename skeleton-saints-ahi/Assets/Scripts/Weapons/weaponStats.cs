@@ -33,6 +33,7 @@ public class weaponStats : ScriptableObject
     public bool infiniteAmmo;
     [Range(0,200)] public int startingAmmo;
     [Range(0, 200)] public int maxAmmo;
+    [Range(0, 100)] public int currentClip;
     [Range(0, 100)] public int maxClipSize;
     [Range(0, 40)] public int ammoRecovery;
     [Tooltip("Currently only used for grapple gun range")]
