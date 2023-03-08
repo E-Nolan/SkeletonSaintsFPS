@@ -83,6 +83,7 @@ public sealed class playerPreferences: MonoBehaviour
 	public string Button_Sprint = "Sprint";
 	public string Button_Menu = "Cancel";
 	public string Button_FirePrimary = "Fire1";
+	public string Button_Interact = "Interact";
 	#endregion
 
 	[Header("----- Camera Stats -----")]
