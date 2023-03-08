@@ -491,6 +491,7 @@ public class playerController : MonoBehaviour, IDamage
             currentWeapon.gameObject.SetActive(true);
             currentWeapon.onSwitch();
 
+<<<<<<< Updated upstream
             if (weaponInventory.Count == 2)
             {
                 if (currWepIndex + 1 >= weaponInventory.Count)
@@ -516,10 +517,12 @@ public class playerController : MonoBehaviour, IDamage
                     inactiveWeapon2 = weaponInventory[2].GetComponent<rangedWeapon>();
                 }
             }
+=======
+            hUDManager.instance.updateWeaponDisplay();
+>>>>>>> Stashed changes
         }
 
-            hUDManager.instance.updateWeaponDisplay();
-        }
+        gameManager.instance.updateWeaaponDisplay();
     }
 
     /// <summary>
