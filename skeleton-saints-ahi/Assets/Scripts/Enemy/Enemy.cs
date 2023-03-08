@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -126,12 +127,21 @@ public class Enemy : MonoBehaviour, IDamage
 
         // Only show damaged animation for every enemy normal enemy hit or
         // every quarter of Boss health
-        if (!isBossEnemy || ((isBossEnemy || isMutant) && Math.Abs(_maxHealth % _health - _maxHealth / 4) < 0.001f))
+        if (!isBossEnemy || ((isBossEnemy || isMutant) && _maxHealth / 2 >  _health))
         {
-            _animator.SetTrigger("Damage");
+            if (isBossEnemy)
+            {
+                foreach (Turret turret in GetComponentsInChildren<Turret>())
+                    turret.enabled = true;
+            }
 
-            if(isBossEnemy || isMutant)
-                _animator.SetFloat("HitRandom", UnityEngine.Random.Range(0f, 1f));
+            if (!isBossEnemy || isBossEnemy && _maxHealth / 3 > _health)
+            {
+                _animator.SetTrigger("Damage");
+
+                if (isBossEnemy || isMutant)
+                    _animator.SetFloat("HitRandom", UnityEngine.Random.Range(0f, 1f));
+            }
         }
 
         StartCoroutine(FlashMaterial());
@@ -158,6 +168,9 @@ public class Enemy : MonoBehaviour, IDamage
             // If the enemy was a boss, give the player a win after they're destroyed
             if (_enemyAi.BossEnemy)
             {
+                foreach (Turret turret in GetComponentsInChildren<Turret>())
+                    turret.enabled = false;
+
                 gameManager.instance.queuePlayerVictory(5.1f);
             }
         }
@@ -249,14 +262,6 @@ public class Enemy : MonoBehaviour, IDamage
 
     private IEnumerator FlashMaterial()
     {
-        // Made a new material so the original material isn't touched and possibly kept altered should it be interupted
-        //Material flashMaterial = Instantiate(_material);
-        //flashMaterial.color = !isMutant ? Color.white : Color.red;
-        //if(!isMutant)
-        //    flashMaterial.SetColor("_Color", Color.white);
-        //else
-        //    flashMaterial.SetColor("_Color", Color.red);
-
         if (!isBossEnemy && !isMutant)
         {
             foreach (SkinnedMeshRenderer rend in GetComponentsInChildren<SkinnedMeshRenderer>())
@@ -264,7 +269,18 @@ public class Enemy : MonoBehaviour, IDamage
         }
         else
         {
-            gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = _flashMaterial;
+            if (isBossEnemy)
+            {
+                foreach (SkinnedMeshRenderer rend in GetComponentsInChildren<SkinnedMeshRenderer>())
+                {
+                    if (!GetComponent<Turret>())
+                        rend.GetComponent<SkinnedMeshRenderer>().material = _flashMaterial;
+                }
+            }
+            else
+            {
+                GetComponentInChildren<SkinnedMeshRenderer>().material = _flashMaterial;
+            }
         }
 
         yield return new WaitForSeconds(_materialFlashSpeed);
@@ -276,10 +292,18 @@ public class Enemy : MonoBehaviour, IDamage
         }
         else
         {
-            gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = _material;
+            if (isBossEnemy)
+            {
+                foreach (SkinnedMeshRenderer rend in GetComponentsInChildren<SkinnedMeshRenderer>())
+                {
+                    if (!GetComponent<Turret>())
+                        rend.GetComponent<SkinnedMeshRenderer>().material = _material;
+                }
+            }
+            else
+            {
+                GetComponentInChildren<SkinnedMeshRenderer>().material = _material;
+            }
         }
-
-        //Destroy(flashMaterial);
-        //Destroy(originalMaterial);
     }
 }
