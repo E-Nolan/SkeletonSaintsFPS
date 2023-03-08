@@ -36,6 +36,7 @@ public class weaponStats : ScriptableObject
     [Range(0, 100)] public int currentClip;
     [Range(0, 100)] public int maxClipSize;
     [Range(0, 40)] public int ammoRecovery;
+    [Range(0, 5)] public int reloadSpeed;
     [Tooltip("Currently only used for grapple gun range")]
     [Range(5, 1000)] public int range;
     public bool lobbedWeapon;
