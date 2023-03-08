@@ -8,18 +8,24 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour, IDamage
 {
     [SerializeField] private EnemyAI _enemyAi;
+    [Range(0, 1000)] [SerializeField] private float _health;
+
+    [Header("----- GameObjects/Transforms -----")]
     [SerializeField] private Transform gunPosition;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private GameObject healthBarUI;
-    [SerializeField] private Slider _healthBar;
     [SerializeField] private Transform handTransform;
+    [SerializeField] private GameObject healthBarUI;
+
+    [Header("----- Material -----")]
     [SerializeField] float _materialFlashSpeed;
     [SerializeField] Material _material;
     [SerializeField] private Material _flashMaterial;
+
+    [Header("----- Difficulty Vars -----")]
     [Range(0, 1)] [SerializeField] private float _easyHealthMultiplier;
     [Range(1, 5)] [SerializeField] private float _HardHealthMultiplier;
-    [Range(0, 1000)] [SerializeField] private float _health;
+    [Range(0, 1)] [SerializeField] private float _nextEnemyFireDelay;
 
+    [Header("----- Publics -----")]
     public bool isShooting = false;
     public rangedWeapon currentWeapon;
     public bool acquiringWeapon;
@@ -32,6 +38,10 @@ public class Enemy : MonoBehaviour, IDamage
     private bool isMutant;
     private int attackDamage;
     private gameManager.GameDifficulty _difficulty;
+
+    [Header("----- Misc -----")]
+    [SerializeField] private Slider _healthBar;
+    [SerializeField] private Animator _animator;
 
     // Property to update _health field
     public float Health
@@ -93,7 +103,8 @@ public class Enemy : MonoBehaviour, IDamage
     void Update()
     {
         // If not shooting and can see the player
-        if(isShooting == false && _enemyAi.CanDetectPlayer && _enemyAi.CanAttack && !isDead) 
+        if(isShooting == false && _enemyAi.CanDetectPlayer && _enemyAi.CanAttack &&
+           !isDead && !gameManager.instance.getEnemyFiring()) 
             Attack();
 
         if(fadeHealthBar && !isBossEnemy)
@@ -212,10 +223,12 @@ public class Enemy : MonoBehaviour, IDamage
         {
             _animator.SetFloat("fireSpeed", currentWeapon.fireRate * 250f); // Sets the multiplier for firing animation
             _animator.SetTrigger("Shoot");
-            Vector3 distanceToPlayer =
-                (gameManager.instance.playerInstance.transform.position - gunPosition.transform.position);
-            currentWeapon.shoot(gameManager.instance.playerInstance.transform.position + 
-                                new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-3f, 3f)));
+           // currentWeapon.shoot(gameManager.instance.playerInstance.transform.position + 
+           //                     new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-3f, 3f)));
+
+            // Polite AI Queue
+            StartCoroutine(NextEnemyFireDelay(_nextEnemyFireDelay));
+
         }
         else
         {
@@ -258,6 +271,19 @@ public class Enemy : MonoBehaviour, IDamage
     private void ShrinkAway()
     {
         shrinkAway = true;
+    }
+
+    private IEnumerator NextEnemyFireDelay(float delay)
+    {
+        gameManager.instance.setEnemyFiring(true);
+
+        currentWeapon.shoot(gameManager.instance.playerInstance.transform.position + 
+                            new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-3f, 3f)));
+
+        if (_difficulty == gameManager.GameDifficulty.Easy)
+            yield return new WaitForSeconds(delay);
+
+        gameManager.instance.setEnemyFiring(false);
     }
 
     private IEnumerator FlashMaterial()

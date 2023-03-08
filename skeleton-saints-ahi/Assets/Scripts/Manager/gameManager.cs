@@ -25,6 +25,7 @@ public class gameManager : MonoBehaviour
 
     [Header("Game State Variables")]
     public bool isPaused;
+    bool isEnemyFiring;
 	int enemiesRemaining;
 	public GameDifficulty currentDifficulty;
 
@@ -310,6 +311,16 @@ public class gameManager : MonoBehaviour
 	{
 		currentDifficulty = GameDifficulty.Hard;
 	}
+
+    public void setEnemyFiring(bool isFiring)
+    {
+        isEnemyFiring = isFiring;
+    }
+
+    public bool getEnemyFiring()
+    {
+        return isEnemyFiring;
+    }
 	#endregion
 
 	#region Private Methods

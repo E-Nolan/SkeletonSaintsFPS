@@ -3201,23 +3201,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAi: {fileID: 4238305480919217940}
+  _health: 3
   gunPosition: {fileID: 29307427}
-  _animator: {fileID: 0}
-  healthBarUI: {fileID: 118404105}
-  _healthBar: {fileID: 25811501}
   handTransform: {fileID: 1189593153148511956}
+  healthBarUI: {fileID: 118404105}
   _materialFlashSpeed: 0.2
   _material: {fileID: 2100000, guid: 27ec51287c78bfb479fe3729111634a4, type: 2}
   _flashMaterial: {fileID: 2100000, guid: 60a1c512e8742e0499b4ead0e3c45891, type: 2}
   _easyHealthMultiplier: 0.5
   _HardHealthMultiplier: 1.75
-  _health: 3
+  _nextEnemyFireDelay: 0.1
   isShooting: 0
   currentWeapon: {fileID: 0}
   acquiringWeapon: 0
   isDead: 0
   isAttacking: 0
   fadeHealthBar: 0
+  _healthBar: {fileID: 25811501}
+  _animator: {fileID: 0}
 --- !u!114 &4238305480919217940
 MonoBehaviour:
   m_ObjectHideFlags: 0
