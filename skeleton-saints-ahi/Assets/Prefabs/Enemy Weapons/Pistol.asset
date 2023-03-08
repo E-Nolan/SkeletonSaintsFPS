@@ -18,6 +18,7 @@ MonoBehaviour:
   gunBullet: {fileID: 2442857871477385035, guid: e905b6323b0c1884f92ad9deecdd15df, type: 3}
   activeweaponIcon: {fileID: 0}
   inactiveweaponIcon: {fileID: 0}
+  bulletIcon: {fileID: 0}
   shotSound: {fileID: 8300000, guid: 7350a88be34b424428839ef403acfae6, type: 3}
   bulletSpeed: 18
   fireRate: 0.5
@@ -28,9 +29,10 @@ MonoBehaviour:
   burstFireDelay: 0
   recoilForce: 0
   infiniteAmmo: 1
-  startingAmmo: 0
-  maxAmmo: 0
-  maxClipSize: 0
+  startingAmmo: 32
+  maxAmmo: 32
+  currentClip: 8
+  maxClipSize: 8
   ammoRecovery: 0
   range: 100
   lobbedWeapon: 0
