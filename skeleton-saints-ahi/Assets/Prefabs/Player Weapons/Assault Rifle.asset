@@ -18,20 +18,25 @@ MonoBehaviour:
   gunBullet: {fileID: 7029142090661333011, guid: c5285166d022b6e40825283ce62d5727, type: 3}
   activeweaponIcon: {fileID: 21300000, guid: b06792e3c48008541b1b868c659624d5, type: 3}
   inactiveweaponIcon: {fileID: 21300000, guid: c07c2d980004210469708214b89f1d30, type: 3}
+  bulletIcon: {fileID: 0}
   shotSound: {fileID: 8300000, guid: 7350a88be34b424428839ef403acfae6, type: 3}
   bulletSpeed: 50
   fireRate: 0.3
   damage: 3
+  lastBulletBonus: 3
   bulletsPerSpread: 1
   spreadAngle: 0
   bulletsPerBurst: 3
   burstFireDelay: 0.05
   recoilForce: 2
   infiniteAmmo: 0
-  startingAmmo: 36
+  doesNotUseAmmo: 0
+  startingAmmo: 60
   maxAmmo: 180
-  maxClipSize: 36
+  currentClip: 0
+  maxClipSize: 30
   ammoRecovery: 24
+  reloadSpeed: 1
   range: 100
   lobbedWeapon: 0
   bulletSpeedBonus: 0

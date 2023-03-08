@@ -23,17 +23,20 @@ MonoBehaviour:
   bulletSpeed: 40
   fireRate: 0.1
   damage: 2
+  lastBulletBonus: 2
   bulletsPerSpread: 1
   spreadAngle: 8
   bulletsPerBurst: 1
   burstFireDelay: 0
   recoilForce: 2.5
   infiniteAmmo: 0
+  doesNotUseAmmo: 0
   startingAmmo: 60
   maxAmmo: 200
   currentClip: 30
   maxClipSize: 30
   ammoRecovery: 30
+  reloadSpeed: 0.75
   range: 60
   lobbedWeapon: 0
   bulletSpeedBonus: 0

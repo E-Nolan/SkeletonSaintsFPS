@@ -139,21 +139,26 @@ public class playerController : MonoBehaviour, IDamage
 
         if (Input.GetButton("Fire1") && !isPrimaryShooting && !gameManager.instance.isPaused && currentWeapon)
         {
+            // If auto reloading is enabled, simply try to shoot the weapon. otherwise show a message on screen
+#if false
             if (currentWeapon.CurrentClip > 0)
                 shoot(currentWeapon);
             else
                 hUDManager.instance.displayReloadWeaponText();
+#else
+            shoot(currentWeapon);
+#endif
         }
 
-        if (Input.GetKeyDown("e"))
+        if (Input.GetButtonDown("Reload") && !currentWeapon.isAmmoEmpty())
         {
-            reloadCurrentWeapon();
+            currentWeapon.startReload();
         }
-        
-    
 
-        // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
-        if (Input.GetButton("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
+
+
+            // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
+            if (Input.GetButton("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
         {
             shoot(currentSecondary);
         }
@@ -180,7 +185,7 @@ public class playerController : MonoBehaviour, IDamage
             giveArmor(armorRegenSpeed * Time.deltaTime);
     }
 
-    #region movement functions
+#region movement functions
     // Tell the player where to move based on player input
     void movement()
     {
@@ -333,24 +338,29 @@ public class playerController : MonoBehaviour, IDamage
         canInputJump = false;
     }
 
-    #endregion
+#endregion
 
     void shoot(rangedWeapon _shotWeapon)
     {
-        RaycastHit hit;
-        if (GetCurrentReticleHit(out hit))
+        if (!_shotWeapon.isClipEmpty())
         {
-            //Debug.Log($"The player is shooting at {hit.point}");
-            // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
-            Vector3 directionToTarget = (hit.point - leftFirePos.transform.position);
-            //Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
-            _shotWeapon.playerShoot(hit.point);
+            RaycastHit hit;
+            if (GetCurrentReticleHit(out hit))
+            {
+                //Debug.Log($"The player is shooting at {hit.point}");
+                // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
+                Vector3 directionToTarget = (hit.point - leftFirePos.transform.position);
+                Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
+                _shotWeapon.shoot(hit.point);
+            }
+            else
+            {
+                // If the raycast didn't hit anything, fire a bullet straight forwards
+                _shotWeapon.shootForward();
+            }
         }
         else
-        {
-            // If the raycast didn't hit anything, fire a bullet straight forwards
-            _shotWeapon.shootForward();
-        }
+            _shotWeapon.startReload();
     }
 
     public bool GetCurrentReticleHit(out RaycastHit _hit)
@@ -532,16 +542,6 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-    void reloadCurrentWeapon()
-    {
-        if (currentWeapon.CurrentAmmo >= 0)
-        {
-            currentWeapon.CurrentAmmo = currentWeapon.CurrentAmmo - currentWeapon.GetMaxClip + currentWeapon.CurrentClip; ;
-            currentWeapon.CurrentClip = currentWeapon.GetMaxClip;
-            hUDManager.instance.updateWeaponText();
-        }
-    }
-
     /// <summary>
     /// Switch the player's weapon to a chosen index in the player's inventory.
     /// </summary>
@@ -633,7 +633,7 @@ public class playerController : MonoBehaviour, IDamage
         hUDManager.instance.updatePlayerArmorBar();
     }
 
-    #region Public Member Accessors
+#region Public Member Accessors
     public int GetMaxHealth()
     { return maxHealth; }
 
@@ -828,7 +828,7 @@ public class playerController : MonoBehaviour, IDamage
             sprintStaminaDrain = value;
         }
     }
-    #endregion
+#endregion
 
     IEnumerator playFootstep()
     {

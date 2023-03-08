@@ -24,6 +24,7 @@ public class weaponStats : ScriptableObject
     [Range(5,200)] public int bulletSpeed;
     [Range(0.0f, 5.0f)] public float fireRate;
     [Range(0, 20)] public float damage;
+    [Range(0.0f, 5.0f)] public float lastBulletBonus;
     [Range(1, 20)] public int bulletsPerSpread;
     [Range(0,60)] public int spreadAngle;
     [Range(1,10)] public int bulletsPerBurst;
@@ -31,6 +32,7 @@ public class weaponStats : ScriptableObject
     [Range(0.0f, 100.0f)] public float recoilForce;
 
     public bool infiniteAmmo;
+    public bool doesNotUseAmmo;
     [Range(0,200)] public int startingAmmo;
     [Range(0, 200)] public int maxAmmo;
     [Range(0, 100)] public int currentClip;

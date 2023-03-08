@@ -20,6 +20,7 @@ public class rangedWeapon : MonoBehaviour
     [Range(5, 200)] [SerializeField] public int bulletSpeed;
     [Range(0.0f, 5.0f)] [SerializeField] public float fireRate; // in seconds
     [Range(1, 20)] [SerializeField] float damage;
+    [Range(0.0f, 5.0f)] [SerializeField] float lastBulletBonus;
     [Range(1, 20)] [SerializeField] int bulletsPerSpread;
     [Range(0, 60)] [SerializeField] int spreadAngle;
     [Range(1, 10)] [SerializeField] int bulletsPerBurst;
@@ -30,16 +31,20 @@ public class rangedWeapon : MonoBehaviour
 
     [Header("----- Ammo -----")]
     [SerializeField] bool infiniteAmmo;
+    [SerializeField] protected bool doesNotUseAmmo;
     [Tooltip("Will be rounded down if it exceeds maxAmmo.")]
     [Range(0, 200)] [SerializeField] int currentAmmo;
     [Range(0, 200)] [SerializeField] int maxAmmo;
     [Range(0, 100)] [SerializeField] int currentClip;
     [Range(0, 100)] [SerializeField] int maxClip;
     [Range(0, 40)] [SerializeField] int ammoRecovery;
+    [Range(0.0f, 5.0f)] [SerializeField] float reloadSpeed;
+    bool isReloading = false;
 
     // If this weapon is being used by an enemy, access 
     Enemy enemyScript;
     protected GameObject targetFinder;
+    Quaternion defaultRotation;
 
 
     public Sprite activeImage;
@@ -65,7 +70,6 @@ public class rangedWeapon : MonoBehaviour
         {
             hUDManager.instance.updateWeaponText();
         }
-
     }
 
     #region Ammo Functions
@@ -85,7 +89,12 @@ public class rangedWeapon : MonoBehaviour
 
     public bool isClipFull()
     {
-        return ((currentClip == maxClip));
+        return (currentClip == maxClip || doesNotUseAmmo);
+    }
+
+    public bool isClipEmpty()
+    {
+        return (currentClip == 0 && !doesNotUseAmmo);
     }
 
     public bool isAmmoFull()
@@ -126,10 +135,8 @@ public class rangedWeapon : MonoBehaviour
     void updateAmmo(int amount)
     {
         currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
-        /*
         if (usedByPlayer)
-            hUDManager.instance.updateWeaponText();
-        */     
+            hUDManager.instance.updateWeaponText();  
     }
 
     public int CurrentClip{ get { return currentClip; } set { currentClip = value; }}
@@ -148,7 +155,8 @@ public class rangedWeapon : MonoBehaviour
     void updateClip(int amount)
     {
         currentClip = Mathf.Clamp(currentClip + amount, 0, maxClip);
-        //hUDManager.instance.updateWeaponText();
+        if (usedByPlayer)
+            hUDManager.instance.updateWeaponText();
     }
 
     #endregion
@@ -170,22 +178,7 @@ public class rangedWeapon : MonoBehaviour
     {
         // Check to see whether or not the weapon has enough ammo to shoot
         // If it does, fire a bullet in the provided direction
-        if (currentAmmo > 0)
-        {
-            StartCoroutine(startShootCooldown());
-            // For each shot in a burst, fire a bullet with a delay between each shot
-            for (int i = 0; i < bulletsPerBurst; i++)
-            {
-                StartCoroutine(shootBullet(fireTarget, i * burstFireDelay));
-            }
-        }
-    }
-
-    virtual public void playerShoot(Vector3 fireTarget)
-    {
-        // Check to see whether or not the weapon has enough ammo to shoot
-        // If it does, fire a bullet in the provided direction
-        if (currentClip > 0)
+        if (!usedByPlayer || currentClip > 0)
         {
             StartCoroutine(startShootCooldown());
             // For each shot in a burst, fire a bullet with a delay between each shot
@@ -235,6 +228,9 @@ public class rangedWeapon : MonoBehaviour
             GameObject newBullet = Instantiate(gunBullet, weaponFirePos.position, targetFinder.transform.rotation);
             bullet newBulletScript = newBullet.GetComponent<bullet>();
             newBulletScript.bulletDmg = damage;
+            if (currentClip == 1)
+                newBulletScript.bulletDmg += lastBulletBonus;
+            Debug.Log($"Bullet fired from {gameObject} has {newBulletScript.bulletDmg} damage");
 
             if (usedByPlayer)
                 newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed + Vector3.Project(gameManager.instance.PlayerScript().GetPlayerVelocity(), newBullet.transform.forward);
@@ -283,6 +279,45 @@ public class rangedWeapon : MonoBehaviour
                             Random.Range(0.0f, 360.0f),
                             Space.Self);
     }
+
+    public void startReload(bool _fasterReload = false)
+    {
+        Debug.Log($"Initiating a reload  for {gameObject}");
+        // If the player isn't currently reloading, initiate a reload
+        if (!isReloading && !isAmmoEmpty())
+        {
+            if (_fasterReload)
+                StartCoroutine(reloadWeapon(reloadSpeed * 0.8f));
+            else
+                StartCoroutine(reloadWeapon(reloadSpeed));
+        }
+
+    }
+
+    IEnumerator reloadWeapon(float _reloadSpeed)
+    {
+        startReloadTilt();
+        isReloading = true;
+        yield return new WaitForSeconds(_reloadSpeed);
+
+        // if the reloading hasn't been interrupted by another event, refill the player's clip
+        if (isReloading == true)
+        {
+            int _ammoReloaded;
+            if (isAmmoInfinite())
+                _ammoReloaded = maxClip - currentClip;
+            else
+                _ammoReloaded = Mathf.Clamp((maxClip - currentClip), 0, currentAmmo);
+
+            Debug.Log($"Giving {_ammoReloaded} ammo to {gameObject}");
+            giveClip(_ammoReloaded);
+            spendAmmo(_ammoReloaded);
+        }
+
+        stopReloadTilt();
+        isReloading = false;
+    }
+
     #endregion
 
     virtual public void copyFromWeaponStats(weaponStats _stats, Transform _weaponFirePos, bool _isUsedByPlayer)
@@ -298,6 +333,7 @@ public class rangedWeapon : MonoBehaviour
         bulletSpeed = _stats.bulletSpeed + _stats.bulletSpeedBonus * (int)gameManager.instance.currentDifficulty;
         fireRate = _stats.fireRate - _stats.fireRateBonus * (int)gameManager.instance.currentDifficulty;
         damage = _stats.damage + _stats.damageBonus * (int)gameManager.instance.currentDifficulty;
+        lastBulletBonus = _stats.lastBulletBonus;
         bulletsPerSpread = _stats.bulletsPerSpread + _stats.bulletsPerSpreadBonus * (int)gameManager.instance.currentDifficulty;
         spreadAngle = _stats.spreadAngle + _stats.spreadAngleBonus * (int)gameManager.instance.currentDifficulty;
         bulletsPerBurst = _stats.bulletsPerBurst;
@@ -306,13 +342,17 @@ public class rangedWeapon : MonoBehaviour
         recoilForce = _stats.recoilForce;
 
         infiniteAmmo = _stats.infiniteAmmo;
-        currentAmmo = _stats.startingAmmo;
+        doesNotUseAmmo = _stats.doesNotUseAmmo;
+        currentClip = _stats.maxClipSize;
+        maxClip = _stats.maxClipSize;
+        currentAmmo = Mathf.Clamp(_stats.startingAmmo - _stats.maxClipSize, 0, _stats.maxAmmo);
         maxAmmo = _stats.maxAmmo;
         ammoRecovery = _stats.ammoRecovery;
+        reloadSpeed = _stats.reloadSpeed;
+
         activeImage = _stats.activeweaponIcon;
         inactiveImage = _stats.activeweaponIcon;
         weaponName = _stats.weaponName;
-        maxClip = _stats.maxClipSize;
 
         bulletIcon = new GameObject("Bullet Icon", typeof(Image));
         bulletIcon.GetComponent<Image>().sprite = _stats.bulletIcon;
@@ -321,6 +361,8 @@ public class rangedWeapon : MonoBehaviour
         audioSource.spatialBlend = 1.0f;
         if (usedByPlayer)
             audioSource.volume = 0.5f;
+
+        defaultRotation = transform.rotation;
     }
 
     virtual public void onSwitch()
@@ -338,5 +380,21 @@ public class rangedWeapon : MonoBehaviour
     {
         if (gunModel)
             gunModel.SetActive(false);
+        if (isReloading)
+            stopReloadTilt();
+        isReloading = false;
     }
+
+    void startReloadTilt()
+    {
+        transform.RotateAround(weaponFirePos.position - weaponFirePos.forward, transform.right, 60);
+    }
+
+    void stopReloadTilt()
+    {
+        transform.RotateAround(weaponFirePos.position - weaponFirePos.forward, transform.right, -60);
+    }
+
+    public float GetReloadSpeed()
+    { return reloadSpeed; }
 }

@@ -72,6 +72,7 @@ public class grappleGun : rangedWeapon
         bulletSpeed = _stats.bulletSpeed;
         fireRate = _stats.fireRate;
         hookRange = _stats.range;
+        doesNotUseAmmo = _stats.doesNotUseAmmo;
 
         grappleHookPoint = Instantiate(_stats.gunBullet, weaponFirePos.position, weaponFirePos.rotation, weaponFirePos);
         grappleHookPoint.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
