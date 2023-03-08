@@ -145,7 +145,7 @@ public class playerController : MonoBehaviour, IDamage
                 hUDManager.instance.displayReloadWeaponText();
         }
 
-        if (Input.GetKey("e"))
+        if (Input.GetKeyDown("e"))
         {
             reloadCurrentWeapon();
         }
@@ -344,7 +344,7 @@ public class playerController : MonoBehaviour, IDamage
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
             Vector3 directionToTarget = (hit.point - leftFirePos.transform.position);
             //Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
-            _shotWeapon.shoot(hit.point);
+            _shotWeapon.playerShoot(hit.point);
         }
         else
         {
@@ -534,9 +534,12 @@ public class playerController : MonoBehaviour, IDamage
 
     void reloadCurrentWeapon()
     {
-        currentWeapon.CurrentAmmo = currentWeapon.CurrentAmmo - currentWeapon.GetMaxClip;
-        currentWeapon.CurrentClip = currentWeapon.GetMaxClip;
-        hUDManager.instance.updateWeaponText();
+        if (currentWeapon.CurrentAmmo >= 0)
+        {
+            currentWeapon.CurrentAmmo = currentWeapon.CurrentAmmo - currentWeapon.GetMaxClip + currentWeapon.CurrentClip; ;
+            currentWeapon.CurrentClip = currentWeapon.GetMaxClip;
+            hUDManager.instance.updateWeaponText();
+        }
     }
 
     /// <summary>

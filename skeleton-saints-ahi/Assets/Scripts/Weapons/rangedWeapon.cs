@@ -170,6 +170,21 @@ public class rangedWeapon : MonoBehaviour
     {
         // Check to see whether or not the weapon has enough ammo to shoot
         // If it does, fire a bullet in the provided direction
+        if (currentAmmo > 0)
+        {
+            StartCoroutine(startShootCooldown());
+            // For each shot in a burst, fire a bullet with a delay between each shot
+            for (int i = 0; i < bulletsPerBurst; i++)
+            {
+                StartCoroutine(shootBullet(fireTarget, i * burstFireDelay));
+            }
+        }
+    }
+
+    virtual public void playerShoot(Vector3 fireTarget)
+    {
+        // Check to see whether or not the weapon has enough ammo to shoot
+        // If it does, fire a bullet in the provided direction
         if (currentClip > 0)
         {
             StartCoroutine(startShootCooldown());
@@ -242,6 +257,7 @@ public class rangedWeapon : MonoBehaviour
         }
 
         spendClip(1);
+        hUDManager.instance.updateWeaponText();
     }
 
     IEnumerator startShootCooldown()
@@ -315,7 +331,6 @@ public class rangedWeapon : MonoBehaviour
         if (usedByPlayer)
         {
             gameManager.instance.PlayerScript().isPrimaryShooting = false;
-            hUDManager.instance.updateWeaponText();
         }
     }
 

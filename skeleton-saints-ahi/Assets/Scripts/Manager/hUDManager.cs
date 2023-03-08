@@ -183,7 +183,16 @@ public class hUDManager : MonoBehaviour
     {
         activeClip.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentClip}";
         activeReserve.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentAmmo}";
-
+        if(gameManager.instance.PlayerScript().currentWeapon.weaponName == "Pistol")
+        {
+            activeReserve.enabled = false;
+            pistolReserve.enabled = true;
+        }
+        else
+        {
+            activeReserve.enabled = true;
+            pistolReserve.enabled = false;
+        }
     }
 
     public void displayWeaponPickUpText()
