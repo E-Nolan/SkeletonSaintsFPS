@@ -136,11 +136,20 @@ public class playerController : MonoBehaviour, IDamage
         movement();
 
         // If the player presses the Shoot Button, they will fire at whatever they are looking at
-        // They can not fire if they do not have ammo
+
         if (Input.GetButton("Fire1") && !isPrimaryShooting && !gameManager.instance.isPaused && currentWeapon)
         {
-            shoot(currentWeapon);
+            if (currentWeapon.CurrentClip > 0)
+                shoot(currentWeapon);
+            else
+                hUDManager.instance.displayReloadWeaponText();
         }
+
+        if (Input.GetKey("e"))
+        {
+            reloadCurrentWeapon();
+        }
+        
     
 
         // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
@@ -331,10 +340,10 @@ public class playerController : MonoBehaviour, IDamage
         RaycastHit hit;
         if (GetCurrentReticleHit(out hit))
         {
-            Debug.Log($"The player is shooting at {hit.point}");
+            //Debug.Log($"The player is shooting at {hit.point}");
             // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
             Vector3 directionToTarget = (hit.point - leftFirePos.transform.position);
-            Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
+            //Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
             _shotWeapon.shoot(hit.point);
         }
         else
@@ -489,7 +498,6 @@ public class playerController : MonoBehaviour, IDamage
 
             currWepIndex = weaponIndex;
             currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
-            
         
             currentWeapon.gameObject.SetActive(true);
             currentWeapon.onSwitch();
@@ -522,6 +530,13 @@ public class playerController : MonoBehaviour, IDamage
             hUDManager.instance.updateWeaponDisplay();
 
         }
+    }
+
+    void reloadCurrentWeapon()
+    {
+        currentWeapon.CurrentAmmo = currentWeapon.CurrentAmmo - currentWeapon.GetMaxClip;
+        currentWeapon.CurrentClip = currentWeapon.GetMaxClip;
+        hUDManager.instance.updateWeaponText();
     }
 
     /// <summary>
@@ -634,20 +649,8 @@ public class playerController : MonoBehaviour, IDamage
     public float GetCurrentStamina()
     { return currentStamina; }
 
-    public int GetCurrentAmmo()
-    { return currentWeapon.GetCurrentAmmo(); }
-
-    public int GetMaxAmmo()
-    { return currentWeapon.GetMaxAmmo(); }
-
     public bool isAmmoInfinite()
     { return currentWeapon.isAmmoInfinite(); }
-
-    public int GetMaxClipSize()
-    { return currentWeapon.GetMaxClip(); }
-
-    public int GetCurrentClip()
-    { return currentWeapon.GetCurrentClip(); }
 
     public bool IsPlayerShooting()
     { return (isPrimaryShooting || isSecondaryShooting); }

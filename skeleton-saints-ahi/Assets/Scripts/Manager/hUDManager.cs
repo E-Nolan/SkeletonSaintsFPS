@@ -45,8 +45,6 @@ public class hUDManager : MonoBehaviour
     public int enemiesRemaining;
     public TextMeshProUGUI enemiesCounter;
 
-    public GameObject EventList;
-
     float maxHealth;
     int healthTick;
     float currentHealth;
@@ -177,13 +175,14 @@ public class hUDManager : MonoBehaviour
             inactiveGun1.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon1.inactiveImage;
         if (gameManager.instance.PlayerScript().inactiveWeapon2 != null)
             inactiveGun2.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon2.inactiveImage;
+
+        updateWeaponText();
     }
 
     public void updateWeaponText()
     {
-        Debug.Log($"current clip {gameManager.instance.PlayerScript().GetCurrentClip()}");
-        Debug.Log($"max clip {gameManager.instance.PlayerScript().GetMaxClipSize()}");
-        Debug.Log($"current ammo {gameManager.instance.PlayerScript().GetCurrentAmmo()}");
+        activeClip.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentClip}";
+        activeReserve.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentAmmo}";
 
     }
 
@@ -217,14 +216,14 @@ public class hUDManager : MonoBehaviour
         playerUISystem.gameObject.SetActive(true);
         weaponUISystem.gameObject.SetActive(true);
         reticle.gameObject.SetActive(true);
-        EventList.gameObject.SetActive(true);
+        //TaskList.gameObject.SetActive(true);
     }
     public void closeHUD()
     {
         playerUISystem.gameObject.SetActive(false);
         weaponUISystem.gameObject.SetActive(false);
         reticle.gameObject.SetActive(false);
-        EventList.gameObject.SetActive(false);
+        //TaskList.gameObject.SetActive(false);
     }
     #endregion
     #region Accessors

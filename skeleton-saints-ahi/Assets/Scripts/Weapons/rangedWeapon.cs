@@ -98,15 +98,9 @@ public class rangedWeapon : MonoBehaviour
         return infiniteAmmo;
     }
 
-    public int GetCurrentAmmo()
-    {
-        return currentAmmo;
-    }
+    public int CurrentAmmo { get { return currentAmmo; } set { currentAmmo = value; } }
 
-    public int GetMaxAmmo()
-    {
-        return maxAmmo;
-    }
+    public int GetMaxAmmo { get { return maxAmmo; } }
 
     /// <summary>
     /// Decreases the weapon's ammo by the given amount. 
@@ -132,15 +126,14 @@ public class rangedWeapon : MonoBehaviour
     void updateAmmo(int amount)
     {
         currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
+        /*
         if (usedByPlayer)
             hUDManager.instance.updateWeaponText();
+        */     
     }
 
-    public int GetCurrentClip()
-    { return currentClip; }
-
-    public int GetMaxClip()
-    { return maxClip; }
+    public int CurrentClip{ get { return currentClip; } set { currentClip = value; }}
+    public int GetMaxClip { get { return maxClip; } }
 
     public void spendClip(int amount)
     {
@@ -155,7 +148,7 @@ public class rangedWeapon : MonoBehaviour
     void updateClip(int amount)
     {
         currentClip = Mathf.Clamp(currentClip + amount, 0, maxClip);
-        hUDManager.instance.updateWeaponText();
+        //hUDManager.instance.updateWeaponText();
     }
 
     #endregion
