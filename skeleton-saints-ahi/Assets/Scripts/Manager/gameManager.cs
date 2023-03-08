@@ -30,7 +30,7 @@ public class gameManager : MonoBehaviour
 
 	[Header("----- Game Goals -----")]
 	[SerializeField] public bool[] keyCard = new bool[3];
-	//List<GameEvent> activeGameEvents;
+	List<gameEvent> activeGameEvents;
 
 	//Bool to determine when a scene with the player in it has started (I.E. Not in the main menu or level selection.
 	//This lets the script know it can start tracking game events like winning or losing.
@@ -40,6 +40,7 @@ public class gameManager : MonoBehaviour
     private void Awake()
 	{
 		instance = this;
+		activeGameEvents = new List<gameEvent>();
 		DontDestroyOnLoad(gameObject);
 	}
 
@@ -82,20 +83,21 @@ public class gameManager : MonoBehaviour
 			LevelSetup();
 		//either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
 		hUDManager.instance.showHUD();
+		
 		playStarted = true;
 	}
 
     public void FetchEvents()
     {
 		gameEventManager.instance.FindEvents();
-		//if (gameEventManager.instance.HasEvents())
-		//{
-		//	for (int i = 0; i < gameEventManager.instance.GameEvents.Count; i++)
-  //          {
-		//		activeGameEvents.Add(gameEventManager.instance.GameEvents[i]);
-		//	}
-		//}
-	}
+        if (gameEventManager.instance.HasEvents())
+        {
+            for (int i = 0; i < gameEventManager.instance.gameEvents.Count; i++)
+            {
+                activeGameEvents.Add(gameEventManager.instance.gameEvents[i]);
+            }
+        }
+    }
 
     public void LevelSetup()
 	{
@@ -112,7 +114,7 @@ public class gameManager : MonoBehaviour
 		playerCamera = Camera.main.GetComponent<cameraControls>();
 
 		//assign values from stored preferences
-		//AssertplayerPreferencesToScript();
+		AssertplayerPreferencesToScript();
 
 		//if player has weapons saved, then equip the current weapon again
 		if (playerScript.weaponInventory.Count > 0)
@@ -123,41 +125,52 @@ public class gameManager : MonoBehaviour
 			hUDManager.instance.toggleCursorVisibility();
 
 		menuManager.instance.CanToggleGameMenu = true;
-
 		gameEventManager.instance.GenerateEventsUI();
 	}
-	//Commented out until player loads properly to start with.
-	/*
+    //Commented out until player loads properly to start with.
+
     public void AssertplayerPreferencesToScript()
-	{
-		//Will take the active values from Player Preferences and assign those settings to the variables
-		//used in the player and camera scripts
-		//Should be called right before the player is dropped in and gains control of the player.
-		//Script values should be assigned from preferences, controls should be enabled and cursor hidden
+    {
+        //Will take the active values from Player Preferences and assign those settings to the variables
+        //used in the player and camera scripts
+        //Should be called right before the player is dropped in and gains control of the player.
+        //Script values should be assigned from preferences, controls should be enabled and cursor hidden
+        
 		playerScript.weaponInventory = playerPreferences.instance.SavedWeapons;
 
-		playerScript.HP = playerPreferences.instance.HP;
-		playerScript.MoveSpeed = playerPreferences.instance.MoveSpeed;
-		playerScript.moveSpeedOrig = playerScript.MoveSpeed;
-		playerScript.SprintMod = playerPreferences.instance.SprintMod;
-		playerScript.JumpTimes = playerPreferences.instance.JumpTimes;
-		playerScript.JumpSpeed = playerPreferences.instance.JumpSpeed;
-		playerScript.PlayerGravity = playerPreferences.instance.PlayerGravityStrength;
-		playerScript.PlayerForce = playerPreferences.instance.PlayerForceStrength;
+		playerScript.SetPlayerSpeed = playerPreferences.instance.playerSpeed;
+		playerScript.SetGravity = playerPreferences.instance.gravity;
 
-		playerScript.ShootRate = playerPreferences.instance.ShootRate;
-		playerScript.ShootDist = playerPreferences.instance.ShootDistance;
-		playerScript.ShotDamage = playerPreferences.instance.ShotDamage;
+		playerScript.SetMaxStamina = playerPreferences.instance.maxStamina;
+		playerScript.SetStaminaRegenSpeed = playerPreferences.instance.staminaRegenSpeed;
+		playerScript.SetStaminaRegenCooldown = playerPreferences.instance.staminaRegenCooldown;
 
-		playerCamera.HorizontalSensitivity = playerPreferences.instance.SensitivityHorizontal;
-		playerCamera.VeritcalSensitivity = playerPreferences.instance.SensitivityVertical;
-		playerCamera.VeticalLockMin = playerPreferences.instance.VerticalLockMin;
-		playerCamera.VeticalLockMax = playerPreferences.instance.VerticalLockMax;
-		playerCamera.InvertX = playerPreferences.instance.InvertX;
+		playerScript.SetMaxHealth = playerPreferences.instance.maxHealth;
 
+		playerScript.SetMaxArmor = playerPreferences.instance.maxArmor;
+		playerScript.SetArmorRegenSpeed = playerPreferences.instance.armorRegenSpeed;
+		playerScript.SetArmorRegenCooldown = playerPreferences.instance.armorRegenCooldown;
+
+		playerScript.SetInvincibilityCooldown = playerPreferences.instance.invincibilityCooldown;
+
+		playerScript.SetMaxJumpVel = playerPreferences.instance.maxJumpVel;
+		playerScript.SetJumpAcceleration = playerPreferences.instance.jumpAcceleration;
+		playerScript.SetMaxJumps = playerPreferences.instance.maxJumps;
+		playerScript.SetJumpStaminaCost = playerPreferences.instance.jumpStaminaCost;
+		playerScript.SetCoyoteTime = playerPreferences.instance.coyoteTime;
+		playerScript.SetJumpInputCooldown = playerPreferences.instance.jumpInputCooldown;
+
+		playerScript.SetDashSpeed = playerPreferences.instance.dashSpeed;
+		playerScript.SetDashCooldown = playerPreferences.instance.dashCooldown;
+		playerScript.SetDashDuration = playerPreferences.instance.dashDuration;
+		playerScript.SetDashStaminaCost = playerPreferences.instance.dashStaminaCost;
+		playerScript.SetDashInvincibilityTime = playerPreferences.instance.dashInvincibilityTime;
+
+		playerScript.SetSprintSpeed = playerPreferences.instance.sprintSpeed;
+		playerScript.SetSprintStaminaDrain = playerPreferences.instance.sprintStaminaDrain;
 	}
-	*/
-	public void respawn()
+
+    public void respawn()
 	{
 		unPause();
 		//if we are respawning because the player died, just un-set the flash screen and toggle the menu
@@ -277,30 +290,11 @@ public class gameManager : MonoBehaviour
 		hUDManager.instance.createPlayerStaminaBar();
 		hUDManager.instance.createPlayerArmorBar();
 	}
-    public void updatePlayerHealthBar()
-    {
-		hUDManager.instance.updatePlayerHealthBar();
-
-	}
-	public void updatePlayerStaminaBar()
-	{
-		hUDManager.instance.updatePlayerStaminaBar();
-	}
-
-	public void updatePlayerArmorBar()
-	{
-		hUDManager.instance.updatePlayerArmorBar();
-	}
 
 	public void updateEnemyCounter()
 	{
 		hUDManager.instance.enemiesCounter.text = $"{enemiesRemaining}";
 	}
-
-	public void updateWeaaponDisplay()
-    {
-		hUDManager.instance.updateWeaponDisplay();
-    }
 	#endregion
 	public void setEasyMode()
 	{
@@ -367,10 +361,10 @@ public class gameManager : MonoBehaviour
 			gameEventManager.instance.UpdateEvents();
 
 
-			//if (gameEventManager.instance.EventsCompleted == 2)
-			//{
-			//	WinGame();
-			//}
+            if (gameEventManager.instance.EventsCompleted == 1)
+            {
+                winGame();
+            }
 		}
 	}
 
@@ -379,8 +373,9 @@ public class gameManager : MonoBehaviour
 		if (restartingGame)
 			playerPreferences.instance.SavedWeapons.Clear();
 
-		//gameEventManager.instance.ClearEventListUI();
-		//gameEventManager.instance.GameEvents.Clear();
+		gameEventManager.instance.ClearEventListUI();
+		gameEventManager.instance.ResetEvents();
+		gameEventManager.instance.gameEvents.Clear();
 		Destroy(playerInstance);
 	}
 	#endregion

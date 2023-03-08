@@ -24,7 +24,7 @@ public class playerController : MonoBehaviour, IDamage
 
     [Header("----- Stamina -----")]
     [Range(10, 500)] [SerializeField] int maxStamina;
-    [Range(0.0f, 100.0f)] [SerializeField] int staminaRegenSpeed;
+    [Range(0.0f, 100.0f)] [SerializeField] float staminaRegenSpeed;
     [Tooltip("This is how long (in seconds) the player will have to stop using stamina in order for their stamina to regenerate")]
     [Range(0.0f, 5.0f)] [SerializeField] float staminaRegenCooldown;
 
@@ -56,7 +56,7 @@ public class playerController : MonoBehaviour, IDamage
     [Header("----- Sprint -----")]
     [Tooltip("This should ideally be between normal Speed and Dash Speed")]
     [Range(10, 60)] [SerializeField] int sprintSpeed;
-    [Range(0.0f, 50.0f)] [SerializeField] int sprintStaminaDrain;
+    [Range(0.0f, 50.0f)] [SerializeField] float sprintStaminaDrain;
 
     [Header("----- Sound Effects -----")]
     [SerializeField] AudioClip jumpSound;
@@ -372,7 +372,7 @@ public class playerController : MonoBehaviour, IDamage
             takeArmorDamage(ref damage);
             fudgeDamage(ref damage);
             updateHealth(-damage);
-            gameManager.instance.updatePlayerHealthBar();
+            hUDManager.instance.updatePlayerHealthBar();
             StartCoroutine(flashDamage());
             invincibilityTimer = invincibilityCooldown;
         }
@@ -395,6 +395,7 @@ public class playerController : MonoBehaviour, IDamage
 
     void takeArmorDamage(ref float damage)
     {
+        
         // Deal damage to the player's armor, if the damage exceeds their armor, the excess will be dealt to their health.
         currentArmor -= damage;
         if (currentArmor < 0)
@@ -405,7 +406,7 @@ public class playerController : MonoBehaviour, IDamage
         else
             damage = 0;
 
-        gameManager.instance.updatePlayerArmorBar();
+        hUDManager.instance.updatePlayerArmorBar();
         // Reset the armor regen cooldown
         armorRegenTimer = armorRegenCooldown;
 
@@ -518,9 +519,9 @@ public class playerController : MonoBehaviour, IDamage
                     inactiveWeapon2 = weaponInventory[2].GetComponent<rangedWeapon>();
                 }
             }
-        }
+            hUDManager.instance.updateWeaponDisplay();
 
-        gameManager.instance.updateWeaaponDisplay();
+        }
     }
 
     /// <summary>
@@ -571,7 +572,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, int.MinValue, maxHealth);
-        gameManager.instance.updatePlayerHealthBar();
+        hUDManager.instance.updatePlayerHealthBar();
         if (currentHealth <= 0)
             gameManager.instance.playerDead();
     }
@@ -603,7 +604,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentStamina += amount;
         currentStamina = Mathf.Clamp(currentStamina, 0.0f, (float)maxStamina);
-        gameManager.instance.updatePlayerStaminaBar();
+        hUDManager.instance.updatePlayerStaminaBar();
 
     }
 
@@ -611,7 +612,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentArmor += armorGain;
         currentArmor = Mathf.Clamp(currentArmor, 0.0f, maxArmor);
-        gameManager.instance.updatePlayerArmorBar();
+        hUDManager.instance.updatePlayerArmorBar();
     }
 
     #region Public Member Accessors
@@ -659,6 +660,168 @@ public class playerController : MonoBehaviour, IDamage
 
     public Vector3 GetPlayerVelocity()
     { return controller.velocity + moveInput * playerSpeed + externalVelocity; }
+
+    public int SetPlayerSpeed
+    {
+        set
+        {
+            playerSpeed = value;
+        }
+    }
+    public int SetGravity
+    {
+        set
+        {
+            gravity = value;
+        }
+    }
+    public int SetMaxStamina
+    {
+        set
+        {
+            maxStamina = value;
+        }
+    }
+    public float SetStaminaRegenSpeed
+    {
+        set
+        {
+            staminaRegenSpeed = value;
+        }
+    }
+    public float SetStaminaRegenCooldown
+    {
+        set
+        {
+            staminaRegenCooldown = value;
+        }
+    }
+    public int SetMaxHealth
+    {
+        set
+        {
+            maxHealth = value;
+        }
+    }
+    public int SetMaxArmor
+    {
+        set
+        {
+            maxArmor = value;
+        }
+    }
+    public float SetArmorRegenSpeed
+    {
+        set
+        {
+            armorRegenSpeed = value;
+        }
+    }
+    public float SetArmorRegenCooldown
+    {
+        set
+        {
+            armorRegenCooldown = value;
+        }
+    }
+    public float SetInvincibilityCooldown
+    {
+        set
+        {
+            invincibilityCooldown = value;
+        }
+    }
+    public float SetMaxJumpVel
+    {
+        set
+        {
+            maxJumpVel = value;
+        }
+    }
+    public float SetJumpAcceleration
+    {
+        set
+        {
+            jumpAcceleration = value;
+        }
+    }
+    public int SetMaxJumps
+    {
+        set
+        {
+            maxJumps = value;
+        }
+    }
+    public int SetJumpStaminaCost
+    {
+        set
+        {
+            jumpStaminaCost = value;
+        }
+    }
+    public float SetCoyoteTime
+    {
+        set
+        {
+            coyoteTime = value;
+        }
+    }
+    public float SetJumpInputCooldown
+    {
+        set
+        {
+            jumpInputCooldown = value;
+        }
+    }
+    public int SetDashSpeed
+    {
+        set
+        {
+            dashSpeed = value;
+        }
+    }
+    public float SetDashCooldown
+    {
+        set
+        {
+            dashCooldown = value;
+        }
+    }
+    public float SetDashDuration
+    {
+        set
+        {
+            dashDuration = value;
+        }
+    }
+    public int SetDashStaminaCost
+    {
+        set
+        {
+            dashStaminaCost = value;
+        }
+    }
+    public float SetDashInvincibilityTime
+    {
+        set
+        {
+            dashInvincibilityTime = value;
+        }
+    }
+    public int SetSprintSpeed
+    {
+        set
+        {
+            sprintSpeed = value;
+        }
+    }
+    public float SetSprintStaminaDrain
+    {
+        set
+        {
+            sprintStaminaDrain = value;
+        }
+    }
     #endregion
 
     IEnumerator playFootstep()

@@ -45,6 +45,8 @@ public class hUDManager : MonoBehaviour
     public int enemiesRemaining;
     public TextMeshProUGUI enemiesCounter;
 
+    public GameObject EventList;
+
     float maxHealth;
     int healthTick;
     float currentHealth;
@@ -215,14 +217,14 @@ public class hUDManager : MonoBehaviour
         playerUISystem.gameObject.SetActive(true);
         weaponUISystem.gameObject.SetActive(true);
         reticle.gameObject.SetActive(true);
-        //TaskList.gameObject.SetActive(true);
+        EventList.gameObject.SetActive(true);
     }
     public void closeHUD()
     {
         playerUISystem.gameObject.SetActive(false);
         weaponUISystem.gameObject.SetActive(false);
         reticle.gameObject.SetActive(false);
-        //TaskList.gameObject.SetActive(false);
+        EventList.gameObject.SetActive(false);
     }
     #endregion
     #region Accessors
