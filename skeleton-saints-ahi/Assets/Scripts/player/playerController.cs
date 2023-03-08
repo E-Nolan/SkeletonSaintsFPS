@@ -392,7 +392,7 @@ public class playerController : MonoBehaviour, IDamage
             fudgeDamage(ref damage);
             updateHealth(-damage);
             hUDManager.instance.updatePlayerHealthBar();
-            StartCoroutine(flashDamage());
+            StartCoroutine(hUDManager.instance.flashDamage(damage));
             invincibilityTimer = invincibilityCooldown;
         }
     }
@@ -557,14 +557,6 @@ public class playerController : MonoBehaviour, IDamage
         {
             switchToWeapon(weaponIndex);
         }
-    }
-
-
-    IEnumerator flashDamage()
-    {
-        hUDManager.instance.damageFlashScreen.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        hUDManager.instance.damageFlashScreen.SetActive(false);
     }
 
     public void giveExternalVelocity(Vector3 _extraVelocity)

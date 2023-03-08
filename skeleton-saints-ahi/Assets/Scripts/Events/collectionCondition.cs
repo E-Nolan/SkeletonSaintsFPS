@@ -18,6 +18,12 @@ public class collectionCondition : eventCondition
 
     private void Awake()
     {
+        Init();
+        
+    }
+    protected override void Init()
+    {
+        base.Init();
         SpawnCollectables();
     }
     public override bool CheckCompletion()

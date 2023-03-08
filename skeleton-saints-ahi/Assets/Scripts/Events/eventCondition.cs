@@ -4,12 +4,24 @@ using UnityEngine;
 
 public abstract class eventCondition : MonoBehaviour
 {
+    public gameEvent parentEvent;
     public int EventClass;
 
     public string description;
+
     [SerializeField]
     protected bool satisfied;
-
+    private void Awake()
+    {
+        Init();
+    }
+    protected virtual void Init()
+    {
+        if (parentEvent == null)
+        {
+            parentEvent = GetComponent<gameEvent>();
+        }
+    }
     public bool Satisfied { get => satisfied;}
 
     //Updates the satisfied condition according to whatever type of event is implemented

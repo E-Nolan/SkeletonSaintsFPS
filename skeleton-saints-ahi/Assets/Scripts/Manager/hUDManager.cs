@@ -241,9 +241,33 @@ public class hUDManager : MonoBehaviour
     }
     #endregion
     #region Accessors
-    public GameObject DamageFlashScreen()
+    public IEnumerator flashDamage(float dmg)
     {
+        SetFlashIntensity(dmg).SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(FadeDamageScreen(0.1f));
+    }
+    public GameObject SetFlashIntensity(float intensity = 0)
+    {
+        Color damageFlash = damageFlashScreen.GetComponent<Image>().color;
+        if (damageFlash.a <= 0)
+        {
+            damageFlash.a = 1;
+        }
+        if (intensity != 0)
+            damageFlash.a = intensity <= 1 ? 0.5f : 1f;
         return damageFlashScreen;
+    }
+    public IEnumerator FadeDamageScreen(float timer)
+    {
+        Color damageFlash = damageFlashScreen.GetComponent<Image>().color;
+        while (damageFlash.a >= 0)
+        {
+            Debug.Log("Turning damage screen down");
+            damageFlash.a -= 0.1f;
+            yield return new WaitForSeconds(timer);
+        }
+        damageFlashScreen.SetActive(false);
     }
     #endregion
 }

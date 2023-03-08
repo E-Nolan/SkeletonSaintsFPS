@@ -10,13 +10,19 @@ public class doorButton : interactableButton, IInteractable
 
     public override void Interact()
     {
-        base.Interact();
-        LinkedDoor.ActivateDoor();
-        if (!onDoor)
-            ChangeColor();
         if (Objective != null)
         {
             Objective.ObjectiveInteraction();
         }
+        if (CanInteractYet)
+        {
+            if (PermanentlyOn && Interacted == true)
+                return;
+            base.Interact();
+            LinkedDoor.ActivateDoor();
+            if (!onDoor)
+                ChangeColor();
+        }
+
     }
 }

@@ -175,9 +175,9 @@ public class gameManager : MonoBehaviour
 	{
 		unPause();
 		//if we are respawning because the player died, just un-set the flash screen and toggle the menu
-		if (playerScript.GetCurrentStamina() <= 0)
+		if (playerScript.GetCurrentHealth() <= 0)
 		{
-			hUDManager.instance.DamageFlashScreen().SetActive(false);
+			hUDManager.instance.damageFlashScreen.SetActive(false);
 			toggleGameMenu();
         }
         else
@@ -206,7 +206,7 @@ public class gameManager : MonoBehaviour
 		clearLevel();
 		if (playerScript.GetCurrentHealth() <= 0)
 		{
-			hUDManager.instance.DamageFlashScreen().SetActive(false);
+			hUDManager.instance.damageFlashScreen.SetActive(false);
 			toggleGameMenu();
 		}
 		//Restart a level without going all the way back to the main menu
@@ -273,6 +273,15 @@ public class gameManager : MonoBehaviour
 	public void updateGameGoal (int amt)
     {
 		enemiesRemaining += amt;
+		killCondition killCon;
+		if (gameEventManager.instance.HasKillCondition(out killCon))
+        {
+			if (amt < 0)
+			{
+				killCon.enemiesLeft += amt;
+				killCon.CheckCompletion();
+			}
+        }
     }
 	public void queuePlayerVictory(float timer)
 	{
@@ -370,12 +379,7 @@ public class gameManager : MonoBehaviour
 		{
 			//Track by highlighting active quest or event, remove or cross out when done, add new tasks as they appear.
 			gameEventManager.instance.UpdateEvents();
-
-
-            if (gameEventManager.instance.EventsCompleted == 1)
-            {
-                winGame();
-            }
+			gameEventManager.instance.EventListComplete();
 		}
 	}
 
@@ -396,7 +400,7 @@ public class gameManager : MonoBehaviour
 		Easy, Normal, Hard
 	}
 	public enum EventClass {
-		Location, Interaction, Collection, Kill
+		Location, Interaction, Collection, Kill, Boss
 	};
 
 	#region Accessors

@@ -18,7 +18,7 @@ public class killCondition : eventCondition
     }
     public override bool CheckCompletion()
     {
-        if (enemiesLeft == 0)
+        if (enemiesLeft <= 0)
         {
             satisfied = true;
         }

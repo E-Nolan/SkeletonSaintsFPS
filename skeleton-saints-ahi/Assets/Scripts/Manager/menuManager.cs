@@ -41,7 +41,9 @@ public class menuManager : MonoBehaviour
 	public Slider cameraSensitivityHorizontal_Slider, cameraSensitivityVertical_Slider;
 
 	bool changesSaved;
-	[Header("Asset References")]
+	[Header("Audio")]
+	public AudioSource MenusAudio;
+	public AudioClip ButtonClick;
 	public AudioMixer MasterAudioMixer;
 	#region Menu Access Methods
 	public bool CanToggleGameMenu
@@ -59,6 +61,12 @@ public class menuManager : MonoBehaviour
 	private void Awake()
     {
 		instance = this;
+		if (MenusAudio == null)
+        {
+			MenusAudio = GetComponent<AudioSource>();
+			if (MenusAudio == null)
+				Debug.Log("No menu audio source found. Please ensure there is an AudioSource attached to the menuManager gameobject.");
+        }
     }
 	private void LateUpdate()
 	{

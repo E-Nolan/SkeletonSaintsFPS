@@ -10,6 +10,8 @@ public class interactableButton : MonoBehaviour, IInteractable
     [HideInInspector]
     public objectiveButton Objective;
 
+    public bool CanInteractYet = false;
+
     public bool Interacted;
     public bool InteractedOnce;
     public bool PermanentlyOn;
@@ -19,8 +21,12 @@ public class interactableButton : MonoBehaviour, IInteractable
     public Material InteractedMaterial;
     public Material OriginalMaterial;
 
-    private void Awake()
+    private void Start()
     {
+        if (Objective == null)
+        {
+            CanInteractYet = true;
+        }
         if (ChangesColor && toggleable)
             OriginalMaterial = ButtonRenderer.sharedMaterial;
     }

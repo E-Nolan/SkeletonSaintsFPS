@@ -2771,7 +2771,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457333255328657286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.324088, y: -0.0000009536743, z: -34.154015}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2816,23 +2816,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAi: {fileID: 457333255328753859}
+  _health: 200
   gunPosition: {fileID: 2683427917342322381}
-  _animator: {fileID: 457333255319264680}
-  healthBarUI: {fileID: 457333255358479377}
-  _healthBar: {fileID: 457333256072619333}
   handTransform: {fileID: 0}
+  healthBarUI: {fileID: 457333255358479377}
   _materialFlashSpeed: 0.25
   _material: {fileID: 2100000, guid: e061968e56112fe4ca8c0ad3347c2a0d, type: 2}
   _flashMaterial: {fileID: 2100000, guid: c38f19bd67a1c974d9e5703cde859cb9, type: 2}
   _easyHealthMultiplier: 0.8
   _HardHealthMultiplier: 2
-  _health: 200
+  _nextEnemyFireDelay: 0
   isShooting: 0
   currentWeapon: {fileID: 0}
   acquiringWeapon: 0
   isDead: 0
   isAttacking: 0
   fadeHealthBar: 0
+  _healthBar: {fileID: 457333256072619333}
+  _animator: {fileID: 457333255319264680}
 --- !u!114 &457333255328753859
 MonoBehaviour:
   m_ObjectHideFlags: 0

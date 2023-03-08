@@ -62,4 +62,9 @@ public class buttonFunctions : MonoBehaviour
     {
         gameManager.instance.currentDifficulty = gameManager.GameDifficulty.Hard;
     }
+
+    public void PlayButtonSound()
+    {
+        menuManager.instance.MenusAudio.PlayOneShot(menuManager.instance.ButtonClick);
+    }
 }

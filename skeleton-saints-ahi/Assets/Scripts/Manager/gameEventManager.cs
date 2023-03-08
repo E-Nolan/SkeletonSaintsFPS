@@ -18,6 +18,7 @@ public class gameEventManager : MonoBehaviour
     public GameObject KillEventText;
     public GameObject EventTextGroup;
     public LayoutElement EventTextLayout;
+
     private void Awake()
     {
         instance = this;
@@ -44,7 +45,42 @@ public class gameEventManager : MonoBehaviour
             }
         }
     }
-
+    public bool HasKillCondition(out killCondition foundCondition)
+    {
+        bool found = false;
+        if (gameEvents.Count > 0)
+        {
+            for(int i = 0; i < gameEvents.Count; i++)
+            {
+                for (int j = 0; j < gameEvents[i].Conditions.Count; j++)
+                {
+                    if (gameEvents[i].Conditions[j].EventClass == 3)
+                    {
+                        if ((gameEvents[i].Conditions[j] as killCondition).enemiesLeft != 0)
+                        {
+                            foundCondition = (gameEvents[i].Conditions[j] as killCondition);
+                            found = true;
+                            return found;
+                        }
+                    }
+                }
+                for (int k = 0; k < gameEvents[i].SpecificConditions.Count; k++)
+                {
+                    if (gameEvents[i].SpecificConditions[k].EventClass == 3)
+                    {
+                        if ((gameEvents[i].SpecificConditions[k] as killCondition).enemiesLeft != 0)
+                        {
+                            foundCondition = (gameEvents[i].SpecificConditions[k] as killCondition);
+                            found = true;
+                            return found;
+                        }
+                    }
+                }
+            }
+        }
+        foundCondition = null;
+        return found;
+    }
     public void GenerateEventsUI()
     {
         if (gameEvents.Count > 0)
@@ -88,7 +124,45 @@ public class gameEventManager : MonoBehaviour
                 }
                 if (eCondition.EventClass == (int)gameManager.EventClass.Kill)
                 {
-                    TaskListUI_Kill KillUI = Instantiate(CollectionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Kill>();
+                    TaskListUI_Kill KillUI = Instantiate(KillEventText, EventTextGroup.transform).GetComponent<TaskListUI_Kill>();
+
+                    KillUI.EventUIText.text = eCondition.description;
+                    (eCondition as killCondition).ConditionUI = KillUI;
+                    (eCondition as killCondition).UpdateKillUI((killCondition)eCondition);
+                }
+            }
+        }
+        if (gEvent.SpecificConditions != null && gEvent.Conditions.Count != 0)
+        {
+            foreach (eventCondition eCondition in gEvent.SpecificConditions)
+            {
+                if (eCondition.EventClass == (int)gameManager.EventClass.Location)
+                {
+                    TaskListUI_Location locationUI = Instantiate(LocationEventText, EventTextGroup.transform).GetComponent<TaskListUI_Location>();
+                    EventTextLayout.preferredHeight += 50;
+                    locationUI.EventUIText.text = eCondition.description;
+                    (eCondition as locationCondition).ConditionUI = locationUI;
+                    (eCondition as locationCondition).UpdateLocationUI((locationCondition)eCondition);
+                }
+                if (eCondition.EventClass == (int)gameManager.EventClass.Interaction)
+                {
+                    TaskListUI_Interaction interactionUI = Instantiate(InteractionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Interaction>();
+
+                    interactionUI.EventUIText.text = eCondition.description;
+                    (eCondition as interactionCondition).ConditionUI = interactionUI;
+                    (eCondition as interactionCondition).UpdateInteractionUI((interactionCondition)eCondition);
+                }
+                if (eCondition.EventClass == (int)gameManager.EventClass.Collection)
+                {
+                    TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Collection>();
+
+                    collectionUI.EventUIText.text = eCondition.description;
+                    (eCondition as collectionCondition).ConditionUI = collectionUI;
+                    (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
+                }
+                if (eCondition.EventClass == (int)gameManager.EventClass.Kill)
+                {
+                    TaskListUI_Kill KillUI = Instantiate(KillEventText, EventTextGroup.transform).GetComponent<TaskListUI_Kill>();
 
                     KillUI.EventUIText.text = eCondition.description;
                     (eCondition as killCondition).ConditionUI = KillUI;
@@ -116,6 +190,28 @@ public class gameEventManager : MonoBehaviour
         if (gEvent.Conditions.Count > 0)
         {
             foreach (eventCondition eCondition in gEvent.Conditions)
+            {
+                if (eCondition.EventClass == (int)gameManager.EventClass.Location)
+                {
+                    (eCondition as locationCondition).UpdateLocationUI((locationCondition)eCondition);
+                }
+                if (eCondition.EventClass == (int)gameManager.EventClass.Interaction)
+                {
+                    (eCondition as interactionCondition).UpdateInteractionUI((interactionCondition)eCondition);
+                }
+                if (eCondition.EventClass == (int)gameManager.EventClass.Collection)
+                {
+                    (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
+                }
+                if (eCondition.EventClass == (int)gameManager.EventClass.Kill)
+                {
+                    (eCondition as killCondition).UpdateKillUI((killCondition)eCondition);
+                }
+            }
+        }
+        if (gEvent.SpecificConditions.Count > 0)
+        {
+            foreach (eventCondition eCondition in gEvent.SpecificConditions)
             {
                 if (eCondition.EventClass == (int)gameManager.EventClass.Location)
                 {

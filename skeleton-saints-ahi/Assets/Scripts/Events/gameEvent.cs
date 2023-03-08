@@ -9,15 +9,20 @@ public class gameEvent : MonoBehaviour
     //Each event has a list of eventConditions like Collection, Location, Interaction
     public List<eventCondition> Conditions;
 
+    public List<eventCondition> SpecificConditions;
+
+    public bool allPreConditionsMet;
+
     public void EventReset()
     {
         //Reset event and all conditions to initial states
         if (Conditions == null)
             return;
-
+        allPreConditionsMet = false;
         for (int i = 0; i < Conditions.Count; i++)
         {
             Conditions[i].ResetCondition();
+            SpecificConditions[i].ResetCondition();
         }
     }
 
@@ -27,6 +32,14 @@ public class gameEvent : MonoBehaviour
         for (int i = 0; i < conditions.Count; i++)
         {
             conditions[i].CheckCompletion();
+            allPreConditionsMet = conditions[i].CheckCompletion();
+        }
+        if (allPreConditionsMet)
+        {
+            for (int i = 0; i < SpecificConditions.Count; i++)
+            {
+                SpecificConditions[i].CheckCompletion();
+            }
         }
     }
     public bool ReturnEventCompletion(List<eventCondition> conditions)
@@ -35,6 +48,13 @@ public class gameEvent : MonoBehaviour
         for (int i = 0; i < conditions.Count; i++)
         {
             if (!conditions[i].Satisfied)
+            {
+                return false;
+            }
+        }
+        for (int i = 0; i < SpecificConditions.Count; i++)
+        {
+            if (!SpecificConditions[i].Satisfied)
             {
                 return false;
             }

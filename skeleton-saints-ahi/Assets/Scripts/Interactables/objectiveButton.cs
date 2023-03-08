@@ -14,6 +14,12 @@ public class objectiveButton : MonoBehaviour
     public void ObjectiveInteraction()
     {
         if (parentCondition != null)
+        {
+            if (parentCondition.parentEvent.allPreConditionsMet)
+            {
+                childButton.CanInteractYet = true;
+            }
             parentCondition.CheckCompletion();
+        }
     }
 }
