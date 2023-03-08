@@ -11,9 +11,9 @@ public sealed class playerPreferences: MonoBehaviour
 		instance = this;
 		GetDefaultsFromFile();
     }
-	public List<weaponStats> SavedWeapons = new List<weaponStats>();
+	public List<GameObject> SavedWeapons = new List<GameObject>();
 
-	[Header("----- Player Stats -----")]
+	[Header("----- Stats -----")]
 	[Range(5, 30)]
 	public int playerSpeed;
 	[Range(0, 50)]
@@ -23,7 +23,7 @@ public sealed class playerPreferences: MonoBehaviour
 	[Range(10, 500)]
 	public int maxStamina;
 	[Range(0.0f, 100.0f)]
-	public int staminaRegenSpeed;
+	public float staminaRegenSpeed;
 	[Tooltip("This is how long (in seconds) the player will have to stop using stamina in order for their stamina to regenerate")]
 	[Range(0.0f, 5.0f)]
 	public float staminaRegenCooldown;
@@ -38,15 +38,21 @@ public sealed class playerPreferences: MonoBehaviour
 	[Range(0.0f, 5.0f)]
 	public float armorRegenCooldown;
 	[Range(0.0f, 2.0f)]
-	public float invincibilityTime;
+	public float invincibilityCooldown;
 
 	[Header("----- Jump -----")]
-	[Range(3, 50)]
-	public int jumpSpeed;
+	[Range(1.0f, 10.0f)]
+	public float maxJumpVel;
+	[Range(0.05f, 1000.0f)]
+	public float jumpAcceleration;
 	[Range(0, 3)]
 	public int maxJumps;
 	[Range(0, 100)]
 	public int jumpStaminaCost;
+	[Range(0.0f, 1.0f)]
+	public float coyoteTime;
+	[Range(0.0f, 1.0f)]
+	public float jumpInputCooldown;
 
 	// Stats for player dashing
 	[Header("----- Dash -----")]
@@ -60,13 +66,15 @@ public sealed class playerPreferences: MonoBehaviour
 	public float dashDuration;
 	[Range(0, 100)]
 	public int dashStaminaCost;
+	[Range(0.0f, 1.0f)]
+	public float dashInvincibilityTime;
 
 	[Header("----- Sprint -----")]
 	[Tooltip("This should ideally be between normal Speed and Dash Speed")]
-	[Range(10, 60)]
+	[Range(10, 60)] 
 	public int sprintSpeed;
 	[Range(0.0f, 50.0f)]
-	public int sprintStaminaDrain;
+	public float sprintStaminaDrain;
 
 	[Header("Active Buttons")]
 	#region Button Codes
