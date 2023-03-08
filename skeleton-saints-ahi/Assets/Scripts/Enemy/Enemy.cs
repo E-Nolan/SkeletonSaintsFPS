@@ -127,6 +127,12 @@ public class Enemy : MonoBehaviour, IDamage
         }
     }
 
+    private void OnDestroy()
+    {
+        if(isBossEnemy)
+            gameManager.instance.queuePlayerVictory(1f);
+    }
+
     private float CalculateHealth()
     {
         return _health / _maxHealth;
@@ -181,8 +187,6 @@ public class Enemy : MonoBehaviour, IDamage
             {
                 foreach (Turret turret in GetComponentsInChildren<Turret>())
                     turret.enabled = false;
-
-                gameManager.instance.queuePlayerVictory(5.1f);
             }
         }
 
