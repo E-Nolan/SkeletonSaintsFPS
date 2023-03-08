@@ -31,7 +31,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4571660264418509419}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
@@ -54,9 +54,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 9174331692456430380}
   explodeOnImpact: 1
-  explodeFromDamage: 0
+  explodeFromDamage: 1
   explodeOnTimer: 1
-  health: 0
+  health: 3
   detonationTimer: 10
   explosionAud: {fileID: 0}
 --- !u!114 &4224389379151676247
@@ -72,9 +72,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDmg: 0
-  timer: 15
   bulletImpactSound: {fileID: 0}
-  damagePopupPrefab: {fileID: 0}
+  damagePopupPrefab: {fileID: 5156991524456792442, guid: 48bf4594a2656ef49afe5d660714f3c4, type: 3}
 --- !u!33 &4571660264417320555
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -471,4 +470,5 @@ MonoBehaviour:
   fireball: {fileID: 0}
   fullExplosionScale: 4
   explosionTime: 0.6
-  explosionDamage: 1
+  explosionDamage: 3
+  explosionForce: 20

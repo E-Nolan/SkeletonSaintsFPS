@@ -14,23 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: 
   weaponType: 0
-  weaponModel: {fileID: 7530913169747578161, guid: b20b13bdfbde41a49b7e0b049458f4f1, type: 3}
+  weaponModel: {fileID: 7530913169747578161, guid: 26271d8a4584bde42a2db02f26475a0a, type: 3}
   gunBullet: {fileID: 4571660264418509419, guid: f5ffbaf2dbe37b84e9c11c37f7c3ef3d, type: 3}
   activeweaponIcon: {fileID: 0}
   inactiveweaponIcon: {fileID: 0}
+  bulletIcon: {fileID: 0}
   shotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   bulletSpeed: 15
   fireRate: 1
-  damage: 0
+  damage: 5
   bulletsPerSpread: 1
   spreadAngle: 0
   bulletsPerBurst: 1
   burstFireDelay: 0
-  recoilForce: 0
+  recoilForce: 40
   infiniteAmmo: 1
   startingAmmo: 5
   maxAmmo: 20
-  maxClipSize: 0
+  currentClip: 1
+  maxClipSize: 1
   ammoRecovery: 3
   range: 100
   lobbedWeapon: 1
