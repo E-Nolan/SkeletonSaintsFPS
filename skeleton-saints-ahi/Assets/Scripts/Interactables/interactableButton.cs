@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableButton : MonoBehaviour, IInteractable
+public class interactableButton : MonoBehaviour, IInteractable
 {
     [SerializeField]
     MeshRenderer ButtonRenderer;
 
     [HideInInspector]
+    public objectiveButton Objective;
 
     public bool Interacted;
     public bool InteractedOnce;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class interactionCondition : eventCondition
 {
-    public InteractableButton Objective;
+    public interactableButton Objective;
     public TaskListUI_Interaction ConditionUI;
 
     public override bool CheckCompletion()

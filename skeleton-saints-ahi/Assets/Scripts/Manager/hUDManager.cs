@@ -44,6 +44,9 @@ public class hUDManager : MonoBehaviour
     public GameObject damageFlashScreen;
     public int enemiesRemaining;
     public TextMeshProUGUI enemiesCounter;
+    public TextMeshProUGUI inputReaderText;
+
+    public GameObject EventList;
 
     float maxHealth;
     int healthTick;
@@ -225,14 +228,16 @@ public class hUDManager : MonoBehaviour
         playerUISystem.gameObject.SetActive(true);
         weaponUISystem.gameObject.SetActive(true);
         reticle.gameObject.SetActive(true);
-        //TaskList.gameObject.SetActive(true);
+        inputReaderText.gameObject.SetActive(true);
+        EventList.SetActive(true);
     }
     public void closeHUD()
     {
         playerUISystem.gameObject.SetActive(false);
         weaponUISystem.gameObject.SetActive(false);
         reticle.gameObject.SetActive(false);
-        //TaskList.gameObject.SetActive(false);
+        inputReaderText.gameObject.SetActive(false);
+        EventList.SetActive(false);
     }
     #endregion
     #region Accessors
