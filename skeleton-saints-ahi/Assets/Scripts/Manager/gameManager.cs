@@ -351,6 +351,7 @@ public class gameManager : MonoBehaviour
 			InitializePlay();
 			isPaused = false;
 		}
+
 	}
 	private void pause()
     {
