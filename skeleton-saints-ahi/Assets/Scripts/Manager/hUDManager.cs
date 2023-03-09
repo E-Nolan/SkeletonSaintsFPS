@@ -41,7 +41,8 @@ public class hUDManager : MonoBehaviour
     public TextMeshProUGUI keyCard03Text;
 
     [Header("----- Dialogue -----")]
-
+    public GameObject gate;
+    public GameObject swap;
 
     [Header("----- Misc UI -----")]
     public GameObject damageFlashScreen;
@@ -200,9 +201,19 @@ public class hUDManager : MonoBehaviour
             pistolReserve.enabled = false;
         }
     }
-    public void displayWeaponPickUpText()
+    public void displayWeaponPickUp()
     {
-        Debug.Log("Press and hold e to swap weapons");
+       
+    }
+
+    public void displayGateTrue()
+    {
+        gate.SetActive(true);
+    }
+
+    public void displayGateFalse()
+    {
+        gate.SetActive(false);
     }
 
     public void displayReloadWeaponText()

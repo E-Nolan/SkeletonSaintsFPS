@@ -107,6 +107,10 @@ public class IGate : MonoBehaviour
             {
                 isOpen = !isOpen;
             }
+            else
+            {
+                hUDManager.instance.displayGateTrue();
+            }
         }
     }
 
@@ -116,6 +120,10 @@ public class IGate : MonoBehaviour
         if(isOpen && other.CompareTag("Player"))
         {
             isOpen = !isOpen;
+        }
+        else
+        {
+            hUDManager.instance.displayGateFalse();
         }
     } 
 }

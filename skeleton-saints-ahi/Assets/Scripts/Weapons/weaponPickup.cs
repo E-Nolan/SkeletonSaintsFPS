@@ -35,7 +35,7 @@ public class weaponPickup : MonoBehaviour
             }
             else
             {
-                hUDManager.instance.displayWeaponPickUpText();
+                hUDManager.instance.displayWeaponPickUp();
             }
         }
     }
