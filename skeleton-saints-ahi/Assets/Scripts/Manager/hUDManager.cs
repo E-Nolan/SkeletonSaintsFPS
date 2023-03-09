@@ -201,9 +201,16 @@ public class hUDManager : MonoBehaviour
             pistolReserve.enabled = false;
         }
     }
-    public void displayWeaponPickUp()
+    public void displayWeaponPickUpTrue()
     {
-       
+        if (gameManager.instance.PlayerScript().weaponInventory.Count == 3)
+        {
+        }
+    }
+
+    public void displayWeaponPickupFalse()
+    {
+        swap.SetActive(false);
     }
 
     public void displayGateTrue()
@@ -219,6 +226,7 @@ public class hUDManager : MonoBehaviour
     public void displayReloadWeaponText()
     {
         Debug.Log("Press e to reload you weapon");
+
     }
 
     public void toggleCursorVisibility()

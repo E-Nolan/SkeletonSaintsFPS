@@ -205,7 +205,7 @@ public class gameManager : MonoBehaviour
 	}
 	public void restartLevel()
 	{
-		unPause();
+		
 		clearLevel();
 		if (playerScript.GetCurrentHealth() <= 0)
 		{
@@ -215,6 +215,7 @@ public class gameManager : MonoBehaviour
 		//Restart a level without going all the way back to the main menu
 		sceneControl.instance.SceneRestart("Level One");
 		//reload player and variable settings
+		
 		LevelSetup();
 	}
 	public void restartGame()
@@ -228,7 +229,8 @@ public class gameManager : MonoBehaviour
 		//Call to scene control to handle unloading anything we are currently in
 		sceneControl.instance.SceneRestart_Game();
 
-		//This call loads the main menu scene and menus
+		//This call loads the main menu scene and menu
+		
 		beginGame();
 		//if the menu wasn't up, then the cursor is still locked at this point
 		if (!Cursor.visible)
@@ -241,9 +243,7 @@ public class gameManager : MonoBehaviour
 	public void loseGame()
 	{
 		pause();
-
 		menuManager.instance.DisplayLoseMenu();
-		hUDManager.instance.toggleCursorVisibility();
 	}
 	public void winGame()
 	{
@@ -348,6 +348,7 @@ public class gameManager : MonoBehaviour
 
 			sceneControl.instance.LoadMainMenuScene();
 			menuManager.instance.DisplayMainMenu();
+
 		}
 		else
 		{

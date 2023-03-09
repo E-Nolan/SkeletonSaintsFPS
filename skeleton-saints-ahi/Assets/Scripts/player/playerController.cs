@@ -155,10 +155,8 @@ public class playerController : MonoBehaviour, IDamage
             currentWeapon.startReload();
         }
 
-
-
-            // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
-            if (Input.GetButton("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
+        // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
+        if (Input.GetButton("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
         {
             shoot(currentSecondary);
         }
