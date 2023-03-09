@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInteractable
+public class IInteractable: MonoBehaviour
 {
- 
-    void Interact();
+    public string interactionText = "Interact";
+
+    public virtual void Interact()
+    {
+
+    }
 }

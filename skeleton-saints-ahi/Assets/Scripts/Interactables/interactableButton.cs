@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class interactableButton : MonoBehaviour, IInteractable
+public class interactableButton : IInteractable
 {
+
     [SerializeField]
     MeshRenderer ButtonRenderer;
 
@@ -30,7 +31,7 @@ public class interactableButton : MonoBehaviour, IInteractable
         if (ChangesColor && toggleable)
             OriginalMaterial = ButtonRenderer.sharedMaterial;
     }
-    public virtual void Interact()
+    public override void Interact()
     {
         InteractedOnce = true;
 

@@ -19406,6 +19406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a73d331f2bb85c43bdf6bf09eff47b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionText: Interact
   ButtonRenderer: {fileID: 747530160}
   Objective: {fileID: 0}
   CanInteractYet: 0
@@ -31836,6 +31837,14 @@ PrefabInstance:
     - target: {fileID: 1581536507, guid: 2066a628b40dbfc4b9f0449cc492ae70, type: 3}
       propertyPath: description
       value: 'Locate Research Facility: R'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035352322, guid: 2066a628b40dbfc4b9f0449cc492ae70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 54.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035352322, guid: 2066a628b40dbfc4b9f0449cc492ae70, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.75
       objectReference: {fileID: 0}
     - target: {fileID: 2045444694466957344, guid: 2066a628b40dbfc4b9f0449cc492ae70, type: 3}
       propertyPath: Conditions.Array.size

@@ -40,11 +40,14 @@ public class hUDManager : MonoBehaviour
     public Image card03;
     public TextMeshProUGUI keyCard03Text;
 
+    [Header("----- Dialogue -----")]
+
+
     [Header("----- Misc UI -----")]
     public GameObject damageFlashScreen;
     public int enemiesRemaining;
     public TextMeshProUGUI enemiesCounter;
-    public TextMeshProUGUI inputReaderText;
+    public InputReader inputReader;
 
     public GameObject EventList;
 
@@ -197,7 +200,6 @@ public class hUDManager : MonoBehaviour
             pistolReserve.enabled = false;
         }
     }
-
     public void displayWeaponPickUpText()
     {
         Debug.Log("Press and hold e to swap weapons");
@@ -214,13 +216,11 @@ public class hUDManager : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            reticle.gameObject.SetActive(false);
         }
         else
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            reticle.gameObject.SetActive(true);
         }
     }
     public void showHUD()
@@ -228,15 +228,16 @@ public class hUDManager : MonoBehaviour
         playerUISystem.gameObject.SetActive(true);
         weaponUISystem.gameObject.SetActive(true);
         reticle.gameObject.SetActive(true);
-        inputReaderText.gameObject.SetActive(true);
+        inputReader.displayText.gameObject.SetActive(true);
         EventList.SetActive(true);
     }
     public void closeHUD()
     {
+        damageFlashScreen.SetActive(false);
         playerUISystem.gameObject.SetActive(false);
         weaponUISystem.gameObject.SetActive(false);
         reticle.gameObject.SetActive(false);
-        inputReaderText.gameObject.SetActive(false);
+        inputReader.displayText.gameObject.SetActive(false);
         EventList.SetActive(false);
     }
     #endregion

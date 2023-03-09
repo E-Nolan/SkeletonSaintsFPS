@@ -28,6 +28,7 @@ public class gameEvent : MonoBehaviour
 
     public void UpdateConditionsCompletion(List<eventCondition> conditions)
     {
+        allPreConditionsMet = false;
         //Check if an Event's conditions are completed
         for (int i = 0; i < conditions.Count; i++)
         {

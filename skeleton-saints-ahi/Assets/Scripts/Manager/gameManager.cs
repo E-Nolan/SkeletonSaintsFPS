@@ -86,6 +86,7 @@ public class gameManager : MonoBehaviour
 		hUDManager.instance.showHUD();
 		
 		playStarted = true;
+		isPaused = false;
 	}
 
     public void FetchEvents()
@@ -260,8 +261,8 @@ public class gameManager : MonoBehaviour
 		if (menuManager.instance.GameMenuIsUp())
 		{
 			menuManager.instance.ClosePauseMenu();
-			unPause();
 			hUDManager.instance.toggleCursorVisibility();
+			unPause();
 		}
 		else
 		{
@@ -349,7 +350,6 @@ public class gameManager : MonoBehaviour
 		else
 		{
 			InitializePlay();
-			isPaused = false;
 		}
 
 	}
@@ -358,14 +358,14 @@ public class gameManager : MonoBehaviour
 		hUDManager.instance.closeHUD();
 		isPaused = true;
 		Time.timeScale = 0f;
-		Cursor.lockState = CursorLockMode.Confined;
+		hUDManager.instance.toggleCursorVisibility();
 	}
 	private void unPause()
 	{
 		hUDManager.instance.showHUD();
 		isPaused = false;
 		Time.timeScale = 1f;
-		Cursor.lockState = CursorLockMode.Locked;
+		hUDManager.instance.toggleCursorVisibility();
 	}
 
 	private void deactivateUI()
