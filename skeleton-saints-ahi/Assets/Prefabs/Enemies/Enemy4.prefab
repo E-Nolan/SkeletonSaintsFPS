@@ -3206,7 +3206,7 @@ MonoBehaviour:
   handTransform: {fileID: 1189593153148511956}
   healthBarUI: {fileID: 118404105}
   _materialFlashSpeed: 0.2
-  _material: {fileID: 2100000, guid: 27ec51287c78bfb479fe3729111634a4, type: 2}
+  _material: {fileID: 2100000, guid: f6fa8c68a1e490643ad2f39690c56625, type: 2}
   _flashMaterial: {fileID: 2100000, guid: 60a1c512e8742e0499b4ead0e3c45891, type: 2}
   _easyHealthMultiplier: 0.5
   _HardHealthMultiplier: 1.75
