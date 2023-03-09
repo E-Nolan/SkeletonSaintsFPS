@@ -16,7 +16,7 @@ public sealed class sceneControl
     public void LoadMainMenuScene()
     {
         //Load 1st scene in build order which should be made sure is the main menu scene. Can also do this by name once that is stuctrued but could be slower
-        AsyncOperation control = SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
+        AsyncOperation control = SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
         control.completed += (sceneComplete) => {
             menuManager.instance.InitializeMenusText();
         };
@@ -25,10 +25,7 @@ public sealed class sceneControl
 
     public void LoadMainLevel()
     {
-        //Unload Main Menu Scene
-        SceneManager.UnloadSceneAsync("Main Menu");
-
-        AsyncOperation control = SceneManager.LoadSceneAsync("Level One", LoadSceneMode.Additive);
+        AsyncOperation control = SceneManager.LoadSceneAsync("Level One", LoadSceneMode.Single);
         control.completed += (sceneComplete) => {
             gameManager.instance.FetchEvents();
             gameManager.instance.LevelSetup();
@@ -39,15 +36,20 @@ public sealed class sceneControl
         //If scence currently loaded is a level scene (player with enemies and objectives)
         if (!SceneManager.GetSceneByName("Main Menu").isLoaded)
         {
-            SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1).name);
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         }
         //Game manager will make call to BeginGame() again which loads main menu
     }
-    public void SceneRestart(string sceneName)
+    public void SceneRestart()
     {
+        int currSceneIndex = SceneManager.GetActiveScene().buildIndex;
         //Current Scene should be the one loaded after the paersistent one (1)
-        int currSceneIndex = SceneManager.GetSceneByName(sceneName).buildIndex;
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(sceneName));
-        SceneManager.LoadSceneAsync(currSceneIndex, LoadSceneMode.Additive);
+
+        AsyncOperation control = SceneManager.LoadSceneAsync(currSceneIndex, LoadSceneMode.Single);
+        control.completed += (sceneComplete) => {
+            gameManager.instance.FetchEvents();
+            gameManager.instance.LevelSetup();
+        };
     }
 }

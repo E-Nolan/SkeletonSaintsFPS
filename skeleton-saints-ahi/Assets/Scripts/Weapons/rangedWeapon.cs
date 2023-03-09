@@ -355,6 +355,7 @@ public class rangedWeapon : MonoBehaviour
         weaponName = _stats.weaponName;
 
         bulletIcon = new GameObject("Bullet Icon", typeof(Image));
+        //bulletIcon.transform.SetParent(transform);
         bulletIcon.GetComponent<Image>().sprite = _stats.bulletIcon;
 
         audioSource = gameObject.AddComponent<AudioSource>();

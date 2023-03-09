@@ -14,34 +14,37 @@ public class InteractablesManager : MonoBehaviour
 	{
 		if (gameManager.instance.PlayStarted() && gameManager.instance.PlayerScript() != null)
 		{
-			Ray inputRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
-			RaycastHit interactingHit;
-			if (Physics.Raycast(inputRay, out interactingHit, ReachDistance, interactableLayer))
+			if (Camera.main != null)
 			{
-				IInteractable currentInteractable;
-				if (interactingHit.collider != null)
-					currentInteractable = interactingHit.collider.GetComponent<IInteractable>();
-				else
-					currentInteractable = null;
-
-				if (currentInteractable != null)
+				Ray inputRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
+				RaycastHit interactingHit;
+				if (Physics.Raycast(inputRay, out interactingHit, ReachDistance, interactableLayer))
 				{
-					inputReader.DisplayMessage(currentInteractable.interactionText); // the line so that the item names appear on screen
-					if (Input.GetButtonDown(playerPreferences.instance.Button_Interact))
+					IInteractable currentInteractable;
+					if (interactingHit.collider != null)
+						currentInteractable = interactingHit.collider.GetComponent<IInteractable>();
+					else
+						currentInteractable = null;
+
+					if (currentInteractable != null)
 					{
-						currentInteractable.Interact();
+						inputReader.DisplayMessage(currentInteractable.interactionText); // the line so that the item names appear on screen
+						if (Input.GetButtonDown(playerPreferences.instance.Button_Interact))
+						{
+							currentInteractable.Interact();
+							inputReader.ClearMessage();
+						}
+					}
+					else
+					{
 						inputReader.ClearMessage();
 					}
 				}
 				else
 				{
 					inputReader.ClearMessage();
-				}
-			}
-			else
-			{
-				inputReader.ClearMessage();
 
+				}
 			}
 		}
 	}

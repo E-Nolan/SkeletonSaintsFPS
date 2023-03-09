@@ -81,7 +81,6 @@ public class spawnManager : MonoBehaviour
             if (enemyIter >= enemyTypes.Length)
                 enemyIter = 0;
         }
-
         GameObject newEnemy = Instantiate(tempEnemy, newSpawnPos.position, tempEnemy.transform.rotation);
         if (newEnemy != null)
         {

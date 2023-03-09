@@ -19,8 +19,6 @@ public class hUDManager : MonoBehaviour
     public GameObject playerArmorBar;
     public GameObject parentArmor;
     public List<GameObject> playerArmorTick;
-    
-    
 
     [Header("----- Weapon UI -----")]
     public GameObject weaponUISystem;
@@ -231,15 +229,16 @@ public class hUDManager : MonoBehaviour
 
     public void toggleCursorVisibility()
     {
-        if (Cursor.visible == false)
+
+        if (Cursor.lockState == CursorLockMode.Locked)
         {
-            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
         }
         else
         {
-            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
     public void showHUD()

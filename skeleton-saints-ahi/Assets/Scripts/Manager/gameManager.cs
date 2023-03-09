@@ -119,7 +119,7 @@ public class gameManager : MonoBehaviour
 		AssertplayerPreferencesToScript();
 
 		//if player has weapons saved, then equip the current weapon again
-		if (playerScript.currentWeapon != null)
+		if (playerScript.weaponInventory != null)
 		{
 			if (playerScript.weaponInventory.Count > 0)
 				playerScript.extSwitchToWeapon(playerScript.weaponInventory.IndexOf(playerScript.currentWeapon.gameObject));
@@ -191,8 +191,9 @@ public class gameManager : MonoBehaviour
 		}
 		//And in either case, reset the player to the playerSpawnPos when they respawn
 		//This can be updated when the player reaches a checkpoint
+
 		playerInstance.transform.position = PlayerSpawnPos.transform.position;
-		//AssertplayerPreferencesToScript();
+		AssertplayerPreferencesToScript();
 
 		//if player has weapons saved, then equip the current weapon again
 		if (playerScript.weaponInventory.Count > 0)
@@ -205,18 +206,22 @@ public class gameManager : MonoBehaviour
 	}
 	public void restartLevel()
 	{
-		
 		clearLevel();
+
+		if (menuManager.instance.GameMenuIsUp())
+		{
+			hUDManager.instance.toggleCursorVisibility();
+			toggleGameMenu();
+		}
+
 		if (playerScript.GetCurrentHealth() <= 0)
 		{
 			hUDManager.instance.damageFlashScreen.SetActive(false);
-			toggleGameMenu();
 		}
 		//Restart a level without going all the way back to the main menu
-		sceneControl.instance.SceneRestart("Level One");
+		sceneControl.instance.SceneRestart();
 		//reload player and variable settings
-		
-		LevelSetup();
+
 	}
 	public void restartGame()
 	{
@@ -387,14 +392,19 @@ public class gameManager : MonoBehaviour
 		}
 	}
 
-    private void clearLevel(bool restartingGame = false)
+    private void clearLevel(bool respawning = false)
     {
-		if (restartingGame)
+		if (!respawning)
+		{
 			playerPreferences.instance.SavedWeapons.Clear();
+			gameEventManager.instance.ClearEventListUI();
+			gameEventManager.instance.ResetEvents();
+			gameEventManager.instance.gameEvents.Clear();
+		} else
+        {
 
-		gameEventManager.instance.ClearEventListUI();
-		gameEventManager.instance.ResetEvents();
-		gameEventManager.instance.gameEvents.Clear();
+        }
+
 		Destroy(playerInstance);
 	}
 	#endregion
