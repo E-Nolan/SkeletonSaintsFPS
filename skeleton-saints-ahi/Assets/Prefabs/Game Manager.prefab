@@ -11093,7 +11093,7 @@ MonoBehaviour:
   damageFlashScreen: {fileID: 6777880150547237362}
   enemiesRemaining: 0
   enemiesCounter: {fileID: 6777880151080413932}
-  inputReader: {fileID: 0}
+  inputReader: {fileID: 6777880151126216718}
   EventList: {fileID: 9027286645818489932}
 --- !u!1 &6777880151149197724
 GameObject:
@@ -11729,8 +11729,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a443fa24aa68b4c9811d5fbe8ea362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BUILDMODE: 0
-  QUICKPLAYMANAGMENT: 1
+  BUILDMODE: 1
+  QUICKPLAYMANAGMENT: 0
   PlayerPrefab: {fileID: 3169843501779763172, guid: 4cb34049403758d428bd6f86c3628ab2, type: 3}
   PlayerSpawnPos: {fileID: 0}
   playerInstance: {fileID: 0}
@@ -11794,12 +11794,12 @@ MonoBehaviour:
   Button_Menu: Cancel
   Button_FirePrimary: Fire1
   Button_Interact: Interact
-  sensitivity_Horizontal: 0
-  sensitivity_Vertical: 0
+  sensitivity_Horizontal: 600
+  sensitivity_Vertical: 500
   invertX: 0
-  masterVolume: 0
-  musicVolume: 0
-  sfxVolume: 0
+  masterVolume: 1
+  musicVolume: 1
+  sfxVolume: 1
   masterVolume_DEFAULT: 100
   musicVolume_DEFAULT: 100
   sfxVolume_DEFAULT: 100

@@ -119,9 +119,11 @@ public class gameManager : MonoBehaviour
 		AssertplayerPreferencesToScript();
 
 		//if player has weapons saved, then equip the current weapon again
-		if (playerScript.weaponInventory.Count > 0)
-			playerScript.extSwitchToWeapon(playerScript.weaponInventory.IndexOf(playerScript.currentWeapon.gameObject));
-
+		if (playerScript.currentWeapon != null)
+		{
+			if (playerScript.weaponInventory.Count > 0)
+				playerScript.extSwitchToWeapon(playerScript.weaponInventory.IndexOf(playerScript.currentWeapon.gameObject));
+		}
 		//if the cursor was up from previous menus or otherwise, lock it again befor the HUD comes up
 		if (Cursor.visible)
 			hUDManager.instance.toggleCursorVisibility();

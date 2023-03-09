@@ -49,6 +49,5 @@ public sealed class sceneControl
         int currSceneIndex = SceneManager.GetSceneByName(sceneName).buildIndex;
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(sceneName));
         SceneManager.LoadSceneAsync(currSceneIndex, LoadSceneMode.Additive);
-    
     }
 }

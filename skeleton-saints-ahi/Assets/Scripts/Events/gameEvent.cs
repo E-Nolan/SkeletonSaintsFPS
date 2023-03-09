@@ -22,7 +22,13 @@ public class gameEvent : MonoBehaviour
         for (int i = 0; i < Conditions.Count; i++)
         {
             Conditions[i].ResetCondition();
+        }
+        if (SpecificConditions == null)
+            return;
+        for (int i = 0; i < SpecificConditions.Count; i++)
+        {
             SpecificConditions[i].ResetCondition();
+
         }
     }
 

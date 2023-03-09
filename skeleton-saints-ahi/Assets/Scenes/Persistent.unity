@@ -134,26 +134,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 6777880151523749169, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
-      propertyPath: sfxVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777880151523749169, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
-      propertyPath: musicVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777880151523749169, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
-      propertyPath: masterVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777880151523749169, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
-      propertyPath: sensitivity_Vertical
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777880151523749169, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
-      propertyPath: sensitivity_Horizontal
-      value: 600
-      objectReference: {fileID: 0}
     - target: {fileID: 6777880151523749172, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -196,14 +176,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6777880151523749172, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777880151523749175, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
-      propertyPath: BUILDMODE
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777880151523749175, guid: 39ef9b1dcc6c44d449c0eeb09a792a59, type: 3}
-      propertyPath: QUICKPLAYMANAGMENT
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

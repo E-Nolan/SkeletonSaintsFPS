@@ -15,7 +15,6 @@ public class buttonFunctions : MonoBehaviour
     }
     public void Restart()
     {
-        gameManager.instance.toggleGameMenu();
         gameManager.instance.restartLevel();
     }
     public void Respawn()
