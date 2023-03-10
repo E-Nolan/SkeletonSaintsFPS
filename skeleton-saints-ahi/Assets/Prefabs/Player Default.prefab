@@ -116,6 +116,7 @@ MonoBehaviour:
   invincibilityCooldown: 0.25
   maxJumpVel: 8
   jumpAcceleration: 50
+  initialJumpVelocity: 3
   maxJumps: 1
   jumpStaminaCost: 0
   coyoteTime: 0.2

@@ -38,6 +38,7 @@ public class playerController : MonoBehaviour, IDamage
     [Header("----- Jump -----")]
     [Range(1.0f, 10.0f)] [SerializeField] float maxJumpVel;
     [Range(0.05f, 1000.0f)] [SerializeField] float jumpAcceleration;
+    [Range(0.0f, 10.0f)] [SerializeField] float initialJumpVelocity;
     [Range(0, 3)] [SerializeField] int maxJumps;
     [Range(0, 100)] [SerializeField] int jumpStaminaCost;
     [Range(0.0f, 1.0f)] [SerializeField] float coyoteTime;
@@ -262,6 +263,7 @@ public class playerController : MonoBehaviour, IDamage
         // When the player releases the jump button, stop the jump
         if (Input.GetButtonDown("Jump") && jumpsCurrent < maxJumps && !canInputJump && jumpStaminaCost <= currentStamina)
         {
+            playerVelocity.y = Mathf.Clamp((initialJumpVelocity + playerVelocity.y), initialJumpVelocity, float.MaxValue);
             isJumping = true;
             jumpsCurrent++;
             useStamina(jumpStaminaCost);
