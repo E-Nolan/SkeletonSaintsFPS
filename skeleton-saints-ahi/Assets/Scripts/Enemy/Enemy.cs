@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,6 +25,10 @@ public class Enemy : MonoBehaviour, IDamage
     [Range(0, 1)] [SerializeField] private float _easyHealthMultiplier;
     [Range(1, 5)] [SerializeField] private float _HardHealthMultiplier;
     [Range(0, 1)] [SerializeField] private float _nextEnemyFireDelay;
+
+    [Header("----- Enemy Drops -----")]
+    [SerializeField] private List<GameObject> enemyDrops;
+    [Range(0, 1)] [SerializeField] float dropChance;
 
     [Header("----- Publics -----")]
     public bool isShooting = false;
@@ -181,6 +186,7 @@ public class Enemy : MonoBehaviour, IDamage
             GetComponent<CapsuleCollider>().enabled = false;
             gameManager.instance.updateGameGoal(-1);
             fadeHealthBar = true;
+            enemyDropPickup();
 
             // If the enemy was a boss, give the player a win after they're destroyed
             if (_enemyAi.BossEnemy)
@@ -334,6 +340,17 @@ public class Enemy : MonoBehaviour, IDamage
             {
                 GetComponentInChildren<SkinnedMeshRenderer>().material = _material;
             }
+        }
+    }
+
+    public void enemyDropPickup()
+    {
+        int dropSelected;
+        if (UnityEngine.Random.value <= dropChance && enemyDrops != null)
+        {
+            dropSelected = UnityEngine.Random.Range(0, enemyDrops.Count);
+            Debug.Log($"drop selected is {dropSelected}");
+            GameObject drop = Instantiate(enemyDrops[dropSelected], transform.position, transform.rotation);
         }
     }
 }

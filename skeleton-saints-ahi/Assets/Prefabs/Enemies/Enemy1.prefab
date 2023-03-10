@@ -1230,6 +1230,10 @@ MonoBehaviour:
   _easyHealthMultiplier: 0.5
   _HardHealthMultiplier: 1.75
   _nextEnemyFireDelay: 0.1
+  enemyDrops:
+  - {fileID: 2771983218902681831, guid: 1495490627c0ae043975db4410e5ea6f, type: 3}
+  - {fileID: 5174752464892961894, guid: 13a90e8c99bd36144abf28008ba6bcb8, type: 3}
+  dropChance: 0.15
   isShooting: 0
   currentWeapon: {fileID: 0}
   acquiringWeapon: 0
