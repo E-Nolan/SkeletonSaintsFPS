@@ -11353,8 +11353,9 @@ MonoBehaviour:
   activeClip: {fileID: 3749974583984578000}
   activeReserve: {fileID: 8440110810578567816}
   pistolReserve: {fileID: 7527069782230535954}
-  inactiveGun1: {fileID: 2078665284890444823}
-  inactiveGun2: {fileID: 8847886608485490491}
+  inactiveGuns:
+  - {fileID: 2078665284890444823}
+  - {fileID: 8847886608485490491}
   reticle: {fileID: 1513440658103482147}
   card01: {fileID: 6777880151010477334}
   keyCard01Text: {fileID: 6777880152375603687}

@@ -155,6 +155,7 @@ MonoBehaviour:
   gunshotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   raycastRange: 100
   externalVelocityDecay: 4
+  grappleGlitchPreventionTimer: 0
   playerVelocity: {x: 0, y: 0, z: 0}
   invincibilityTimer: 0
   currCoyoteTimer: 0
@@ -274,7 +275,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 50
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001

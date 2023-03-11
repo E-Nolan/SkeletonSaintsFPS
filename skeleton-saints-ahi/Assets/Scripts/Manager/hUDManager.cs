@@ -26,8 +26,7 @@ public class hUDManager : MonoBehaviour
     public TextMeshProUGUI activeClip;
     public TextMeshProUGUI activeReserve;
     public Image pistolReserve;
-    public Image inactiveGun1;
-    public Image inactiveGun2;
+    public Image[] inactiveGuns;
     public Image reticle;
 
     [Header("----- KeyCard UI -----")]
@@ -176,10 +175,11 @@ public class hUDManager : MonoBehaviour
     public void updateWeaponDisplay()
     {
         activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
-        if (gameManager.instance.PlayerScript().inactiveWeapon1 != null)
-            inactiveGun1.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon1.inactiveImage;
-        if (gameManager.instance.PlayerScript().inactiveWeapon2 != null)
-            inactiveGun2.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapon2.inactiveImage;
+        for (int i = 0; i < gameManager.instance.PlayerScript().inactiveWeapons.Count; i++)
+        {
+            if (gameManager.instance.PlayerScript().inactiveWeapons[i] != null)
+                inactiveGuns[i].GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapons[i].inactiveImage;
+        }
 
         updateWeaponText();
     }

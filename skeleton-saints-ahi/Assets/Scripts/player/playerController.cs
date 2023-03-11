@@ -83,8 +83,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public rangedWeapon currentWeapon { get; private set; }
     public rangedWeapon currentSecondary { get; private set; }
-    public rangedWeapon inactiveWeapon1 { get; private set; }
-    public rangedWeapon inactiveWeapon2 { get; private set; }
+    public List<rangedWeapon> inactiveWeapons { get; private set; }
     public bool isDashing { get; private set; } = false;
     public bool isSprinting { get; private set; } = false;
     public bool isPrimaryShooting = false;
@@ -114,6 +113,9 @@ public class playerController : MonoBehaviour, IDamage
         currentArmor = maxArmor;
 
         gameManager.instance.createUIBar();
+
+        if (inactiveWeapons == null)
+            inactiveWeapons = new List<rangedWeapon>();
 
         if (startingWeapon)
             rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
@@ -157,7 +159,7 @@ public class playerController : MonoBehaviour, IDamage
         }
 
         // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
-        if (Input.GetButton("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
+        if (Input.GetButtonDown("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
         {
             shoot(currentSecondary);
         }
@@ -462,6 +464,8 @@ public class playerController : MonoBehaviour, IDamage
                 _newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(_newWeaponStats, _newFirePos.transform, true);
                 weaponInventory.Add(_newWeapon);
                 switchToWeapon(weaponInventory.Count - 1);
+
+                inactiveWeapons.Add(null);
                 break;
         }
     }
@@ -512,31 +516,19 @@ public class playerController : MonoBehaviour, IDamage
             currentWeapon.gameObject.SetActive(true);
             currentWeapon.onSwitch();
 
-            if (weaponInventory.Count == 2)
+            // For each weapon in the player's inventory beyond than the current weapon, update the inactive weapons array to include
+            for (int i = 1; i < weaponInventory.Count; i++)
             {
-                if (currWepIndex + 1 >= weaponInventory.Count)
-                    inactiveWeapon1 = weaponInventory[0].GetComponent<rangedWeapon>();
+                int _inactiveIndex = currWepIndex + i;
+                if (_inactiveIndex >= weaponInventory.Count)
+                    _inactiveIndex -= weaponInventory.Count;
+
+                if ((i - 1) < inactiveWeapons.Count)
+                    inactiveWeapons[i - 1] = weaponInventory[_inactiveIndex].GetComponent<rangedWeapon>();
                 else
-                    inactiveWeapon1 = weaponInventory[1].GetComponent<rangedWeapon>();
+                    inactiveWeapons.Add(weaponInventory[_inactiveIndex].GetComponent<rangedWeapon>());
             }
-            if (weaponInventory.Count == 3)
-            {
-                if (currWepIndex + 1 >= weaponInventory.Count)
-                {
-                    inactiveWeapon1 = weaponInventory[0].GetComponent<rangedWeapon>();
-                    inactiveWeapon2 = weaponInventory[1].GetComponent<rangedWeapon>();
-                }
-                else if(currWepIndex + 2 >= weaponInventory.Count)
-                {
-                    inactiveWeapon1 = weaponInventory[2].GetComponent<rangedWeapon>();
-                    inactiveWeapon2 = weaponInventory[0].GetComponent<rangedWeapon>();
-                }
-                else
-                {
-                    inactiveWeapon1 = weaponInventory[1].GetComponent<rangedWeapon>();
-                    inactiveWeapon2 = weaponInventory[2].GetComponent<rangedWeapon>();
-                }
-            }
+
             hUDManager.instance.updateWeaponDisplay();
 
         }
@@ -821,6 +813,7 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 #endregion
+
 
     IEnumerator playFootstep()
     {

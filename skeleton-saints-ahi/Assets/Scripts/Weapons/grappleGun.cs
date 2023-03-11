@@ -106,4 +106,9 @@ public class grappleGun : rangedWeapon
     {
        
     }
+
+    public hookPoint HookPointScript()
+    {
+        return grappleHookScript;
+    }
 }
