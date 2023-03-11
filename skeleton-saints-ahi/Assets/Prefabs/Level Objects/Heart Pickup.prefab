@@ -9,11 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2771983218902681834}
-  - component: {fileID: 2771983218902681835}
-  - component: {fileID: 2771983218902681832}
-  - component: {fileID: 2771983218902681833}
-  - component: {fileID: 2771983218902681830}
-  - component: {fileID: 2771983218902681837}
   m_Layer: 11
   m_Name: Heart Pickup
   m_TagString: Collectible
@@ -29,20 +24,57 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2771983218902681831}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3496043870313873785}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8808675935621364230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3496043870313873785}
+  - component: {fileID: 2210142916140594844}
+  - component: {fileID: 2917100975945741790}
+  - component: {fileID: 3127855583164604659}
+  - component: {fileID: 6615689319766238912}
+  - component: {fileID: 6990606095306294239}
+  m_Layer: 11
+  m_Name: Heart
+  m_TagString: Collectible
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3496043870313873785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8808675935621364230}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2771983218902681834}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2771983218902681835
+--- !u!114 &2210142916140594844
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2771983218902681831}
+  m_GameObject: {fileID: 8808675935621364230}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3ad4d3e90872674aa61d38c598fed14, type: 3}
@@ -52,34 +84,34 @@ MonoBehaviour:
   healthRecovery: 5
   rotationSpeed: 90
   pickupSound: {fileID: 8300000, guid: fe368d71fea839740be97b81fa345f14, type: 3}
---- !u!135 &2771983218902681832
+--- !u!135 &2917100975945741790
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2771983218902681831}
+  m_GameObject: {fileID: 8808675935621364230}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
   m_Center: {x: 0, y: 0.2, z: 0}
---- !u!33 &2771983218902681833
+--- !u!33 &3127855583164604659
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2771983218902681831}
+  m_GameObject: {fileID: 8808675935621364230}
   m_Mesh: {fileID: 4300000, guid: 38004d34179b3a1469f9a157c1d4c1a1, type: 2}
---- !u!23 &2771983218902681830
+--- !u!23 &6615689319766238912
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2771983218902681831}
+  m_GameObject: {fileID: 8808675935621364230}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -115,13 +147,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!82 &2771983218902681837
+--- !u!82 &6990606095306294239
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2771983218902681831}
+  m_GameObject: {fileID: 8808675935621364230}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
