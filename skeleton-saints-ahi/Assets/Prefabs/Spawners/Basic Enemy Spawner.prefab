@@ -92,6 +92,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypes:
+  - {fileID: 5358488325615739627, guid: ca15aaffe6955f941b51a7877128c07e, type: 3}
+  - {fileID: 4965651216935674399, guid: 40d035e175460074b8baaa09ecea9b92, type: 3}
+  - {fileID: 388288328662397116, guid: b2431d8f4ee887c43803892ac37e8a5b, type: 3}
   - {fileID: 1189593153148091184, guid: afa975ef478587844a8dbbdc0bbf929d, type: 3}
   weaponTypes:
   - {fileID: 2458024468041302749, guid: 01c6bd5a6a9c0b240951cec2e7d6bb9a, type: 3}
@@ -101,7 +104,7 @@ MonoBehaviour:
   - {fileID: 6803417500905508958, guid: 7f34f0fb9bedfcb468ee0c974fa1ec11, type: 3}
   particles:
   - {fileID: 3857670074230327645, guid: 67b47b7898a779544a96b69a135ef9e3, type: 3}
-  spawnMaxNum: 10
+  spawnMaxNum: 4
   spawnCooldown: 0
   spawnPos:
   - {fileID: 2857360574229553101}
