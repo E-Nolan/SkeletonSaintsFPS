@@ -8,7 +8,8 @@ public class weaponStats : ScriptableObject
     public enum weaponStatsType
     {
         Gun,
-        GrappleGun
+        GrappleGun,
+        SideArm
     }
 
     public string weaponName;
