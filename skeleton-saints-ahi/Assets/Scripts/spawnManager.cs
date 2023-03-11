@@ -87,25 +87,33 @@ public class spawnManager : MonoBehaviour
             if(weaponTypes.Length > 0 && newWeapon != null)
                 newEnemy.GetComponent<Enemy>().PickupWeapon(newWeapon.GetComponent<weaponPickup>().weapon);
 
+            // NOTE: Particles only spawn one Particle System per spawn position
             if (particles.Length > 1)
             {
-                Vector3 particleOffset = newEnemy.transform.position + new Vector3(0f, newEnemy.transform.localScale.y / 2, 1f);
+                Vector3 particleOffset = newEnemy.transform.position + new Vector3(0f, newEnemy.transform.localScale.y / 2, 0f);
 
                 foreach (GameObject particle in particles)
                 {
                     GameObject temp = Instantiate(particle, particleOffset,
                         Quaternion.Euler(newEnemy.transform.forward));
+
                     Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
                 }
             } 
             else if (particles.Length == 1)
             {
-                Vector3 particleOffset = newEnemy.transform.position + new Vector3(0f, newEnemy.transform.localScale.y / 2, 1f);
+                Vector3 particleOffset = newEnemy.transform.position + new Vector3(0f, newEnemy.transform.localScale.y / 2, 0f);
+                //GameObject temp = Instantiate(particles[0], particleOffset,
+                //    Quaternion.Euler(newEnemy.transform.forward));
+
                 GameObject temp = Instantiate(particles[0], particleOffset,
-                    Quaternion.Euler(newEnemy.transform.forward));
-                float duration = temp.GetComponent<ParticleSystem>().main.duration;
-                Destroy(temp, duration);
+                    particles[0].transform.rotation);
+
+                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
             }
+
+            newEnemy.SetActive(true);
+
         }
 
         yield return new WaitForSeconds(spawnCooldown);

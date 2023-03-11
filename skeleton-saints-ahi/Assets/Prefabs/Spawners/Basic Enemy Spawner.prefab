@@ -102,8 +102,9 @@ MonoBehaviour:
   - {fileID: 2615637619668773366, guid: 96bcb387263fecb438530623ec288cb7, type: 3}
   - {fileID: 438381355057676507, guid: 1b851d7ab3b60d6409652e73d018e758, type: 3}
   - {fileID: 6803417500905508958, guid: 7f34f0fb9bedfcb468ee0c974fa1ec11, type: 3}
-  particles: []
-  spawnMaxNum: 10
+  particles:
+  - {fileID: 3857670074230327645, guid: 67b47b7898a779544a96b69a135ef9e3, type: 3}
+  spawnMaxNum: 4
   spawnCooldown: 0
   spawnPos:
   - {fileID: 2857360574229553101}
