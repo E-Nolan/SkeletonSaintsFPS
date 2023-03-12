@@ -230,7 +230,6 @@ public class rangedWeapon : MonoBehaviour
             newBulletScript.bulletDmg = damage;
             if (currentClip == 1)
                 newBulletScript.bulletDmg += lastBulletBonus;
-            Debug.Log($"Bullet fired from {gameObject} has {newBulletScript.bulletDmg} damage");
 
             if (usedByPlayer)
                 newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed + Vector3.Project(gameManager.instance.PlayerScript().GetPlayerVelocity(), newBullet.transform.forward);
