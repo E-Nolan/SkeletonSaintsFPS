@@ -62,10 +62,6 @@ public class EnemyAI : MonoBehaviour
         if(_agent == null)
             _agent = GetComponent<NavMeshAgent>();
 
-        // Check if there is a Game Manager present
-        if (gameManager.instance == null)
-            Debug.Log("EnemyAI: There is no GameManager. Not using a GameManager will lead to unsupported behavior.");
-
         _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
         _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IDamage
@@ -58,7 +59,8 @@ public class Enemy : MonoBehaviour, IDamage
     void Start()
     {
         isAttacking = false;
-        _difficulty = gameManager.instance.currentDifficulty;
+        if(SceneManager.GetActiveScene().name != "Main Menu") 
+            _difficulty = gameManager.instance.currentDifficulty;
 
         switch (_difficulty)
         {
@@ -88,7 +90,8 @@ public class Enemy : MonoBehaviour, IDamage
             isMutant = false;
         }
 
-        gameManager.instance.updateEnemyCounter();
+        if(SceneManager.GetActiveScene().name != "Main Menu") 
+            gameManager.instance.updateEnemyCounter();
 
         _maxHealth = _health;
         _healthBar.value = CalculateHealth();
@@ -134,7 +137,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     private void OnDestroy()
     {
-        if(isBossEnemy)
+        if(isBossEnemy && SceneManager.GetActiveScene().name != "Main Menu")
             gameManager.instance.queuePlayerVictory(1f);
     }
 
