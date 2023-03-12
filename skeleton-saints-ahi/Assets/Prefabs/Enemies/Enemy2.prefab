@@ -931,7 +931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4965651216935190079
 Transform:
   m_ObjectHideFlags: 0
@@ -974,6 +974,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &4965651216935190052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,7 +993,7 @@ MonoBehaviour:
   handTransform: {fileID: 4965651216935190523}
   healthBarUI: {fileID: 1800511852}
   _materialFlashSpeed: 0.2
-  _material: {fileID: 2100000, guid: 6fcd9d698ea07974abf39f90181445d2, type: 2}
+  _material: {fileID: 2100000, guid: 3232a163cd4376f4c8b0677a4b79d359, type: 2}
   _flashMaterial: {fileID: 2100000, guid: 60a1c512e8742e0499b4ead0e3c45891, type: 2}
   _easyHealthMultiplier: 0.5
   _HardHealthMultiplier: 1.75
