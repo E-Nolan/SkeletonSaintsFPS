@@ -464,7 +464,7 @@ public class playerController : MonoBehaviour, IDamage
                 _newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(_newWeaponStats, _newFirePos.transform, true);
                 weaponInventory.Add(_newWeapon);
                 switchToWeapon(weaponInventory.Count - 1);
-
+                
                 inactiveWeapons.Add(null);
                 break;
         }

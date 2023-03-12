@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3494760854401932458}
   - component: {fileID: 4171806061585347952}
   - component: {fileID: 5422038882351153763}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: assault3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

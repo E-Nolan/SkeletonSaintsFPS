@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4911603633976522048}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Sci-Fi Pistol 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4911603633976522050}
   - component: {fileID: 4911603633973654880}
   - component: {fileID: 4911603633974753184}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Sci_fi_Pistol1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

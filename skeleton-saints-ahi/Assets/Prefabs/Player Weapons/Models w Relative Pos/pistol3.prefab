@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7523979257950075328}
   - component: {fileID: 2491341308869846349}
   - component: {fileID: 4466768759736636291}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: pistol3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
