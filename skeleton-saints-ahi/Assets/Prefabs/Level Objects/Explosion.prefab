@@ -110,7 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14eabb1b5a108042afb33906b8b6089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireball: {fileID: 0}
+  fireball: {fileID: 4205592952412514524}
   fullExplosionScale: 3
   explosionTime: 0.4
   explosionDamage: 1
+  explosionForce: 0

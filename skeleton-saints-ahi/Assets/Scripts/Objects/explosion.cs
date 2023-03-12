@@ -28,7 +28,7 @@ public class explosion : MonoBehaviour
     {
         if (exploding)
         {
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * fullExplosionScale, Time.deltaTime * (1.0f / explosionTime));
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * fullExplosionScale, Time.deltaTime * explosionTime * 5f);
             if (transform.localScale.magnitude >= (Vector3.one * fullExplosionScale).magnitude - 0.05f)
                 Destroy(gameObject, 0.1f);
         }
@@ -36,7 +36,8 @@ public class explosion : MonoBehaviour
 
     public void explode()
     {
-        meshRender.enabled = true;
+        if(meshRender != null)
+            meshRender.enabled = true;
         exploding = true;
         //transform.localScale = Vector3.one * fullExplosionScale;
         Destroy(gameObject, explosionTime);

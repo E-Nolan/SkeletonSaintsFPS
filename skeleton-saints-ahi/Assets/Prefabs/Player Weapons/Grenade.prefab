@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 9174331692456430380}
+  shrapnel: {fileID: 3275279903921669404, guid: 7b1137d42a02d114f890c5526fc8e2eb, type: 3}
   explodeOnImpact: 1
   explodeFromDamage: 0
   explodeOnTimer: 1
@@ -72,7 +73,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDmg: 0
-  timer: 15
   bulletImpactSound: {fileID: 0}
   damagePopupPrefab: {fileID: 5156991524456792442, guid: 48bf4594a2656ef49afe5d660714f3c4, type: 3}
 --- !u!33 &4571660264417320555
@@ -472,3 +472,4 @@ MonoBehaviour:
   fullExplosionScale: 7
   explosionTime: 0.5
   explosionDamage: 20
+  explosionForce: 0

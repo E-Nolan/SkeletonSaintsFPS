@@ -5,6 +5,7 @@ using UnityEngine;
 public class explosiveObject : MonoBehaviour, IDamage
 {
     [SerializeField] GameObject explosion;
+    [SerializeField] GameObject shrapnel;
     [SerializeField] bool explodeOnImpact;
     [SerializeField] bool explodeFromDamage;
     [SerializeField] bool explodeOnTimer;
@@ -58,5 +59,8 @@ public class explosiveObject : MonoBehaviour, IDamage
         Destroy(gameObject, 5.0f);
 
         explosion.GetComponent<explosion>().explode();
+        detonated = true;
+        // Should get rid of itself
+        Instantiate(shrapnel, transform.position, explosion.transform.rotation);
     }
 }
