@@ -2168,7 +2168,7 @@ GameObject:
   - component: {fileID: 8290775159967972625}
   - component: {fileID: 8290775159967972624}
   m_Layer: 6
-  m_Name: Slider_Mutant
+  m_Name: Mutant
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

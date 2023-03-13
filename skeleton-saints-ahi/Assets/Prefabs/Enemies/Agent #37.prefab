@@ -3140,7 +3140,7 @@ GameObject:
   - component: {fileID: 8453596840679467766}
   - component: {fileID: 6841760883620596963}
   m_Layer: 6
-  m_Name: Enemy4
+  m_Name: Agent #37
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

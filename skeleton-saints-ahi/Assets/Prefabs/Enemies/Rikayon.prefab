@@ -2757,7 +2757,7 @@ GameObject:
   - component: {fileID: 457333255319264679}
   - component: {fileID: 457333255319264678}
   m_Layer: 6
-  m_Name: crab-monster
+  m_Name: Rikayon
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
