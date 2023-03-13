@@ -27,7 +27,7 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     bool isEnemyFiring;
 	int enemiesRemaining;
-	public GameDifficulty currentDifficulty;
+	public Difficulty currentDifficulty;
 
 	[Header("----- Game Goals -----")]
 	[SerializeField] public bool[] keyCard = new bool[3];
@@ -316,17 +316,17 @@ public class gameManager : MonoBehaviour
 	#endregion
 	public void setEasyMode()
 	{
-		currentDifficulty = GameDifficulty.Easy;
+		mainMenuManager.instance.easyMode();
 	}
 
 	public void setNormalMode()
 	{
-		currentDifficulty = GameDifficulty.Normal;
+		mainMenuManager.instance.normalMode();
 	}
 
 	public void setHardMode()
 	{
-		currentDifficulty = GameDifficulty.Hard;
+		mainMenuManager.instance.hardMode();
 	}
 
     public void setEnemyFiring(bool isFiring)
@@ -409,7 +409,7 @@ public class gameManager : MonoBehaviour
 	}
 	#endregion
 
-	public enum GameDifficulty
+	public enum Difficulty
 	{
 		Easy, Normal, Hard
 	}

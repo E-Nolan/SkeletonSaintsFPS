@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour, IDamage
     private bool isBossEnemy;
     private bool isMutant;
     private int attackDamage;
-    private gameManager.GameDifficulty _difficulty;
+    private gameManager.Difficulty _difficulty;
 
     [Header("----- Misc -----")]
     [SerializeField] private Slider _healthBar;
@@ -64,13 +64,13 @@ public class Enemy : MonoBehaviour, IDamage
 
         switch (_difficulty)
         {
-            case gameManager.GameDifficulty.Easy:
+            case gameManager.Difficulty.Easy:
                 _health *= _easyHealthMultiplier;
                 break;
-            case gameManager.GameDifficulty.Hard:
+            case gameManager.Difficulty.Hard:
                 _health *= _HardHealthMultiplier;
                 break;
-            case gameManager.GameDifficulty.Normal:
+            case gameManager.Difficulty.Normal:
                 break;
             default:
                 break;
@@ -293,7 +293,7 @@ public class Enemy : MonoBehaviour, IDamage
         currentWeapon.shoot(gameManager.instance.playerInstance.transform.position + 
                             new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-3f, 3f)));
 
-        if (_difficulty == gameManager.GameDifficulty.Easy)
+        if (_difficulty == gameManager.Difficulty.Easy)
             yield return new WaitForSeconds(delay);
 
         gameManager.instance.setEnemyFiring(false);

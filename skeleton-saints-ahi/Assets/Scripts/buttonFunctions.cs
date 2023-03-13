@@ -47,20 +47,6 @@ public class buttonFunctions : MonoBehaviour
         menuManager.instance.DisplaySettingsMenu();
     }
     #endregion
-    public void SetEasyGame()
-    {
-        gameManager.instance.currentDifficulty = gameManager.GameDifficulty.Easy;
-
-    }
-    public void SetNormalGame()
-    {
-        gameManager.instance.currentDifficulty = gameManager.GameDifficulty.Normal;
-    }
-
-    public void SetHardGame()
-    {
-        gameManager.instance.currentDifficulty = gameManager.GameDifficulty.Hard;
-    }
 
     public void PlayButtonSound()
     {

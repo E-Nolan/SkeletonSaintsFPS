@@ -8,6 +8,8 @@ public class mainMenuManager : MonoBehaviour
 
     [Header("----- Start Panels -----")]
     public GameObject startMenu;
+    public List<GameObject> difficulty;
+    public GameObject currentDifficulty;
 
     [Header("----- Controls Panels -----")]
     public GameObject controlMenu;
@@ -35,8 +37,10 @@ public class mainMenuManager : MonoBehaviour
         startMenu.SetActive(true);
         activeMenu = startMenu;
         currentPage = 0;
+        difficulty[0].SetActive(true);
     }
 
+    //Start menu
     public void DisplayStart()
     {
         if (activeMenu != startMenu)
@@ -47,6 +51,43 @@ public class mainMenuManager : MonoBehaviour
         }
     }
 
+    public void easyMode()
+    {
+        
+        if(currentDifficulty != difficulty[0])
+        {
+            currentDifficulty.SetActive(false);
+            currentDifficulty = difficulty[0];
+            difficulty[0].SetActive(true);
+            gameManager.instance.currentDifficulty = gameManager.Difficulty.Easy;
+        }
+    }
+
+    public void normalMode()
+    {
+        
+        if (currentDifficulty != difficulty[1])
+        {
+            currentDifficulty.SetActive(false);
+            currentDifficulty = difficulty[1];
+            difficulty[1].SetActive(true);
+            gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
+        }
+    }
+
+    public void hardMode()
+    {
+        
+        if (currentDifficulty != difficulty[2])
+        {
+            currentDifficulty.SetActive(false);
+            currentDifficulty = difficulty[2];
+            difficulty[2].SetActive(true);
+            gameManager.instance.currentDifficulty = gameManager.Difficulty.Hard;
+        }
+    }
+
+    //Control menu
     public void DisplayControl()
     {
         if (activeMenu != controlMenu)
@@ -57,6 +98,8 @@ public class mainMenuManager : MonoBehaviour
         }
     }
 
+
+    //settings menu
     public void DisplaySettings()
     {
         if (activeMenu != settingsMenu)
@@ -67,6 +110,7 @@ public class mainMenuManager : MonoBehaviour
         }
     }
 
+    //credits menu
     public void DisplayCredits()
     {
         if (activeMenu != creditsMenu)
@@ -95,6 +139,7 @@ public class mainMenuManager : MonoBehaviour
         credits[currentPage].SetActive(true);
     }
 
+   //quit menu
     public void DisplayQuit()
     {
         if (activeMenu != quitMenu)
@@ -104,5 +149,4 @@ public class mainMenuManager : MonoBehaviour
             quitMenu.SetActive(true);
         }
     }
-
 }
