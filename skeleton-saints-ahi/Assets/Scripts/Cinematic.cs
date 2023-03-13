@@ -32,7 +32,6 @@ public class Cinematic : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
-            //targets = new GameObject[GameObject.FindGameObjectsWithTag("Enemy").Length];
             targets = GameObject.FindGameObjectsWithTag("Enemy");
         }
 
@@ -45,8 +44,6 @@ public class Cinematic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //uiCamera.gameObject.SetActive(false);
-        //camMain.gameObject.SetActive(false);
         reachedTargetPosition = false;
 
         if (focusTimer <= 0)
@@ -82,7 +79,11 @@ public class Cinematic : MonoBehaviour
         }
 
         nameText.GetComponent<TextMeshPro>().enabled = isWaiting;
-        uiCamera.gameObject.SetActive(true);
+
+        if(isWaiting)
+            uiCamera.gameObject.SetActive(true);
+        else
+            uiCamera.gameObject.SetActive(false);
 
         transform.LookAt(targets[_index].transform.position.normalized);
     }
