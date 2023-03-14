@@ -5,17 +5,17 @@ using UnityEngine;
 public class gateButton : interactableButton
 {
     [SerializeField]
-    private IGate LinkedGate;
+    protected IGate LinkedGate;
 
     [Tooltip("1 = Red, 2 = Yellow, 3 =  Blue\n0 means no card is required")]
     public int accessLevel = 0;
     
-    string accessGranted = "ACCESS GRANTED";
+    protected string accessGranted = "ACCESS GRANTED";
     string accessDeniedRed = "ACCESS DENIED:\nLevel 1: Red Clearance required";
     string accessDeniedBlue = "ACCESS DENIED:\nLevel 2: Blue Clearance required";
     string accessDeniedYellow = "ACCESS DENIED:\nLevel 3: Yellow Clearance required";
 
-    //string accessDeniedSpecial = "ACCESS DENIED:\nUnknown Clearance required";
+    protected string accessDeniedFull = "ACCESS DENIED:\nFull Clearance required";
 
     //For when the door can't be interacted with but doesn't need kaycard clearance (e.g locked from somewhere else)
     string accessDeniedOpenClearance = "ACCESS DENIED:\nGate is deadlocked.";
@@ -62,6 +62,9 @@ public class gateButton : interactableButton
                     break;
                 case 3:
                     currentInteractionText = accessDeniedYellow;
+                    break;
+                case 4:
+                    currentInteractionText = accessDeniedFull;
                     break;
                 default:
                     currentInteractionText = accessDeniedOpenClearance;

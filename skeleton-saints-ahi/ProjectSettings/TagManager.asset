@@ -12,6 +12,7 @@ TagManager:
   - Collectible
   - Player Spawn
   - GameEvent
+  - FinalGateButton
   layers:
   - Default
   - TransparentFX

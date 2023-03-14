@@ -52,4 +52,9 @@ public sealed class sceneControl
             gameManager.instance.LevelSetup();
         };
     }
+
+    public string SceneName()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
 }

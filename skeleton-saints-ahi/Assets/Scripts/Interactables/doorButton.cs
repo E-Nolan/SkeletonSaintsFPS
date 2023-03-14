@@ -10,8 +10,19 @@ public class doorButton : interactableButton
 
     public bool secretDoor;
 
-    string activateSecretDoor = "ACCESS GRANTED";
-    string activateSecretDoorDenial = "ACCESS DENIED";
+    string activateSecretDoor = "ACCESS GRANTED: Welcome, Dr.Rikayon";
+    string activateSecretDoorDenial = "ACCESS DENIED: Personal Code Entry Incorrect";
+
+    private void Awake()
+    {
+        
+    }
+    public override void Init()
+    {
+        base.Init();
+        //set to false specifically for gatebutton since by default interactables start off with this true
+        CanInteractYet = false;
+    }
     public override void Interact()
     {
         if (Objective != null)

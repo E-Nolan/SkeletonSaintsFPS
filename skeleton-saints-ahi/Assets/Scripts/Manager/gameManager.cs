@@ -30,8 +30,10 @@ public class gameManager : MonoBehaviour
 	public Difficulty currentDifficulty;
 
 	[Header("----- Game Goals -----")]
-	[SerializeField] public bool[] keyCard = new bool[3];
+	[SerializeField] public bool[] keyCard;
 	List<gameEvent> activeGameEvents;
+	[SerializeField]
+	gateButton finalGateButton;
 
 	//Bool to determine when a scene with the player in it has started (I.E. Not in the main menu or level selection.
 	//This lets the script know it can start tracking game events like winning or losing.
@@ -42,6 +44,7 @@ public class gameManager : MonoBehaviour
 	{
 		instance = this;
 		activeGameEvents = new List<gameEvent>();
+		keyCard = new bool[3];
 		DontDestroyOnLoad(gameObject);
 	}
 
@@ -108,7 +111,8 @@ public class gameManager : MonoBehaviour
         {
 			Debug.Log ("Player Spawn not found on level setup");
         }
-
+		if (sceneControl.instance.SceneName() == "Level One")
+			finalGateButton = GameObject.FindGameObjectWithTag("FinalGateButton").GetComponent<gateButton>();
 		//Load player in and assign script components
 		playerInstance = Instantiate(PlayerPrefab, PlayerSpawnPos.transform.position, PlayerSpawnPos.transform.rotation);
 		
@@ -383,6 +387,8 @@ public class gameManager : MonoBehaviour
 	}
 	private void managePlayerTasks()
 	{
+		if (allKeysFound())
+			finalGateButton.CanInteractYet = true;
 		//could probably only check this when an interaction happens or something
 		if (gameEventManager.instance.HasEvents())
 		{
@@ -391,7 +397,22 @@ public class gameManager : MonoBehaviour
 			gameEventManager.instance.EventListComplete();
 		}
 	}
-
+	private bool allKeysFound()
+    {
+		int keysFound = 0;
+		if (keyCard[0])
+			keysFound++;
+		if (keyCard[1])
+			keysFound++;
+		if (keyCard[2])
+			keysFound++;
+		if (keysFound == 3)
+		{
+			return true;
+		}
+		else 
+			return false;
+	}
     private void clearLevel(bool respawning = false)
     {
 		if (!respawning)
