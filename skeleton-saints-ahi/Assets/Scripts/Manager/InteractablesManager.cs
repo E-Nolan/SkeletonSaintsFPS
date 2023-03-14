@@ -9,6 +9,8 @@ public class InteractablesManager : MonoBehaviour
 	public float ReachDistance = 5f;
 
 	public LayerMask interactableLayer;
+	IInteractable oldInteractable;
+	IInteractable currentInteractable;
 
 	public void Update()
 	{
@@ -18,17 +20,22 @@ public class InteractablesManager : MonoBehaviour
 			{
 				Ray inputRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
 				RaycastHit interactingHit;
+				
 				if (Physics.Raycast(inputRay, out interactingHit, ReachDistance, interactableLayer))
 				{
-					IInteractable currentInteractable;
 					if (interactingHit.collider != null)
-						currentInteractable = interactingHit.collider.GetComponent<IInteractable>();
+					{
+						currentInteractable = interactingHit.collider.GetComponent<IInteractable>();	
+					}
 					else
+					{
 						currentInteractable = null;
-
+					}
+					oldInteractable = currentInteractable;
 					if (currentInteractable != null)
 					{
-						inputReader.DisplayMessage(currentInteractable.interactionText); // the line so that the item names appear on screen
+						oldInteractable = currentInteractable;
+						inputReader.DisplayMessage(currentInteractable.currentInteractionText); // the line so that the item names appear on screen
 						if (Input.GetButtonDown(playerPreferences.instance.Button_Interact))
 						{
 							currentInteractable.Interact();
@@ -38,12 +45,16 @@ public class InteractablesManager : MonoBehaviour
 					else
 					{
 						inputReader.ClearMessage();
+
 					}
-				}
+                }
 				else
 				{
 					inputReader.ClearMessage();
-
+					if (oldInteractable != null)
+					{
+						oldInteractable.ResetInteractionText();
+					}
 				}
 			}
 		}

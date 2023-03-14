@@ -25,7 +25,7 @@ public class doorButton : interactableButton
             base.Interact();
             LinkedDoor.ActivateDoor();
             if (secretDoor)
-                interactionText = activateSecretDoor;
+                currentInteractionText = activateSecretDoor;
 
             if (!onDoor)
                 ChangeColor();
@@ -33,7 +33,7 @@ public class doorButton : interactableButton
         else
         {
             if (secretDoor)
-                interactionText = activateSecretDoorDenial;
+                currentInteractionText = activateSecretDoorDenial;
         }
 
     }

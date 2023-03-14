@@ -38,7 +38,7 @@ public class hUDManager : MonoBehaviour
     public TextMeshProUGUI keyCard03Text;
 
     [Header("----- Dialogue -----")]
-    public GameObject gate;
+    public TextMeshProUGUI gateText;
     public GameObject swap;
 
     [Header("----- Misc UI -----")]
@@ -211,14 +211,18 @@ public class hUDManager : MonoBehaviour
         swap.SetActive(false);
     }
 
-    public void displayGateTrue()
+    public void setGate(bool active, bool keyFound = false)
     {
-        gate.SetActive(true);
-    }
-
-    public void displayGateFalse()
-    {
-        gate.SetActive(false);
+        gateText.gameObject.SetActive(active);
+        if (keyFound)
+        {
+            gateText.text = "Gate acess: GRANTED\nGate terminal status: UNAUTHORIZED";
+        }
+        else
+        {
+            gateText.text = "Gate acess: DENIED\nGate terminal status: UNAUTHORIZED";
+        }
+        
     }
 
     public void displayReloadWeaponText()

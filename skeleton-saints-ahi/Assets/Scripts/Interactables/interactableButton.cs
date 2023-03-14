@@ -22,7 +22,11 @@ public class interactableButton : IInteractable
     public Material InteractedMaterial;
     public Material OriginalMaterial;
 
-    private void Start()
+    void Awake()
+    {
+        Init();
+    }
+    public virtual void Init()
     {
         if (Objective == null)
         {

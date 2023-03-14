@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class IKey : MonoBehaviour
-{ 
+{
+    [SerializeField] gateButton gBUtton;
+
     [Tooltip("Positive = Clockwise | Negative = Counter-Clockwise")]
     [Range(-360, 360)] [SerializeField] int rotationSpeed;
     [SerializeField] AudioClip pickupSound;
+
+
 
     // Update is called once per frame
     void Update()
@@ -23,6 +27,7 @@ public class IKey : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            gBUtton.CanInteractYet = true;
             if (pickupSound)
                 gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
 

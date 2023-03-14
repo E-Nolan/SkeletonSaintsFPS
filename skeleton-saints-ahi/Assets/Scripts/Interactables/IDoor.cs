@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class IDoor : MonoBehaviour
 {
-    private Animator doorAnimator;
+    private Animator anim;
     private void Awake()
     {
-        doorAnimator = GetComponentInParent<Animator>();
+        anim = GetComponentInParent<Animator>();
     }
     public void ActivateDoor()
     {
-        if (doorAnimator.IsInTransition(0))
+        if (anim.IsInTransition(0))
             return;
         AnimationReaction doorAction = ScriptableObject.CreateInstance<AnimationReaction>();
         doorAction.instruction = 1;
-        doorAction.animator = doorAnimator;
+        doorAction.animator = anim;
         doorAction.text = "Activated";
         doorAction.React(this);
     }
