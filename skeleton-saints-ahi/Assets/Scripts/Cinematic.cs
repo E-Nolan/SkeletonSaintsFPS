@@ -7,22 +7,26 @@ using UnityEngine.SceneManagement;
 
 public class Cinematic : MonoBehaviour
 {
-    [Header("----- Camera -----")]
+    [Header("----- Cameras -----")]
     [SerializeField] private Camera cam;
-    [SerializeField] private Camera camMain;
     [SerializeField] private Camera uiCamera;
+
+    [Header("----- Camera Vars -----")]
     [SerializeField] private GameObject nameText;
+    [SerializeField] private GameObject pressAnyKeyText;
+    [SerializeField] private GameObject speedLines;
     [Range(0.1f, 5f)] [SerializeField] private float camSpeed;
     [SerializeField] private Vector3 cameraOffset;
-    [SerializeField] private bool reachedTargetPosition;
-    [SerializeField] private bool isWaiting;
 
     [Header("----- Targets -----")]
     [SerializeField] private GameObject[] targets;
     [Range(0.1f, 10f)] [SerializeField] private float focusTimer;
-    public GameObject CurrentTarget;
+    [HideInInspector] public GameObject CurrentTarget;
+    [SerializeField] private bool reachedTargetPosition;
+    [SerializeField] private bool isWaiting;
 
-
+    private Camera camMain;
+    private GameObject mainMenu;
     private Vector3 targetPosition;
     private int _index;
 
@@ -36,9 +40,14 @@ public class Cinematic : MonoBehaviour
         }
 
         CurrentTarget = targets[0];
+        mainMenu = GameObject.Find("Game Manager/UI/MenuManager/Main Menu Panel");
 
-        uiCamera.gameObject.SetActive(false);
+        //uiCamera.gameObject.SetActive(false);
+        pressAnyKeyText.gameObject.SetActive(true);
+        nameText.gameObject.SetActive(false);
+        speedLines.gameObject.SetActive(false);
         camMain.gameObject.SetActive(false);
+        mainMenu.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -80,21 +89,33 @@ public class Cinematic : MonoBehaviour
 
         nameText.GetComponent<TextMeshPro>().enabled = isWaiting;
 
-        if(isWaiting)
-            uiCamera.gameObject.SetActive(true);
+        if (isWaiting)
+        {
+            //uiCamera.gameObject.SetActive(true);
+            nameText.gameObject.SetActive(true);
+            speedLines.gameObject.SetActive(true);
+        }
         else
-            uiCamera.gameObject.SetActive(false);
+        {
+            //uiCamera.gameObject.SetActive(false);
+            nameText.gameObject.SetActive(false);
+            speedLines.gameObject.SetActive(false);
+        }
 
         transform.LookAt(targets[_index].transform.position.normalized);
     }
 
+    // Cinematic prefab object is intended to be destroyed when not in use
+    // and Instantiated when needed
     void OnDestroy()
     {
         if (camMain != null)
         {
             transform.position = camMain.transform.position;
             camMain.gameObject.SetActive(true);
+            mainMenu.gameObject.SetActive(true);
         }
+
     }
 
     private IEnumerator Delay(float delay)
