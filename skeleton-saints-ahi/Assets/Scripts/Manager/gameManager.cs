@@ -79,7 +79,8 @@ public class gameManager : MonoBehaviour
 		 */
 		if (BUILDMODE)
 		{
-			menuManager.instance.DeactivateAllMenus();
+			//menuManager.instance.DeactivateAllMenus
+			mainMenuManager.instance.DeactivateMainMenu();
 			sceneControl.instance.LoadMainLevel();
 		}
 		FetchEvents();

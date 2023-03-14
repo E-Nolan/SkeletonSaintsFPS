@@ -88,9 +88,9 @@ public sealed class playerPreferences: MonoBehaviour
 
 	[Header("----- Camera Stats -----")]
 	[Range(400, 700)]
-	public float sensitivity_Horizontal;
+	public float horizontal;
 	[Range(300, 600)]
-	public float sensitivity_Vertical;
+	public float vertical;
 	public bool invertX;
 
 	[Header("Sound Settings")]
@@ -104,28 +104,26 @@ public sealed class playerPreferences: MonoBehaviour
 	//between closing and reopening
 	#region Defaults
 	//Sound
-	public float masterVolume_DEFAULT = 100f;
-	public float musicVolume_DEFAULT = 100f;
-	public float sfxVolume_DEFAULT = 100f;
-
-
+	public float masterVolumeDefault = 1f;
+	public float musicVolumeDefault = 1f;
+	public float sfxVolumeDefault = 1f;
 
 	//Camera
-    public float sensitivity_Horizontal_DEFAULT = 600f;
-	public float sensitivity_Vertical_DEFAULT = 500f;
-	public static bool invertX_DEFAULT = false;
+    public float horizontalDefault = 500;
+	public float verticalDefault = 500;
+	public bool invertXDefault= false;
     #endregion
 
-	public void AssignActivetoDefault()
+    public void AssignActivetoDefault()
     {
 
-		masterVolume = masterVolume_DEFAULT;
-		musicVolume = musicVolume_DEFAULT;
-		sfxVolume = sfxVolume_DEFAULT;
+		masterVolume = masterVolumeDefault;
+		musicVolume = musicVolumeDefault;
+		sfxVolume = sfxVolumeDefault;
 
-		sensitivity_Horizontal = sensitivity_Horizontal_DEFAULT;
-		sensitivity_Vertical =  sensitivity_Vertical_DEFAULT;
-		invertX = invertX_DEFAULT;
+		horizontal = horizontalDefault;
+		vertical =  verticalDefault;
+		invertX = invertXDefault;
 
 	}
 	public void GetDefaultsFromFile(/*string fileName*/)

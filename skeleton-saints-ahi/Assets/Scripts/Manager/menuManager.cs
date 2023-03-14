@@ -133,22 +133,22 @@ public class menuManager : MonoBehaviour
 	public void SetTextFromPlayerPreferences()
 	{
 		masterVolume_Value.text = playerPreferences.instance.masterVolume.ToString();
-		masterVolume_Slider.value = float.Parse(masterVolume_Value.text);
+		masterVolume_Slider.value = playerPreferences.instance.masterVolume;
 
 		musicVolume_Value.text = playerPreferences.instance.musicVolume.ToString();
-		musicVolume_Slider.value = float.Parse(musicVolume_Value.text);
+		musicVolume_Slider.value = playerPreferences.instance.musicVolume;
 
-		
+
 		sfxVolume_Value.text = playerPreferences.instance.sfxVolume.ToString();
-		sfxVolume_Slider.value = float.Parse(sfxVolume_Value.text);
+		sfxVolume_Slider.value = playerPreferences.instance.sfxVolume;
 
 
-		cameraSensitivityHorizontal_Value.text = playerPreferences.instance.sensitivity_Horizontal.ToString();
-		cameraSensitivityHorizontal_Slider.value = float.Parse(cameraSensitivityHorizontal_Value.text);
+		cameraSensitivityHorizontal_Value.text = playerPreferences.instance.horizontal.ToString();
+		cameraSensitivityHorizontal_Slider.value = playerPreferences.instance.horizontal;
 
-		cameraSensitivityVertical_Value.text = playerPreferences.instance.sensitivity_Vertical.ToString();
-		cameraSensitivityVertical_Slider.value = float.Parse(cameraSensitivityVertical_Value.text);
-		
+		cameraSensitivityVertical_Value.text = playerPreferences.instance.vertical.ToString();
+		cameraSensitivityVertical_Slider.value = playerPreferences.instance.vertical;
+
 		invertX.isOn = playerPreferences.instance.invertX;
 	}
 
@@ -158,9 +158,8 @@ public class menuManager : MonoBehaviour
 		playerPreferences.instance.musicVolume = float.Parse(musicVolume_Value.text);
 		playerPreferences.instance.sfxVolume = float.Parse(sfxVolume_Value.text);
 
-
-		playerPreferences.instance.sensitivity_Horizontal = float.Parse(cameraSensitivityHorizontal_Value.text);
-		playerPreferences.instance.sensitivity_Vertical = float.Parse(cameraSensitivityVertical_Value.text);
+		playerPreferences.instance.horizontal = float.Parse(cameraSensitivityHorizontal_Value.text);
+		playerPreferences.instance.vertical = float.Parse(cameraSensitivityVertical_Value.text);
 		
 		playerPreferences.instance.invertX = invertX.isOn;
 

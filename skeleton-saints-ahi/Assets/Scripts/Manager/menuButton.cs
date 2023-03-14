@@ -25,6 +25,11 @@ public class menuButton : MonoBehaviour
         mainMenuManager.instance.hardMode();
     }
 
+    public void PlayGame()
+    {
+        mainMenuManager.instance.playGame();
+    }
+
     //control menu
     public void ControlMenu()
     {
@@ -36,6 +41,16 @@ public class menuButton : MonoBehaviour
     public void SettingsMenu()
     {
         mainMenuManager.instance.DisplaySettings();
+    }
+
+    public void SaveSettings()
+    {
+        mainMenuManager.instance.SaveSettingsToPlayer();
+    }
+
+    public void ResetSetting()
+    {
+        mainMenuManager.instance.ResetDefault();
     }
 
     //credits menu

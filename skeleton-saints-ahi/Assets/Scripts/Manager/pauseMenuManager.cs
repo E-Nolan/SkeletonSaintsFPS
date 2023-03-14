@@ -5,15 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
 
-public class mainMenuManager : MonoBehaviour
+public class pauseMenuManager : MonoBehaviour
 {
-    public static mainMenuManager instance;
-    public GameObject mainMenu;
+    public static pauseMenuManager instance;
 
-    [Header("----- Start Panels -----")]
-    public GameObject startMenu;
-    public List<GameObject> difficulty;
-    public GameObject currentDifficulty;
+    [Header("----- Game Panels -----")]
+    public GameObject gameMenu;
+    public List<GameObject> gameState;
+    public GameObject currentState;
 
     [Header("----- Controls Panels -----")]
     public GameObject controlMenu;
@@ -25,15 +24,12 @@ public class mainMenuManager : MonoBehaviour
     public TextMeshProUGUI horizontal, vertical;
     public Slider horizontalSlider, verticalSlider;
     public Toggle invertX;
+    public List<GameObject> difficulty;
+    public GameObject currentDifficulty;
     bool changesSaved;
 
-    [Header("----- Credits Panels -----")]
-    public GameObject creditsMenu;
-    public List<GameObject> credits;
-    public GameObject currentCredits;
-    public int currentPage;
-    public GameObject nextPage;
-    public GameObject previousPage;
+    [Header("----- Objectives Panels -----")]
+    public GameObject objectivesMenu;
 
     [Header("----- Quit Panels -----")]
     public GameObject quitMenu;
@@ -53,74 +49,45 @@ public class mainMenuManager : MonoBehaviour
 
     private void Start()
     {
-        mainMenu.SetActive(true);
-        startMenu.SetActive(true);
-        activeMenu = startMenu;
-        currentPage = 0;
-        difficulty[0].SetActive(true);
-        currentDifficulty = difficulty[0];
-        gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
+        gameMenu.SetActive(true);
+        activeMenu = gameMenu;
     }
 
-    //Start menu
-    public void DisplayStart()
+    //game menu
+    public void DisplayGame()
     {
         SavedChanges();
-        if (activeMenu != startMenu)
+        if(activeMenu != gameMenu)
         {
             activeMenu.SetActive(false);
-            activeMenu = startMenu;
-            startMenu.SetActive(true);
+            activeMenu = gameMenu;
+            gameMenu.SetActive(true);
+            currentState = gameState[0];
+            currentState.SetActive(true);
         }
     }
 
-    public void easyMode()
+    public void Respawn()
     {
-        
-        if(currentDifficulty != difficulty[0])
+        if(currentState != gameState[0])
         {
-            currentDifficulty.SetActive(false);
-            currentDifficulty = difficulty[0];
-            difficulty[0].SetActive(true);
-            gameManager.instance.currentDifficulty = gameManager.Difficulty.Easy;
+            currentState.SetActive(false);
+            currentState = gameState[0];
+            gameState[0].SetActive(true);
         }
     }
 
-    public void normalMode()
+    public void Restart()
     {
-        
-        if (currentDifficulty != difficulty[1])
+        if (currentState != gameState[1])
         {
-            currentDifficulty.SetActive(false);
-            currentDifficulty = difficulty[1];
-            difficulty[1].SetActive(true);
-            gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
+            currentState.SetActive(false);
+            currentState = gameState[1];
+            gameState[1].SetActive(true);
         }
     }
 
-    public void playGame()
-    {
-        gameManager.instance.InitializePlay();
-    }
-
-    public void hardMode()
-    {
-        
-        if (currentDifficulty != difficulty[2])
-        {
-            currentDifficulty.SetActive(false);
-            currentDifficulty = difficulty[2];
-            difficulty[2].SetActive(true);
-            gameManager.instance.currentDifficulty = gameManager.Difficulty.Hard;
-        }
-    }
-
-    public void PlayGame()
-    {
-
-    }
-
-    //Control menu
+    //control menu
     public void DisplayControl()
     {
         SavedChanges();
@@ -132,8 +99,7 @@ public class mainMenuManager : MonoBehaviour
         }
     }
 
-
-    //settings menu
+    //setting menu
     public void DisplaySettings()
     {
         if (activeMenu != settingsMenu)
@@ -201,46 +167,29 @@ public class mainMenuManager : MonoBehaviour
 
     public void SavedChanges()
     {
-        if(activeMenu == settingsMenu)
+        if (activeMenu == settingsMenu)
         {
             if (changesSaved != true)
             {
                 ResetDefault();
             }
-        }  
-    }
-
-    //credits menu
-    public void DisplayCredits()
-    {
-        SavedChanges();
-        if (activeMenu != creditsMenu)
-        {
-            activeMenu.SetActive(false);
-            activeMenu = creditsMenu;
-            creditsMenu.SetActive(true);
-            currentCredits = credits[currentPage];
-            credits[currentPage].SetActive(true);
         }
     }
 
-    public void NextPage()
+    //objectives menu
+    public void DisplayObjectives()
     {
-        credits[currentPage].SetActive(false);
-        currentPage++;
-        currentCredits = credits[currentPage];
-        credits[currentPage].SetActive(true);
+        SavedChanges();
+        if (activeMenu != objectivesMenu)
+        {
+            activeMenu.SetActive(false);
+            activeMenu = objectivesMenu;
+            objectivesMenu.SetActive(true);
+            changesSaved = false;
+        }
     }
 
-    public void PreviousPage()
-    {
-        credits[currentPage].SetActive(false);
-        currentPage--;
-        currentCredits = credits[currentPage];
-        credits[currentPage].SetActive(true);
-    }
-
-   //quit menu
+    //quit menu
     public void DisplayQuit()
     {
         SavedChanges();
@@ -250,10 +199,5 @@ public class mainMenuManager : MonoBehaviour
             activeMenu = quitMenu;
             quitMenu.SetActive(true);
         }
-    }
-
-    public void DeactivateMainMenu()
-    {
-        mainMenu.SetActive(false);
     }
 }
