@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 1988112262730287152}
   - component: {fileID: 8682056086257030218}
   m_Layer: 7
-  m_Name: Homing Missile
+  m_Name: Cluster Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,10 +112,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6334445734507695394}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.024548851, y: 0.030155845, z: -0.77493274, w: 0.63084644}
   m_LocalPosition: {x: 0, y: 0.668, z: -8.57}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5547459835752315251}
   m_Father: {fileID: 0}
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionObject: {fileID: 6087298982043621310, guid: 9e9e14ab8204c09488a15fc46d293928, type: 3}
-  turnSpeed: 2
-  accelerationRate: 7.5
+  turnSpeed: 4
+  accelerationRate: 9
   destroyTimer: 5
 --- !u!114 &4976332635579290271
 MonoBehaviour:
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f896df0e2bed754f8971a8e824749b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDmg: 10
+  bulletDmg: 2
   bulletImpactSound: {fileID: 8682056086257030218}
   damagePopupPrefab: {fileID: 5156991524456792442, guid: 48bf4594a2656ef49afe5d660714f3c4, type: 3}
 --- !u!136 &6265951388605544237
