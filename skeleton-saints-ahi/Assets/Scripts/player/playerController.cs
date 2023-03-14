@@ -421,7 +421,7 @@ public class playerController : MonoBehaviour, IDamage
         currentArmor -= damage;
         if (currentArmor < 0)
         {
-            damage = (Mathf.CeilToInt(-currentArmor));
+            damage = -currentArmor;
             currentArmor = 0;
         }
         else
@@ -617,7 +617,20 @@ public class playerController : MonoBehaviour, IDamage
         hUDManager.instance.updatePlayerArmorBar();
     }
 
-#region Public Member Accessors
+    public void SetInvincibilityState(bool _isInvincible)
+    {
+        switch (_isInvincible)
+        {
+            case true:
+                invincibilityTimer = invincibilityCooldown;
+                break;
+            case false:
+                invincibilityTimer = 0.0f;
+                break;
+        }
+    }
+
+    #region Public Member Accessors
     public int GetMaxHealth()
     { return maxHealth; }
 
