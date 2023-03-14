@@ -27,7 +27,7 @@ public class collectiblePickup : MonoBehaviour
 
                 gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
 
-                Destroy(gameObject);
+                Destroy(transform.root.gameObject);
             }
         }
     }
