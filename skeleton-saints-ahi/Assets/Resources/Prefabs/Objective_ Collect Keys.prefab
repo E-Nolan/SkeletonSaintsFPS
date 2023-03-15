@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6543562840006862601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6543562840006862600}
+  - component: {fileID: 6543562840006862602}
+  - component: {fileID: 6543562840006862603}
+  m_Layer: 0
+  m_Name: Objective_ Collect Keys
+  m_TagString: GameEvent
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6543562840006862600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543562840006862601}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 199.23888, y: 20.752773, z: 99.545525}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6543562840006862602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543562840006862601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0913073b08acbd4abad8b669fcf9713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Find Keycards
+  Conditions:
+  - {fileID: 6543562840006862603}
+  SpecificConditions: []
+  allPreConditionsMet: 0
+--- !u!114 &6543562840006862603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543562840006862601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3add04cb7d6742c4aa7a9dd880a24262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentEvent: {fileID: 0}
+  EventClass: 2
+  description: Collect Keycards
+  satisfied: 0
+  CollectionName: Keycards
+  Objectives:
+  - {fileID: 8873350526565115659, guid: 7eecb095d7f8b496b8c5d75d593d02ab, type: 3}
+  - {fileID: 3371348667280081738, guid: 9e20215bdbc534dc4aae2563e685e023, type: 3}
+  - {fileID: 3371348667280081738, guid: fc7d78946b74640578d27e9aa28aaf7a, type: 3}
+  FoundObjectives: 0
+  ObjectiveLocations:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ConditionUI: {fileID: 0}
+  keycardObjectives: 1

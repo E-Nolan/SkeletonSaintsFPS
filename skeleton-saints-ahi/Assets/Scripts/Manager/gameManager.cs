@@ -31,7 +31,7 @@ public class gameManager : MonoBehaviour
 	public GameObject currentScene;
 
 	[Header("----- Game Goals -----")]
-	[SerializeField] public bool[] keyCard;
+	[SerializeField] public bool[] keyCard = new bool[3];
 	List<gameEvent> activeGameEvents;
 	[SerializeField]
 	gateButton finalGateButton;
@@ -45,7 +45,6 @@ public class gameManager : MonoBehaviour
 	{
 		instance = this;
 		activeGameEvents = new List<gameEvent>();
-		keyCard = new bool[3];
 		DontDestroyOnLoad(gameObject);
 	}
 

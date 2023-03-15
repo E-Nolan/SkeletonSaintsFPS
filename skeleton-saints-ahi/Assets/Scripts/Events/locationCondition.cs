@@ -5,7 +5,7 @@ using UnityEngine;
 public class locationCondition : eventCondition
 {
     public GameObject platformPrefab;
-    public locationPlatform Objective;
+    public locationPlatform platformScript;
 
     public TaskListUI_Location ConditionUI;
 
@@ -15,12 +15,16 @@ public class locationCondition : eventCondition
     }
     public void SpawnObjective()
     {
-        Instantiate(platformPrefab, gameObject.transform);
-        Objective = platformPrefab.GetComponent<locationPlatform>();
+        GameObject temp = Instantiate(platformPrefab, gameObject.transform);
+        platformScript = temp.GetComponent<locationPlatform>();
+        platformScript.Objective = temp.GetComponent<objectiveArea>();
+        platformScript.Objective.parentCondition = this;
+
+        
     }
     public override bool CheckCompletion()
     {
-        if (Objective.locationPathed)
+        if (platformScript.locationPathed)
         {
             satisfied = true;
         }
@@ -33,11 +37,14 @@ public class locationCondition : eventCondition
     public void UpdateLocationUI(locationCondition locate)
     {   if (locate.ConditionUI != null)
         {
-            locate.ConditionUI.ConditionToggle.isOn = satisfied;
-            locate.ConditionUI.ConditionalUIText.text = "Get to: " + locate.platformPrefab.name + 
-                "\n Located at:" + Objective.transform.position;
-            locate.ConditionUI.LocationText.text = "Current Location: " +
-                gameManager.instance.PlayerScript().transform.position.ToString();
+            if (platformScript != null)
+            {
+                locate.ConditionUI.ConditionToggle.isOn = satisfied;
+                locate.ConditionUI.ConditionalUIText.text = "Get to: " + locate.platformPrefab.name +
+                    "\n Located at:" + platformScript.Objective.transform.position;
+                locate.ConditionUI.LocationText.text = "Current Location: " +
+                    gameManager.instance.PlayerScript().transform.position.ToString();
+            }
         }
     }
 }

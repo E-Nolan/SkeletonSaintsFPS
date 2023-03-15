@@ -21,7 +21,7 @@ public class IKey : collectionItem
         {
             gBUtton = GameObject.FindGameObjectWithTag("RedButton").GetComponent<gateButton>();
         }
-        else if (entryLevel[0])
+        else if (entryLevel[1])
         {
             gBUtton = GameObject.FindGameObjectWithTag("BlueButton").GetComponent<gateButton>();
         }
@@ -55,7 +55,7 @@ public class IKey : collectionItem
                 hUDManager.instance.keyCard01Text.color = new Color(hUDManager.instance.keyCard01Text.color.r, hUDManager.instance.keyCard01Text.color.g, hUDManager.instance.keyCard01Text.color.b, 1f);
                 gameManager.instance.keyCard[0] = !gameManager.instance.keyCard[0];
             }
-            else if (entryLevel[0])
+            else if (entryLevel[1])
             {
                 Destroy(gameObject);
                 hUDManager.instance.card02.color = new Color(hUDManager.instance.card02.color.r, hUDManager.instance.card02.color.g, hUDManager.instance.card02.color.b, 1f);
