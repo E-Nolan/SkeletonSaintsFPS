@@ -38,7 +38,6 @@ public class pauseMenuManager : MonoBehaviour
     [Header("----- Menu Options -----")]
     public GameObject activeMenu;
     public bool canToggleGameMenu;
-    bool active;
 
     [Header("----- Audio -----")]
     public AudioSource Audio;
@@ -54,6 +53,8 @@ public class pauseMenuManager : MonoBehaviour
     {
         gameMenu.SetActive(true);
         activeMenu = gameMenu;
+        currentState = gameState[0];
+        currentState.SetActive(true);
     }
 
     private void LateUpdate()
@@ -101,6 +102,11 @@ public class pauseMenuManager : MonoBehaviour
         hUDManager.instance.toggleCursorVisibility();
     }
 
+    public void Resume()
+    {
+        unPause();
+    }
+
     //game menu
     public void DisplayGame()
     {
@@ -117,21 +123,21 @@ public class pauseMenuManager : MonoBehaviour
 
     public void Respawn()
     {
-        if(currentState != gameState[0])
+        if(currentState != gameState[1])
         {
             currentState.SetActive(false);
-            currentState = gameState[0];
-            gameState[0].SetActive(true);
+            currentState = gameState[1];
+            gameState[1].SetActive(true);
         }
     }
 
     public void Restart()
     {
-        if (currentState != gameState[1])
+        if (currentState != gameState[0])
         {
             currentState.SetActive(false);
-            currentState = gameState[1];
-            gameState[1].SetActive(true);
+            currentState = gameState[0];
+            gameState[0].SetActive(true);
         }
     }
 

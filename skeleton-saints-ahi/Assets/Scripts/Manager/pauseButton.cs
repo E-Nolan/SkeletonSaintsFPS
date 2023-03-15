@@ -11,7 +11,18 @@ public class pauseButton : MonoBehaviour
 
     public void SetRespawn()
     {
+        pauseMenuManager.instance.Respawn();
+    }
 
+    public void ConfirmRespawn()
+    {
+
+    }
+
+
+    public void Resume()
+    {
+        pauseMenuManager.instance.toggleGameMenu();
     }
 
     public void SetRestart()
@@ -19,9 +30,9 @@ public class pauseButton : MonoBehaviour
         pauseMenuManager.instance.Restart();
     }
 
-    public void Confirm()
+    public void ConfirmRestart()
     {
-
+        gameManager.instance.restartLevel();
     }
 
     public void ControlMenu()
@@ -54,4 +65,8 @@ public class pauseButton : MonoBehaviour
         pauseMenuManager.instance.DisplayQuit();
     }
 
+    public void ConfirmQuit()
+    {
+        gameManager.instance.restartGame();
+    }
 }
