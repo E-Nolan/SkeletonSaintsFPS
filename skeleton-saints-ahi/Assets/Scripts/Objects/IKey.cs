@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IKey : MonoBehaviour
+public class IKey : collectionItem
 {
     [SerializeField] gateButton gBUtton;
 
@@ -11,8 +11,25 @@ public class IKey : MonoBehaviour
     [Range(-360, 360)] [SerializeField] int rotationSpeed;
     [SerializeField] AudioClip pickupSound;
 
+    [SerializeField]
+    bool[] entryLevel = new bool[3];
 
+    public void AssignButton()
+    {
 
+        if (entryLevel[0])
+        {
+            gBUtton = GameObject.FindGameObjectWithTag("RedButton").GetComponent<gateButton>();
+        }
+        else if (entryLevel[0])
+        {
+            gBUtton = GameObject.FindGameObjectWithTag("BlueButton").GetComponent<gateButton>();
+        }
+        else
+        {
+            gBUtton = GameObject.FindGameObjectWithTag("YellowButton").GetComponent<gateButton>();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -30,28 +47,27 @@ public class IKey : MonoBehaviour
             gBUtton.CanInteractYet = true;
             if (pickupSound)
                 gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
-
-            switch (gameObject.name)
+            Collect();
+            if (entryLevel[0])
             {
-                case "Card01":
-                    Destroy(gameObject);
-                    hUDManager.instance.card01.color = new Color(hUDManager.instance.card01.color.r, hUDManager.instance.card01.color.g, hUDManager.instance.card01.color.b, 1f);
-                    hUDManager.instance.keyCard01Text.color = new Color(hUDManager.instance.keyCard01Text.color.r, hUDManager.instance.keyCard01Text.color.g, hUDManager.instance.keyCard01Text.color.b, 1f);
-                    gameManager.instance.keyCard[0] = !gameManager.instance.keyCard[0];
-                    return;
-                case "Card02":
-                    Destroy(gameObject);
-                    hUDManager.instance.card02.color = new Color(hUDManager.instance.card02.color.r, hUDManager.instance.card02.color.g, hUDManager.instance.card02.color.b, 1f);
-                    hUDManager.instance.keyCard02Text.color = new Color(hUDManager.instance.keyCard02Text.color.r, hUDManager.instance.keyCard02Text.color.g, hUDManager.instance.keyCard02Text.color.b, 1f);
-                    gameManager.instance.keyCard[1] = !gameManager.instance.keyCard[1];
-                    return;
-                case "Card03":
-                    Destroy(gameObject);
-                    hUDManager.instance.card03.color = new Color(hUDManager.instance.card03.color.r, hUDManager.instance.card03.color.g, hUDManager.instance.card03.color.b, 1f);
-                    hUDManager.instance.keyCard03Text.color = new Color(hUDManager.instance.keyCard03Text.color.r, hUDManager.instance.keyCard03Text.color.g, hUDManager.instance.keyCard03Text.color.b, 1f);
-                    gameManager.instance.keyCard[2] = !gameManager.instance.keyCard[2];
-                    return;
-
+                Destroy(gameObject);
+                hUDManager.instance.card01.color = new Color(hUDManager.instance.card01.color.r, hUDManager.instance.card01.color.g, hUDManager.instance.card01.color.b, 1f);
+                hUDManager.instance.keyCard01Text.color = new Color(hUDManager.instance.keyCard01Text.color.r, hUDManager.instance.keyCard01Text.color.g, hUDManager.instance.keyCard01Text.color.b, 1f);
+                gameManager.instance.keyCard[0] = !gameManager.instance.keyCard[0];
+            }
+            else if (entryLevel[0])
+            {
+                Destroy(gameObject);
+                hUDManager.instance.card02.color = new Color(hUDManager.instance.card02.color.r, hUDManager.instance.card02.color.g, hUDManager.instance.card02.color.b, 1f);
+                hUDManager.instance.keyCard02Text.color = new Color(hUDManager.instance.keyCard02Text.color.r, hUDManager.instance.keyCard02Text.color.g, hUDManager.instance.keyCard02Text.color.b, 1f);
+                gameManager.instance.keyCard[1] = !gameManager.instance.keyCard[1];
+            }
+            else
+            {
+                Destroy(gameObject);
+                hUDManager.instance.card03.color = new Color(hUDManager.instance.card03.color.r, hUDManager.instance.card03.color.g, hUDManager.instance.card03.color.b, 1f);
+                hUDManager.instance.keyCard03Text.color = new Color(hUDManager.instance.keyCard03Text.color.r, hUDManager.instance.keyCard03Text.color.g, hUDManager.instance.keyCard03Text.color.b, 1f);
+                gameManager.instance.keyCard[2] = !gameManager.instance.keyCard[2];
             }
         }
     }

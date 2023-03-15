@@ -16,6 +16,8 @@ public class collectionCondition : eventCondition
 
     public TaskListUI_Collection ConditionUI;
 
+    public bool keycardObjectives;
+
     private void Awake()
     {
         Init();
@@ -45,11 +47,21 @@ public class collectionCondition : eventCondition
 
     public void SpawnCollectables()
     {
-        for (int i = 0; i < Objectives.Count; i++)
+        if (!keycardObjectives)
         {
-            itemPickup pickup = Instantiate(Objectives[i], ObjectiveLocations[i]).GetComponent<itemPickup>();
-            pickup.parentCondition = this;
-
+            for (int i = 0; i < Objectives.Count; i++)
+            {
+                itemPickup pickup = Instantiate(Objectives[i], ObjectiveLocations[i]).GetComponent<itemPickup>();
+                pickup.parentCondition = this;
+            }
+        } else
+        {
+            for (int i = 0; i < Objectives.Count; i++)
+            {
+                IKey pickup = Instantiate(Objectives[i], ObjectiveLocations[i]).GetComponent<IKey>();
+                pickup.parentCondition = this;
+                pickup.AssignButton();
+            }
         }
     }
     public void UpdateCollectionUI(collectionCondition collection)

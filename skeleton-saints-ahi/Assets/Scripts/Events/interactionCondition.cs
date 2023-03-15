@@ -20,8 +20,11 @@ public class interactionCondition : eventCondition
     {
         if (interaction.ConditionUI != null)
         {
-            interaction.ConditionUI.ConditionToggle.isOn = satisfied;
-            interaction.ConditionUI.ConditionalUIText.text = "Interact with: " + interaction.Objective.name;
+            if (Objective != null)
+            {
+                interaction.ConditionUI.ConditionToggle.isOn = satisfied;
+                interaction.ConditionUI.ConditionalUIText.text = "Interact with: " + interaction.Objective.name;
+            }
         }
     }
 }

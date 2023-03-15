@@ -85,9 +85,12 @@ public class gameManager : MonoBehaviour
 		}
 		FetchEvents();
 		if (QUICKPLAYMANAGMENT)
+		{
+			mainMenuManager.instance.DeactivateMainMenu();
 			LevelSetup();
-		//either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
-		hUDManager.instance.showHUD();
+		}
+            //either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
+            hUDManager.instance.showHUD();
 		
 		playStarted = true;
 		isPaused = false;
@@ -112,7 +115,7 @@ public class gameManager : MonoBehaviour
         {
 			Debug.Log ("Player Spawn not found on level setup");
         }
-		if (sceneControl.instance.SceneName() == "Level One")
+		if (sceneControl.instance.CurrentScene().name == "Level One")
 			finalGateButton = GameObject.FindGameObjectWithTag("FinalGateButton").GetComponent<gateButton>();
 		//Load player in and assign script components
 		playerInstance = Instantiate(PlayerPrefab, PlayerSpawnPos.transform.position, PlayerSpawnPos.transform.rotation);

@@ -27,9 +27,12 @@ public class spawnManager : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && !isSpawning && enemiesSpawned < spawnMaxNum)
+        if (gameManager.instance.PlayerScript() != null)
         {
-            StartCoroutine(spawnEnemy());
+            if (playerInRange && !isSpawning && enemiesSpawned < spawnMaxNum)
+            {
+                StartCoroutine(spawnEnemy());
+            }
         }
     }
 
@@ -84,8 +87,13 @@ public class spawnManager : MonoBehaviour
         GameObject newEnemy = Instantiate(tempEnemy, newSpawnPos.position, tempEnemy.transform.rotation);
         if (newEnemy != null)
         {
-            if(weaponTypes.Length > 0 && newWeapon != null)
-                newEnemy.GetComponent<Enemy>().PickupWeapon(newWeapon.GetComponent<weaponPickup>().weapon);
+            if (weaponTypes.Length > 0 && newWeapon != null)
+            {
+                Enemy tempScript  = newEnemy.GetComponent<Enemy>();
+                tempScript.PickupWeapon(newWeapon.GetComponent<weaponPickup>().weapon);
+                tempScript.savedWeapon = newWeapon;
+            }
+            
 
             // NOTE: Particles only spawn one Particle System per spawn position
             if (particles.Length > 1)

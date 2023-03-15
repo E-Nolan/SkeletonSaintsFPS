@@ -74,8 +74,8 @@ public sealed class sceneControl
         };
     }
 
-    public string SceneName()
+    public Scene CurrentScene()
     {
-        return SceneManager.GetActiveScene().name;
+        return SceneManager.GetActiveScene();
     }
 }

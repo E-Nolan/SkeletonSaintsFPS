@@ -43,6 +43,10 @@ public class Enemy : MonoBehaviour, IDamage
     [Header("----- Publics -----")]
     public bool isShooting = false;
     public rangedWeapon currentWeapon;
+    
+    [SerializeField]
+    public GameObject savedWeapon;
+    
     public bool acquiringWeapon;
     public bool isDead = false;
     public bool isAttacking;
@@ -401,5 +405,10 @@ public class Enemy : MonoBehaviour, IDamage
     private void PlaySpawnScreech()
     {
         audioSource.PlayOneShot(spawnScreech, spawnScreechVolume);
+    }
+
+    public void OnDeSerialize()
+    {
+        PickupWeapon(savedWeapon.GetComponent<rangedWeapon>().GetComponent<weaponPickup>().weapon);
     }
 }

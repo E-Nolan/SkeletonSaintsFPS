@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+[System.Serializable]
 public class rangedWeapon : MonoBehaviour
 {
     #region Member Fields
@@ -232,7 +232,10 @@ public class rangedWeapon : MonoBehaviour
                 newBulletScript.bulletDmg += lastBulletBonus;
 
             if (usedByPlayer)
+            {
+                if (gameManager.instance.PlayerScript() != null)
                 newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed + Vector3.Project(gameManager.instance.PlayerScript().GetPlayerVelocity(), newBullet.transform.forward);
+            }
             else
                 newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed;
             newBulletScript.setTimer((float)range / bulletSpeed);

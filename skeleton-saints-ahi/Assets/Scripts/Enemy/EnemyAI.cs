@@ -86,9 +86,14 @@ public class EnemyAI : MonoBehaviour
     {
         if (_agent.enabled)
         {
-            if ((!CanDetectPlayer || _agent.destination != gameManager.instance.playerInstance.transform.position) &&
+            if (gameManager.instance.playerInstance != null)
+            {
+                if ((!CanDetectPlayer || _agent.destination != gameManager.instance.playerInstance.transform.position) &&
             ((BossEnemy && !GetComponent<bossAttackManager>().goingToWaveLocation) || !(BossEnemy && GetComponent<bossAttackManager>().goingToWaveLocation)))
-                StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
+                {
+                    StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
+                }
+            }
 
             // --- ANIMATION STUFF ---
             // Get how far enemy is from its next position
