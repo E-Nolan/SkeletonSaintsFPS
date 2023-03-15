@@ -29,7 +29,7 @@ public class CinematicManager : MonoBehaviour
         {
             _timer += Time.deltaTime;
 
-            if (Input.anyKeyDown && tempCinematic.activeSelf)
+            if (Input.anyKeyDown && tempCinematic != null && tempCinematic.activeSelf)
             {
                 Destroy(tempCinematic);
                 _timer = 0f;
