@@ -17,7 +17,8 @@ public class weaponPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if(gameManager.instance.PlayerScript().weaponInventory.Count <3 || gameManager.instance.PlayerScript().currentSecondary == null)
+            if ((weapon.weaponType == weaponStats.weaponStatsType.Gun && gameManager.instance.PlayerScript().weaponInventory.Count < 3) 
+             || (weapon.weaponType == weaponStats.weaponStatsType.GrappleGun && gameManager.instance.PlayerScript().currentSecondary == null))
             {
                 // Check to see if the player already has the weapon. If they do, give them ammo for the respective weapon instead
                 GameObject duplicateWeapon = gameManager.instance.PlayerScript().weaponInventory.Find(x => x.GetComponent<rangedWeapon>().weaponName == weapon.weaponName);
