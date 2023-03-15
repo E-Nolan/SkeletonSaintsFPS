@@ -11,6 +11,8 @@ public abstract class eventCondition : MonoBehaviour
 
     [SerializeField]
     protected bool satisfied;
+
+    public bool preRequisitesMet = false;
     private void Awake()
     {
         Init();
@@ -19,7 +21,7 @@ public abstract class eventCondition : MonoBehaviour
     {
         if (parentEvent == null)
         {
-            parentEvent = GetComponent<gameEvent>();
+            parentEvent = GetComponentInParent<gameEvent>();
         }
     }
     public bool Satisfied { get => satisfied;}

@@ -22,10 +22,6 @@ public class interactableButton : IInteractable
     public Material InteractedMaterial;
     public Material OriginalMaterial;
 
-    void Awake()
-    {
-        Init();
-    }
     public virtual void Init()
     {
         if (Objective == null)

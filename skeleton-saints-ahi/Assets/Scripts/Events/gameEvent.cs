@@ -45,6 +45,7 @@ public class gameEvent : MonoBehaviour
         {
             for (int i = 0; i < SpecificConditions.Count; i++)
             {
+                SpecificConditions[i].preRequisitesMet = true;
                 SpecificConditions[i].CheckCompletion();
             }
         }
@@ -67,5 +68,16 @@ public class gameEvent : MonoBehaviour
             }
         }
         return true;
+    }
+    public void SetParent()
+    {
+        for (int i = 0; i < Conditions.Count; i++)
+        {
+            Conditions[i].parentEvent = this;
+        }
+        for (int i = 0; i < SpecificConditions.Count; i++)
+        {
+            SpecificConditions[i].parentEvent = this;
+        }
     }
 }

@@ -15,7 +15,7 @@ public class doorButton : interactableButton
 
     private void Awake()
     {
-        
+        Init();
     }
     public override void Init()
     {

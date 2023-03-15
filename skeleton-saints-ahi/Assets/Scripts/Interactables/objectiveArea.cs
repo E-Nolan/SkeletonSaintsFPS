@@ -7,7 +7,7 @@ public class objectiveArea : MonoBehaviour
     public eventCondition parentCondition;
     public interactableArea childArea;
 
-    private void Awake()
+    private void Start ()
     {
         childArea.Objective = this;
     }

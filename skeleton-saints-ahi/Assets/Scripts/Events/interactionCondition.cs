@@ -6,7 +6,14 @@ public class interactionCondition : eventCondition
 {
     public interactableButton Objective;
     public TaskListUI_Interaction ConditionUI;
-
+    private void Update()
+    {
+        if (preRequisitesMet)
+        {
+            //eww don't look at this please.
+            Objective.Objective.ObjectiveInteraction();
+        }
+    }
     public override bool CheckCompletion()
     {
         if (Objective.InteractedOnce)
