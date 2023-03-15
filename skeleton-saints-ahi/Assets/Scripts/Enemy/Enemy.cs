@@ -19,8 +19,8 @@ public class Enemy : MonoBehaviour, IDamage
 
     [Header("----- Material -----")]
     [SerializeField] float _materialFlashSpeed;
-    [SerializeField] Material _material;
-    [SerializeField] private Material _flashMaterial;
+    [SerializeField] public Material _material;
+    [SerializeField] public Material _flashMaterial;
 
     [Header("----- Difficulty Vars -----")]
     [Range(0, 1)] [SerializeField] private float _easyHealthMultiplier;
@@ -112,7 +112,9 @@ public class Enemy : MonoBehaviour, IDamage
     {
         // If not shooting and can see the player
         if(isShooting == false && _enemyAi.CanDetectPlayer && _enemyAi.CanAttack &&
-           !isDead && !gameManager.instance.getEnemyFiring()) 
+           !isDead && !gameManager.instance.getEnemyFiring() && 
+           (!(isBossEnemy && GetComponent<bossAttackManager>().goingToWaveLocation) || 
+            (isBossEnemy && !GetComponent<bossAttackManager>().goingToWaveLocation))) 
             Attack();
 
         if(fadeHealthBar && !isBossEnemy)
@@ -247,7 +249,9 @@ public class Enemy : MonoBehaviour, IDamage
         {
             if (!isAttacking)
             {
-                if (_enemyAi.GetAgentRemainingDistance() <= _enemyAi.GetAgentStoppingDistance())
+                if (_enemyAi.GetAgentRemainingDistance() <= _enemyAi.GetAgentStoppingDistance() && 
+                    (!(isBossEnemy && GetComponent<bossAttackManager>().goingToWaveLocation) ||
+                     (isBossEnemy && !GetComponent<bossAttackManager>().goingToWaveLocation)))
                 {
                     _animator.SetTrigger("Attacking");
                     _animator.SetFloat("AttackRandom", UnityEngine.Random.Range(-1, 2));
@@ -259,6 +263,11 @@ public class Enemy : MonoBehaviour, IDamage
                 _enemyAi.DecreaseAgentSpeed();
             }
         }
+    }
+
+    public void SetAttacking(bool p_isAttacking)
+    {
+        isAttacking = p_isAttacking;
     }
 
     private void EnableAttackCollider()
@@ -352,7 +361,7 @@ public class Enemy : MonoBehaviour, IDamage
         if (UnityEngine.Random.value <= dropChance && enemyDrops != null)
         {
             dropSelected = UnityEngine.Random.Range(0, enemyDrops.Count);
-            Debug.Log($"drop selected is {dropSelected}");
+            //Debug.Log($"drop selected is {dropSelected}");
             GameObject drop = Instantiate(enemyDrops[dropSelected], transform.position, transform.rotation);
         }
     }

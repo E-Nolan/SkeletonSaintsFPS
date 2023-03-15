@@ -6,8 +6,14 @@ public class CinematicManager : MonoBehaviour
 {
     public GameObject CinematicGameObject;
 
+    private Vector3 mainCameraPosition;
     private GameObject tempCinematic;
     private float _timer;
+
+    void Awake()
+    {
+        mainCameraPosition = Camera.main.transform.position;
+    }
 
     // Update is called once per frame
     void Update()
@@ -16,7 +22,7 @@ public class CinematicManager : MonoBehaviour
         {
             _timer = 0f;
             if(tempCinematic == null)
-                tempCinematic = Instantiate(CinematicGameObject, Camera.main.transform.position,
+                tempCinematic = Instantiate(CinematicGameObject, mainCameraPosition,
                     CinematicGameObject.transform.rotation);
         }
         else

@@ -42,6 +42,7 @@ public class Cinematic : MonoBehaviour
         CurrentTarget = targets[0];
         mainMenu = mainMenuManager.instance.mainMenu;
 
+
         //uiCamera.gameObject.SetActive(false);
         pressAnyKeyText.gameObject.SetActive(true);
         nameText.gameObject.SetActive(false);

@@ -33,14 +33,14 @@ public class musicManager : MonoBehaviour
             {
                 if (i == currentAudIndex)
                 {
-                    if (1.0f == (audSources[i].volume = Mathf.Clamp(audSources[i].volume + (1 / fadeTimeSeconds) * Time.deltaTime, 0.0f, 1.0f)))
+                    if (1.0f == (audSources[i].volume = Mathf.Clamp(audSources[i].volume + (1.0f / fadeTimeSeconds) * Time.deltaTime, 0.0f, 1.0f)))
                     {
                         isFading[i] = false;
                     }
                 }
                 else
                 {
-                    if (0.0f == (audSources[i].volume = Mathf.Clamp(audSources[i].volume - (1 / fadeTimeSeconds) * Time.deltaTime, 0.0f, 1.0f)))
+                    if (0.0f == (audSources[i].volume = Mathf.Clamp(audSources[i].volume - (1.0f / fadeTimeSeconds) * Time.deltaTime, 0.0f, 1.0f)))
                     {
                         isFading[i] = false;
                         audSources[i].Stop();
