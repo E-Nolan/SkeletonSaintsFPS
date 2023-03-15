@@ -40,7 +40,7 @@ public class Cinematic : MonoBehaviour
         }
 
         CurrentTarget = targets[0];
-        mainMenu = GameObject.Find("Game Manager/UI/MenuManager/Main Menu Panel");
+        mainMenu = GameObject.Find("Game Manager V1/UI/MenuManager/Main Menu Panel");
 
         //uiCamera.gameObject.SetActive(false);
         pressAnyKeyText.gameObject.SetActive(true);

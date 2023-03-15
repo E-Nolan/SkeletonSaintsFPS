@@ -86,15 +86,9 @@ public class EnemyAI : MonoBehaviour
     {
         if (_agent.enabled)
         {
-            if (!CanDetectPlayer || _agent.destination != gameManager.instance.playerInstance.transform.position)
+            if ((!CanDetectPlayer || _agent.destination != gameManager.instance.playerInstance.transform.position) &&
+            ((BossEnemy && !GetComponent<bossAttackManager>().goingToWaveLocation) || !(BossEnemy && GetComponent<bossAttackManager>().goingToWaveLocation)))
                 StartCoroutine(CheckForPlayerWithDelay(_roamingDelay));
-            else
-            {
-                // If no player is detected for whatever reason, script disables itself
-                // on enemy so it doesnt continue checking (save minimal performance in edge cases)
-                Debug.Log($"{gameObject.name} did not detect player, disabling EnemyAI");
-                enabled = false;
-            }
 
             // --- ANIMATION STUFF ---
             // Get how far enemy is from its next position
@@ -205,7 +199,7 @@ public class EnemyAI : MonoBehaviour
 
                     // If the Player is within the stopping distance of the Enemy,
                     // change rotation of the Enemy to face the Player
-                    if (_agent.remainingDistance <= _agent.stoppingDistance)
+                    if (_agent.remainingDistance <= _agent.stoppingDistance && !(BossEnemy && GetComponent<bossAttackManager>().goingToWaveLocation))
                         FacePlayer();
 
                     float angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0f, playerDirection.z), transform.forward);
@@ -339,6 +333,7 @@ public class EnemyAI : MonoBehaviour
     {
         return _agent;
     }
+
 
     #region IENUMERATORS
     /// <summary>
