@@ -61,6 +61,7 @@ public class explosiveObject : MonoBehaviour, IDamage
         explosion.GetComponent<explosion>().explode();
         detonated = true;
         // Should get rid of itself
-        Instantiate(shrapnel, transform.position, explosion.transform.rotation);
+        if (shrapnel)
+            Instantiate(shrapnel, transform.position, explosion.transform.rotation);
     }
 }

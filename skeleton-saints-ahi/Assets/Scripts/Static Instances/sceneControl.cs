@@ -25,12 +25,33 @@ public sealed class sceneControl
 
     public void LoadMainLevel()
     {
-        AsyncOperation control = SceneManager.LoadSceneAsync("Level One", LoadSceneMode.Single);
+        AsyncOperation control = SceneManager.LoadSceneAsync("Tutorial Level", LoadSceneMode.Single);
         control.completed += (sceneComplete) => {
             gameManager.instance.FetchEvents();
             gameManager.instance.LevelSetup();
         };
     }
+
+    public void LoadNextLevel()
+    {
+        AsyncOperation control = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
+        control.completed += (sceneComplete) =>
+        {
+            gameManager.instance.FetchEvents();
+            gameManager.instance.LevelSetup();
+        };
+    }
+
+    public void LoadSpecificLevel(string levelName)
+    {
+        AsyncOperation control = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
+        control.completed += (sceneComplete) =>
+        {
+            gameManager.instance.FetchEvents();
+            gameManager.instance.LevelSetup();
+        };
+    }
+
     public void SceneRestart_Game()
     {
         //If scence currently   loaded is a level scene (player with enemies and objectives)
