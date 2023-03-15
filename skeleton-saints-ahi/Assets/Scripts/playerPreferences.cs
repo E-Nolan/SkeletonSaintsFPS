@@ -11,7 +11,8 @@ public sealed class playerPreferences: MonoBehaviour
 		instance = this;
 		GetDefaultsFromFile();
     }
-	public List<GameObject> SavedWeapons = new List<GameObject>();
+	public List<GameObject> MainWeapons = new List<GameObject>();
+	public GameObject OffWeapon;
 
 	[Header("----- Stats -----")]
 	[Range(5, 30)]

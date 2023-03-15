@@ -12,6 +12,7 @@ public class levelTransition : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            savePlayer.instance.updatePlayer();
             switch (loadSpecificScene)
             {
                 case true:

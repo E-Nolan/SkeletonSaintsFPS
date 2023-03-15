@@ -500,7 +500,8 @@ public class playerController : MonoBehaviour, IDamage
 
     void switchToWeapon(int weaponIndex)
     {
-
+        weaponInventory = playerPreferences.instance.MainWeapons;
+        offHandWeapon = playerPreferences.instance.OffWeapon;
         if (currentWeapon != weaponInventory[weaponIndex])
         {
             // Switch to the weapon at the given index, update currWepIndex to the new weapon's index, and turn the old weapon off

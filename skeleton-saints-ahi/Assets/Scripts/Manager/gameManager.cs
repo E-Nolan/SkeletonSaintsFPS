@@ -148,7 +148,8 @@ public class gameManager : MonoBehaviour
         //Should be called right before the player is dropped in and gains control of the player.
         //Script values should be assigned from preferences, controls should be enabled and cursor hidden
         
-		playerScript.weaponInventory = playerPreferences.instance.SavedWeapons;
+		playerScript.weaponInventory = playerPreferences.instance.MainWeapons;
+		playerScript.offHandWeapon = playerPreferences.instance.OffWeapon;
 
 		playerScript.SetPlayerSpeed = playerPreferences.instance.playerSpeed;
 		playerScript.SetGravity = playerPreferences.instance.gravity;
@@ -393,7 +394,7 @@ public class gameManager : MonoBehaviour
     {
 		if (!respawning)
 		{
-			playerPreferences.instance.SavedWeapons.Clear();
+			playerPreferences.instance.MainWeapons.Clear();
 			gameEventManager.instance.ClearEventListUI();
 			gameEventManager.instance.ResetEvents();
 			gameEventManager.instance.gameEvents.Clear();
