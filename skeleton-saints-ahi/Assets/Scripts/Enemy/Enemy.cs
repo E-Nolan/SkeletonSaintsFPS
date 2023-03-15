@@ -12,6 +12,15 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] private EnemyAI _enemyAi;
     [Range(0, 1000)] [SerializeField] private float _health;
 
+    [Header("----- Audio -----")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip turretEnableScreech;
+    [Range(0f, 1f)] [SerializeField] private float turretEnableScreechVolume;
+    [SerializeField] private AudioClip spawnScreech;
+    [Range(0f, 1f)] [SerializeField] private float spawnScreechVolume;
+    [SerializeField] private AudioClip deathScreech;
+    [Range(0f, 1f)] [SerializeField] private float deathScreechVolume;
+
     [Header("----- GameObjects/Transforms -----")]
     [SerializeField] private Transform gunPosition;
     [SerializeField] private Transform handTransform;
@@ -38,11 +47,13 @@ public class Enemy : MonoBehaviour, IDamage
     public bool isDead = false;
     public bool isAttacking;
     public bool fadeHealthBar = false;
+
     private bool shrinkAway = false;
     private float _maxHealth;
     private bool isBossEnemy;
     private bool isMutant;
     private int attackDamage;
+    private bool turretsEnabled;
     private gameManager.Difficulty _difficulty;
 
     [Header("----- Misc -----")]
@@ -58,6 +69,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Start()
     {
+
         isAttacking = false;
         if(SceneManager.GetActiveScene().name != "Main Menu") 
             _difficulty = gameManager.instance.currentDifficulty;
@@ -78,10 +90,14 @@ public class Enemy : MonoBehaviour, IDamage
 
         if (_enemyAi.BossEnemy || _enemyAi.IsMutant)
         {
-            if(_enemyAi.BossEnemy) 
+            if (_enemyAi.BossEnemy)
+            {
                 isBossEnemy = true;
+                audioSource = GetComponent<AudioSource>();
+            }
             else if (_enemyAi.IsMutant)
                 isMutant = true;
+
             attackDamage = _enemyAi.AttackDamage;
         }
         else
@@ -106,6 +122,9 @@ public class Enemy : MonoBehaviour, IDamage
             _animator = GetComponent<Animator>();
 
         acquiringWeapon = false;
+
+        if(isBossEnemy)
+            _animator.SetTrigger("Spawned");
     }
 
     void Update()
@@ -152,14 +171,17 @@ public class Enemy : MonoBehaviour, IDamage
     {
         _health -= damage;
 
-        // Only show damaged animation for every enemy normal enemy hit or
-        // every quarter of Boss health
         if (!isBossEnemy || ((isBossEnemy || isMutant) && _maxHealth / 2 >  _health))
         {
             if (isBossEnemy)
             {
-                foreach (Turret turret in GetComponentsInChildren<Turret>())
-                    turret.enabled = true;
+                if (!turretsEnabled)
+                {
+                    _animator.SetTrigger("TurretEnable");
+                    turretsEnabled = true;
+                    foreach (Turret turret in GetComponentsInChildren<Turret>())
+                        turret.enabled = true;
+                }
             }
 
             if (!isBossEnemy || isBossEnemy && _maxHealth / 3 > _health)
@@ -364,5 +386,20 @@ public class Enemy : MonoBehaviour, IDamage
             //Debug.Log($"drop selected is {dropSelected}");
             GameObject drop = Instantiate(enemyDrops[dropSelected], transform.position, transform.rotation);
         }
+    }
+
+    private void PlayTurretEnableScreech()
+    {
+        audioSource.PlayOneShot(turretEnableScreech, turretEnableScreechVolume);
+    }
+
+    private void PlayDeathScreech()
+    {
+        audioSource.PlayOneShot(deathScreech, deathScreechVolume);
+    }
+
+    private void PlaySpawnScreech()
+    {
+        audioSource.PlayOneShot(spawnScreech, spawnScreechVolume);
     }
 }

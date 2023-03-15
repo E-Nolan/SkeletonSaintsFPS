@@ -13,13 +13,16 @@ public class bossAttackManager : MonoBehaviour
     [SerializeField] EnemyAI enemyAiScript;
 
     [Header("----- Energy Wave Vars -----")] 
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip energyWaveAudio;
     [SerializeField] float waveCooldown;
     public bool CanSendWave;
     [SerializeField] bool waveSent;
     [SerializeField] bool atWaveLocation;
     public bool goingToWaveLocation;
+
+    [Header("----- Audio -----")] 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip energyWaveAudio;
+    [Range(0f, 1f)] [SerializeField] float energyWaveAudioVolume;
 
     [Header("----- Misc Vars -----")]
     [SerializeField] bool invincible;
@@ -150,6 +153,6 @@ public class bossAttackManager : MonoBehaviour
 
     private void PlayEnergyWaveScreech()
     {
-        audioSource.PlayOneShot(energyWaveAudio, .5f);
+        audioSource.PlayOneShot(energyWaveAudio, energyWaveAudioVolume);
     }
 }
