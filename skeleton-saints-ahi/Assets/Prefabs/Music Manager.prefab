@@ -51,7 +51,7 @@ MonoBehaviour:
   - {fileID: 683960998552865141}
   musicTrackList:
   - {fileID: 0}
-  fadeTimeSeconds: 1
+  fadeTimeSeconds: 3
   isFading: 
 --- !u!82 &683960998552865144
 AudioSource:
