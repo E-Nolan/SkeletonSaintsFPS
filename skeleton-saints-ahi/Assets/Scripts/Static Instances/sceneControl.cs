@@ -33,7 +33,7 @@ public sealed class sceneControl
     }
     public void SceneRestart_Game()
     {
-        //If scence currently   loaded is a level scene (player with enemies and objectives)
+        //If scence currently loaded is a level scene (player with enemies and objectives)
         if (!SceneManager.GetSceneByName("Main Menu").isLoaded)
         {
             SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
