@@ -3488,6 +3488,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -17.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6381056064566453759, guid: 8cf441681ceb23746b42dbd853eb4770, type: 3}
+      propertyPath: enemyTypes.Array.data[0]
+      value: 
+      objectReference: {fileID: 457333255328657286, guid: 50b0cc82617d5024085c1e3b765a30a8, type: 3}
     - target: {fileID: 7599001594600293698, guid: 8cf441681ceb23746b42dbd853eb4770, type: 3}
       propertyPath: m_Radius
       value: 4

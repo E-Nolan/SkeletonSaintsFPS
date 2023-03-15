@@ -5,6 +5,7 @@ using UnityEngine;
 public class TreasureChest : interactableButton
 {
     public GameObject[] Drops;
+    [SerializeField] ParticleSystem particles;
     [Range(0.1f, 10f)]public float DestroyTimer;
 
     private GameObject _dropChosen;
@@ -40,6 +41,8 @@ public class TreasureChest : interactableButton
         base.Interact();
         GetComponent<Animator>().SetTrigger("Activate");
         StartCoroutine(PickupDelay(1f));
+
+        particles.Stop();
     }
 
     private void EnablePickup()
