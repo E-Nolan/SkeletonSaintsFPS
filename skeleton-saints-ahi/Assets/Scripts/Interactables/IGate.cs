@@ -91,7 +91,7 @@ public class IGate : MonoBehaviour
             {
                 sensor.sharedMaterial = card3;
             }
-            else if (entryLevel[4])
+            else if (entryLevel[0])
             {
                 sensor.sharedMaterial = specialButtonOff;
             }
