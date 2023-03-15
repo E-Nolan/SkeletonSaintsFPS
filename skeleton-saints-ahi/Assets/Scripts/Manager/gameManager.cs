@@ -28,6 +28,7 @@ public class gameManager : MonoBehaviour
     bool isEnemyFiring;
 	int enemiesRemaining;
 	public Difficulty currentDifficulty;
+	public GameObject currentScene;
 
 	[Header("----- Game Goals -----")]
 	[SerializeField] public bool[] keyCard;
@@ -215,12 +216,12 @@ public class gameManager : MonoBehaviour
 	{
 		clearLevel();
 
-		if (menuManager.instance.GameMenuIsUp())
+		
+		if (isPaused)
 		{
-			hUDManager.instance.toggleCursorVisibility();
-
+			pauseMenuManager.instance.toggleGameMenu();
 		}
-
+		
 		if (playerScript.GetCurrentHealth() <= 0)
 		{
 			hUDManager.instance.damageFlashScreen.SetActive(false);

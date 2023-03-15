@@ -76,6 +76,7 @@ public sealed class sceneControl
 
     public Scene CurrentScene()
     {
+
         return SceneManager.GetActiveScene();
     }
 }

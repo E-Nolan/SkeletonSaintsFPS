@@ -67,6 +67,6 @@ public class pauseButton : MonoBehaviour
 
     public void ConfirmQuit()
     {
-        gameManager.instance.restartGame();
+        sceneControl.instance.LoadMainMenuScene();
     }
 }
