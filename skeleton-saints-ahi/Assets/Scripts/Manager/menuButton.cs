@@ -36,7 +36,6 @@ public class menuButton : MonoBehaviour
         mainMenuManager.instance.DisplayControl();
     }
 
-
     //settings menu
     public void SettingsMenu()
     {
@@ -74,4 +73,10 @@ public class menuButton : MonoBehaviour
     {
         mainMenuManager.instance.DisplayQuit();
     }
+
+    public void ConfirmQuit()
+    {
+        Application.Quit();
+    }
+
 }

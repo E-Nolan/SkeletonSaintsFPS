@@ -16,6 +16,11 @@ public class pauseButton : MonoBehaviour
 
     public void SetRestart()
     {
+        pauseMenuManager.instance.Restart();
+    }
+
+    public void Confirm()
+    {
 
     }
 

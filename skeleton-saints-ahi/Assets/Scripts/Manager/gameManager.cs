@@ -133,7 +133,7 @@ public class gameManager : MonoBehaviour
 		if (Cursor.visible)
 			hUDManager.instance.toggleCursorVisibility();
 
-		menuManager.instance.CanToggleGameMenu = true;
+		pauseMenuManager.instance.canToggleGameMenu = true;
 		gameEventManager.instance.GenerateEventsUI();
 	}
     //Commented out until player loads properly to start with.
@@ -181,18 +181,17 @@ public class gameManager : MonoBehaviour
 
     public void respawn()
 	{
-		unPause();
+	
 		//if we are respawning because the player died, just un-set the flash screen and toggle the menu
 		if (playerScript.GetCurrentHealth() <= 0)
 		{
 			hUDManager.instance.damageFlashScreen.SetActive(false);
-			toggleGameMenu();
+	
         }
         else
         {
-			//Otherwise, if we respawned from the menu it will still be up so close it
-			if (menuManager.instance.GameMenuIsUp())
-				toggleGameMenu();
+			//Otherwise, if we respawned from the menu it will still be up so close i
+			
 		}
 		//And in either case, reset the player to the playerSpawnPos when they respawn
 		//This can be updated when the player reaches a checkpoint
@@ -216,7 +215,7 @@ public class gameManager : MonoBehaviour
 		if (menuManager.instance.GameMenuIsUp())
 		{
 			hUDManager.instance.toggleCursorVisibility();
-			toggleGameMenu();
+
 		}
 
 		if (playerScript.GetCurrentHealth() <= 0)
@@ -252,37 +251,23 @@ public class gameManager : MonoBehaviour
     }
 	public void loseGame()
 	{
-		pause();
+	
 		menuManager.instance.DisplayLoseMenu();
 	}
 	public void winGame()
 	{
-		pause();
+
 		hUDManager.instance.toggleCursorVisibility();
 		menuManager.instance.DisplayWinMenu();
 	}
 	public void continueGame()
 	{
-		unPause();
+	
 		hUDManager.instance.toggleCursorVisibility();
 
 		menuManager.instance.CloseWinMenu();
 	}
-	public void toggleGameMenu()
-	{
-		if (menuManager.instance.GameMenuIsUp())
-		{
-			menuManager.instance.ClosePauseMenu();
-			hUDManager.instance.toggleCursorVisibility();
-			unPause();
-		}
-		else
-		{
-			hUDManager.instance.toggleCursorVisibility();
-			pause();
-			menuManager.instance.DisplayPauseMenu();
-		}
-	}
+	
 	public void updateGameGoal (int amt)
     {
 		enemiesRemaining += amt;
@@ -357,7 +342,7 @@ public class gameManager : MonoBehaviour
 			deactivateUI();
 
 			sceneControl.instance.LoadMainMenuScene();
-			menuManager.instance.DisplayMainMenu();
+			//menuManager.instance.DisplayMainMenu();
 
 		}
 		else
@@ -366,24 +351,11 @@ public class gameManager : MonoBehaviour
 		}
 
 	}
-	private void pause()
-    {
-		hUDManager.instance.closeHUD();
-		isPaused = true;
-		Time.timeScale = 0f;
-		hUDManager.instance.toggleCursorVisibility();
-	}
-	private void unPause()
-	{
-		hUDManager.instance.showHUD();
-		isPaused = false;
-		Time.timeScale = 1f;
-		hUDManager.instance.toggleCursorVisibility();
-	}
+	
 
 	private void deactivateUI()
     {
-		menuManager.instance.DeactivateAllMenus();
+		//menuManager.instance.DeactivateAllMenus();
 		hUDManager.instance.closeHUD();
 	}
 	private void managePlayerTasks()

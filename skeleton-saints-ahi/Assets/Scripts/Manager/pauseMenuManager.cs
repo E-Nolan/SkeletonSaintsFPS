@@ -8,6 +8,7 @@ using TMPro;
 public class pauseMenuManager : MonoBehaviour
 {
     public static pauseMenuManager instance;
+    public GameObject pauseMenu;
 
     [Header("----- Game Panels -----")]
     public GameObject gameMenu;
@@ -36,6 +37,8 @@ public class pauseMenuManager : MonoBehaviour
 
     [Header("----- Menu Options -----")]
     public GameObject activeMenu;
+    public bool canToggleGameMenu;
+    bool active;
 
     [Header("----- Audio -----")]
     public AudioSource Audio;
@@ -51,6 +54,51 @@ public class pauseMenuManager : MonoBehaviour
     {
         gameMenu.SetActive(true);
         activeMenu = gameMenu;
+    }
+
+    private void LateUpdate()
+    {
+        if (gameManager.instance.PlayStarted())
+            HandleInGameMenuInput();
+    }
+
+    void HandleInGameMenuInput()
+    {
+        //Using the menu manager here to toggle the menus, but in game manager because it affects the timescale and pausestate.
+        if (canToggleGameMenu)
+            if (Input.GetButtonDown(playerPreferences.instance.Button_Menu))
+            {
+                toggleGameMenu();
+            }
+    }
+
+    public void toggleGameMenu()
+    {
+        if(!gameManager.instance.isPaused)
+        {
+            pauseMenu.SetActive(true);
+            pause();
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+            unPause();
+        }
+    }
+
+    private void pause()
+    {
+        hUDManager.instance.closeHUD();
+        gameManager.instance.isPaused = true;
+        Time.timeScale = 0f;
+        hUDManager.instance.toggleCursorVisibility();
+    }
+    private void unPause()
+    {
+        hUDManager.instance.showHUD();
+        gameManager.instance.isPaused = false;
+        Time.timeScale = 1f;
+        hUDManager.instance.toggleCursorVisibility();
     }
 
     //game menu

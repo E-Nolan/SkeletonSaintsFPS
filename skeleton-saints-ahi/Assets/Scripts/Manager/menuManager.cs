@@ -68,21 +68,9 @@ public class menuManager : MonoBehaviour
 				Debug.Log("No menu audio source found. Please ensure there is an AudioSource attached to the menuManager gameobject.");
         }
     }
-	private void LateUpdate()
-	{
-		if (gameManager.instance.PlayStarted())
-			HandleInGameMenuInput();
-	}
+
 	#region Run-Time Methods
-	void HandleInGameMenuInput()
-	{
-		//Using the menu manager here to toggle the menus, but in game manager because it affects the timescale and pausestate.
-		if (canToggleGameMenu)
-			if (Input.GetButtonDown(playerPreferences.instance.Button_Menu))
-			{
-				gameManager.instance.toggleGameMenu();
-			}
-	}
+
 	#endregion
 
 	#region Global Menu Methods

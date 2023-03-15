@@ -109,7 +109,7 @@ public sealed class playerPreferences: MonoBehaviour
 	public float sfxVolumeDefault = 1f;
 
 	//Camera
-    public float horizontalDefault = 500;
+    public float horizontalDefault = 400;
 	public float verticalDefault = 500;
 	public bool invertXDefault= false;
     #endregion
