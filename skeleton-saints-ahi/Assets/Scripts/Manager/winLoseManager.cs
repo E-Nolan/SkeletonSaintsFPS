@@ -10,6 +10,11 @@ public class winLoseManager : MonoBehaviour
     public GameObject credits;
     public GameObject current;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     public void DisplayWin()
     {
         victory.SetActive(true);
@@ -18,15 +23,15 @@ public class winLoseManager : MonoBehaviour
 
     public void DisplayLose()
     {
-        defeat.SetActive(true);
         pauseMenuManager.instance.pause();
+        defeat.SetActive(true);
+        
     }
 
     public void PlayCredits()
     {
         int scrollSpeed = 2;
         int i = 3200;
-
         victory.SetActive(false);
         credits.SetActive(true);
         

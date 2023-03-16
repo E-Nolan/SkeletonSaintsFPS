@@ -262,14 +262,14 @@ public class gameManager : MonoBehaviour
     {
 		loseGame();
     }
+
 	public void loseGame()
 	{
 		winLoseManager.instance.DisplayLose();
 	}
+
 	public void winGame()
 	{
-
-		hUDManager.instance.toggleCursorVisibility();
 		winLoseManager.instance.DisplayWin();
 	} 
 	

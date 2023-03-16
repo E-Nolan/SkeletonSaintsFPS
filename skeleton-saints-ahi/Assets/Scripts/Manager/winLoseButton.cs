@@ -19,7 +19,7 @@ public class winLoseButton : MonoBehaviour
 
     public void Credits()
     {
-
+        winLoseManager.instance.PlayCredits();
     }
 
     public void Quit()

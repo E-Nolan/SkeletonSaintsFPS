@@ -94,6 +94,7 @@ public class pauseMenuManager : MonoBehaviour
         Time.timeScale = 0f;
         hUDManager.instance.toggleCursorVisibility();
     }
+
     public void unPause()
     {
         hUDManager.instance.showHUD();

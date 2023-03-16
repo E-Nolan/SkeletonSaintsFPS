@@ -224,6 +224,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1630883222, guid: 0c656dbde079e428aac7453996a000c9, type: 3}
+      propertyPath: credits
+      value: 
+      objectReference: {fileID: 1999549754}
     - target: {fileID: 6777880151523749168, guid: 0c656dbde079e428aac7453996a000c9, type: 3}
       propertyPath: m_Name
       value: Game Manager V2
@@ -274,3 +278,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c656dbde079e428aac7453996a000c9, type: 3}
+--- !u!1 &1999549754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7390705806683117452, guid: 0c656dbde079e428aac7453996a000c9, type: 3}
+  m_PrefabInstance: {fileID: 1630883219}
+  m_PrefabAsset: {fileID: 0}
