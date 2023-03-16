@@ -227,7 +227,7 @@ public class hUDManager : MonoBehaviour
 
     public void displayReloadWeaponText()
     {
-        Debug.Log("Press e to reload you weapon");
+        //Debug.Log("Press e to reload you weapon");
 
     }
 
@@ -286,7 +286,7 @@ public class hUDManager : MonoBehaviour
         Color damageFlash = damageFlashScreen.GetComponent<Image>().color;
         while (damageFlash.a >= 0)
         {
-            Debug.Log("Turning damage screen down");
+            //Debug.Log("Turning damage screen down");
             damageFlash.a -= 0.1f;
             yield return new WaitForSeconds(timer);
         }

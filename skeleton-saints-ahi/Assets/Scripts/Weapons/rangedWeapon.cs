@@ -285,7 +285,7 @@ public class rangedWeapon : MonoBehaviour
 
     public void startReload(bool _fasterReload = false)
     {
-        Debug.Log($"Initiating a reload  for {gameObject}");
+        //Debug.Log($"Initiating a reload  for {gameObject}");
         // If the player isn't currently reloading, initiate a reload
         if (!isReloading && !isAmmoEmpty())
         {
@@ -312,7 +312,7 @@ public class rangedWeapon : MonoBehaviour
             else
                 _ammoReloaded = Mathf.Clamp((maxClip - currentClip), 0, currentAmmo);
 
-            Debug.Log($"Giving {_ammoReloaded} ammo to {gameObject}");
+            //Debug.Log($"Giving {_ammoReloaded} ammo to {gameObject}");
             giveClip(_ammoReloaded);
             spendAmmo(_ammoReloaded);
         }

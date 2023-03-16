@@ -20,7 +20,7 @@ public class saveManagerHelper : MonoBehaviour
 			if (loadedPrefab.GetComponent<objectSaver>())
 			{
 				prefabDictionary.Add(loadedPrefab.name, loadedPrefab);
-				//Debug.Log("Added GameObject to prefabDictionary: " + loadedPrefab.name);
+				////Debug.Log("Added GameObject to prefabDictionary: " + loadedPrefab.name);
 			}
 		}
 	}
@@ -29,7 +29,7 @@ public class saveManagerHelper : MonoBehaviour
 
 		if (string.IsNullOrEmpty(gameName))
 		{
-			Debug.Log("SaveGameName is null or empty!");
+			//Debug.Log("SaveGameName is null or empty!");
 			return;
 		}
 
@@ -63,7 +63,7 @@ public class saveManagerHelper : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("No saveableobjects found");
+			//Debug.Log("No saveableobjects found");
 		}
 
 		//invoke the save event
@@ -81,7 +81,7 @@ public class saveManagerHelper : MonoBehaviour
 		saveData loadedGame = saveManager.LoadGameData(saveManager.directory + gameName);
 		if (loadedGame == null)
 		{
-			Debug.Log("saveGameName " + gameName + "couldn't be found!");
+			//Debug.Log("saveGameName " + gameName + "couldn't be found!");
 			return;
 		}
 
@@ -168,7 +168,7 @@ public class saveManagerHelper : MonoBehaviour
 		//Theoretically, we could even reconstruct GO's that have no prefab by instatiating an empty GO and filling it with the required components... I'lll leave that to you.
 		if (prefabDictionary.ContainsKey(sceneObject.prefabName) == false)
 		{
-			Debug.Log("Can't find key " + sceneObject.prefabName + " in SaveLoadMenu.prefabDictionary!");
+			//Debug.Log("Can't find key " + sceneObject.prefabName + " in SaveLoadMenu.prefabDictionary!");
 			return null;
 		}
 		GameObject go = null;

@@ -24,7 +24,7 @@ public class loadingScreen : MonoBehaviour
         while (!oper.isDone)
         {
             float progress = Mathf.Clamp01(oper.progress / .9f);
-            Debug.Log(progress);
+            //Debug.Log(progress);
             slider.value = progress;
             yield return null;
         }

@@ -387,7 +387,7 @@ public class Enemy : MonoBehaviour, IDamage
         if (UnityEngine.Random.value <= dropChance && enemyDrops != null)
         {
             dropSelected = UnityEngine.Random.Range(0, enemyDrops.Count);
-            //Debug.Log($"drop selected is {dropSelected}");
+            ////Debug.Log($"drop selected is {dropSelected}");
             GameObject drop = Instantiate(enemyDrops[dropSelected], transform.position, transform.rotation);
         }
     }

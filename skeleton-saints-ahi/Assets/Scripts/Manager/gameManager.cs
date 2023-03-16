@@ -113,7 +113,7 @@ public class gameManager : MonoBehaviour
 		PlayerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn");
 		if (PlayerSpawnPos == null)
         {
-			Debug.Log ("Player Spawn not found on level setup");
+			//Debug.Log ("Player Spawn not found on level setup");
         }
 		if (sceneControl.instance.CurrentScene().name == "Level Onety")
 			finalGateButton = GameObject.FindGameObjectWithTag("FinalGateButton").GetComponent<gateButton>();

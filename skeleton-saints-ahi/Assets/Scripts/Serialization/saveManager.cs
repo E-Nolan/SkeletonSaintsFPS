@@ -70,8 +70,8 @@ public static class saveManager
         }
         else
         {
-            Debug.LogError(message: "Save File doesn't exist");
-            Debug.LogError(message: fullPath);
+            //Debug.LogError(message: "Save File doesn't exist");
+            //Debug.LogError(message: fullPath);
         }
 
         mainData_Current = tempData;

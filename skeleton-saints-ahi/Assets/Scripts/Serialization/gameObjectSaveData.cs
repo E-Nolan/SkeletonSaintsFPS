@@ -103,13 +103,13 @@ public class gameObjectSaveData
 			{
 				if (field.FieldType.IsSerializable == false)
 				{
-					//Debug.Log(field.Name + " (Type: " + field.FieldType + ") is not marked as serializable. Continue loop.");
+					////Debug.Log(field.Name + " (Type: " + field.FieldType + ") is not marked as serializable. Continue loop.");
 					continue;
 				}
 				if (TypeSystem.IsEnumerableType(field.FieldType) == true || TypeSystem.IsCollectionType(field.FieldType) == true)
 				{
 					Type elementType = TypeSystem.GetElementType(field.FieldType);
-					//Debug.Log(field.Name + " -> " + elementType);
+					////Debug.Log(field.Name + " -> " + elementType);
 
 					if (elementType.IsSerializable == false)
 					{
@@ -118,7 +118,7 @@ public class gameObjectSaveData
 				}
 				newObjectComponent.saveableType = new(component.GetType());
 				newObjectComponent.fields.Add(field.Name, field.GetValue(component));
-				//Debug.Log(field.Name + " (Type: " + field.FieldType + "): " + field.GetValue(component));
+				////Debug.Log(field.Name + " (Type: " + field.FieldType + "): " + field.GetValue(component));
 			}
 		}
 		return newObjectComponent;

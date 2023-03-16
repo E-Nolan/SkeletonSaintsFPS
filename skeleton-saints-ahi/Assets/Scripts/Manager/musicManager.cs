@@ -55,7 +55,7 @@ public class musicManager : MonoBehaviour
     {
         if (musicTrackList.Find(x => x.name == _newTrack.name) == null)
         {
-            Debug.Log($"Adding {_newTrack.name} to the playlist");
+            //Debug.Log($"Adding {_newTrack.name} to the playlist");
             musicTrackList.Add(_newTrack);
         }
     }
@@ -103,6 +103,6 @@ public class musicManager : MonoBehaviour
     {
         AudioClip _clip = GetTrackWithName(_trackName);
         audSources[_audIndex].clip = _clip;
-        Debug.Log($"Playing {audSources[_audIndex].clip.name}");
+        //Debug.Log($"Playing {audSources[_audIndex].clip.name}");
     }
 }

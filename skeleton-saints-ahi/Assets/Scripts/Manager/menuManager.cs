@@ -64,8 +64,8 @@ public class menuManager : MonoBehaviour
 		if (MenusAudio == null)
         {
 			MenusAudio = GetComponent<AudioSource>();
-			if (MenusAudio == null)
-				Debug.Log("No menu audio source found. Please ensure there is an AudioSource attached to the menuManager gameobject.");
+			//if (MenusAudio == null)
+				//Debug.Log("No menu audio source found. Please ensure there is an AudioSource attached to the menuManager gameobject.");
         }
     }
 

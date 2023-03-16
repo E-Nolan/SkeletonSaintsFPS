@@ -356,7 +356,7 @@ public class playerController : MonoBehaviour, IDamage
             RaycastHit hit;
             if (GetCurrentReticleHit(out hit))
             {
-                //Debug.Log($"The player is shooting at {hit.point}");
+                ////Debug.Log($"The player is shooting at {hit.point}");
                 // If the raycast hit something, instantiate a bullet and send it flying in that object's direction
                 Vector3 directionToTarget = (hit.point - leftFirePos.transform.position);
                 Debug.DrawRay(transform.position, directionToTarget, Color.red, 1.0f);
@@ -550,7 +550,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (gameManager.instance.PlayStarted())
         {
-            Debug.Log("Outside assignment of currentWeapon is invalid \n Only playerController and GM may call this");
+            //Debug.Log("Outside assignment of currentWeapon is invalid \n Only playerController and GM may call this");
             return;
         }
         else

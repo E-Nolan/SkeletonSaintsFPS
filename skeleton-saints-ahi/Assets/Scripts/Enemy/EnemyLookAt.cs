@@ -17,7 +17,7 @@ public class EnemyLookAt : MonoBehaviour {
     {
         if (!head)
         {
-            Debug.LogError("No head transform - EnemyLookAt disabled");
+            //Debug.LogError("No head transform - EnemyLookAt disabled");
             enabled = false;
             return;
         }
