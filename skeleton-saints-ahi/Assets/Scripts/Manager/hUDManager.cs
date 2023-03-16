@@ -95,11 +95,11 @@ public class hUDManager : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         for (int i = 0; i < currentTick; i++)
         {
-            playerHealthTick[i].SetActive(true);
+            playerHealthTick[Mathf.Clamp(i, 0, playerHealthTick.Count)].SetActive(true);
         }
         for (int i = currentTick; i < playerHealthTick.Count; i++)
         {
-            playerHealthTick[i].SetActive(false);
+            playerHealthTick[Mathf.Clamp(i, 0, playerHealthTick.Count)].SetActive(false);
         }
         if (diff >= 0)
             playerHealthTick[(playerHealthTick.Count - 1) - diff].SetActive(true);
