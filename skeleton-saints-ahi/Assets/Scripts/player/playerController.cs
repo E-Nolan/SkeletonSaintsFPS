@@ -103,6 +103,7 @@ public class playerController : MonoBehaviour, IDamage
     bool canPlayFootsteps = true;
     public int currWepIndex { get; private set; } = 0;
 
+    bool godModeEnabled = false;
     #endregion
 
     // Start is called before the first frame update
@@ -135,6 +136,10 @@ public class playerController : MonoBehaviour, IDamage
             invincibilityTimer -= Time.deltaTime;
         if (currCoyoteTimer > 0.0f)
             currCoyoteTimer -= Time.deltaTime;
+
+        //Cheat Codes
+        if (Input.GetKeyDown(KeyCode.I))
+            godMode();
 
 
         // Handle movement for the player
@@ -390,7 +395,7 @@ public class playerController : MonoBehaviour, IDamage
     /// <param name="damage"></param>
     public void TakeDamage(float damage)
     {
-        if (invincibilityTimer <= 0.0f)
+        if (invincibilityTimer <= 0.0f && !godModeEnabled)
         {
             takeArmorDamage(ref damage);
             fudgeDamage(ref damage);
@@ -857,5 +862,10 @@ public class playerController : MonoBehaviour, IDamage
     public void CopyGrappleFromPlayerPreferences()
     {
         rangedWeaponPickup(backupGrapple, backupGrapple.weaponType);
+    }
+
+    public void godMode()
+    {
+        godModeEnabled = !godModeEnabled;
     }
 }
