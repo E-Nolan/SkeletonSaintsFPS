@@ -115,7 +115,7 @@ public class gameManager : MonoBehaviour
         {
 			Debug.Log ("Player Spawn not found on level setup");
         }
-		if (sceneControl.instance.CurrentScene().name == "Level One")
+		if (sceneControl.instance.CurrentScene().name == "Level Onety")
 			finalGateButton = GameObject.FindGameObjectWithTag("FinalGateButton").GetComponent<gateButton>();
 		//Load player in and assign script components
 		playerInstance = Instantiate(PlayerPrefab, PlayerSpawnPos.transform.position, PlayerSpawnPos.transform.rotation);
@@ -377,6 +377,7 @@ public class gameManager : MonoBehaviour
 	}
 	private bool allKeysFound()
     {
+		return false;
 		int keysFound = 0;
 		if (keyCard[0])
 			keysFound++;

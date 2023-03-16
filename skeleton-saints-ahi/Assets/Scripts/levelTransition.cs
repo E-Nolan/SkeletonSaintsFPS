@@ -12,6 +12,10 @@ public class levelTransition : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            for (int i = 0; i < gameManager.instance.keyCard.Length; i++)
+            {
+                gameManager.instance.keyCard[i] = false;
+            }
             savePlayer.instance.updatePlayer();
             switch (loadSpecificScene)
             {
