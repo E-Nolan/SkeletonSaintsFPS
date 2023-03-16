@@ -47,7 +47,7 @@ public class IKey : collectionItem
             gBUtton.CanInteractYet = true;
             if (pickupSound)
                 gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
-            Collect();
+            //Collect();
             if (entryLevel[0])
             {
                 Destroy(gameObject);

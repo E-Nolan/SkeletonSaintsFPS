@@ -53,6 +53,7 @@ public class rangedWeapon : MonoBehaviour
 
     public string weaponName;
 
+    public weaponStats.weaponStatsType gunType;
     #endregion
 
     private void Start()
@@ -366,6 +367,8 @@ public class rangedWeapon : MonoBehaviour
             audioSource.volume = 0.5f;
 
         defaultRotation = transform.rotation;
+
+        gunType = _stats.weaponType;
     }
 
     virtual public void onSwitch()

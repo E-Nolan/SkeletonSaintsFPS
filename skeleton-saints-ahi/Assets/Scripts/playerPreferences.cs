@@ -12,7 +12,7 @@ public sealed class playerPreferences: MonoBehaviour
 		GetDefaultsFromFile();
     }
 	public List<GameObject> MainWeapons = new List<GameObject>();
-	public GameObject OffWeapon;
+	public bool OffWeapon;
 
 	[Header("----- Stats -----")]
 	[Range(5, 30)]

@@ -29569,7 +29569,7 @@ MonoBehaviour:
   keyCard02Text: {fileID: 6777880150877519268}
   card03: {fileID: 6777880150729879958}
   keyCard03Text: {fileID: 6777880150445758727}
-  gateText: {fileID: 0}
+  gateText: {fileID: 5521856832034094374}
   swap: {fileID: 6362641214398360256}
   damageFlashScreen: {fileID: 6777880150547237362}
   enemiesRemaining: 0
@@ -29969,7 +29969,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1d7aecc6af7d54484998db48752459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedWeapons: []
+  MainWeapons: []
+  OffWeapon: {fileID: 0}
   playerSpeed: 10
   gravity: 24
   maxStamina: 100

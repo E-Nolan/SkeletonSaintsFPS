@@ -81,6 +81,8 @@ public class playerController : MonoBehaviour, IDamage
     bool canInputJump = false;
     [SerializeField] bool isJumping = false;
 
+    [SerializeField] weaponStats backupGrapple;
+
     public rangedWeapon currentWeapon { get; private set; }
     public rangedWeapon currentSecondary { get; private set; }
     public List<rangedWeapon> inactiveWeapons { get; private set; }
@@ -500,8 +502,8 @@ public class playerController : MonoBehaviour, IDamage
 
     void switchToWeapon(int weaponIndex)
     {
-        weaponInventory = playerPreferences.instance.MainWeapons;
-        offHandWeapon = playerPreferences.instance.OffWeapon;
+        //weaponInventory = playerPreferences.instance.MainWeapons;
+        //offHandWeapon = playerPreferences.instance.OffWeapon;
         if (currentWeapon != weaponInventory[weaponIndex])
         {
             // Switch to the weapon at the given index, update currWepIndex to the new weapon's index, and turn the old weapon off
@@ -839,5 +841,21 @@ public class playerController : MonoBehaviour, IDamage
         canPlayFootsteps = false;
         yield return new WaitForSeconds(0.35f);
         canPlayFootsteps = true;
+    }
+
+    public void CopyWeaponFromPlayerPreferences(GameObject _copiedWeapon)
+    {
+        if (_copiedWeapon.GetComponent<rangedWeapon>().gunType == weaponStats.weaponStatsType.Gun)
+        {
+            //_copiedWeapon.transform.parent = playerCamera.transform;
+            //_copiedWeapon.transform.SetPositionAndRotation(playerCamera.transform.position, playerCamera.transform.rotation);
+            GameObject _newWeapon = Instantiate(_copiedWeapon, playerCamera.transform.position, playerCamera.transform.rotation, playerCamera.transform);
+            weaponInventory.Add(_newWeapon);
+        }
+    }
+
+    public void CopyGrappleFromPlayerPreferences()
+    {
+        rangedWeaponPickup(backupGrapple, backupGrapple.weaponType);
     }
 }
