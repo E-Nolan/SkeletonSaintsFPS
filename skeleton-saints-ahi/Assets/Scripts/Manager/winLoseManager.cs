@@ -10,7 +10,7 @@ public class winLoseManager : MonoBehaviour
 
     public void Restart()
     {
-
+        gameManager.instance.restartLevel();
     }
 
     public void Respawn()
@@ -25,6 +25,6 @@ public class winLoseManager : MonoBehaviour
 
     public void Quit()
     {
-        
+        Application.Quit();
     }
 }
