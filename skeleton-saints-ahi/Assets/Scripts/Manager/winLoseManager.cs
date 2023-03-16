@@ -26,6 +26,7 @@ public class winLoseManager : MonoBehaviour
     {
         int scrollSpeed = 2;
         int i = 3200;
+
         victory.SetActive(false);
         credits.SetActive(true);
         
