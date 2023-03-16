@@ -87,14 +87,14 @@ public class pauseMenuManager : MonoBehaviour
         }
     }
 
-    private void pause()
+    public void pause()
     {
         hUDManager.instance.closeHUD();
         gameManager.instance.isPaused = true;
         Time.timeScale = 0f;
         hUDManager.instance.toggleCursorVisibility();
     }
-    private void unPause()
+    public void unPause()
     {
         hUDManager.instance.showHUD();
         gameManager.instance.isPaused = false;

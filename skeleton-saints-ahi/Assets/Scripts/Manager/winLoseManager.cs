@@ -7,24 +7,27 @@ public class winLoseManager : MonoBehaviour
     public static winLoseManager instance;
     public GameObject victory;
     public GameObject defeat;
+    public GameObject credits;
+    public GameObject current;
 
-    public void Restart()
+    public void DisplayWin()
     {
-        gameManager.instance.restartLevel();
+        victory.SetActive(true);
+        pauseMenuManager.instance.pause();
     }
 
-    public void Respawn()
+    public void DisplayLose()
     {
-
+        defeat.SetActive(true);
+        pauseMenuManager.instance.pause();
     }
 
-    public void Credits()
+    public void PlayCredits()
     {
-
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
+        int scrollSpeed = 2;
+        int i = 3200;
+        victory.SetActive(false);
+        credits.SetActive(true);
+        
     }
 }

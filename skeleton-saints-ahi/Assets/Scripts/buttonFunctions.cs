@@ -9,10 +9,6 @@ public class buttonFunctions : MonoBehaviour
     {
         pauseMenuManager.instance.toggleGameMenu();
     }
-    public void Continue()
-    {
-        gameManager.instance.continueGame();
-    }
     public void Restart()
     {
         gameManager.instance.restartLevel();

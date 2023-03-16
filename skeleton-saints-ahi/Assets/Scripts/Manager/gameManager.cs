@@ -264,22 +264,14 @@ public class gameManager : MonoBehaviour
     }
 	public void loseGame()
 	{
-	
-		menuManager.instance.DisplayLoseMenu();
+		winLoseManager.instance.DisplayLose();
 	}
 	public void winGame()
 	{
 
 		hUDManager.instance.toggleCursorVisibility();
-		menuManager.instance.DisplayWinMenu();
-	}
-	public void continueGame()
-	{
-	
-		hUDManager.instance.toggleCursorVisibility();
-
-		menuManager.instance.CloseWinMenu();
-	}
+		winLoseManager.instance.DisplayWin();
+	} 
 	
 	public void updateGameGoal (int amt)
     {

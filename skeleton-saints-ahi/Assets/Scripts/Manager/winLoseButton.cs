@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class winLoseButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Restart()
     {
-        
+        gameManager.instance.restartLevel();
+        winLoseManager.instance.victory.SetActive(false);
+        winLoseManager.instance.defeat.SetActive(false);
+        pauseMenuManager.instance.unPause();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Respawn()
     {
-        
+
+    }
+
+    public void Credits()
+    {
+
+    }
+
+    public void Quit()
+    {
+        gameManager.instance.restartGame();
     }
 }
