@@ -18,7 +18,6 @@ public sealed class sceneControl
         //Load 1st scene in build order which should be made sure is the main menu scene. Can also do this by name once that is stuctrued but could be slower
         AsyncOperation control = SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
         control.completed += (sceneComplete) => {
-            menuManager.instance.pause();
         };
 
     }

@@ -82,7 +82,7 @@ public class gameManager : MonoBehaviour
 		{
 			//menuManager.instance.DeactivateAllMenus
 			menuManager.instance.DeactivateMain();
-			sceneLoader.instance.LoadNextScene();
+			sceneControl.instance.LoadMainLevel();
 			isPaused = false;
 		}
 
@@ -343,7 +343,7 @@ public class gameManager : MonoBehaviour
 			//Deactivate any menus up from a possible last play
 			hUDManager.instance.closeHUD();
 
-			//sceneControl.instance.LoadMainMenuScene();
+			sceneControl.instance.LoadMainMenuScene();
 			menuManager.instance.ActivateMenu();
 
 		}
