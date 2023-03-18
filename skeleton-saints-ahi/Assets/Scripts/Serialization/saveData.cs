@@ -12,5 +12,19 @@ public class saveData
     public string Timestamp;
 
     public List<gameObjectSaveData> objectsData = new List<gameObjectSaveData>();
+
+    public override string ToString()
+    {
+        string concatenation = "";
+        foreach (gameObjectSaveData data in objectsData)
+        {
+            foreach (objectComponent oc in data.objectComponents)
+                foreach (string field in oc.fields.Keys)
+                {
+                    concatenation += data.name + ":" + oc.componentName + "->" + field + ":" + oc.fields[field] + "\n";
+                }
+        }
+        return concatenation;
+    }
 }
 

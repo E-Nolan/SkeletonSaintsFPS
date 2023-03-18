@@ -46,22 +46,22 @@ public class weaponManager: MonoBehaviour
     {
         switch (weapon)
         {
-            case "Pistol":
+            case "Enemy Pistol":
                 return enemyPistol;
-            case "SMG":
+            case "Enemy SMG":
                 return enemySMG;
-            case "Shotgun":
+            case "Enemy Shotgun":
                 return enemyShotgun;
-            case "Assault Rifle":
+            case "Enemy Assault Rifle":
                 return enemyAssaultRifle;
-            case "Grenade Launcher":
+            case "Enemy Grenade Launcher":
                 return enemyGrenadeLauncher;
-            case "Missile Launcher":
+            case "Enemy Missile Launcher":
                 return enemyMissileLauncher;
             default:
                 break;
         }
-        Debug.Log("No suitable constructor found, returning pistol");
+        Debug.Log("No " + weapon + " constructor found, returning pistol");
         return enemyPistol;
     }
 
