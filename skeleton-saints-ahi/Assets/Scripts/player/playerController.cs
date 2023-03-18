@@ -81,7 +81,7 @@ public class playerController : MonoBehaviour, IDamage
     bool canInputJump = false;
     [SerializeField] bool isJumping = false;
 
-    [SerializeField] weaponStats backupGrapple;
+    [SerializeField] weaponStats startingOffHand;
 
     public rangedWeapon currentWeapon { get; private set; }
     public rangedWeapon currentSecondary { get; private set; }
@@ -122,6 +122,8 @@ public class playerController : MonoBehaviour, IDamage
 
         if (startingWeapon)
             rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
+        if (startingOffHand != null)
+            rangedWeaponPickup(startingOffHand, startingOffHand.weaponType);
     }
 
     // Update is called once per frame
@@ -137,10 +139,7 @@ public class playerController : MonoBehaviour, IDamage
         if (currCoyoteTimer > 0.0f)
             currCoyoteTimer -= Time.deltaTime;
 
-        //Cheat Codes
-        if (Input.GetKeyDown(KeyCode.I))
-            godMode();
-
+        cheatCodeInput();
 
         // Handle movement for the player
         movement();
@@ -444,11 +443,47 @@ public class playerController : MonoBehaviour, IDamage
     {
         // turn isShooting off to prevent a bug where picking up a weapon while shooting could disable shooting entirely
         isPrimaryShooting = false;
+
+        GameObject _newWeapon = createWeaponCopy(_newWeaponStats, _weaponType);
+        // If the picked up object is a grapple gun, add it to the player's off hand (right)
+        // Otherwise, add it to their primary hand (left)
+        switch (_weaponType)
+        {
+            case weaponStats.weaponStatsType.GrappleGun:
+                offHandWeapon = _newWeapon;
+                currentSecondary = offHandWeapon.GetComponent<grappleGun>();
+                break;
+
+            default:
+                weaponInventory.Add(_newWeapon);
+                switchToWeapon(weaponInventory.Count - 1);
+                
+                inactiveWeapons.Add(null);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Removes the player's active weapon and returns a copy of it
+    /// </summary>
+    /// <returns></returns>
+    public GameObject rangedWeaponSwap(weaponStats _newWeaponStats, weaponStats.weaponStatsType _weaponType)
+    {
+        GameObject _oldWeapon = Instantiate(weaponInventory[currWepIndex]);
+        Destroy(weaponInventory[currWepIndex]);
+
+        GameObject _newWeapon = createWeaponCopy(_newWeaponStats, _weaponType);
+        weaponInventory[currWepIndex] = _newWeapon;
+        switchToWeapon(currWepIndex);
+
+            return _oldWeapon;
+    }
+
+    GameObject createWeaponCopy(weaponStats _newWeaponStats, weaponStats.weaponStatsType _weaponType)
+    {
         GameObject _newWeapon;
         GameObject _newFirePos;
 
-        // If the picked up object is a grapple gun, add it to the player's off hand (right)
-        // Otherwise, add it to their primary hand (left)
         switch (_weaponType)
         {
             case weaponStats.weaponStatsType.GrappleGun:
@@ -458,8 +493,6 @@ public class playerController : MonoBehaviour, IDamage
 
                 _newFirePos = Instantiate(rightFirePos.gameObject, rightFirePos.position, rightFirePos.rotation, _newWeapon.transform);
                 _newWeapon.GetComponent<grappleGun>().copyFromWeaponStats(_newWeaponStats, _newFirePos.transform, true);
-                offHandWeapon = _newWeapon;
-                currentSecondary = offHandWeapon.GetComponent<grappleGun>();
                 break;
 
             default:
@@ -469,12 +502,10 @@ public class playerController : MonoBehaviour, IDamage
 
                 _newFirePos = Instantiate(leftFirePos.gameObject, leftFirePos.position, leftFirePos.rotation, _newWeapon.transform);
                 _newWeapon.GetComponent<rangedWeapon>().copyFromWeaponStats(_newWeaponStats, _newFirePos.transform, true);
-                weaponInventory.Add(_newWeapon);
-                switchToWeapon(weaponInventory.Count - 1);
-                
-                inactiveWeapons.Add(null);
                 break;
         }
+
+        return _newWeapon;
     }
 
     IEnumerator nextWeapon()
@@ -861,18 +892,37 @@ public class playerController : MonoBehaviour, IDamage
 
     public void CopyGrappleFromPlayerPreferences()
     {
-        rangedWeaponPickup(backupGrapple, backupGrapple.weaponType);
+        rangedWeaponPickup(startingOffHand, startingOffHand.weaponType);
     }
 
-    public void godMode()
-    {
-        godModeEnabled = !godModeEnabled;
-    }
 
     public void OnDeserialize()
     {
         gameManager.instance.SetPlayerController = this;
         gameManager.instance.SetCameraControls = Camera.main.gameObject.GetComponent<cameraControls>();
         gameManager.instance.playerInstance = gameObject;
+    }
+
+    void cheatCodeInput()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+            godMode();
+        if (Input.GetKeyDown(KeyCode.Tab))
+            skipLevel();
+    }
+    public void godMode()
+    {
+        godModeEnabled = !godModeEnabled;
+    }
+    
+    public void skipLevel()
+    {
+        for (int i = 0; i < gameManager.instance.keyCard.Length; i++)
+        {
+            gameManager.instance.keyCard[i] = false;
+        }
+        saveManager.SaveGameData(saveManager.mainData_Current);
+
+    sceneControl.instance.LoadNextLevel();
     }
 }

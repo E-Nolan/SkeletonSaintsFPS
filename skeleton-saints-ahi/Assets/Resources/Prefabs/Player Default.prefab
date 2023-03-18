@@ -102,7 +102,6 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
-  isPlayer: 1
   isEnemy: 0
   EnemyWeaponSave: {fileID: 0}
 --- !u!114 &3169843501779763169
@@ -180,7 +179,7 @@ MonoBehaviour:
   invincibilityTimer: 0
   currCoyoteTimer: 0
   isJumping: 0
-  backupGrapple: {fileID: 11400000, guid: 15a93ac0856030645a33b7d5d6981d20, type: 2}
+  startingOffHand: {fileID: 11400000, guid: 15a93ac0856030645a33b7d5d6981d20, type: 2}
   isPrimaryShooting: 0
   isSecondaryShooting: 0
   isGrappling: 0

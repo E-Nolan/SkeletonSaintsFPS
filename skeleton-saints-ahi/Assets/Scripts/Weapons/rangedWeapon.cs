@@ -7,7 +7,6 @@ public class rangedWeapon : MonoBehaviour
 {
     #region Member Fields
     [Header("----- Components -----")]
-    [SerializeField] GameObject gunModel;
     [SerializeField] public Transform weaponFirePos;
     [SerializeField] public GameObject gunBullet;
     [SerializeField] AudioSource audioSource;
@@ -51,8 +50,12 @@ public class rangedWeapon : MonoBehaviour
     public Sprite inactiveImage;
     public GameObject bulletIcon;
 
+    public MeshFilter meshFilter;
+    public MeshRenderer meshRenderer;
+
     public string weaponName;
 
+    public weaponStats originalWeapon;
     public weaponStats.weaponStatsType gunType;
     #endregion
 
@@ -179,7 +182,7 @@ public class rangedWeapon : MonoBehaviour
     {
         // Check to see whether or not the weapon has enough ammo to shoot
         // If it does, fire a bullet in the provided direction
-        if (!usedByPlayer || currentClip > 0)
+        if (!usedByPlayer || currentClip > 0 && !isReloading)
         {
             StartCoroutine(startShootCooldown());
             // For each shot in a burst, fire a bullet with a delay between each shot
@@ -327,7 +330,11 @@ public class rangedWeapon : MonoBehaviour
     {
         weaponFirePos = _weaponFirePos;
         if (_stats.weaponModel)
-            Instantiate(_stats.weaponModel, weaponFirePos);
+        {
+            GameObject _model = Instantiate(_stats.weaponModel, weaponFirePos);
+            meshFilter = _model.GetComponent<MeshFilter>();
+            meshRenderer = _model.GetComponent<MeshRenderer>();
+        }
 
         usedByPlayer = _isUsedByPlayer;
         gunBullet = _stats.gunBullet;
@@ -369,13 +376,12 @@ public class rangedWeapon : MonoBehaviour
         defaultRotation = transform.rotation;
 
         gunType = _stats.weaponType;
+
+        originalWeapon = _stats;
     }
 
     virtual public void onSwitch()
     {
-        if (gunModel)
-            gunModel.SetActive(true);
-
         if (usedByPlayer)
         {
             gameManager.instance.PlayerScript().isPrimaryShooting = false;
@@ -384,8 +390,6 @@ public class rangedWeapon : MonoBehaviour
 
     virtual public void offSwitch()
     {
-        if (gunModel)
-            gunModel.SetActive(false);
         if (isReloading)
             stopReloadTilt();
         isReloading = false;

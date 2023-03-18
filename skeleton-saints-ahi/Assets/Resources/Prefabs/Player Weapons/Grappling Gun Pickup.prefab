@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1635102481578471780}
-  m_Layer: 9
+  m_Layer: 20
   m_Name: Sci-Fi Pistol 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1635102481578471782}
   - component: {fileID: 1635102481579798852}
   - component: {fileID: 1635102481580897156}
-  m_Layer: 9
+  m_Layer: 20
   m_Name: Sci_fi_Pistol1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 5607771250863102248}
   - component: {fileID: 4470378863504427108}
   - component: {fileID: 5035958006238474587}
-  m_Layer: 9
+  m_Layer: 20
   m_Name: kunai1-1-128 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 852046467554013404}
   - component: {fileID: 3616567561203180412}
   - component: {fileID: 3524521710918179957}
-  m_Layer: 9
+  m_Layer: 20
   m_Name: kunai1-1-128 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 7629102783065934982}
   - component: {fileID: 7430989059628601}
   - component: {fileID: 3068184043998004607}
-  m_Layer: 9
+  m_Layer: 20
   m_Name: Hookshot Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 5710884710473754194}
   - component: {fileID: 5710884710470329970}
   - component: {fileID: 5710884710471328946}
-  m_Layer: 9
+  m_Layer: 20
   m_Name: kunai1-1-128
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 2317702182709591282}
   - component: {fileID: 7162718339278345350}
   - component: {fileID: 8865933428908505459}
-  m_Layer: 9
+  m_Layer: 20
   m_Name: kunai1-1-128 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 8761265463065745920}
   - component: {fileID: 8761265463065745921}
   - component: {fileID: 8761265463065745926}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Grappling Gun Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,6 +602,8 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
+  isEnemy: 0
+  EnemyWeaponSave: {fileID: 0}
 --- !u!114 &8761265463065745920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,8 +616,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f367b8f24f31c4743b658c8f0e249fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalInteractionText: Interact
+  currentInteractionText: Interact
   weapon: {fileID: 11400000, guid: 15a93ac0856030645a33b7d5d6981d20, type: 2}
   pickupSound: {fileID: 8300000, guid: cd4903704c36e3140b491a89902671d9, type: 3}
+  gunPickupModel: {fileID: 0}
   rotationSpeed: 90
 --- !u!135 &8761265463065745921
 SphereCollider:
@@ -625,7 +630,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8761265463065745927}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2
@@ -644,5 +649,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
