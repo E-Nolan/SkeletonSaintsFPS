@@ -10,9 +10,17 @@ public class bullet : MonoBehaviour
     [SerializeField] AudioSource bulletImpactSound;
     [SerializeField] private Transform damagePopupPrefab;
 
+    private Transform damageNumber;
+
     public void setTimer(float _timer)
     {
         StartCoroutine(timerWait(_timer));
+    }
+
+    void Update()
+    {
+        if(damageNumber != null)
+            damageNumber.rotation = Quaternion.LookRotation(damageNumber.position - Camera.main.transform.position, Camera.main.transform.up);
     }
 
     IEnumerator timerWait(float _timer)
@@ -43,7 +51,7 @@ public class bullet : MonoBehaviour
             other.GetComponent<IDamage>().TakeDamage(bulletDmg);
             Vector3 direction = new Vector3(transform.position.x, 0, 
                 transform.position.z) - new Vector3(other.transform.position.x, 0, other.transform.position.z);
-            Transform damageNumber = Instantiate(damagePopupPrefab, 
+            damageNumber = Instantiate(damagePopupPrefab, 
                 GetComponent<Rigidbody>().transform.position, Quaternion.LookRotation(direction));
             if (other.CompareTag("Player"))
             {
