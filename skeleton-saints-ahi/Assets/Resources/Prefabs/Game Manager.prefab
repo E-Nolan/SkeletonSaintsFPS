@@ -378,7 +378,6 @@ GameObject:
   - component: {fileID: 734101524882160806}
   - component: {fileID: 734101524882160801}
   - component: {fileID: 2230043159466123850}
-  - component: {fileID: 2338057896135287611}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -489,9 +488,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2338057896135287611}
+      - m_Target: {fileID: 734101524882160803}
         m_TargetAssemblyTypeName: winLoseButton, Assembly-CSharp
-        m_MethodName: Credits
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -501,18 +500,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2338057896135287611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734101524882160803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85a282004aca4e449e850d5baa16267, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &734101525025383322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1216,7 +1203,6 @@ GameObject:
   - component: {fileID: 734101525680035741}
   - component: {fileID: 734101525680035740}
   - component: {fileID: 3800379871195572772}
-  - component: {fileID: 7178250493980749660}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1327,9 +1313,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7178250493980749660}
+      - m_Target: {fileID: 734101525680035742}
         m_TargetAssemblyTypeName: winLoseButton, Assembly-CSharp
-        m_MethodName: Quit
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1339,18 +1325,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7178250493980749660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734101525680035742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85a282004aca4e449e850d5baa16267, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &734101525681626930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,7 +1337,6 @@ GameObject:
   - component: {fileID: 734101525681626929}
   - component: {fileID: 734101525681626928}
   - component: {fileID: 6135271806584998032}
-  - component: {fileID: 117697613767531728}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1474,9 +1447,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 117697613767531728}
+      - m_Target: {fileID: 734101525681626930}
         m_TargetAssemblyTypeName: winLoseButton, Assembly-CSharp
-        m_MethodName: Quit
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1486,18 +1459,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &117697613767531728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734101525681626930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85a282004aca4e449e850d5baa16267, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &734101525691759892
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,7 +2296,6 @@ GameObject:
   - component: {fileID: 734101525977601983}
   - component: {fileID: 734101525977601981}
   - component: {fileID: 734101525977601980}
-  - component: {fileID: 6752745171166517797}
   - component: {fileID: 4002428908080462496}
   m_Layer: 5
   m_Name: Restart
@@ -2403,18 +2363,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6752745171166517797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734101525977601982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85a282004aca4e449e850d5baa16267, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4002428908080462496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2459,9 +2407,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6752745171166517797}
+      - m_Target: {fileID: 734101525977601982}
         m_TargetAssemblyTypeName: winLoseButton, Assembly-CSharp
-        m_MethodName: Restart
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2618,7 +2566,6 @@ GameObject:
   - component: {fileID: 734101526358274983}
   - component: {fileID: 734101526358274982}
   - component: {fileID: 2456648498141628555}
-  - component: {fileID: 4518591670401456623}
   m_Layer: 5
   m_Name: Restart
   m_TagString: Untagged
@@ -2729,9 +2676,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4518591670401456623}
+      - m_Target: {fileID: 734101526358274976}
         m_TargetAssemblyTypeName: winLoseButton, Assembly-CSharp
-        m_MethodName: Restart
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2741,18 +2688,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4518591670401456623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734101526358274976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85a282004aca4e449e850d5baa16267, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &734101526504157798
 GameObject:
   m_ObjectHideFlags: 0
@@ -30576,7 +30511,6 @@ GameObject:
   - component: {fileID: 7192507529388351140}
   - component: {fileID: 7192507529388351141}
   - component: {fileID: 2884299570543086888}
-  - component: {fileID: 734101526425722646}
   m_Layer: 0
   m_Name: Resume
   m_TagString: Untagged
@@ -30687,9 +30621,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 734101526425722646}
+      - m_Target: {fileID: 7192507529388351143}
         m_TargetAssemblyTypeName: pauseButton, Assembly-CSharp
-        m_MethodName: Resume
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30699,18 +30633,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &734101526425722646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192507529388351143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d595bd477f4648a39229b77f13cb504, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7192507529526640739
 GameObject:
   m_ObjectHideFlags: 0
@@ -35182,7 +35104,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3630797087784199747}
         m_TargetAssemblyTypeName: menuButton, Assembly-CSharp
-        m_MethodName: ConfirmQuit
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

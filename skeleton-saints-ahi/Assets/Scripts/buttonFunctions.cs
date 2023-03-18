@@ -7,7 +7,7 @@ public class buttonFunctions : MonoBehaviour
     #region Game Menu Buttons
     public void Resume()
     {
-        pauseMenuManager.instance.toggleGameMenu();
+        menuManager.instance.toggleGameMenu();
     }
     public void Restart()
     {

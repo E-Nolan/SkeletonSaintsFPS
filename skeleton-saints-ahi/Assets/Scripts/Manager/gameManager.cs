@@ -281,12 +281,12 @@ public class gameManager : MonoBehaviour
 
 	public void loseGame()
 	{
-		winLoseManager.instance.DisplayLose();
+		
 	}
 
 	public void winGame()
 	{
-		winLoseManager.instance.DisplayWin();
+		
 	}
 
 	public void updateGameGoal(int amt)
