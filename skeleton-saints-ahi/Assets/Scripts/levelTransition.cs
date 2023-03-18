@@ -8,25 +8,38 @@ public class levelTransition : MonoBehaviour
     [SerializeField] bool loadSpecificScene;
     [SerializeField] string specificSceneName;
 
+    private void Awake()
+    {
+        if (!loadSpecificScene)
+            specificSceneName = "";
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            for (int i = 0; i < gameManager.instance.keyCard.Length; i++)
-            {
-                gameManager.instance.keyCard[i] = false;
-            }
-            saveManager.SaveGameData(saveManager.mainData_Current);
+            SwitchToLevel(specificSceneName);
+        }
+    }
 
-            switch (loadSpecificScene)
-            {
-                case true:
-                    sceneControl.instance.LoadSpecificLevel(specificSceneName);
-                    break;
-                case false:
-                    sceneControl.instance.LoadNextLevel();
-                    break;
-            }
+    /// <summary>
+    /// Leave string name blank to switch to the next level
+    /// </summary>
+    /// <param name="_sceneName"></param>
+    public static void SwitchToLevel(string _sceneName = "")
+    {
+        for (int i = 0; i < gameManager.instance.keyCard.Length; i++)
+        {
+            gameManager.instance.keyCard[i] = false;
+        }
+        saveManager.SaveGameData(saveManager.mainData_Current);
+
+        if (_sceneName == "")
+        {
+            sceneControl.instance.LoadNextLevel();
+        }
+        else
+        {
+            sceneControl.instance.LoadSpecificLevel(_sceneName);
         }
     }
 }
