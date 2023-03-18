@@ -45,6 +45,11 @@ public class bullet : MonoBehaviour
                 transform.position.z) - new Vector3(other.transform.position.x, 0, other.transform.position.z);
             Transform damageNumber = Instantiate(damagePopupPrefab, 
                 GetComponent<Rigidbody>().transform.position, Quaternion.LookRotation(direction));
+            if (other.CompareTag("Player"))
+            {
+                damageNumber.position -= transform.forward * 2.5f;
+            }
+            damageNumber.rotation = Quaternion.LookRotation(damageNumber.position - Camera.main.transform.position, Camera.main.transform.up);
             DamagePopup damagePopup = damageNumber.GetComponent<DamagePopup>();
             damagePopup.Setup(bulletDmg);
         }

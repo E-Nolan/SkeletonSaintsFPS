@@ -161,7 +161,7 @@ public class Enemy : MonoBehaviour, IDamage
             Vector3 direction = new Vector3(transform.position.x, 0,
     transform.position.z) - new Vector3(other.transform.position.x, 0, other.transform.position.z);
             Transform damageNumber = Instantiate(damagePopupPrefab,
-                transform.position + transform.up + transform.forward, Quaternion.LookRotation(direction));
+                transform.position + transform.up * 2.0f, Quaternion.LookRotation(direction));
             DamagePopup damagePopup = damageNumber.GetComponent<DamagePopup>();
             damagePopup.Setup(attackDamage);
         }
