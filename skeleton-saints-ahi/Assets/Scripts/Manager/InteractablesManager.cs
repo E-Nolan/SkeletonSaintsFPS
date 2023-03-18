@@ -36,6 +36,7 @@ public class InteractablesManager : MonoBehaviour
 					if (currentInteractable != null)
 					{
 						oldInteractable = currentInteractable;
+						currentInteractable.lookingAt();
 						inputReader.DisplayMessage(currentInteractable.currentInteractionText); // the line so that the item names appear on screen
 						if (Input.GetButtonDown(playerPreferences.instance.Button_Interact))
 						{

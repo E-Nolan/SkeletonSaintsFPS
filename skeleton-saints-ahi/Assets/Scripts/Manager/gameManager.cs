@@ -136,7 +136,10 @@ public class gameManager : MonoBehaviour
 		if (Cursor.visible)
 			hUDManager.instance.toggleCursorVisibility();
 
+		hUDManager.instance.showHUD();
 		menuManager.instance.canToggleGameMenu = true;
+		if (Testing)
+			FetchEvents();
 		gameEventManager.instance.GenerateEventsUI();
 	}
     //Commented out until player loads properly to start with.
