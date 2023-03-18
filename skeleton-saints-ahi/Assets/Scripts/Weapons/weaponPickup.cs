@@ -10,11 +10,29 @@ public class weaponPickup : IInteractable
     [SerializeField] MeshRenderer gunPickupMaterial;
     [Range(0,360)] [SerializeField] int rotationSpeed;
     public bool canInteract = true;
+    bool displayingError = false;
+
+    [SerializeField] Transform gunModelTransform;
+
+    private void Start()
+    {
+            originalInteractionText = $"E: Pickup {weapon.weaponName}";
+            currentInteractionText = $"E: Pickup {weapon.weaponName}";
+    }
 
     private void Update()
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
     }
+    public override void lookingAt()
+    {
+        if (gameManager.instance.PlayerScript().weaponInventory.Count >= 3 && !displayingError)
+        {
+            originalInteractionText = $"E: Swap for {weapon.weaponName}";
+            currentInteractionText = $"E: Swap for {weapon.weaponName}";
+        }
+    }
+
 
     public override void Interact()
     {
@@ -23,10 +41,17 @@ public class weaponPickup : IInteractable
             StartCoroutine(interactCooldown());
             if (gameManager.instance.PlayerScript().weaponInventory.Count >= 3)
             {
-                // If the player's inventory is full, swap their weapon with the weapon inside this pickup
-                GameObject _givenWeapon = gameManager.instance.PlayerScript().rangedWeaponSwap(weapon, weapon.weaponType);
-                replaceWeaponPickup(_givenWeapon.GetComponent<rangedWeapon>());
-                Destroy(_givenWeapon);
+                if (gameManager.instance.PlayerScript().currentWeapon.gunType != weaponStats.weaponStatsType.SideArm)
+                {
+                    // If the player's inventory is full, swap their weapon with the weapon inside this pickup
+                    GameObject _givenWeapon = gameManager.instance.PlayerScript().rangedWeaponSwap(weapon, weapon.weaponType);
+                    replaceWeaponPickup(_givenWeapon.GetComponent<rangedWeapon>());
+                    Destroy(_givenWeapon);
+                }
+                else
+                {
+                    StartCoroutine(noSwappingPistolDelay());
+                }
             }
             else
             {
@@ -34,6 +59,8 @@ public class weaponPickup : IInteractable
                 gameManager.instance.PlayerScript().rangedWeaponPickup(weapon, weapon.weaponType);
                 if (pickupSound)
                     gameManager.instance.PlayerScript().audioSource.PlayOneShot(pickupSound);
+
+
                 Destroy(gameObject);
             }
         }
@@ -41,7 +68,11 @@ public class weaponPickup : IInteractable
 
     IEnumerator noSwappingPistolDelay()
     {
+        displayingError = true;
+        currentInteractionText = "You can not swap out your pistol!";
         yield return new WaitForSeconds(1.0f);
+        displayingError = false;
+        currentInteractionText = originalInteractionText;
     }
 
     IEnumerator interactCooldown()
@@ -54,8 +85,11 @@ public class weaponPickup : IInteractable
     void replaceWeaponPickup(rangedWeapon _newWeapon)
     {
         weapon = _newWeapon.originalWeapon;
+        gunModelTransform.localScale = weapon.originalWeaponScale;
         gunPickupMesh.sharedMesh = _newWeapon.meshFilter.sharedMesh;
         gunPickupMaterial.sharedMaterial = _newWeapon.meshRenderer.sharedMaterial;
+        originalInteractionText = $"E: Swap for {weapon.weaponName}";
+        currentInteractionText = $"E: Swap for {weapon.weaponName}";
     }
 
     /*

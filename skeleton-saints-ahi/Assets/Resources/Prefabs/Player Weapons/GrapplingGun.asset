@@ -44,3 +44,4 @@ MonoBehaviour:
   damageBonus: 0
   bulletsPerSpreadBonus: 0
   spreadAngleBonus: 0
+  originalWeaponScale: {x: 0.1, y: 0.1, z: 0.1}

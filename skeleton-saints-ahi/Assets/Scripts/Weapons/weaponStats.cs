@@ -49,4 +49,7 @@ public class weaponStats : ScriptableObject
     [Range(0, 20)] public float damageBonus;
     [Range(0, 20)] public int bulletsPerSpreadBonus;
     [Range(0, 60)]public int spreadAngleBonus;
+
+    [Header("Miscellaneous")]
+    public Vector3 originalWeaponScale;
 }
