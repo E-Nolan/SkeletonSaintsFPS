@@ -2211,6 +2211,9 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
+  isPlayer: 0
+  isEnemy: 0
+  EnemyWeaponSave: {fileID: 0}
 --- !u!95 &8290775159967972618
 Animator:
   serializedVersion: 5
@@ -2256,6 +2259,7 @@ MonoBehaviour:
   gunPosition: {fileID: 0}
   handTransform: {fileID: 0}
   healthBarUI: {fileID: 2083425801176400462}
+  damagePopupPrefab: {fileID: 5156991524456792442, guid: 48bf4594a2656ef49afe5d660714f3c4, type: 3}
   _materialFlashSpeed: 0.25
   _material: {fileID: 2100000, guid: ef13cfa4472295049a476211589069a1, type: 2}
   _flashMaterial: {fileID: 2100000, guid: c38f19bd67a1c974d9e5703cde859cb9, type: 2}
@@ -2266,6 +2270,7 @@ MonoBehaviour:
   dropChance: 0
   isShooting: 0
   currentWeapon: {fileID: 0}
+  savedWeapon: {fileID: 0}
   acquiringWeapon: 0
   isDead: 0
   isAttacking: 0

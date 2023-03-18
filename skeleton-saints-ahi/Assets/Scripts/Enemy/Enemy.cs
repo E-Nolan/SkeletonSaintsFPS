@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] private Transform gunPosition;
     [SerializeField] private Transform handTransform;
     [SerializeField] private GameObject healthBarUI;
+    [SerializeField] Transform damagePopupPrefab;
 
     [Header("----- Material -----")]
     [SerializeField] float _materialFlashSpeed;
@@ -157,12 +158,18 @@ public class Enemy : MonoBehaviour, IDamage
         if (other.CompareTag("Player") && (isBossEnemy || isMutant))
         {
             gameManager.instance.PlayerScript().TakeDamage(attackDamage);
+            Vector3 direction = new Vector3(transform.position.x, 0,
+    transform.position.z) - new Vector3(other.transform.position.x, 0, other.transform.position.z);
+            Transform damageNumber = Instantiate(damagePopupPrefab,
+                transform.position + transform.up + transform.forward, Quaternion.LookRotation(direction));
+            DamagePopup damagePopup = damageNumber.GetComponent<DamagePopup>();
+            damagePopup.Setup(attackDamage);
         }
     }
 
     private void OnDestroy()
     {
-        if(isBossEnemy && SceneManager.GetActiveScene().name != "Main Menu")
+        if(isBossEnemy && Health <= 0 && SceneManager.GetActiveScene().name != "Main Menu")
             gameManager.instance.queuePlayerVictory(1f);
     }
 

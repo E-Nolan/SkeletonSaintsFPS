@@ -57,7 +57,7 @@ public class bossAttackManager : MonoBehaviour
 
         if (waveSent)
             CanSendWave = false;
-
+        
         atWaveLocation = Mathf.Abs((transform.position - returnToGameObject.transform.position).magnitude) < 0.1f;
         goingToWaveLocation = Mathf.Abs((agent.destination - returnToGameObject.transform.position).magnitude) < 0.1f;
 
@@ -66,6 +66,7 @@ public class bossAttackManager : MonoBehaviour
         {
             agent.destination = returnToGameObject.transform.position;
         }
+        
 
         if (goingToWaveLocation)
             Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new 
