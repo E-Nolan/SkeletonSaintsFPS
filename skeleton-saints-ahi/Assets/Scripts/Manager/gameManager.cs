@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class gameManager : MonoBehaviour
 {
-    public static gameManager instance;
+	public static gameManager instance;
 
 	public bool Game = false;
 	public bool Testing = false;
@@ -16,13 +16,13 @@ public class gameManager : MonoBehaviour
 	public GameObject PlayerSpawnPos;
 	public GameObject playerInstance;
 
-    [Header("Game Components")]
-    [SerializeField] playerController playerScript;
+	[Header("Game Components")]
+	[SerializeField] playerController playerScript;
 	[SerializeField] cameraControls playerCamera;
 
-    [Header("Game State Variables")]
-    public bool isPaused;
-    bool isEnemyFiring;
+	[Header("Game State Variables")]
+	public bool isPaused;
+	bool isEnemyFiring;
 	int enemiesRemaining;
 	public Difficulty currentDifficulty;
 	public GameObject currentScene;
@@ -37,14 +37,16 @@ public class gameManager : MonoBehaviour
 	//This lets the script know it can start tracking game events like winning or losing.
 	public bool playStarted;
 	public bool confirmed;
-    #region Runtime Calls
-    private void Awake()
+	#region Runtime Calls
+	private void Awake()
 	{
-		if (instance != null)
-			Destroy(instance);
-
-		instance = this;
-		DontDestroyOnLoad(gameObject);
+		if (instance == null)
+		{
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		else
+			Destroy(gameObject);
 		activeGameEvents = new List<gameEvent>();
 	}
 
@@ -56,22 +58,22 @@ public class gameManager : MonoBehaviour
 		 */
 		beginGame();
 	}
-    private void LateUpdate()
-    {
-        if (playStarted)
-        {
+	private void LateUpdate()
+	{
+		if (playStarted)
+		{
 			/*manage events and tasks, this needs not check every frame because it doesn't need to be as precise
 			  as something like movement or detecting things
 			*/
 			managePlayerTasks();
-        }
-		
-    }
-    #endregion
+		}
 
-    #region Public Methods
+	}
+	#endregion
 
-    public void InitializePlay()
+	#region Public Methods
+
+	public void InitializePlay()
 	{
 		/* This method is called by either the button in the start menu 
 		 * or by beginGame if BUILDMODE == false
@@ -83,7 +85,7 @@ public class gameManager : MonoBehaviour
 			sceneLoader.instance.LoadNextScene();
 			isPaused = false;
 		}
-		
+
 		if (Testing)
 		{
 			menuManager.instance.DeactivateMain();
@@ -93,30 +95,30 @@ public class gameManager : MonoBehaviour
 		//either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
 	}
 
-    public void FetchEvents()
-    {
+	public void FetchEvents()
+	{
 		gameEventManager.instance.FindEvents();
-        if (gameEventManager.instance.HasEvents())
-        {
-            for (int i = 0; i < gameEventManager.instance.gameEvents.Count; i++)
-            {
-                activeGameEvents.Add(gameEventManager.instance.gameEvents[i]);
-            }
-        }
-    }
+		if (gameEventManager.instance.HasEvents())
+		{
+			for (int i = 0; i < gameEventManager.instance.gameEvents.Count; i++)
+			{
+				activeGameEvents.Add(gameEventManager.instance.gameEvents[i]);
+			}
+		}
+	}
 
-    public void LevelSetup()
+	public void LevelSetup()
 	{
 		PlayerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn");
 		if (PlayerSpawnPos == null)
-        {
+		{
 			//Debug.Log ("Player Spawn not found on level setup");
-        }
+		}
 		if (sceneControl.instance.CurrentScene().name == "Level One")
 			finalGateButton = GameObject.FindGameObjectWithTag("FinalGateButton").GetComponent<gateButton>();
 		//Load player in and assign script components
 		playerInstance = Instantiate(PlayerPrefab, PlayerSpawnPos.transform.position, PlayerSpawnPos.transform.rotation);
-		
+
 		playerScript = playerInstance.GetComponent<playerController>();
 		playerCamera = Camera.main.GetComponent<cameraControls>();
 
@@ -134,28 +136,31 @@ public class gameManager : MonoBehaviour
 		if (Cursor.visible)
 			hUDManager.instance.toggleCursorVisibility();
 
+		hUDManager.instance.showHUD();
 		menuManager.instance.canToggleGameMenu = true;
+		if (Testing)
+			FetchEvents();
 		gameEventManager.instance.GenerateEventsUI();
 	}
-    //Commented out until player loads properly to start with.
+	//Commented out until player loads properly to start with.
 
-    public void AssertplayerPreferencesToScript()
-    {
-        //Will take the active values from Player Preferences and assign those settings to the variables
-        //used in the player and camera scripts
-        //Should be called right before the player is dropped in and gains control of the player.
-        //Script values should be assigned from preferences, controls should be enabled and cursor hidden
-        
+	public void AssertplayerPreferencesToScript()
+	{
+		//Will take the active values from Player Preferences and assign those settings to the variables
+		//used in the player and camera scripts
+		//Should be called right before the player is dropped in and gains control of the player.
+		//Script values should be assigned from preferences, controls should be enabled and cursor hidden
+
 		//playerScript.weaponInventory = playerPreferences.instance.MainWeapons;
 		for (int i = 0; i < playerPreferences.instance.MainWeapons.Count; i++)
-        {
+		{
 			playerScript.CopyWeaponFromPlayerPreferences(playerPreferences.instance.MainWeapons[i]);
-        }
+		}
 		//playerPreferences.instance.MainWeapons.Clear();
 		if (playerPreferences.instance.OffWeapon)
-        {
+		{
 			playerScript.CopyGrappleFromPlayerPreferences();
-        }
+		}
 
 		playerScript.SetPlayerSpeed = playerPreferences.instance.playerSpeed;
 		playerScript.SetGravity = playerPreferences.instance.gravity;
@@ -189,19 +194,19 @@ public class gameManager : MonoBehaviour
 		playerScript.SetSprintStaminaDrain = playerPreferences.instance.sprintStaminaDrain;
 	}
 
-    public void respawn()
+	public void respawn()
 	{
-	
+
 		//if we are respawning because the player died, just un-set the flash screen and toggle the menu
 		if (playerScript.GetCurrentHealth() <= 0)
 		{
 			hUDManager.instance.damageFlashScreen.SetActive(false);
-	
-        }
-        else
-        {
+
+		}
+		else
+		{
 			//Otherwise, if we respawned from the menu it will still be up so close i
-			
+
 		}
 		//And in either case, reset the player to the playerSpawnPos when they respawn
 		//This can be updated when the player reaches a checkpoint
@@ -226,7 +231,7 @@ public class gameManager : MonoBehaviour
 		{
 			menuManager.instance.toggleGameMenu();
 		}
-		
+
 		if (playerScript.GetCurrentHealth() <= 0)
 		{
 			hUDManager.instance.damageFlashScreen.SetActive(false);
@@ -260,19 +265,19 @@ public class gameManager : MonoBehaviour
 			hUDManager.instance.toggleCursorVisibility();
 		*/
 		clearLevel(true);
-		
+
 		//Call to scene control to handle unloading anything we are currently in
 		sceneControl.instance.SceneRestart_Game();
 
 		//This call loads the main menu scene and menu
-		
+
 		beginGame();
 		//if the menu wasn't up, then the cursor is still locked at this point
 	}
 	public void playerDead()
-    {
+	{
 		loseGame();
-    }
+	}
 
 	public void loseGame()
 	{
@@ -282,21 +287,21 @@ public class gameManager : MonoBehaviour
 	public void winGame()
 	{
 		winLoseManager.instance.DisplayWin();
-	} 
-	
-	public void updateGameGoal (int amt)
-    {
+	}
+
+	public void updateGameGoal(int amt)
+	{
 		enemiesRemaining += amt;
 		killCondition killCon;
 		if (gameEventManager.instance.HasKillCondition(out killCon))
-        {
+		{
 			if (amt < 0)
 			{
 				killCon.enemiesLeft += amt;
 				killCon.CheckCompletion();
 			}
-        }
-    }
+		}
+	}
 	public void queuePlayerVictory(float timer)
 	{
 		StartCoroutine(playerVictoryTimer(timer));
@@ -307,24 +312,24 @@ public class gameManager : MonoBehaviour
 		yield return new WaitForSeconds(timer);
 		instance.winGame();
 	}
-    #region Merged Functions
+	#region Merged Functions
 	public void createUIBar()
-    {
+	{
 		hUDManager.instance.createPlayerHealthBar();
 		hUDManager.instance.createPlayerStaminaBar();
 		hUDManager.instance.createPlayerArmorBar();
 	}
 
 	#endregion
-    public void setEnemyFiring(bool isFiring)
-    {
-        isEnemyFiring = isFiring;
-    }
+	public void setEnemyFiring(bool isFiring)
+	{
+		isEnemyFiring = isFiring;
+	}
 
-    public bool getEnemyFiring()
-    {
-        return isEnemyFiring;
-    }
+	public bool getEnemyFiring()
+	{
+		return isEnemyFiring;
+	}
 	#endregion
 
 	#region Private Methods
@@ -362,8 +367,7 @@ public class gameManager : MonoBehaviour
 		}
 	}
 	private bool allKeysFound()
-    {
-		return false;
+	{
 		int keysFound = 0;
 		if (keyCard[0])
 			keysFound++;
@@ -375,22 +379,23 @@ public class gameManager : MonoBehaviour
 		{
 			return true;
 		}
-		else 
+		else
 			return false;
 	}
 
-    public void clearLevel(bool respawning = false)
-    {
+	public void clearLevel(bool respawning = false)
+	{
 		if (!respawning)
 		{
 			//playerPreferences.instance.MainWeapons.Clear();
 			gameEventManager.instance.ClearEventListUI();
 			gameEventManager.instance.ResetEvents();
 			gameEventManager.instance.gameEvents.Clear();
-		} else
-        {
+		}
+		else
+		{
 
-        }
+		}
 
 		Destroy(playerInstance);
 	}
@@ -400,7 +405,8 @@ public class gameManager : MonoBehaviour
 	{
 		Easy, Normal, Hard
 	}
-	public enum EventClass {
+	public enum EventClass
+	{
 		Location, Interaction, Collection, Kill, Boss
 	};
 
@@ -413,6 +419,20 @@ public class gameManager : MonoBehaviour
 	public cameraControls CameraControls()
 	{
 		return playerCamera;
+	}
+	public cameraControls SetCameraControls
+	{
+		set
+		{
+			playerCamera = value;
+		}
+	}
+	public playerController SetPlayerController
+	{
+		set
+		{
+			playerScript = value;
+		}
 	}
 	public bool PlayStarted()
 	{

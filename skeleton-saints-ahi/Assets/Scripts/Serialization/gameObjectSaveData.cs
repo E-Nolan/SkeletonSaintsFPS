@@ -24,8 +24,9 @@ public class gameObjectSaveData
 	public GameObject EnemyWeaponSave;
 
 	public List<objectComponent> objectComponents = new List<objectComponent>();
-    public gameObjectSaveData(GameObject original)
+    public gameObjectSaveData(GameObject original, bool isPlayerData = false)
     {
+		isPlayer = isPlayerData;
 		objectSaver oS = original.GetComponent<objectSaver>();
 		name = original.name;
 		prefabName = oS.prefabName;
@@ -53,15 +54,21 @@ public class gameObjectSaveData
 		//Collect all the components that are attached to the GO.
 		//This includes MonoBehavior scripts, Renderers, Transform, Animator...
 		//If it
-		object[] components_raw = original.GetComponents<Component>() as object[];
+		object[] components_raw = original.GetComponents<Component>();
 		foreach (object component_raw in components_raw)
 		{
 			if (componentTypesToAdd.Contains(component_raw.GetType().BaseType.FullName))
 			{
-				if (!isPlayer)
+				if (!isPlayerData)
 				{
 					components_filtered.Add(component_raw);
-				}
+				} else
+                {
+					if (component_raw.GetType() == typeof(Transform))
+                    {
+						components_filtered.Add(component_raw);
+					}
+                }
 			}
 		}
 

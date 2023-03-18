@@ -117,6 +117,7 @@ Transform:
   m_Children:
   - {fileID: 4056260376301426578}
   - {fileID: 7480289410062679745}
+  - {fileID: 7480289409812485798}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
@@ -137,6 +138,9 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
+  isPlayer: 0
+  isEnemy: 0
+  EnemyWeaponSave: {fileID: 0}
 --- !u!65 &2964705908013411206
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -223,7 +227,6 @@ Transform:
   - {fileID: 3813600612848858441}
   - {fileID: 7480289410317724869}
   - {fileID: 7480289411800140651}
-  - {fileID: 7480289409812485798}
   m_Father: {fileID: 3011809223121294224}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -315,13 +318,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7480289409812485793}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.092, z: 1.74}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.099998966, y: 0.1510787, z: 2.8603442}
+  m_LocalScale: {x: 0.25, y: 0.5741269, z: 0.41241986}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4056260376301426578}
-  m_RootOrder: 3
+  m_Father: {fileID: 3011809223121294224}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7480289409812485799
 MeshFilter:

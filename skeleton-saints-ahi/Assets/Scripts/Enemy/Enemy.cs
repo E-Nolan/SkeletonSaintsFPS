@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour, IDamage
     public rangedWeapon currentWeapon;
     
     [SerializeField]
-    public GameObject savedWeapon;
+    public string savedWeapon;
     
     public bool acquiringWeapon;
     public bool isDead = false;
@@ -411,8 +411,8 @@ public class Enemy : MonoBehaviour, IDamage
         audioSource.PlayOneShot(spawnScreech, spawnScreechVolume);
     }
 
-    public void OnDeSerialize()
+    public void OnDeserialize()
     {
-        PickupWeapon(savedWeapon.GetComponent<rangedWeapon>().GetComponent<weaponPickup>().weapon);
+        PickupWeapon(weaponManager.instance.GetEnemyWeaponStats(savedWeapon));
     }
 }

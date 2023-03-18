@@ -36,7 +36,14 @@ public static class saveManager
         if (SaveDataEvent != null)
             SaveDataEvent.Invoke(data);
     }
-
+    public static void playerSave()
+    {
+        gameObjectSaveData newPlayerData = new gameObjectSaveData(gameManager.instance.playerInstance);
+        objectSaver saver = gameManager.instance.playerInstance.GetComponent<objectSaver>();
+        saver.SetID();
+        gameManager.instance.playerInstance.SendMessage("OnSerialize", SendMessageOptions.DontRequireReceiver);
+        TriggerSerialization(mainData_Current);
+    }
     public static bool SaveGameData(saveData save)
     {
         if (!Directory.Exists(directory))
