@@ -35,8 +35,8 @@ MonoBehaviour:
   maxAmmo: 120
   currentClip: 30
   maxClipSize: 30
-  ammoRecovery: 15
-  reloadSpeed: 0
+  ammoRecovery: 0
+  reloadSpeed: 3.5
   range: 100
   lobbedWeapon: 0
   bulletSpeedBonus: 5

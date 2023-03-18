@@ -34,20 +34,18 @@ public class Cinematic : MonoBehaviour
 
     void Awake()
     {
-        camMain = Camera.main;
 
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
             targets = GameObject.FindGameObjectsWithTag("Enemy");
         }
 
+        camMain = Camera.main;
         CurrentTarget = targets[0];
         mainMenu = menuManager.instance.mainMenu;
         sharedMenu = menuManager.instance.sharedMenu;
         activeMenu = menuManager.instance.activeMenu;
 
-
-        //uiCamera.gameObject.SetActive(false);
         pressAnyKeyText.gameObject.SetActive(true);
         nameText.gameObject.SetActive(false);
         speedLines.gameObject.SetActive(false);
@@ -75,10 +73,8 @@ public class Cinematic : MonoBehaviour
             _index = 0;
 
         CurrentTarget = targets[_index];
-
         targetPosition = targets[_index].transform.position +
                          new Vector3(0f, targets[_index].transform.localScale.y * 2, 0f);
-
         reachedTargetPosition = Math.Abs(transform.position.x - targetPosition.x) < 0.01f;
 
         if (reachedTargetPosition)
@@ -98,13 +94,11 @@ public class Cinematic : MonoBehaviour
 
         if (isWaiting)
         {
-            //uiCamera.gameObject.SetActive(true);
             nameText.gameObject.SetActive(true);
             speedLines.gameObject.SetActive(true);
         }
         else
         {
-            //uiCamera.gameObject.SetActive(false);
             nameText.gameObject.SetActive(false);
             speedLines.gameObject.SetActive(false);
         }

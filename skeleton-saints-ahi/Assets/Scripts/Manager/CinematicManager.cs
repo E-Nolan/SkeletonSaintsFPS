@@ -18,6 +18,9 @@ public class CinematicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.anyKeyDown)
+            _timer = 0f;
+
         if (_timer > 6)
         {
             _timer = 0f;

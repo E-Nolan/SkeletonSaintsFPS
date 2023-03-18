@@ -397,12 +397,24 @@ public class rangedWeapon : MonoBehaviour
 
     void startReloadTilt()
     {
-        transform.RotateAround(weaponFirePos.position - weaponFirePos.forward, transform.right, 60);
+        if(usedByPlayer) 
+            transform.RotateAround(weaponFirePos.position - weaponFirePos.forward, transform.right, 60);
+        else
+        {
+            enemyScript.enabled = false;
+            transform.RotateAround(transform.position, transform.up, 40);
+        }
     }
 
     void stopReloadTilt()
     {
-        transform.RotateAround(weaponFirePos.position - weaponFirePos.forward, transform.right, -60);
+        if(usedByPlayer) 
+            transform.RotateAround(weaponFirePos.position - weaponFirePos.forward, transform.right, -60);
+        else
+        {
+            enemyScript.enabled = true;
+            transform.RotateAround(transform.position, transform.up, -40);
+        }
     }
 
     public float GetReloadSpeed()
