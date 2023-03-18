@@ -12,31 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc55912ace33a884a97d97399a426c7f, type: 3}
   m_Name: Missile Launcher
   m_EditorClassIdentifier: 
-  weaponName: Enemy Missile Launcher
+  weaponName: 
   weaponType: 0
   weaponModel: {fileID: 4068021025288313986, guid: 406781cd9251dc94095e58f54a7139b0, type: 3}
   gunBullet: {fileID: 2442857871477385035, guid: 665a284eafe254044a42e05e22ad2f78, type: 3}
   activeweaponIcon: {fileID: 0}
   inactiveweaponIcon: {fileID: 0}
-  bulletIcon: {fileID: 0}
   shotSound: {fileID: 8300000, guid: 0649fb0a4f0668247a8121db8be6aa7f, type: 3}
   bulletSpeed: 10
   fireRate: 2
   damage: 2
-  lastBulletBonus: 0
   bulletsPerSpread: 1
   spreadAngle: 0
   bulletsPerBurst: 1
   burstFireDelay: 0.05
   recoilForce: 0
   infiniteAmmo: 1
-  doesNotUseAmmo: 0
   startingAmmo: 30
   maxAmmo: 120
-  currentClip: 0
   maxClipSize: 0
   ammoRecovery: 15
-  reloadSpeed: 0
   range: 100
   lobbedWeapon: 0
   bulletSpeedBonus: 0

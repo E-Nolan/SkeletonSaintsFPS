@@ -176,8 +176,7 @@ public class hUDManager : MonoBehaviour
 
     public void updateWeaponDisplay()
     {
-        if (gameManager.instance.PlayerScript() != null)
-            activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
+        activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
         for (int i = 0; i < gameManager.instance.PlayerScript().inactiveWeapons.Count; i++)
         {
             if (gameManager.instance.PlayerScript().inactiveWeapons[i] != null)

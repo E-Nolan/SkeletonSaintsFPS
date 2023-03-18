@@ -36,7 +36,6 @@ public class gameEventManager : MonoBehaviour
     }
     public void FindEvents()
     {
-        gameEvents.Clear();
         GameObject[] objs = GameObject.FindGameObjectsWithTag("GameEvent");
         if (objs.Length > 0)
         {
@@ -84,7 +83,6 @@ public class gameEventManager : MonoBehaviour
     }
     public void GenerateEventsUI()
     {
-        ClearEventListUI();
         if (gameEvents.Count > 0)
         {
             foreach (gameEvent gameEvent in gameEvents)
