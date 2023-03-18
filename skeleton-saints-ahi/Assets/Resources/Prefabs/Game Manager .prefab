@@ -25618,7 +25618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audSources:
-  - {fileID: 0}
+  - {fileID: 7956608358905862223}
   musicTrackList: []
   fadeTimeSeconds: 0
   isFading: 
@@ -29823,12 +29823,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8731933486966169381}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e3d0d3867a6c6948aa16ff3b8527fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReader: {fileID: 0}
+  inputReader: {fileID: 3250955499799993017}
   ReachDistance: 5
   interactableLayer:
     serializedVersion: 2
