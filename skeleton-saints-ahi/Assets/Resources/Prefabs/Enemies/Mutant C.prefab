@@ -2211,7 +2211,6 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
-  isPlayer: 0
   isEnemy: 0
   EnemyWeaponSave: {fileID: 0}
 --- !u!95 &8290775159967972618
@@ -2248,7 +2247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAi: {fileID: 8290775159967972631}
-  _health: 9
+  _health: 6
   audioSource: {fileID: 0}
   turretEnableScreech: {fileID: 0}
   turretEnableScreechVolume: 0
@@ -2266,11 +2265,13 @@ MonoBehaviour:
   _easyHealthMultiplier: 0.5
   _HardHealthMultiplier: 1.6
   _nextEnemyFireDelay: 0
-  enemyDrops: []
-  dropChance: 0
+  enemyDrops:
+  - {fileID: 5174752464892961894, guid: 13a90e8c99bd36144abf28008ba6bcb8, type: 3}
+  - {fileID: 2771983218902681831, guid: 1495490627c0ae043975db4410e5ea6f, type: 3}
+  dropChance: 0.1
   isShooting: 0
   currentWeapon: {fileID: 0}
-  savedWeapon: {fileID: 0}
+  savedWeapon: 
   acquiringWeapon: 0
   isDead: 0
   isAttacking: 0
