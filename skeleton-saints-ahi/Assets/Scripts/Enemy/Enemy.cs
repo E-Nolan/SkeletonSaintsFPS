@@ -148,6 +148,9 @@ public class Enemy : MonoBehaviour, IDamage
             if(transform.localScale.x <= 0f)
                 Destroy(gameObject);
         }
+
+        if(!isBossEnemy && healthBarUI.activeSelf)
+            healthBarUI.transform.LookAt(gameManager.instance.playerInstance.transform.position);
     }
 
     private void OnTriggerEnter(Collider other)

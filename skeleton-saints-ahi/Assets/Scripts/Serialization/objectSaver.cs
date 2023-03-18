@@ -14,9 +14,6 @@ public class objectSaver : MonoBehaviour {
 	public string id;
 	public string idParent;
 	public bool dontSave = false;
-	public bool isEnemy = false;
-
-	public GameObject EnemyWeaponSave;
 	public void SetID() {
 		
 		id = System.Guid.NewGuid().ToString();
@@ -53,20 +50,9 @@ public class objectSaver : MonoBehaviour {
 	{
 		//creates a new serializable data from the attached gameobject
 		gameObjectSaveData newObjectData;
-		if (gameObject.tag == "Player")
-        {
-			newObjectData = new gameObjectSaveData(gameObject, true);
 
-		} else
-        {
-			newObjectData = new gameObjectSaveData(gameObject);
-		}
+		newObjectData = new gameObjectSaveData(gameObject);
 
-		newObjectData.isEnemy = isEnemy;
-		if (isEnemy)
-        {
-			newObjectData.EnemyWeaponSave = EnemyWeaponSave;
-        }
 		data.objectsData.Add(newObjectData);
 	}
 }

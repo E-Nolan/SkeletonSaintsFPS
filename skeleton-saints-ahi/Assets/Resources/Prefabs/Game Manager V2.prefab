@@ -3588,7 +3588,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2893033600036127002}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: saveFunctions, Assembly-CSharp
         m_MethodName: SaveMain
         m_Mode: 1
@@ -22484,7 +22484,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2893033600036127002}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: saveFunctions, Assembly-CSharp
         m_MethodName: LoadMain
         m_Mode: 3
@@ -22701,7 +22701,8 @@ MonoBehaviour:
   gameMenu: {fileID: 0}
   objectivesMenu: {fileID: 0}
   quitGame: {fileID: 0}
-  restart: {fileID: 0}
+  restartLevel: {fileID: 0}
+  restartGame: {fileID: 0}
   respawn: {fileID: 0}
   gameState: {fileID: 0}
   settingsMenu: {fileID: 0}
@@ -31097,7 +31098,6 @@ GameObject:
   - component: {fileID: 9171740738459599511}
   - component: {fileID: 7209414880244653595}
   - component: {fileID: 7565510627295449786}
-  - component: {fileID: 2893033600036127002}
   m_Layer: 0
   m_Name: Game Manager V2
   m_TagString: Untagged
@@ -31148,6 +31148,7 @@ MonoBehaviour:
   finalGateButton: {fileID: 0}
   activeScene: 
   playStarted: 0
+  confirmed: 0
 --- !u!114 &6777880151523749174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31425,18 +31426,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2893033600036127002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6777880151523749168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4e5181d0be7f3b43a4894cc8a1f884a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6777880151634991087
 GameObject:
   m_ObjectHideFlags: 0
