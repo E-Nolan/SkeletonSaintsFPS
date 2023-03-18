@@ -92,6 +92,8 @@ public class spawnManager : MonoBehaviour
                 Enemy tempScript  = newEnemy.GetComponent<Enemy>();
                 weaponPickup pickup = newWeapon.GetComponent<weaponPickup>();
                 tempScript.PickupWeapon(pickup.weapon);
+                tempScript.savedWeapon = pickup.weapon.name;
+                Debug.Log(pickup.weapon.name);
             }
             
 

@@ -18,9 +18,15 @@ public class gameObjectSaveData
     public Vector3 localScale;
     public Quaternion rotation;
 
+	public bool isPlayer;
+	public bool isEnemy;
+
+	public GameObject EnemyWeaponSave;
+
 	public List<objectComponent> objectComponents = new List<objectComponent>();
-    public gameObjectSaveData(GameObject original)
+    public gameObjectSaveData(GameObject original, bool isPlayerData = false)
     {
+		isPlayer = isPlayerData;
 		objectSaver oS = original.GetComponent<objectSaver>();
 		name = original.name;
 		prefabName = oS.prefabName;
@@ -53,7 +59,16 @@ public class gameObjectSaveData
 		{
 			if (componentTypesToAdd.Contains(component_raw.GetType().BaseType.FullName))
 			{
-				components_filtered.Add(component_raw);
+				if (!isPlayerData)
+				{
+					components_filtered.Add(component_raw);
+				} else
+                {
+					if (component_raw.GetType() == typeof(Transform))
+                    {
+						components_filtered.Add(component_raw);
+					}
+                }
 			}
 		}
 
@@ -95,13 +110,13 @@ public class gameObjectSaveData
 			{
 				if (field.FieldType.IsSerializable == false)
 				{
-					//Debug.Log(field.Name + " (Type: " + field.FieldType + ") is not marked as serializable. Continue loop.");
+					////Debug.Log(field.Name + " (Type: " + field.FieldType + ") is not marked as serializable. Continue loop.");
 					continue;
 				}
 				if (TypeSystem.IsEnumerableType(field.FieldType) == true || TypeSystem.IsCollectionType(field.FieldType) == true)
 				{
 					Type elementType = TypeSystem.GetElementType(field.FieldType);
-					//Debug.Log(field.Name + " -> " + elementType);
+					////Debug.Log(field.Name + " -> " + elementType);
 
 					if (elementType.IsSerializable == false)
 					{
@@ -110,7 +125,7 @@ public class gameObjectSaveData
 				}
 				newObjectComponent.saveableType = new(component.GetType());
 				newObjectComponent.fields.Add(field.Name, field.GetValue(component));
-				//Debug.Log(field.Name + " (Type: " + field.FieldType + "): " + field.GetValue(component));
+				////Debug.Log(field.Name + " (Type: " + field.FieldType + "): " + field.GetValue(component));
 			}
 		}
 		return newObjectComponent;
@@ -120,14 +135,12 @@ public class gameObjectSaveData
 		//Go through the stored object's component list and reassign all values in each component, and add components that are missing
 		foreach (objectComponent obc in sceneObject.objectComponents)
 		{
-			if (obc.saveableType.SystemType == null)
-            {
-				continue;
-            }
-			if (go.GetComponent(obc.componentName) == false)
+
+			if (go.GetComponent(obc.saveableType.SystemType) == false)
 			{
 				go.AddComponent(obc.saveableType.SystemType);
 			}
+
 			object obj = go.GetComponent(obc.saveableType.SystemType);
 
 			var typ = obj.GetType();

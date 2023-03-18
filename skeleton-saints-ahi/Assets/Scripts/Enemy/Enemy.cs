@@ -410,10 +410,7 @@ public class Enemy : MonoBehaviour, IDamage
     {
         audioSource.PlayOneShot(spawnScreech, spawnScreechVolume);
     }
-    public void OnSerialize()
-    {
-        savedWeapon = currentWeapon.weaponName;
-    }
+
     public void OnDeserialize()
     {
         PickupWeapon(weaponManager.instance.GetEnemyWeaponStats(savedWeapon));
