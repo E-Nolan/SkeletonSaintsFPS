@@ -40,7 +40,7 @@ public class Cinematic : MonoBehaviour
         }
 
         CurrentTarget = targets[0];
-        mainMenu = mainMenuManager.instance.mainMenu;
+        mainMenu = menuManager.instance.mainMenu;
 
 
         //uiCamera.gameObject.SetActive(false);

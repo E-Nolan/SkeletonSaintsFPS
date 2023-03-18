@@ -7,21 +7,17 @@ public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
 
-	public bool BUILDMODE = false;
-	public bool QUICKPLAYMANAGMENT = false;
+	public bool Game = false;
+	public bool Testing = false;
 
 	[Header("----- Player Information -----")]
-	[SerializeField]
-	GameObject PlayerPrefab;
+	[SerializeField] GameObject PlayerPrefab;
 	public GameObject PlayerSpawnPos;
-
 	public GameObject playerInstance;
 
     [Header("Game Components")]
-    [SerializeField]
-    playerController playerScript;
-	[SerializeField]
-	cameraControls playerCamera;
+    [SerializeField] playerController playerScript;
+	[SerializeField] cameraControls playerCamera;
 
     [Header("Game State Variables")]
     public bool isPaused;
@@ -33,13 +29,13 @@ public class gameManager : MonoBehaviour
 	[Header("----- Game Goals -----")]
 	[SerializeField] public bool[] keyCard = new bool[3];
 	List<gameEvent> activeGameEvents;
-	[SerializeField]
-	gateButton finalGateButton;
+	[SerializeField] gateButton finalGateButton;
 
+	public string activeScene;
 	//Bool to determine when a scene with the player in it has started (I.E. Not in the main menu or level selection.
 	//This lets the script know it can start tracking game events like winning or losing.
-	[SerializeField]
-	bool playStarted;
+	public bool playStarted;
+
     #region Runtime Calls
     private void Awake()
 	{
@@ -55,6 +51,7 @@ public class gameManager : MonoBehaviour
 		  If not, this will start functionality but with expectation that it has the play level already loaded
 		 */
 		beginGame();
+		activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 		
 	}
     private void LateUpdate()
@@ -77,23 +74,24 @@ public class gameManager : MonoBehaviour
 		/* This method is called by either the button in the start menu 
 		 * or by beginGame if BUILDMODE == false
 		 */
-		if (BUILDMODE)
+		if (Game)
 		{
 			//menuManager.instance.DeactivateAllMenus
-			mainMenuManager.instance.DeactivateMainMenu();
+			menuManager.instance.DeactivateMain();
 			sceneControl.instance.LoadMainLevel();
+			isPaused = false;
 		}
-		FetchEvents();
-		if (QUICKPLAYMANAGMENT)
+		
+		if (Testing)
 		{
-			mainMenuManager.instance.DeactivateMainMenu();
+			menuManager.instance.DeactivateMain();
 			LevelSetup();
 		}
-            //either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
-            hUDManager.instance.showHUD();
-		
+        //either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
+        hUDManager.instance.showHUD();
 		playStarted = true;
 		isPaused = false;
+		FetchEvents();
 	}
 
     public void FetchEvents()
@@ -137,7 +135,7 @@ public class gameManager : MonoBehaviour
 		if (Cursor.visible)
 			hUDManager.instance.toggleCursorVisibility();
 
-		pauseMenuManager.instance.canToggleGameMenu = true;
+		menuManager.instance.canToggleGameMenu = true;
 		gameEventManager.instance.GenerateEventsUI();
 	}
     //Commented out until player loads properly to start with.
@@ -219,7 +217,7 @@ public class gameManager : MonoBehaviour
 		if (Cursor.visible)
 			hUDManager.instance.toggleCursorVisibility();
 
-		menuManager.instance.CanToggleGameMenu = true;
+		//menuManager.instance.CanToggleGameMenu = true;
 	}
 	public void restartLevel()
 	{
@@ -228,7 +226,7 @@ public class gameManager : MonoBehaviour
 		
 		if (isPaused)
 		{
-			pauseMenuManager.instance.toggleGameMenu();
+			menuManager.instance.toggleGameMenu();
 		}
 		
 		if (playerScript.GetCurrentHealth() <= 0)
@@ -242,12 +240,12 @@ public class gameManager : MonoBehaviour
 	}
 	public void restartGame()
 	{
+		/*
 		if (menuManager.instance.GameMenuIsUp())
 			hUDManager.instance.toggleCursorVisibility();
-
+		*/
 		clearLevel(true);
 		
-
 		//Call to scene control to handle unloading anything we are currently in
 		sceneControl.instance.SceneRestart_Game();
 
@@ -309,21 +307,6 @@ public class gameManager : MonoBehaviour
 		hUDManager.instance.enemiesCounter.text = $"{enemiesRemaining}";
 	}
 	#endregion
-	public void setEasyMode()
-	{
-		mainMenuManager.instance.easyMode();
-	}
-
-	public void setNormalMode()
-	{
-		mainMenuManager.instance.normalMode();
-	}
-
-	public void setHardMode()
-	{
-		mainMenuManager.instance.hardMode();
-	}
-
     public void setEnemyFiring(bool isFiring)
     {
         isEnemyFiring = isFiring;
@@ -338,7 +321,7 @@ public class gameManager : MonoBehaviour
 	#region Private Methods
 	void beginGame()
 	{
-		if (BUILDMODE)
+		if (Game)
 		{
 			isPaused = true;
 			playStarted = false;
@@ -346,8 +329,8 @@ public class gameManager : MonoBehaviour
 			//Deactivate any menus up from a possible last play
 			deactivateUI();
 
-			sceneControl.instance.LoadMainMenuScene();
-			//menuManager.instance.DisplayMainMenu();
+			//sceneControl.instance.LoadMainMenuScene();
+			menuManager.instance.TurnOnMain();
 
 		}
 		else

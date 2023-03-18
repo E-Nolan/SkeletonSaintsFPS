@@ -36,16 +36,16 @@ public class buttonFunctions : MonoBehaviour
     }
     public void OpenCreditsPanel()
     {
-        menuManager.instance.DisplayCreditsMenu();
+        //menuManager.instance.DisplayCreditsMenu();
     }
     public void OpenSettingsPanel()
     {
-        menuManager.instance.DisplaySettingsMenu();
+        //menuManager.instance.DisplaySettingsMenu();
     }
     #endregion
 
     public void PlayButtonSound()
     {
-        menuManager.instance.MenusAudio.PlayOneShot(menuManager.instance.ButtonClick);
+        //menuManager.instance.MenusAudio.PlayOneShot(menuManager.instance.ButtonClick);
     }
 }

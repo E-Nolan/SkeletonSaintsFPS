@@ -7,6 +7,7 @@ using TMPro;
 public class hUDManager : MonoBehaviour
 {
     public static hUDManager instance;
+    public GameObject hud;
 
     [Header("----- Player UI -----")]
     public GameObject playerUISystem;
@@ -245,23 +246,17 @@ public class hUDManager : MonoBehaviour
             Cursor.visible = false;
         }
     }
+
     public void showHUD()
     {
-        playerUISystem.gameObject.SetActive(true);
-        weaponUISystem.gameObject.SetActive(true);
-        reticle.gameObject.SetActive(true);
-        inputReader.displayText.gameObject.SetActive(true);
-        EventList.SetActive(true);
+        hud.SetActive(true);
     }
+
     public void closeHUD()
     {
-        damageFlashScreen.SetActive(false);
-        playerUISystem.gameObject.SetActive(false);
-        weaponUISystem.gameObject.SetActive(false);
-        reticle.gameObject.SetActive(false);
-        inputReader.displayText.gameObject.SetActive(false);
-        EventList.SetActive(false);
+        hud.SetActive(false);
     }
+
     #endregion
     #region Accessors
     public IEnumerator flashDamage(float dmg)
