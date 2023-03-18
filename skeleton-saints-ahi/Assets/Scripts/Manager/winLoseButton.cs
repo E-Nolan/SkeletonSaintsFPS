@@ -4,26 +4,4 @@ using UnityEngine;
 
 public class winLoseButton : MonoBehaviour
 {
-    public void Restart()
-    {
-        gameManager.instance.restartLevel();
-        winLoseManager.instance.victory.SetActive(false);
-        winLoseManager.instance.defeat.SetActive(false);
-        pauseMenuManager.instance.unPause();
-    }
-
-    public void Respawn()
-    {
-        // not using yet
-    }
-
-    public void Credits()
-    {
-        winLoseManager.instance.PlayCredits();
-    }
-
-    public void Quit()
-    {
-        gameManager.instance.restartGame();
-    }
 }

@@ -111,9 +111,6 @@ public class Enemy : MonoBehaviour, IDamage
             isMutant = false;
         }
 
-        if(SceneManager.GetActiveScene().name != "Main Menu") 
-            gameManager.instance.updateEnemyCounter();
-
         _maxHealth = _health;
         _healthBar.value = CalculateHealth();
 

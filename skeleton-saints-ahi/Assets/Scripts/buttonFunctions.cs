@@ -23,7 +23,7 @@ public class buttonFunctions : MonoBehaviour
     }
     public void QuitToMenu()
     {
-        gameManager.instance.restartGame();
+        gameManager.instance.GoToMain();
     }
     #endregion
 

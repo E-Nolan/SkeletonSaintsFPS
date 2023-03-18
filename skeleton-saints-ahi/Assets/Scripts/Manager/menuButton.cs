@@ -81,4 +81,34 @@ public class menuButton : MonoBehaviour
     {
         menuManager.instance.GameQuit();
     }
+
+    public void RestartLevel()
+    {
+        menuManager.instance.RestartLevel();
+    }
+
+    public void ConfirmLevelRestart()
+    {
+        menuManager.instance.ConfirmLevelRestart();
+    }
+
+    public void RestartGame()
+    {
+        menuManager.instance.RestartGame();
+    }
+
+    public void ConfirmGameRestart()
+    {
+        menuManager.instance.ConfirmGameRestart();
+    }
+
+    public void Respawn()
+    {
+        menuManager.instance.Respawn();
+    }
+
+    public void ConfirmRespawn()
+    {
+        menuManager.instance.ConfirmRespawn();
+    }
 }

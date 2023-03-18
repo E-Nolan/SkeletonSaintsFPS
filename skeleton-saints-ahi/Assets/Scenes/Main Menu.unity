@@ -946,17 +946,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1669738678815827674, guid: ca83687b4049d644f9b5b1e3e70772a2, type: 3}
   m_PrefabInstance: {fileID: 802229021}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &817544375 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3250955499799993017, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
-  m_PrefabInstance: {fileID: 2043645596}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 903c8acb362c72347b2d96d1eade3d84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &817890762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,11 +1512,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2431d8f4ee887c43803892ac37e8a5b, type: 3}
---- !u!82 &1842189735 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 7956608358905862223, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
-  m_PrefabInstance: {fileID: 2043645596}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1896471660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1659,14 +1643,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1880857613893530368, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1880857613893530368, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
-      propertyPath: inputReader
-      value: 
-      objectReference: {fileID: 817544375}
     - target: {fileID: 6384491181293823937, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -1715,10 +1691,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Game Manager '
       objectReference: {fileID: 0}
-    - target: {fileID: 8781187402141173858, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
-      propertyPath: audSources.Array.data[0]
-      value: 
-      objectReference: {fileID: 1842189735}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
 --- !u!1001 &2132493425
@@ -5164,6 +5136,7 @@ MonoBehaviour:
   gunPosition: {fileID: 8615596288727610999}
   handTransform: {fileID: 0}
   healthBarUI: {fileID: 6121810780499944619}
+  damagePopupPrefab: {fileID: 0}
   _materialFlashSpeed: 0.25
   _material: {fileID: 2100000, guid: e061968e56112fe4ca8c0ad3347c2a0d, type: 2}
   _flashMaterial: {fileID: 2100000, guid: c38f19bd67a1c974d9e5703cde859cb9, type: 2}

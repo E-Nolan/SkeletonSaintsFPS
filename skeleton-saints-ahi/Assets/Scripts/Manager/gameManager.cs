@@ -219,11 +219,10 @@ public class gameManager : MonoBehaviour
 
 		//menuManager.instance.CanToggleGameMenu = true;
 	}
+
 	public void restartLevel()
 	{
 		clearLevel();
-
-		
 		if (isPaused)
 		{
 			menuManager.instance.toggleGameMenu();
@@ -236,9 +235,26 @@ public class gameManager : MonoBehaviour
 		//Restart a level without going all the way back to the main menu
 		sceneControl.instance.SceneRestart();
 		//reload player and variable settings
-
 	}
+
 	public void restartGame()
+	{
+		clearLevel();
+		if (isPaused)
+		{
+			menuManager.instance.toggleGameMenu();
+		}
+
+		if (playerScript.GetCurrentHealth() <= 0)
+		{
+			hUDManager.instance.damageFlashScreen.SetActive(false);
+		}
+		//Restart a level without going all the way back to the main menu
+		sceneControl.instance.LoadMainLevel();
+		//reload player and variable settings
+	}
+
+	public void GoToMain()
 	{
 		/*
 		if (menuManager.instance.GameMenuIsUp())
@@ -302,10 +318,6 @@ public class gameManager : MonoBehaviour
 		hUDManager.instance.createPlayerArmorBar();
 	}
 
-	public void updateEnemyCounter()
-	{
-		hUDManager.instance.enemiesCounter.text = $"{enemiesRemaining}";
-	}
 	#endregion
     public void setEnemyFiring(bool isFiring)
     {

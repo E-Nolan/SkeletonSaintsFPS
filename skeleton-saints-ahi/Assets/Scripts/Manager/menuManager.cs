@@ -28,7 +28,8 @@ public class menuManager : MonoBehaviour
 	public GameObject gameMenu;
 	public GameObject objectivesMenu;
 	public GameObject quitGame;
-	public GameObject restart;
+	public GameObject restartLevel;
+	public GameObject restartGame;
 	public GameObject respawn;
 	public GameObject gameState;
 
@@ -149,11 +150,14 @@ public class menuManager : MonoBehaviour
 			sharedMenu.SetActive(true);
 			activeMenu = gameMenu;
 			activeMenu.SetActive(true);
+			gameState = restartLevel;
 			pause();
 		}
 		else
 		{
 			pauseMenu.SetActive(false);
+			sharedMenu.SetActive(false);
+			activeMenu.SetActive(false);
 			unPause();
 		}
 	}
@@ -199,14 +203,39 @@ public class menuManager : MonoBehaviour
 		}
 	}
 
-	public void Restart()
+	public void ConfirmRespawn()
+    {
+		Debug.Log("Game should respawn");
+	}
+
+	public void RestartLevel()
 	{
-		if (gameState != restart)
+		if (gameState != restartLevel)
 		{
 			gameState.SetActive(false);
-			gameState = restart;
+			gameState = restartLevel;
 			gameState.SetActive(true);
 		}
+	}
+
+	public void ConfirmLevelRestart()
+    {
+		gameManager.instance.restartLevel();
+    }
+
+	public void RestartGame()
+	{
+		if (gameState != restartGame)
+		{
+			gameState.SetActive(false);
+			gameState = restartGame;
+			gameState.SetActive(true);
+		}
+	}
+
+	public void ConfirmGameRestart()
+	{
+		gameManager.instance.restartGame();
 	}
 
 	public void DisplayObjective()
@@ -297,7 +326,7 @@ public class menuManager : MonoBehaviour
 
 	public void GameQuit()
     {
-		gameManager.instance.restartGame();
+		gameManager.instance.GoToMain();
 
 	}
 
