@@ -27,6 +27,8 @@ public class Cinematic : MonoBehaviour
 
     private Camera camMain;
     private GameObject mainMenu;
+    private GameObject sharedMenu;
+    private GameObject activeMenu;
     private Vector3 targetPosition;
     private int _index;
 
@@ -41,6 +43,8 @@ public class Cinematic : MonoBehaviour
 
         CurrentTarget = targets[0];
         mainMenu = menuManager.instance.mainMenu;
+        sharedMenu = menuManager.instance.sharedMenu;
+        activeMenu = menuManager.instance.activeMenu;
 
 
         //uiCamera.gameObject.SetActive(false);
@@ -49,6 +53,8 @@ public class Cinematic : MonoBehaviour
         speedLines.gameObject.SetActive(false);
         camMain.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(false);
+        sharedMenu.gameObject.SetActive(false);
+        activeMenu.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -115,6 +121,8 @@ public class Cinematic : MonoBehaviour
             transform.position = camMain.transform.position;
             camMain.gameObject.SetActive(true);
             mainMenu.gameObject.SetActive(true);
+            sharedMenu.gameObject.SetActive(true);
+            activeMenu.gameObject.SetActive(true);
         }
 
     }

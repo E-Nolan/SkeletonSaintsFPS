@@ -21,7 +21,12 @@ public class difficultyStorer : MonoBehaviour
     }
     private void Awake()
     {
-        instance = this;
-        GameObject.DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
     }
 }

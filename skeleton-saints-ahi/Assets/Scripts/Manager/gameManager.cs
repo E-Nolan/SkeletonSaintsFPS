@@ -36,14 +36,18 @@ public class gameManager : MonoBehaviour
 	//Bool to determine when a scene with the player in it has started (I.E. Not in the main menu or level selection.
 	//This lets the script know it can start tracking game events like winning or losing.
 	public bool playStarted;
-	public GameObject loadingScene;
-
+	public bool confirmed;
     #region Runtime Calls
     private void Awake()
 	{
-		instance = this;
+		if (instance == null)
+		{
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		else
+			Destroy(gameObject);
 		activeGameEvents = new List<gameEvent>();
-		DontDestroyOnLoad(gameObject);
 	}
 
 	void Start()
@@ -53,8 +57,6 @@ public class gameManager : MonoBehaviour
 		  If not, this will start functionality but with expectation that it has the play level already loaded
 		 */
 		beginGame();
-		activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-		
 	}
     private void LateUpdate()
     {
@@ -80,8 +82,7 @@ public class gameManager : MonoBehaviour
 		{
 			//menuManager.instance.DeactivateAllMenus
 			menuManager.instance.DeactivateMain();
-			sceneLoader.instance.LoadScene("Tutorial Level");
-			sceneControl.instance.LoadMainLevel();
+			sceneLoader.instance.LoadNextScene();
 			isPaused = false;
 		}
 		
@@ -90,11 +91,8 @@ public class gameManager : MonoBehaviour
 			menuManager.instance.DeactivateMain();
 			LevelSetup();
 		}
+
 		//either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
-		hUDManager.instance.showHUD();
-		playStarted = true;
-		isPaused = false;
-		FetchEvents();
 	}
 
     public void FetchEvents()
@@ -332,7 +330,7 @@ public class gameManager : MonoBehaviour
 	#endregion
 
 	#region Private Methods
-	void beginGame()
+	public void beginGame()
 	{
 		if (Game)
 		{
@@ -340,10 +338,10 @@ public class gameManager : MonoBehaviour
 			playStarted = false;
 
 			//Deactivate any menus up from a possible last play
-			deactivateUI();
+			hUDManager.instance.closeHUD();
 
 			//sceneControl.instance.LoadMainMenuScene();
-			menuManager.instance.TurnOnMain();
+			menuManager.instance.ActivateMenu();
 
 		}
 		else
@@ -351,13 +349,6 @@ public class gameManager : MonoBehaviour
 			InitializePlay();
 		}
 
-	}
-	
-
-	private void deactivateUI()
-    {
-		//menuManager.instance.DeactivateAllMenus();
-		hUDManager.instance.closeHUD();
 	}
 
 	private void managePlayerTasks()
@@ -389,7 +380,8 @@ public class gameManager : MonoBehaviour
 		else 
 			return false;
 	}
-    private void clearLevel(bool respawning = false)
+
+    public void clearLevel(bool respawning = false)
     {
 		if (!respawning)
 		{

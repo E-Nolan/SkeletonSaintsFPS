@@ -70,10 +70,8 @@ public class menuManager : MonoBehaviour
 	}
 
 	//mainmenu functions
-	public void TurnOnMain()
+	public void ActivateMenu()
 	{
-		Debug.Log("running");
-
 		mainMenu.SetActive(true);
 		startMenu.SetActive(true);
 		sharedMenu.SetActive(true);
@@ -235,7 +233,8 @@ public class menuManager : MonoBehaviour
 
 	public void ConfirmGameRestart()
 	{
-		gameManager.instance.restartGame();
+		gameManager.instance.clearLevel();
+		sceneLoader.instance.LoadMainMenu();
 	}
 
 	public void DisplayObjective()
@@ -326,8 +325,8 @@ public class menuManager : MonoBehaviour
 
 	public void GameQuit()
 	{
-		gameManager.instance.GoToMain();
-		hUDManager.instance.closeHUD();
+		sceneLoader.instance.LoadMainMenu();
+		unPause();
 		hUDManager.instance.toggleCursorVisibility();
 	}
 

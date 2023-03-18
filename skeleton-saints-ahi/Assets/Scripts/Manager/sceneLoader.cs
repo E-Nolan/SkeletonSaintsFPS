@@ -10,43 +10,76 @@ public class sceneLoader : MonoBehaviour
     public static sceneLoader instance;
     public GameObject loading;
     public Slider loadingSlider;
-    public GameObject lSlider;
     public GameObject loadingValue;
-    public GameObject confirm;
-    public bool isReady;
-    public bool confirmed;
+    private float time;
 
     private void Awake()
     {
         instance = this;
-    }
-    public void LoadScene(string sceneName)
-    {
-        StartCoroutine(LoadScenAsynchronously(sceneName));
+        time = 2f;
     }
 
-    IEnumerator LoadScenAsynchronously(string sceneName)
+    public void LoadNextScene()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+    }
+
+    public void LoadMainMenu()
+    {
+        StartCoroutine(LoadMain());
+    }
+
+    public void RestartLevel()
+    {
+
+    }
+
+    public void RestartGame()
+    {
+
+    }
+
+    IEnumerator LoadLevel(int sceneIndex)
+    {
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        AsyncOperation control = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
         loading.SetActive(true);
-        while (!operation.isDone)
+        while(!control.isDone)
         {
-            float slide = Mathf.Clamp01(operation.progress / .9f);
+            float slide = Mathf.Clamp01(control.progress / .9f);
             loadingSlider.value = slide;
             loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
-            yield return null;
+
+            yield return new WaitForSeconds(time);
+            control.completed += (sceneComplete) =>
+            {
+                loading.SetActive(false);
+                gameManager.instance.LevelSetup();
+                hUDManager.instance.showHUD();
+                gameManager.instance.isPaused = false;
+                gameManager.instance.FetchEvents();
+                
+            };
         }
-        /*
-        if (operation.isDone)
+    }
+
+    IEnumerator LoadMain()
+    {
+        loading.SetActive(true);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        AsyncOperation control = SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
+        while(!control.isDone)
         {
-            lSlider.SetActive(false);
-            loadingValue.SetActive(false);
-            confirm.SetActive(true);
-            if (Input.GetButton(playerPreferences.instance.Button_Interact))
-                confirmed = !confirmed;
+            float slide = Mathf.Clamp01(control.progress / .9f);
+            loadingSlider.value = slide;
+            loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
+
+            yield return new WaitForSeconds(time);
+            control.completed += (sceneComplete) =>
+            {
+                loading.SetActive(false);
+                gameManager.instance.beginGame();
+            };
         }
-        */
-        //confirmed = !confirmed;
-        loading.SetActive(false);
     }
 }
