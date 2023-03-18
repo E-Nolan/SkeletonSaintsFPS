@@ -44,14 +44,12 @@ public class Enemy : MonoBehaviour, IDamage
     [Header("----- Publics -----")]
     public bool isShooting = false;
     public rangedWeapon currentWeapon;
-    
-    [SerializeField]
     public string savedWeapon;
-    
     public bool acquiringWeapon;
     public bool isDead = false;
     public bool isAttacking;
     public bool fadeHealthBar = false;
+    public bool DummyEnemy;
 
     private bool shrinkAway = false;
     private float _maxHealth;
@@ -151,6 +149,12 @@ public class Enemy : MonoBehaviour, IDamage
 
         if(!isBossEnemy && healthBarUI.activeSelf)
             healthBarUI.transform.LookAt(gameManager.instance.playerInstance.transform.position);
+
+        if (!isBossEnemy && !isMutant && currentWeapon != null)
+        {
+            if(currentWeapon.CurrentClip <= 0)
+                currentWeapon.startReload();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -180,7 +184,8 @@ public class Enemy : MonoBehaviour, IDamage
 
     public void TakeDamage(float damage)
     {
-        _health -= damage;
+        if(!DummyEnemy) 
+            _health -= damage;
 
         if (!isBossEnemy || ((isBossEnemy || isMutant) && _maxHealth / 2 >  _health))
         {
@@ -274,7 +279,7 @@ public class Enemy : MonoBehaviour, IDamage
            // currentWeapon.shoot(gameManager.instance.playerInstance.transform.position + 
            //                     new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-3f, 3f)));
 
-            // Polite AI Queue
+           // Polite AI Queue
             StartCoroutine(NextEnemyFireDelay(_nextEnemyFireDelay));
 
         }
