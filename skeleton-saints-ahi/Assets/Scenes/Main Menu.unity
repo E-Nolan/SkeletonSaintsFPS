@@ -1643,6 +1643,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1235161601961661013, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607937526639070549, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
+    - target: {fileID: 5607937526639070549, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607937526639070549, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607937526639070549, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607937526639070549, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21032597133445202, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
+    - target: {fileID: 5607937526639070549, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607937526639070549, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607937526639070549, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6384491181293823937, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -1690,6 +1726,26 @@ PrefabInstance:
     - target: {fileID: 6384491181293823941, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
       propertyPath: m_Name
       value: 'Game Manager '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059663173094688117, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059663173094688117, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 675
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059663173094688117, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -460
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193735514548145456, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193735514548145456, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb91288c534ac4ebfabd0dd81db209e7, type: 3}

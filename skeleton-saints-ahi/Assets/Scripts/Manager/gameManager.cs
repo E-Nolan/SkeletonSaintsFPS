@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class gameManager : MonoBehaviour
@@ -35,6 +36,7 @@ public class gameManager : MonoBehaviour
 	//Bool to determine when a scene with the player in it has started (I.E. Not in the main menu or level selection.
 	//This lets the script know it can start tracking game events like winning or losing.
 	public bool playStarted;
+	public GameObject loadingScene;
 
     #region Runtime Calls
     private void Awake()
@@ -78,6 +80,7 @@ public class gameManager : MonoBehaviour
 		{
 			//menuManager.instance.DeactivateAllMenus
 			menuManager.instance.DeactivateMain();
+			sceneLoader.instance.LoadScene("Tutorial Level");
 			sceneControl.instance.LoadMainLevel();
 			isPaused = false;
 		}
@@ -87,8 +90,8 @@ public class gameManager : MonoBehaviour
 			menuManager.instance.DeactivateMain();
 			LevelSetup();
 		}
-        //either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
-        hUDManager.instance.showHUD();
+		//either way call hUDManager to start HUD elements and ensure checks to PlayStarted() return true now.
+		hUDManager.instance.showHUD();
 		playStarted = true;
 		isPaused = false;
 		FetchEvents();
@@ -113,7 +116,7 @@ public class gameManager : MonoBehaviour
         {
 			//Debug.Log ("Player Spawn not found on level setup");
         }
-		if (sceneControl.instance.CurrentScene().name == "Level Onety")
+		if (sceneControl.instance.CurrentScene().name == "Level One")
 			finalGateButton = GameObject.FindGameObjectWithTag("FinalGateButton").GetComponent<gateButton>();
 		//Load player in and assign script components
 		playerInstance = Instantiate(PlayerPrefab, PlayerSpawnPos.transform.position, PlayerSpawnPos.transform.rotation);
@@ -269,8 +272,6 @@ public class gameManager : MonoBehaviour
 		
 		beginGame();
 		//if the menu wasn't up, then the cursor is still locked at this point
-		if (!Cursor.visible)
-			hUDManager.instance.toggleCursorVisibility();
 	}
 	public void playerDead()
     {
@@ -358,6 +359,7 @@ public class gameManager : MonoBehaviour
 		//menuManager.instance.DeactivateAllMenus();
 		hUDManager.instance.closeHUD();
 	}
+
 	private void managePlayerTasks()
 	{
 		if (allKeysFound())
