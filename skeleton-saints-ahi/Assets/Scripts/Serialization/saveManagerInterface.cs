@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class saveManagerHelper : MonoBehaviour
+public class saveManagerInterface : MonoBehaviour
 {
 	public Dictionary<string, GameObject> prefabDictionary;
+	public string defaultSaveName = "Main Save";
 
-	// Use this for initialization
+	public static saveManagerInterface instance;
+
+	private void Awake()
+	{
+		instance = this;
+	}
+
 	void Start()
 	{
 		if (saveManager.saveHelper == null)
@@ -24,7 +31,19 @@ public class saveManagerHelper : MonoBehaviour
 			}
 		}
 	}
-	public void SaveGame(string gameName)
+	public void SaveMain()
+	{
+		saveManager.mainData_Current.Index++;
+		saveManager.saveHelper.SaveGame(defaultSaveName);
+		Debug.Log(saveManager.mainData_Current.ToString());
+	}
+	//if 0 it will load the most recent save.
+	public void LoadMain()
+	{
+		saveManager.saveHelper.LoadGame(defaultSaveName);
+
+	}
+	private void SaveGame(string gameName)
 	{
 
 		if (string.IsNullOrEmpty(gameName))
@@ -71,7 +90,7 @@ public class saveManagerHelper : MonoBehaviour
 		//Call the static method that serialized our game and writes the data to a file.
 		saveManager.SaveGameData(newSaveGame);
 	}
-	public void LoadGame(string gameName)
+	private void LoadGame(string gameName)
 	{
 
 		//First, we will destroy all objects in the scene which are not tagged with "DontDestroy" (such as Cameras, Managers of any type, and so on... things that should persist)
@@ -92,14 +111,8 @@ public class saveManagerHelper : MonoBehaviour
 		foreach (gameObjectSaveData loadedObject in loadedGame.objectsData)
 		{
 			GameObject go_reconstructed;
-			if (loadedObject.isPlayer)
-			{
-				go_reconstructed = UnpackGameObject(loadedObject, true);
-			}
-			else
-			{
-				go_reconstructed = UnpackGameObject(loadedObject, false);
-			}
+			go_reconstructed = UnpackGameObject(loadedObject);
+
 			if (go_reconstructed != null)
 			{
 				//Add the reconstructed GO to the list we created earlier.
@@ -141,16 +154,6 @@ public class saveManagerHelper : MonoBehaviour
 			}
 		}
 	}
-	public gameObjectSaveData PackGameObject(GameObject go)
-	{
-		//Now, we create a new instance of gameObjectSaveData, which will hold all the GO's data, including it's components.
-		gameObjectSaveData sceneObject = new gameObjectSaveData(go);
-		
-		return sceneObject;
-	}
-
-	
-
 	public GameObject UnpackGameObject(gameObjectSaveData sceneObject, bool player = false)
 	{
 		//This is where our prefabDictionary above comes in. Each GameObject that was saved needs to be reconstucted, so we need a Prefab,

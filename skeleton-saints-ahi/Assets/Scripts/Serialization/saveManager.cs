@@ -9,7 +9,7 @@ public static class saveManager
     public static saveData mainData_Current = new saveData();
     public static saveData checkpointData_Current = new saveData();
 
-    public static saveManagerHelper saveHelper;
+    public static saveManagerInterface saveHelper;
     public static int saveNumberMain = 0;
 
     public static int saveNumberCheckpoint = 0;
@@ -49,12 +49,19 @@ public static class saveManager
         if (!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
+
         }
+
         string json;
         string fullpath;
         save.Timestamp = DateTime.Now.ToString();
         //if the path is the main one, use main data. if not, it is checkpoint
         fullpath = directory + save.name + extension;
+
+        if (!File.Exists(fullpath))
+        {
+            File.Delete(fullpath);
+        }
 
         mainData_Current = save;
 
@@ -77,8 +84,8 @@ public static class saveManager
         }
         else
         {
-            //Debug.LogError(message: "Save File doesn't exist");
-            //Debug.LogError(message: fullPath);
+            Debug.LogError(message: "Save File doesn't exist");
+            Debug.LogError(message: fullPath);
         }
 
         mainData_Current = tempData;
