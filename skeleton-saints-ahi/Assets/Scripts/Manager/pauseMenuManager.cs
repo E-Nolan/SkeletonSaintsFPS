@@ -75,7 +75,7 @@ public class pauseMenuManager : MonoBehaviour
 
     public void toggleGameMenu()
     {
-        if(!gameManager.instance.isPaused)
+        if(gameManager.instance.isPaused)
         {
             pauseMenu.SetActive(true);
             pause();

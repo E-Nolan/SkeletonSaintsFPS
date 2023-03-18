@@ -4,79 +4,81 @@ using UnityEngine;
 
 public class menuButton : MonoBehaviour
 {
-    //start menu
-    public void StartMenu()
+    public void DisplayStart()
     {
-        mainMenuManager.instance.DisplayStart();
+        menuManager.instance.DisplayStart();
     }
 
-    public void SetEasy()
+    public void EasyMode()
     {
-        mainMenuManager.instance.easyMode();
+        menuManager.instance.EasyMode();
+        gameManager.instance.currentDifficulty = gameManager.Difficulty.Easy;
     }
 
-    public void SetNormal()
+    public void NormalMode()
     {
-        mainMenuManager.instance.normalMode();
+        menuManager.instance.NormalMode();
+        gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
     }
 
-    public void SetHard()
+    public void HardMode()
     {
-        mainMenuManager.instance.hardMode();
+        menuManager.instance.HardMode();
+        gameManager.instance.currentDifficulty = gameManager.Difficulty.Hard;
     }
 
     public void PlayGame()
     {
-        mainMenuManager.instance.playGame();
+        gameManager.instance.InitializePlay();
     }
 
-    //control menu
-    public void ControlMenu()
+    public void DisplayControls()
     {
-        mainMenuManager.instance.DisplayControl();
+        menuManager.instance.DisplayControls();
     }
 
-    //settings menu
-    public void SettingsMenu()
+    public void DisplaySettings()
     {
-        mainMenuManager.instance.DisplaySettings();
+        menuManager.instance.DisplaySettings();
     }
 
-    public void SaveSettings()
+    public void DisplayMenuQuit()
     {
-        mainMenuManager.instance.SaveSettingsToPlayer();
+        menuManager.instance.DisplayExitGame();
     }
 
-    public void ResetSetting()
+    public void DisplayObjective()
     {
-        mainMenuManager.instance.ResetDefault();
+       
     }
 
-    //credits menu
-    public void CreditsMenu()
+    public void DisplayCredits()
     {
-        mainMenuManager.instance.DisplayCredits();
+        
     }
 
-    public void NextPage()
+    public void DisplayGame()
     {
-        mainMenuManager.instance.NextPage();
+        menuManager.instance.DisplayGame();
     }
 
-    public void PreviousPage()
+    public void DisplayObjectives()
     {
-        mainMenuManager.instance.PreviousPage();
+        menuManager.instance.DisplayObjective();
     }
 
-    //quit menu
-    public void QuitMenu()
+    public void DisplayExitGame()
     {
-        mainMenuManager.instance.DisplayQuit();
+        menuManager.instance.DisplayExitGame();
     }
 
-    public void ConfirmQuit()
+    public void DisplayGameQuit()
     {
-        Application.Quit();
+        menuManager.instance.DisplayGameQuit();
     }
 
+    public void GameQuit()
+    {
+        menuManager.instance.GameQuit();
+    }
 }
