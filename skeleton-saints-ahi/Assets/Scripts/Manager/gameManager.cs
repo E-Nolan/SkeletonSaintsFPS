@@ -365,7 +365,6 @@ public class gameManager : MonoBehaviour
 	}
 	private bool allKeysFound()
     {
-		return false;
 		int keysFound = 0;
 		if (keyCard[0])
 			keysFound++;
@@ -415,6 +414,20 @@ public class gameManager : MonoBehaviour
 	public cameraControls CameraControls()
 	{
 		return playerCamera;
+	}
+	public cameraControls SetCameraControls
+    {
+        set
+        {
+			playerCamera = value;
+        }
+    }
+	public playerController SetPlayerController
+	{
+		set
+		{
+			playerScript = value;
+		}
 	}
 	public bool PlayStarted()
 	{

@@ -9,7 +9,7 @@ public class saveFunctions : MonoBehaviour
         saveManager.saveHelper.SaveGame("Main Save");
     }
     //if 0 it will load the most recent save.
-    public void LoadMain(int loadIndex = 0)
+    public void LoadMain()
     {
         saveManager.saveHelper.LoadGame("Main Save");
 

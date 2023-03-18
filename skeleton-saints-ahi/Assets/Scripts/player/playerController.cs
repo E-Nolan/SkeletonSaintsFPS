@@ -868,4 +868,11 @@ public class playerController : MonoBehaviour, IDamage
     {
         godModeEnabled = !godModeEnabled;
     }
+
+    public void OnDeserialize()
+    {
+        gameManager.instance.SetPlayerController = this;
+        gameManager.instance.SetCameraControls = Camera.main.gameObject.GetComponent<cameraControls>();
+        gameManager.instance.playerInstance = gameObject;
+    }
 }

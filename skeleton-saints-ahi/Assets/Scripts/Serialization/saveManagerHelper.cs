@@ -91,28 +91,20 @@ public class saveManagerHelper : MonoBehaviour
 		//iterate through the loaded game's sceneObjects list to access each stored objet's data and reconstruct it with all it's components
 		foreach (gameObjectSaveData loadedObject in loadedGame.objectsData)
 		{
+			GameObject go_reconstructed;
 			if (loadedObject.isPlayer)
 			{
-				gameManager.instance.playerInstance.transform.position = loadedObject.position;
-				gameManager.instance.playerInstance.transform.rotation = loadedObject.rotation;
-				gameManager.instance.playerInstance.transform.localScale = loadedObject.localScale;
-				gameManager.instance.playerInstance.SetActive(loadedObject.active);
+				go_reconstructed = UnpackGameObject(loadedObject, true);
 			}
 			else
 			{
-				GameObject go_reconstructed = UnpackGameObject(loadedObject, false);
-
-				if (loadedObject.isEnemy)
-                {
-					go_reconstructed.GetComponent<Enemy>().savedWeapon = loadedObject.EnemyWeaponSave;
-                }
-				if (go_reconstructed != null)
-				{
-					//Add the reconstructed GO to the list we created earlier.
-					goList.Add(go_reconstructed);
-				}
+				go_reconstructed = UnpackGameObject(loadedObject, false);
 			}
-
+			if (go_reconstructed != null)
+			{
+				//Add the reconstructed GO to the list we created earlier.
+				goList.Add(go_reconstructed);
+			}
 		}
 
 		//Go through the list of reconstructed GOs and reassign any missing children
@@ -145,9 +137,7 @@ public class saveManagerHelper : MonoBehaviour
 		{
 			foreach (objectSaver oS in allSaveableObjects)
 			{
-				//if not player then destroy, otherwise we're just loading transform for now
-				if (!oS.isPlayer)
-					Destroy(oS.gameObject);
+				Destroy(oS.gameObject);
 			}
 		}
 	}
@@ -171,41 +161,33 @@ public class saveManagerHelper : MonoBehaviour
 			//Debug.Log("Can't find key " + sceneObject.prefabName + " in SaveLoadMenu.prefabDictionary!");
 			return null;
 		}
-		GameObject go = null;
-		//instantiate the gameObject
-		if (!player)
+		GameObject go = Instantiate(prefabDictionary[sceneObject.prefabName], sceneObject.position, sceneObject.rotation);
+
+		//Reassign values
+		go.name = sceneObject.name;
+		go.transform.localScale = sceneObject.localScale;
+		go.SetActive(sceneObject.active);
+
+		objectSaver idScript = go.GetComponent<objectSaver>();
+		idScript.id = sceneObject.id;
+		idScript.idParent = sceneObject.idParent;
+
+		sceneObject.UnpackComponents(ref go, sceneObject);
+
+
+
+		//Destroy any children that were not referenced as having a parent
+		objectSaver[] childrenIds = go.GetComponentsInChildren<objectSaver>();
+		foreach (objectSaver childrenIDScript in childrenIds)
 		{
-			go = Instantiate(prefabDictionary[sceneObject.prefabName], sceneObject.position, sceneObject.rotation) as GameObject;
-        }
-        else
-        {
-			go = gameManager.instance.playerInstance;
-        }
-			//Reassign values
-			go.name = sceneObject.name;
-			go.transform.localScale = sceneObject.localScale;
-			go.SetActive(sceneObject.active);
-
-			objectSaver idScript = go.GetComponent<objectSaver>();
-			idScript.id = sceneObject.id;
-			idScript.idParent = sceneObject.idParent;
-
-			sceneObject.UnpackComponents(ref go, sceneObject);
-
-
-
-			//Destroy any children that were not referenced as having a parent
-			objectSaver[] childrenIds = go.GetComponentsInChildren<objectSaver>();
-			foreach (objectSaver childrenIDScript in childrenIds)
+			if (childrenIDScript.transform != go.transform)
 			{
-				if (childrenIDScript.transform != go.transform)
+				if (string.IsNullOrEmpty(childrenIDScript.id) == true)
 				{
-					if (string.IsNullOrEmpty(childrenIDScript.id) == true)
-					{
-						Destroy(childrenIDScript.gameObject);
-					}
+					Destroy(childrenIDScript.gameObject);
 				}
 			}
+		}
 		return go;
 	}
 }

@@ -14,7 +14,6 @@ public class objectSaver : MonoBehaviour {
 	public string id;
 	public string idParent;
 	public bool dontSave = false;
-	public bool isPlayer = false;
 	public bool isEnemy = false;
 
 	public GameObject EnemyWeaponSave;
@@ -53,8 +52,16 @@ public class objectSaver : MonoBehaviour {
 	public void Save(saveData data)
 	{
 		//creates a new serializable data from the attached gameobject
-		gameObjectSaveData newObjectData = new gameObjectSaveData(gameObject);
-		newObjectData.isPlayer = isPlayer;
+		gameObjectSaveData newObjectData;
+		if (gameObject.tag == "Player")
+        {
+			newObjectData = new gameObjectSaveData(gameObject, true);
+
+		} else
+        {
+			newObjectData = new gameObjectSaveData(gameObject);
+		}
+
 		newObjectData.isEnemy = isEnemy;
 		if (isEnemy)
         {

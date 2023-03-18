@@ -16,7 +16,8 @@ public class levelTransition : MonoBehaviour
             {
                 gameManager.instance.keyCard[i] = false;
             }
-            savePlayer.instance.updatePlayer();
+            saveManager.SaveGameData(saveManager.mainData_Current);
+
             switch (loadSpecificScene)
             {
                 case true:
