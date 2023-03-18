@@ -63,7 +63,8 @@ public class hUDManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
     }
     #region Access Methods
 

@@ -41,7 +41,7 @@ public class sceneLoader : MonoBehaviour
 
     IEnumerator LoadLevel(int sceneIndex)
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         AsyncOperation control = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
         loading.SetActive(true);
         while(!control.isDone)
@@ -65,9 +65,11 @@ public class sceneLoader : MonoBehaviour
 
     IEnumerator LoadMain()
     {
+        Time.timeScale = 1f;
+        menuManager.instance.unPause();
         loading.SetActive(true);
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        AsyncOperation control = SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
+        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        AsyncOperation control = SceneManager.LoadSceneAsync(0);
         while(!control.isDone)
         {
             float slide = Mathf.Clamp01(control.progress / .9f);
@@ -78,6 +80,7 @@ public class sceneLoader : MonoBehaviour
             control.completed += (sceneComplete) =>
             {
                 loading.SetActive(false);
+                menuManager.instance.ActivateMenu();
                 gameManager.instance.beginGame();
             };
         }

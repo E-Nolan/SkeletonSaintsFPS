@@ -57,7 +57,9 @@ public class menuManager : MonoBehaviour
 
 	private void Awake()
 	{
-		instance = this;
+		if(instance == null)
+			instance = this;
+
 		difficulty = easyMode;
 		difficulty.SetActive(true);
 		activeMenu = startMenu;
@@ -326,7 +328,6 @@ public class menuManager : MonoBehaviour
 	public void GameQuit()
 	{
 		sceneLoader.instance.LoadMainMenu();
-		unPause();
 		hUDManager.instance.toggleCursorVisibility();
 	}
 

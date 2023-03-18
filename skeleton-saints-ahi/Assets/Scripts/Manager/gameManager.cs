@@ -40,13 +40,11 @@ public class gameManager : MonoBehaviour
     #region Runtime Calls
     private void Awake()
 	{
-		if (instance == null)
-		{
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
-		else
-			Destroy(gameObject);
+		if (instance != null)
+			Destroy(instance);
+
+		instance = this;
+		DontDestroyOnLoad(gameObject);
 		activeGameEvents = new List<gameEvent>();
 	}
 
