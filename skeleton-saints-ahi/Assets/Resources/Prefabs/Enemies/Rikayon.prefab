@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 117828179251995109}
   m_Layer: 0
   m_Name: _B010
-  m_TagString: Untagged
+  m_TagString: TurretRotator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117828179252428229}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.42261827, y: 0, z: 0, w: 0.9063079}
   m_LocalPosition: {x: -45.49375, y: -92.59529, z: 2.1857643}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -63,7 +63,7 @@ Transform:
   - {fileID: 3570114057509022948}
   m_Father: {fileID: 117828179251995111}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -50, y: 0, z: 0}
 --- !u!1 &117828179252428231
 GameObject:
   m_ObjectHideFlags: 0
@@ -10750,7 +10750,7 @@ MonoBehaviour:
   FireAngle: 10
   _turnSpeed: 25
   _bulletSpeed: 15
-  _fireDelay: 0.05
+  _fireDelay: 0.09
   _seekSpeed: 15
   _rotateAngle: 45
   CanDetectPlayer: 0
@@ -10952,7 +10952,7 @@ GameObject:
   - component: {fileID: 2903121918741040093}
   m_Layer: 0
   m_Name: _B010
-  m_TagString: Untagged
+  m_TagString: TurretRotator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10964,7 +10964,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2903121918741040090}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.42261827, y: 0, z: 0, w: 0.9063079}
   m_LocalPosition: {x: -45.49375, y: -92.59529, z: 2.1857643}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10972,7 +10972,7 @@ Transform:
   - {fileID: 799462171343443283}
   m_Father: {fileID: 2903121918253264928}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -50, y: 0, z: 0}
 --- !u!1 &2917239116093585793
 GameObject:
   m_ObjectHideFlags: 0
@@ -11592,7 +11592,7 @@ MonoBehaviour:
   FireAngle: 10
   _turnSpeed: 25
   _bulletSpeed: 15
-  _fireDelay: 0.05
+  _fireDelay: 0.09
   _seekSpeed: 15
   _rotateAngle: 45
   CanDetectPlayer: 0

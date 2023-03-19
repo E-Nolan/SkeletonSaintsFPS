@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     private bool shrinkAway = false;
     private float _maxHealth;
+    private bool enableTurrets = false;
     private bool isBossEnemy;
     private bool isMutant;
     private int attackDamage;
@@ -74,6 +75,7 @@ public class Enemy : MonoBehaviour, IDamage
     {
 
         isAttacking = false;
+
         if(SceneManager.GetActiveScene().name != "Main Menu") 
             _difficulty = gameManager.instance.currentDifficulty;
 
@@ -129,7 +131,6 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Update()
     {
-        // If not shooting and can see the player
         if(isShooting == false && _enemyAi.CanDetectPlayer && _enemyAi.CanAttack &&
            !isDead && !gameManager.instance.getEnemyFiring() && 
            (!(isBossEnemy && GetComponent<bossAttackManager>().goingToWaveLocation) || 
@@ -154,6 +155,15 @@ public class Enemy : MonoBehaviour, IDamage
         {
             if(currentWeapon.CurrentClip <= 0)
                 currentWeapon.startReload();
+        }
+
+        if (isBossEnemy && enableTurrets)
+        {
+            foreach (GameObject rotator in GameObject.FindGameObjectsWithTag("TurretRotator"))
+            {
+                Quaternion tempRotation = new Quaternion(0f, rotator.transform.localRotation.y, rotator.transform.localRotation.z, 1f);
+                rotator.transform.localRotation = Quaternion.Lerp(rotator.transform.localRotation, tempRotation, Time.deltaTime);
+            }
         }
     }
 
@@ -192,12 +202,7 @@ public class Enemy : MonoBehaviour, IDamage
             if (isBossEnemy)
             {
                 if (!turretsEnabled)
-                {
-                    _animator.SetTrigger("TurretEnable");
-                    turretsEnabled = true;
-                    foreach (Turret turret in GetComponentsInChildren<Turret>())
-                        turret.enabled = true;
-                }
+                    StartCoroutine(EnableTurrets());
             }
 
             if (!isBossEnemy || isBossEnemy && _maxHealth / 3 > _health)
@@ -231,7 +236,6 @@ public class Enemy : MonoBehaviour, IDamage
             fadeHealthBar = true;
             enemyDropPickup();
 
-            // If the enemy was a boss, give the player a win after they're destroyed
             if (_enemyAi.BossEnemy)
             {
                 foreach (Turret turret in GetComponentsInChildren<Turret>())
@@ -276,8 +280,6 @@ public class Enemy : MonoBehaviour, IDamage
         {
             _animator.SetFloat("fireSpeed", currentWeapon.fireRate * 250f); // Sets the multiplier for firing animation
             _animator.SetTrigger("Shoot");
-           // currentWeapon.shoot(gameManager.instance.playerInstance.transform.position + 
-           //                     new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-3f, 3f)));
 
            // Polite AI Queue
             StartCoroutine(NextEnemyFireDelay(_nextEnemyFireDelay));
@@ -422,5 +424,19 @@ public class Enemy : MonoBehaviour, IDamage
     public void OnDeserialize()
     {
         PickupWeapon(weaponManager.instance.GetEnemyWeaponStats(savedWeapon));
+    }
+
+    private IEnumerator EnableTurrets()
+    {
+        turretsEnabled = true;
+        enableTurrets = true;
+        _animator.SetTrigger("TurretEnable");
+
+        yield return new WaitForSeconds(3f);
+
+        foreach (Turret turret in GetComponentsInChildren<Turret>())
+            turret.enabled = true;
+
+        enableTurrets = false;
     }
 }

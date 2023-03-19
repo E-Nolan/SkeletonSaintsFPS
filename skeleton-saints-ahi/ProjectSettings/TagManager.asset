@@ -13,6 +13,7 @@ TagManager:
   - Player Spawn
   - GameEvent
   - FinalGateButton
+  - TurretRotator
   layers:
   - Default
   - TransparentFX
