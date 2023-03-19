@@ -127,7 +127,7 @@ public class playerController : MonoBehaviour, IDamage
 
         if (startingWeapon)
             rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
-        if (startingOffHand != null)
+        if (startingOffHand)
             rangedWeaponPickup(startingOffHand, startingOffHand.weaponType);
     }
 
@@ -881,7 +881,28 @@ public class playerController : MonoBehaviour, IDamage
             else
                 _newWeapon.GetComponent<rangedWeapon>().isInTutorial = false;
             weaponInventory.Add(_newWeapon);
+
+            if (savePlayer.instance.savedWeaponIndex == weaponInventory.Count - 1)
+                switchToWeapon(savePlayer.instance.savedWeaponIndex);
+            else
+            {
+                _newWeapon.GetComponent<rangedWeapon>().offSwitch();
+                _newWeapon.SetActive(false);
+            }
         }
+        //currWepIndex = savePlayer.instance.savedWeaponIndex;
+        //currentWeapon = weaponInventory[currWepIndex].GetComponent<rangedWeapon>();
+        /*
+        for (int i = 0; i < weaponInventory.Count; i++)
+        {
+            if (i != currWepIndex)
+            {
+                weaponInventory[i].GetComponent<rangedWeapon>().offSwitch();
+                weaponInventory[i].SetActive(false);
+            }
+        }
+        */
+        //switchToWeapon(currWepIndex);
     }
 
     public void CopyGrappleFromPlayerPreferences()
