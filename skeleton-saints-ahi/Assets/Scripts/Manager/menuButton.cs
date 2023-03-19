@@ -49,7 +49,7 @@ public class menuButton : MonoBehaviour
 
     public void DisplayObjective()
     {
-       
+        menuManager.instance.DisplayObjective();
     }
 
     public void DisplayCredits()

@@ -220,7 +220,8 @@ public class menuManager : MonoBehaviour
 
 	public void ConfirmLevelRestart()
 	{
-		gameManager.instance.restartLevel();
+		gameManager.instance.clearLevel();
+		sceneLoader.instance.RestartLevel();
 	}
 
 	public void RestartGame()
@@ -236,7 +237,7 @@ public class menuManager : MonoBehaviour
 	public void ConfirmGameRestart()
 	{
 		gameManager.instance.clearLevel();
-		sceneLoader.instance.LoadMainMenu();
+		sceneLoader.instance.RestartGame();
 	}
 
 	public void DisplayObjective()

@@ -22,7 +22,7 @@ public class sceneLoader : MonoBehaviour
 
     public void LoadNextScene()
     {
-        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+        StartCoroutine(LoadLevel());
     }
 
     public void LoadMainMenu()
@@ -32,15 +32,15 @@ public class sceneLoader : MonoBehaviour
 
     public void RestartLevel()
     {
-
+        StartCoroutine(LoadCurrent());
     }
 
     public void RestartGame()
     {
-
+        StartCoroutine(LoadBeginning());
     }
 
-    IEnumerator LoadLevel(int sceneIndex)
+    IEnumerator LoadLevel()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         loading.SetActive(true);
@@ -67,7 +67,6 @@ public class sceneLoader : MonoBehaviour
     IEnumerator LoadMain()
     {
         menuManager.instance.toggleGameMenu();
-        menuManager.instance.quitGame.SetActive(false);
         hUDManager.instance.closeHUD();
         loading.SetActive(true);
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
@@ -87,4 +86,54 @@ public class sceneLoader : MonoBehaviour
             };
         }
     }
+
+    IEnumerator LoadCurrent()
+    {
+        menuManager.instance.toggleGameMenu();
+        hUDManager.instance.closeHUD();
+        loading.SetActive(true);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        AsyncOperation control = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+        while(!control.isDone)
+        {
+            float slide = Mathf.Clamp01(control.progress / .9f);
+            loadingSlider.value = slide;
+            loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
+
+            yield return new WaitForSeconds(time);
+            control.completed += (sceneComplete) =>
+            {
+                loading.SetActive(false);
+                hUDManager.instance.showHUD();
+                gameManager.instance.LevelSetup();
+                gameManager.instance.FetchEvents();
+            };
+        }
+    }
+
+ 
+    IEnumerator LoadBeginning()
+    {
+        menuManager.instance.toggleGameMenu();
+        hUDManager.instance.closeHUD();
+        loading.SetActive(true);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        AsyncOperation control = SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
+        while (!control.isDone)
+        {
+            float slide = Mathf.Clamp01(control.progress / .9f);
+            loadingSlider.value = slide;
+            loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
+
+            yield return new WaitForSeconds(time);
+            control.completed += (sceneComplete) =>
+            {
+                loading.SetActive(false);
+                hUDManager.instance.showHUD();
+                gameManager.instance.LevelSetup();
+                gameManager.instance.FetchEvents();
+            };
+        }
+    }
+    
 }
