@@ -19,6 +19,7 @@ public class hookPoint : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         hookCollider = GetComponent<BoxCollider>();
+        grappleGunScript.lineRender.enabled = false;
     }
 
     // Update is called once per frame
