@@ -144,49 +144,8 @@ public class playerController : MonoBehaviour, IDamage
         if (currCoyoteTimer > 0.0f)
             currCoyoteTimer -= Time.deltaTime;
 
-        cheatCodeInput();
-
-        // Handle movement for the player
-        movement();
-
-        // If the player presses the Shoot Button, they will fire at whatever they are looking at
-
-        if (Input.GetButton("Fire1") && !isPrimaryShooting && !gameManager.instance.isPaused && currentWeapon)
-        {
-            // If auto reloading is enabled, simply try to shoot the weapon. otherwise show a message on screen
-#if false
-            if (currentWeapon.CurrentClip > 0)
-                shoot(currentWeapon);
-            else
-                hUDManager.instance.displayReloadWeaponText();
-#else
-            shoot(currentWeapon);
-#endif
-        }
-
-        if (Input.GetButtonDown("Reload") && !currentWeapon.isAmmoEmpty())
-        {
-            currentWeapon.startReload();
-        }
-
-        // If the player presses the secondary Shoot button (right click) Fire their secondary weapon
-        if (Input.GetButtonDown("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
-        {
-            shoot(currentSecondary);
-        }
-
-        // If the player scrolls the mouse wheel, switch to the next weapon for up, or the previous weapon for down.
-        if (!isSwitchingWeapons)
-        {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0)
-            {
-                StartCoroutine(nextWeapon());
-            }
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-            {
-                StartCoroutine(prevWeapon());
-            }
-        }
+        if (!gameManager.instance.isPaused)
+            getPlayerInput();
 
 
         // If the player hasn't used any stamina for the duration of the regen cooldown, regenerate their stamina over time
@@ -197,6 +156,32 @@ public class playerController : MonoBehaviour, IDamage
             giveArmor(armorRegenSpeed * Time.deltaTime);
     }
 
+    void getPlayerInput()
+    {
+        cheatCodeInput();
+
+        movement();
+
+
+        if (Input.GetButton("Fire1") && !isPrimaryShooting && !gameManager.instance.isPaused && currentWeapon)
+            shoot(currentWeapon);
+
+
+        if (Input.GetButtonDown("Reload") && !currentWeapon.isAmmoEmpty())
+            currentWeapon.startReload();
+
+        if (Input.GetButtonDown("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)
+            shoot(currentSecondary);
+
+        if (!isSwitchingWeapons)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+                StartCoroutine(nextWeapon());
+
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+                StartCoroutine(prevWeapon());
+        }
+    }
 #region movement functions
     // Tell the player where to move based on player input
     void movement()
