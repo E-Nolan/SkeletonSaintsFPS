@@ -29,7 +29,7 @@ public class collectiblePickup : MonoBehaviour
         {
             rangedWeapon currentWeapon = gameManager.instance.PlayerScript().currentWeapon;
 
-            if ((currentWeapon.weaponName == "Pistol" || currentWeapon.isAmmoFull()) && tempText == null)
+            if ((currentWeapon.weaponName == "Pistol" || currentWeapon.isAmmoFull()) && tempText == null && ammoRecoveryMultiplier < 0)
             {
                 tempText = Instantiate(pistolText, transform.position + new Vector3(0f, transform.position.y / 2, 0f), transform.rotation, transform.root);
                 tempText.GetComponent<TextMeshPro>().SetText($"{currentWeapon.name} already at Max Ammo");
