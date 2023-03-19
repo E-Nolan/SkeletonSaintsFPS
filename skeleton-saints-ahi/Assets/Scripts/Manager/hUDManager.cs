@@ -12,15 +12,9 @@ public class hUDManager : MonoBehaviour
 
     [Header("----- Player UI -----")]
     public GameObject playerUISystem;
-    public GameObject playerHealthBar;
-    public GameObject parentHealth;
-    public List<GameObject> playerHealthTick;
-    public GameObject playerStaminaBar;
-    public GameObject parentStamina;
-    public List<GameObject> playerStaminaTick;
-    public GameObject playerArmorBar;
-    public GameObject parentArmor;
-    public List<GameObject> playerArmorTick;
+    public Slider health;
+    public Slider armor;
+    public Slider stamina;
 
     [Header("----- Weapon UI -----")]
     public GameObject weaponUISystem;
@@ -69,11 +63,6 @@ public class hUDManager : MonoBehaviour
     }
     #region Access Methods
 
-    public GameObject PlayerUISystem
-    {
-        get { return playerUISystem; }
-        set { playerHealthBar = value; }
-    }
     private void Update()
     {
         for(int i = 0; i < gameManager.instance.keyCard.Length; i++)
@@ -84,102 +73,22 @@ public class hUDManager : MonoBehaviour
 
     #endregion
     #region Public Methods
-    public void createPlayerHealthBar()
+    public void updateHealth()
     {
-        maxHealth = gameManager.instance.PlayerScript().GetMaxHealth();
-        healthTick = (int)maxHealth / 1;
-        for (int i = 0; i < healthTick; i++)
-        {
-            GameObject tick = Instantiate(playerHealthBar, new Vector3(playerHealthBar.transform.position.x - (i * 24), playerHealthBar.transform.position.y, playerHealthBar.transform.position.z), Quaternion.identity, parentHealth.transform);
-            tick.SetActive(true);
-            playerHealthTick.Add(tick);
-        }
+        health.maxValue = gameManager.instance.PlayerScript().GetMaxHealth();
+        health.value = gameManager.instance.PlayerScript().currentHealth;
     }
 
-    public void updatePlayerHealthBar()
+    public void updateStamina()
     {
-        currentHealth = gameManager.instance.PlayerScript().GetCurrentHealth();
-        maxHealth = gameManager.instance.PlayerScript().GetMaxHealth();
-        int currentTick = (int)currentHealth;
-        int diff = currentTick - playerHealthTick.Count;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        for (int i = 0; i < currentTick; i++)
-        {
-            playerHealthTick[Mathf.Clamp(i, 0, playerHealthTick.Count)].SetActive(true);
-        }
-        for (int i = currentTick; i < playerHealthTick.Count; i++)
-        {
-            playerHealthTick[Mathf.Clamp(i, 0, playerHealthTick.Count)].SetActive(false);
-        }
-        if (diff >= 0)
-            playerHealthTick[(playerHealthTick.Count - 1) - diff].SetActive(true);
+        stamina.maxValue = gameManager.instance.PlayerScript().GetMaxStamina();
+        stamina.value = gameManager.instance.PlayerScript().currentStamina;
     }
 
-    public void createPlayerStaminaBar()
+    public void updateArmor()
     {
-        maxStamina = gameManager.instance.PlayerScript().GetMaxStamina();
-        staminaTick = (int)maxStamina / 10;
-        for (int i = 0; i < staminaTick; i++)
-        {
-            GameObject tick = Instantiate(playerStaminaBar, new Vector2(playerStaminaBar.transform.position.x - (i * 24), playerStaminaBar.transform.position.y), Quaternion.identity, parentStamina.transform);
-            tick.SetActive(true);
-            playerStaminaTick.Add(tick);
-        }
-    }
-
-    public void updatePlayerStaminaBar()
-    {
-        currentStamina = gameManager.instance.PlayerScript().GetCurrentStamina();
-        maxStamina = gameManager.instance.PlayerScript().GetMaxStamina();
-        int currentTick = (int)currentStamina / 10;
-        int diff = playerStaminaTick.Count - currentTick;
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        if ((gameManager.instance.PlayerScript().isDashing || gameManager.instance.PlayerScript().isSprinting) && currentStamina > 0)
-        {
-            for (int i = 0; i < diff; i++)
-            {
-                int index = (playerStaminaTick.Count - 1) - i;
-                if (index >= 0)
-                    playerStaminaTick[index].SetActive(false);
-            }
-        }
-        else if ((!gameManager.instance.PlayerScript().isDashing && !gameManager.instance.PlayerScript().isSprinting) || currentStamina == maxStamina)
-        {
-            if (diff >= 0 && diff < playerStaminaTick.Count)
-                playerStaminaTick[(playerStaminaTick.Count - 1) - diff].SetActive(true);
-
-        }
-    }
-
-    public void createPlayerArmorBar()
-    {
-        maxArmor = gameManager.instance.PlayerScript().GetMaxArmor();
-        armorTick = (int)maxArmor / 1;
-        for (int i = 0; i < armorTick; i++)
-        {
-            GameObject tick = Instantiate(playerArmorBar, new Vector2(playerArmorBar.transform.position.x - (i * 24), playerArmorBar.transform.position.y), Quaternion.identity, parentArmor.transform);
-            tick.SetActive(true);
-            playerArmorTick.Add(tick);
-        }
-    }
-
-    public void updatePlayerArmorBar()
-    {
-        currentArmor = gameManager.instance.PlayerScript().GetCurrentArmor();
-        maxArmor = gameManager.instance.PlayerScript().GetMaxArmor();
-        int currentTick = (int)currentArmor;
-        int diff = currentTick - playerArmorTick.Count;
-        currentArmor = Mathf.Clamp(currentArmor, 0, maxArmor);
-        for (int i = 0; i < currentTick && i < playerArmorTick.Count; i++)
-        {
-            playerArmorTick[i].SetActive(true);
-        }
-        for (int i = currentTick; i < playerArmorTick.Count; i++)
-        {
-            playerArmorTick[i].SetActive(false);
-        }
-        if (diff >= 0 && (playerArmorTick.Count - 1) - diff < playerArmorTick.Count)
-            playerArmorTick[(playerArmorTick.Count - 1) - diff].SetActive(true);
+        armor.maxValue = gameManager.instance.PlayerScript().GetMaxArmor();
+        armor.value = gameManager.instance.PlayerScript().currentArmor;
     }
 
     public void updateWeaponDisplay()

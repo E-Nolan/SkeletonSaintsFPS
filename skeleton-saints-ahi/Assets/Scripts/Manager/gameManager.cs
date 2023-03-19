@@ -313,12 +313,6 @@ public class gameManager : MonoBehaviour
 		instance.winGame();
 	}
 	#region Merged Functions
-	public void createUIBar()
-	{
-		hUDManager.instance.createPlayerHealthBar();
-		hUDManager.instance.createPlayerStaminaBar();
-		hUDManager.instance.createPlayerArmorBar();
-	}
 
 	#endregion
 	public void setEnemyFiring(bool isFiring)

@@ -121,9 +121,6 @@ public class playerController : MonoBehaviour, IDamage
         currentStamina = maxStamina;
         currentArmor = maxArmor;
 
-        gameManager.instance.createUIBar();
-
-
         /*
         if (startingWeapon)
             rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
@@ -390,7 +387,7 @@ public class playerController : MonoBehaviour, IDamage
             takeArmorDamage(ref damage);
             fudgeDamage(ref damage);
             updateHealth(-damage);
-            hUDManager.instance.updatePlayerHealthBar();
+            hUDManager.instance.updateHealth();
             StartCoroutine(hUDManager.instance.flashDamage(damage));
             invincibilityTimer = invincibilityCooldown;
         }
@@ -424,7 +421,7 @@ public class playerController : MonoBehaviour, IDamage
         else
             damage = 0;
 
-        hUDManager.instance.updatePlayerArmorBar();
+        hUDManager.instance.updateArmor();
         // Reset the armor regen cooldown
         armorRegenTimer = armorRegenCooldown;
 
@@ -604,7 +601,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, int.MinValue, maxHealth);
-        hUDManager.instance.updatePlayerHealthBar();
+        hUDManager.instance.updateHealth();
         if (currentHealth <= 0)
             gameManager.instance.playerDead();
     }
@@ -636,7 +633,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentStamina += amount;
         currentStamina = Mathf.Clamp(currentStamina, 0.0f, (float)maxStamina);
-        hUDManager.instance.updatePlayerStaminaBar();
+        hUDManager.instance.updateStamina();
 
     }
 
@@ -644,7 +641,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         currentArmor += armorGain;
         currentArmor = Mathf.Clamp(currentArmor, 0.0f, maxArmor);
-        hUDManager.instance.updatePlayerArmorBar();
+        hUDManager.instance.updateArmor();
     }
 
     public void SetInvincibilityState(bool _isInvincible)
