@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2964705908013411206}
   - component: {fileID: 6829984727951870519}
   - component: {fileID: 2964705908013411207}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Final Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,9 +138,6 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
-  isPlayer: 0
-  isEnemy: 0
-  EnemyWeaponSave: {fileID: 0}
 --- !u!65 &2964705908013411206
 BoxCollider:
   m_ObjectHideFlags: 0

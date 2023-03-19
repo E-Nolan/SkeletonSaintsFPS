@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5691495630307376888}
   - component: {fileID: 1477376258491322245}
   - component: {fileID: 153351041496084023}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MusicTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

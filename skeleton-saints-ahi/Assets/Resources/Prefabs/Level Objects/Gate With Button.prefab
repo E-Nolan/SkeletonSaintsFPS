@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 8691276401591928399}
   - component: {fileID: 1112854658085382142}
   - component: {fileID: 8691276401591928398}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Gate With Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,8 +489,6 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
-  isEnemy: 0
-  EnemyWeaponSave: {fileID: 0}
 --- !u!65 &8691276401591928399
 BoxCollider:
   m_ObjectHideFlags: 0
