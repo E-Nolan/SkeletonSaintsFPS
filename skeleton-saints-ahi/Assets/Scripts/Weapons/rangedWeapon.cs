@@ -39,6 +39,7 @@ public class rangedWeapon : MonoBehaviour
     [Range(0, 40)] [SerializeField] int ammoRecovery;
     [Range(0.0f, 5.0f)] [SerializeField] float reloadSpeed;
     bool isReloading = false;
+    public bool isInTutorial;
 
     // If this weapon is being used by an enemy, access 
     Enemy enemyScript;
@@ -259,6 +260,8 @@ public class rangedWeapon : MonoBehaviour
         }
 
         spendClip(1);
+        if (isInTutorial)
+            updateAmmo(1);
         hUDManager.instance.updateWeaponText();
     }
 
@@ -378,6 +381,11 @@ public class rangedWeapon : MonoBehaviour
         gunType = _stats.weaponType;
 
         originalWeapon = _stats;
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Tutorial Level")
+            isInTutorial = true;
+        else
+            isInTutorial = false;
     }
 
     virtual public void onSwitch()

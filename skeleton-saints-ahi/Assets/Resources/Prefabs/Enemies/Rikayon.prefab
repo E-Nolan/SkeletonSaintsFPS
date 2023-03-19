@@ -980,7 +980,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 12.5
+      value: 8
       mode: 0
       spread: 0
       speed:
@@ -1776,7 +1776,7 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -2309,7 +2309,7 @@ ParticleSystem:
         m_RotationOrder: 4
     speedModifier:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -2317,7 +2317,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.79758644
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -2325,14 +2325,32 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
-          value: 1
+          time: 0.01995886
+          value: -0.009621989
           inSlope: 0
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.21975808
+          value: 0.009527205
+          inSlope: 0.38759255
+          outSlope: 0.38759255
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.15987875
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.23284498
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -7907,9 +7925,6 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
-  isPlayer: 0
-  isEnemy: 0
-  EnemyWeaponSave: {fileID: 0}
 --- !u!95 &457333255319264680
 Animator:
   serializedVersion: 5
@@ -7991,11 +8006,12 @@ MonoBehaviour:
   dropChance: 0
   isShooting: 0
   currentWeapon: {fileID: 0}
-  savedWeapon: {fileID: 0}
+  savedWeapon: 
   acquiringWeapon: 0
   isDead: 0
   isAttacking: 0
   fadeHealthBar: 0
+  DummyEnemy: 0
   _healthBar: {fileID: 457333256072619333}
   _animator: {fileID: 457333255319264680}
 --- !u!114 &457333255328753859

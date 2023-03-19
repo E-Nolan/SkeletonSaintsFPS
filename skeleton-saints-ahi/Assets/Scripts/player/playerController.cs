@@ -886,6 +886,10 @@ public class playerController : MonoBehaviour, IDamage
             //_copiedWeapon.transform.parent = playerCamera.transform;
             //_copiedWeapon.transform.SetPositionAndRotation(playerCamera.transform.position, playerCamera.transform.rotation);
             GameObject _newWeapon = Instantiate(_copiedWeapon, playerCamera.transform.position, playerCamera.transform.rotation, playerCamera.transform);
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Tutorial Level")
+                _newWeapon.GetComponent<rangedWeapon>().isInTutorial = true;
+            else
+                _newWeapon.GetComponent<rangedWeapon>().isInTutorial = false;
             weaponInventory.Add(_newWeapon);
         }
     }
