@@ -150,16 +150,14 @@ public class gameManager : MonoBehaviour
 		//Should be called right before the player is dropped in and gains control of the player.
 		//Script values should be assigned from preferences, controls should be enabled and cursor hidden
 
-		//playerScript.weaponInventory = playerPreferences.instance.MainWeapons;
+		if (playerScript.startingWeapon)
+			playerScript.rangedWeaponPickup(playerScript.startingWeapon, playerScript.startingWeapon.weaponType);
+
 		for (int i = 0; i < playerPreferences.instance.MainWeapons.Count; i++)
-		{
 			playerScript.CopyWeaponFromPlayerPreferences(playerPreferences.instance.MainWeapons[i]);
-		}
-		//playerPreferences.instance.MainWeapons.Clear();
-		if (playerPreferences.instance.OffWeapon)
-		{
-			playerScript.CopyGrappleFromPlayerPreferences();
-		}
+
+		if (playerScript.startingOffHand)
+			playerScript.rangedWeaponPickup(playerScript.startingOffHand, playerScript.startingOffHand.weaponType);
 
 		playerScript.SetPlayerSpeed = playerPreferences.instance.playerSpeed;
 		playerScript.SetGravity = playerPreferences.instance.gravity;

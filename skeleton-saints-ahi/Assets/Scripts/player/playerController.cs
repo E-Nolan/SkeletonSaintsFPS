@@ -7,7 +7,7 @@ public class playerController : MonoBehaviour, IDamage
     #region Member Fields
     // Components used by this script
     [Header("----- Components -----")]
-    [SerializeField] weaponStats startingWeapon;
+    [SerializeField] public weaponStats startingWeapon;
     [SerializeField] CharacterController controller;
     public AudioSource audioSource;
     [SerializeField] Transform leftFirePos;
@@ -81,7 +81,7 @@ public class playerController : MonoBehaviour, IDamage
     bool canInputJump = false;
     [SerializeField] bool isJumping = false;
 
-    [SerializeField] weaponStats startingOffHand;
+    [SerializeField] public weaponStats startingOffHand;
 
     public rangedWeapon currentWeapon { get; private set; }
     public rangedWeapon currentSecondary { get; private set; }
@@ -108,7 +108,8 @@ public class playerController : MonoBehaviour, IDamage
 
     void Awake()
     {
-
+        if (inactiveWeapons == null)
+            inactiveWeapons = new List<rangedWeapon>();
     }
     
     // Start is called before the first frame update
@@ -122,13 +123,13 @@ public class playerController : MonoBehaviour, IDamage
 
         gameManager.instance.createUIBar();
 
-        if (inactiveWeapons == null)
-            inactiveWeapons = new List<rangedWeapon>();
 
+        /*
         if (startingWeapon)
             rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);
         if (startingOffHand)
             rangedWeaponPickup(startingOffHand, startingOffHand.weaponType);
+        */
     }
 
     // Update is called once per frame
