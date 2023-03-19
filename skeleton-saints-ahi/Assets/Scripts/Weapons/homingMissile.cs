@@ -10,6 +10,8 @@ public class homingMissile : MonoBehaviour
     [Header("----- Missile Vars -----")]
     [Range(0.0f, 10.0f)] [SerializeField] float turnSpeed;
     [Range(0.0f, 10.0f)] [SerializeField] float accelerationRate;
+    [Range(0.0f, 10.0f)] [SerializeField] float explosionRadius;
+    [Range(0.0f, 10.0f)] [SerializeField] float explosionDamage;
     [Range(0.0f, 10.0f)] [SerializeField] private float destroyTimer;
 
     Vector3 toPlayerDir;
@@ -40,8 +42,19 @@ public class homingMissile : MonoBehaviour
             other.gameObject.layer == LayerMask.NameToLayer("Obstacle") ||
             other.gameObject.layer == LayerMask.NameToLayer("Player Bullet"))
         {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
             GameObject explosion = Instantiate(_explosionObject, transform.position, Quaternion.Euler(Vector3.up));
-            Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration);
+
+            foreach (Collider collider in colliders)
+            {
+                if (collider.CompareTag("Player"))
+                {
+                    gameManager.instance.PlayerScript().TakeDamage(explosionDamage);
+                    break;
+                }
+            }
+
+            Destroy(explosion, explosion.GetComponentInChildren<ParticleSystem>().main.duration);
             GetComponentInChildren<MeshRenderer>().enabled = false;
             GetComponent<TrailRenderer>().enabled = false;
             enabled = false;

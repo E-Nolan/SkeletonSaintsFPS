@@ -134,8 +134,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionObject: {fileID: 6087298982043621310, guid: 9e9e14ab8204c09488a15fc46d293928, type: 3}
-  turnSpeed: 2
-  accelerationRate: 7.5
+  turnSpeed: 1.75
+  accelerationRate: 6.5
+  explosionRadius: 4.25
+  explosionDamage: 4
   destroyTimer: 5
 --- !u!114 &4976332635579290271
 MonoBehaviour:
@@ -149,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f896df0e2bed754f8971a8e824749b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDmg: 10
+  bulletDmg: 4
   bulletImpactSound: {fileID: 8682056086257030218}
   damagePopupPrefab: {fileID: 5156991524456792442, guid: 48bf4594a2656ef49afe5d660714f3c4, type: 3}
 --- !u!136 &6265951388605544237
