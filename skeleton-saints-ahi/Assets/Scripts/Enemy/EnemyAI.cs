@@ -197,7 +197,8 @@ public class EnemyAI : MonoBehaviour
 
                     if (NavMesh.SamplePosition(playerTransform.position, out NavMeshHit hit, ViewRadius, -1))
                     {
-                        _agent.SetDestination(hit.position);
+                        if(!BossEnemy)
+                            _agent.SetDestination(hit.position);
                         _agent.stoppingDistance = originalStoppingDistance;
                         SetupChase();
                     }
@@ -326,7 +327,9 @@ public class EnemyAI : MonoBehaviour
 
     public float GetAgentRemainingDistance()
     {
-        return _agent.remainingDistance;
+        if(!BossEnemy)
+            return _agent.remainingDistance;
+        return (gameManager.instance.playerInstance.transform.position - transform.position).magnitude;
     }
 
     public float GetAgentStoppingDistance()
