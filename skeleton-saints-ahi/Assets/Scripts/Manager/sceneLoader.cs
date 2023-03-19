@@ -23,6 +23,7 @@ public class sceneLoader : MonoBehaviour
     public void LoadNextScene()
     {
         StartCoroutine(LoadNextLevel());
+        //gameManager.instance.PlayerScript().OnDeserialize();
     }
 
     public void LoadMainMenu()
@@ -52,22 +53,25 @@ public class sceneLoader : MonoBehaviour
             loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
 
             yield return new WaitForSeconds(time);
-            control.completed += (sceneComplete) =>
+
+        }
+        control.completed += (sceneComplete) =>
+        {
+            loading.SetActive(false);
+            if (gameManager.instance.playerInstance == null)
             {
-                loading.SetActive(false);
                 gameManager.instance.LevelSetup();
                 hUDManager.instance.showHUD();
                 gameManager.instance.isPaused = false;
-                gameManager.instance.FetchEvents();
-                
-            };
-        }
+            }
+        };
     }
 
     IEnumerator LoadMain()
     {
         menuManager.instance.toggleGameMenu();
         hUDManager.instance.closeHUD();
+        gameEventManager.instance.ClearEventListUI();
         loading.SetActive(true);
         AsyncOperation control = SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
         while(!control.isDone)
@@ -77,13 +81,13 @@ public class sceneLoader : MonoBehaviour
             loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
 
             yield return new WaitForSeconds(time);
-            control.completed += (sceneComplete) =>
-            {
-                loading.SetActive(false);
-                menuManager.instance.ActivateMenu();
-                gameManager.instance.beginGame();
-            };
         }
+        control.completed += (sceneComplete) =>
+        {
+            loading.SetActive(false);
+            menuManager.instance.ActivateMenu();
+            gameManager.instance.beginGame();
+        };
     }
 
     IEnumerator LoadCurrent()
@@ -100,14 +104,17 @@ public class sceneLoader : MonoBehaviour
             loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
 
             yield return new WaitForSeconds(time);
-            control.completed += (sceneComplete) =>
+        }
+        control.completed += (sceneComplete) =>
+        {
+            if (gameManager.instance.playerInstance == null)
             {
                 loading.SetActive(false);
                 hUDManager.instance.showHUD();
                 gameManager.instance.LevelSetup();
-                gameManager.instance.FetchEvents();
-            };
-        }
+            }
+
+        };
     }
 
  
@@ -116,7 +123,6 @@ public class sceneLoader : MonoBehaviour
         menuManager.instance.toggleGameMenu();
         hUDManager.instance.closeHUD();
         loading.SetActive(true);
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         AsyncOperation control = SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
         while (!control.isDone)
         {
@@ -125,14 +131,16 @@ public class sceneLoader : MonoBehaviour
             loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
 
             yield return new WaitForSeconds(time);
-            control.completed += (sceneComplete) =>
+        }
+        control.completed += (sceneComplete) =>
+        {
+            if (gameManager.instance.playerInstance == null)
             {
                 loading.SetActive(false);
                 hUDManager.instance.showHUD();
                 gameManager.instance.LevelSetup();
-                gameManager.instance.FetchEvents();
-            };
-        }
+            }
+        };
     }
     
 }

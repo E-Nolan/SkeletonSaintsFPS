@@ -916,7 +916,8 @@ public class playerController : MonoBehaviour, IDamage
             gameManager.instance.keyCard[i] = false;
         }
         saveManager.SaveGameData(saveManager.mainData_Current);
+        savePlayer.instance.updatePlayer();
 
-    sceneControl.instance.LoadNextLevel();
+        sceneControl.instance.LoadNextLevel();
     }
 }

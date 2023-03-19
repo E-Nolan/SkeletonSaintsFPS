@@ -7,7 +7,10 @@ public abstract class collectionItem : MonoBehaviour, ICollectibleItem
     public collectionCondition parentCondition;
     public void Collect()
     {
-        parentCondition.FoundObjectives++;
-        parentCondition.CheckCompletion();
+        if (parentCondition != null)
+        {
+            parentCondition.FoundObjectives++;
+            parentCondition.CheckCompletion();
+        }
     }
 }

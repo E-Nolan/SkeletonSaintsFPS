@@ -37,7 +37,7 @@ public class locationCondition : eventCondition
     public void UpdateLocationUI(locationCondition locate)
     {   if (locate.ConditionUI != null)
         {
-            if (platformScript != null)
+            if (platformScript != null && gameManager.instance.PlayerScript() != null)
             {
                 locate.ConditionUI.ConditionToggle.isOn = satisfied;
                 locate.ConditionUI.ConditionalUIText.text = "Get to: " + locate.platformPrefab.name +

@@ -32,10 +32,8 @@ public class levelTransition : MonoBehaviour
             gameManager.instance.keyCard[i] = false;
         }
         saveManager.SaveGameData(saveManager.mainData_Current);
+
         savePlayer.instance.updatePlayer();
-        //sceneLoader.instance.LoadNextScene();
-        sceneControl.instance.LoadNextLevel();
-
-
+        sceneLoader.instance.LoadNextScene();
     }
 }

@@ -109,6 +109,7 @@ public class gameManager : MonoBehaviour
 
 	public void LevelSetup()
 	{
+		Debug.Log("Setting up level: Spawning New Player");
 		PlayerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn");
 		if (PlayerSpawnPos == null)
 		{
@@ -138,9 +139,7 @@ public class gameManager : MonoBehaviour
 
 		hUDManager.instance.showHUD();
 		menuManager.instance.canToggleGameMenu = true;
-		if (Testing)
-			FetchEvents();
-		gameEventManager.instance.GenerateEventsUI();
+		FetchEvents();
 	}
 	//Commented out until player loads properly to start with.
 

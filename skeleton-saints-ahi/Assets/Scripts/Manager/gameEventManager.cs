@@ -36,6 +36,8 @@ public class gameEventManager : MonoBehaviour
     }
     public void FindEvents()
     {
+        gameEvents.Clear();
+        ClearEventListUI();
         GameObject[] objs = GameObject.FindGameObjectsWithTag("GameEvent");
         if (objs.Length > 0)
         {
@@ -44,6 +46,7 @@ public class gameEventManager : MonoBehaviour
                 gameEvents.Add(obj.GetComponent<gameEvent>());
             }
         }
+        GenerateEventsUI();
     }
     public bool HasKillCondition(out killCondition foundCondition)
     {
@@ -52,27 +55,33 @@ public class gameEventManager : MonoBehaviour
         {
             for(int i = 0; i < gameEvents.Count; i++)
             {
-                for (int j = 0; j < gameEvents[i].Conditions.Count; j++)
+                if (gameEvents[i].Conditions != null)
                 {
-                    if (gameEvents[i].Conditions[j].EventClass == 3)
+                    for (int j = 0; j < gameEvents[i].Conditions.Count; j++)
                     {
-                        if ((gameEvents[i].Conditions[j] as killCondition).enemiesLeft != 0)
+                        if (gameEvents[i].Conditions[j].EventClass == 3)
                         {
-                            foundCondition = (gameEvents[i].Conditions[j] as killCondition);
-                            found = true;
-                            return found;
+                            if ((gameEvents[i].Conditions[j] as killCondition).enemiesLeft != 0)
+                            {
+                                foundCondition = (gameEvents[i].Conditions[j] as killCondition);
+                                found = true;
+                                return found;
+                            }
                         }
                     }
                 }
-                for (int k = 0; k < gameEvents[i].SpecificConditions.Count; k++)
+                if (gameEvents[i].SpecificConditions != null)
                 {
-                    if (gameEvents[i].SpecificConditions[k].EventClass == 3)
+                    for (int k = 0; k < gameEvents[i].SpecificConditions.Count; k++)
                     {
-                        if ((gameEvents[i].SpecificConditions[k] as killCondition).enemiesLeft != 0)
+                        if (gameEvents[i].SpecificConditions[k].EventClass == 3)
                         {
-                            foundCondition = (gameEvents[i].SpecificConditions[k] as killCondition);
-                            found = true;
-                            return found;
+                            if ((gameEvents[i].SpecificConditions[k] as killCondition).enemiesLeft != 0)
+                            {
+                                foundCondition = (gameEvents[i].SpecificConditions[k] as killCondition);
+                                found = true;
+                                return found;
+                            }
                         }
                     }
                 }
@@ -273,7 +282,7 @@ public class gameEventManager : MonoBehaviour
     {
         foreach(TaskListUIElement obj in EventTextGroup.GetComponentsInChildren<TaskListUIElement>())
         {
-            Destroy(obj);
+            Destroy(obj.gameObject);
         }
     }
 }

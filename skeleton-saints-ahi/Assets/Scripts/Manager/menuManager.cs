@@ -207,6 +207,7 @@ public class menuManager : MonoBehaviour
 	public void ConfirmRespawn()
 	{
 		Debug.Log("Game should respawn");
+		sceneLoader.instance.RestartLevel();
 	}
 
 	public void RestartLevel()

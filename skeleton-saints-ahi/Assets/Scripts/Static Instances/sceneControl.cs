@@ -26,7 +26,6 @@ public sealed class sceneControl
     {
         AsyncOperation control = SceneManager.LoadSceneAsync("Tutorial Level", LoadSceneMode.Single);
         control.completed += (sceneComplete) => {
-            gameManager.instance.FetchEvents();
             gameManager.instance.LevelSetup();
         };
     }
@@ -36,7 +35,6 @@ public sealed class sceneControl
         AsyncOperation control = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
         control.completed += (sceneComplete) =>
         {
-            gameManager.instance.FetchEvents();
             gameManager.instance.LevelSetup();
         };
     }
@@ -46,7 +44,6 @@ public sealed class sceneControl
         AsyncOperation control = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
         control.completed += (sceneComplete) =>
         {
-            gameManager.instance.FetchEvents();
             gameManager.instance.LevelSetup();
         };
     }
@@ -70,7 +67,6 @@ public sealed class sceneControl
 
         AsyncOperation control = SceneManager.LoadSceneAsync(currSceneIndex, LoadSceneMode.Single);
         control.completed += (sceneComplete) => {
-            gameManager.instance.FetchEvents();
             gameManager.instance.LevelSetup();
         };
     }
