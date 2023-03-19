@@ -22,7 +22,7 @@ public class sceneLoader : MonoBehaviour
 
     public void LoadNextScene()
     {
-        StartCoroutine(LoadLevel());
+        StartCoroutine(LoadNextLevel());
     }
 
     public void LoadMainMenu()
@@ -40,7 +40,7 @@ public class sceneLoader : MonoBehaviour
         StartCoroutine(LoadBeginning());
     }
 
-    IEnumerator LoadLevel()
+    IEnumerator LoadNextLevel()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         loading.SetActive(true);

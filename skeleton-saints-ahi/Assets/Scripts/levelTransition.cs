@@ -17,7 +17,7 @@ public class levelTransition : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SwitchToLevel(specificSceneName);
+            SwitchToLevel();
         }
     }
 
@@ -25,21 +25,14 @@ public class levelTransition : MonoBehaviour
     /// Leave string name blank to switch to the next level
     /// </summary>
     /// <param name="_sceneName"></param>
-    public static void SwitchToLevel(string _sceneName = "")
+    public static void SwitchToLevel()
     {
         for (int i = 0; i < gameManager.instance.keyCard.Length; i++)
         {
             gameManager.instance.keyCard[i] = false;
         }
         saveManager.SaveGameData(saveManager.mainData_Current);
-
-        if (_sceneName == "")
-        {
-            sceneControl.instance.LoadNextLevel();
-        }
-        else
-        {
-            sceneControl.instance.LoadSpecificLevel(_sceneName);
-        }
+        savePlayer.instance.updatePlayer();
+        sceneLoader.instance.LoadNextScene();
     }
 }

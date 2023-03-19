@@ -181,6 +181,7 @@ public class menuManager : MonoBehaviour
 	public void Resume()
 	{
 		unPause();
+		toggleGameMenu();
 	}
 
 	public void DisplayGame()
@@ -294,7 +295,6 @@ public class menuManager : MonoBehaviour
 		vertical.GetComponent<TextMeshProUGUI>().text = $"{Mathf.FloorToInt(verticalSlider.value)}";
 	}
 
-
 	//shared functions
 	public void DisplayControls()
 	{
@@ -332,8 +332,6 @@ public class menuManager : MonoBehaviour
 		hUDManager.instance.toggleCursorVisibility();
 	}
 
-
-
 	public void DeactivateMain()
 	{
 		mainMenu.SetActive(false);
@@ -341,5 +339,7 @@ public class menuManager : MonoBehaviour
 		startMenu.SetActive(false);
 		gameManager.instance.playStarted = true;
 	}
+
+	//defeat menu
 
 }

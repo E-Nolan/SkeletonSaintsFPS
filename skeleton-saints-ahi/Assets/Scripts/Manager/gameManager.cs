@@ -281,12 +281,15 @@ public class gameManager : MonoBehaviour
 
 	public void loseGame()
 	{
-		
+		menuManager.instance.canToggleGameMenu = false;
+		menuManager.instance.pause();
+		menuManager.instance.activeMenu = menuManager.instance.defeatMenu;
+		menuManager.instance.activeMenu.SetActive(true);
 	}
 
 	public void winGame()
 	{
-		
+		menuManager.instance.canToggleGameMenu = false;
 	}
 
 	public void updateGameGoal(int amt)
