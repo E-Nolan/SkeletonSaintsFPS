@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class levelTransition : MonoBehaviour
 {
-    [Tooltip("If false, will just load the next scene in the build")]
-    [SerializeField] bool loadSpecificScene;
-    [SerializeField] string specificSceneName;
+    public static levelTransition instance;
 
     private void Awake()
     {
-        if (!loadSpecificScene)
-            specificSceneName = "";
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -31,8 +31,11 @@ public class levelTransition : MonoBehaviour
         {
             gameManager.instance.keyCard[i] = false;
         }
-        saveManager.SaveGameData(saveManager.mainData_Current);
         savePlayer.instance.updatePlayer();
+        SwitchToLevel();
         sceneLoader.instance.LoadNextScene();
+        //saveManager.SaveGameData(saveManager.mainData_Current);
+
+
     }
 }

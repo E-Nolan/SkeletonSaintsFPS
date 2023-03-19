@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class hUDManager : MonoBehaviour
 {
@@ -72,6 +73,13 @@ public class hUDManager : MonoBehaviour
     {
         get { return playerUISystem; }
         set { playerHealthBar = value; }
+    }
+    private void Update()
+    {
+        for(int i = 0; i < gameManager.instance.keyCard.Length; i++)
+        {
+
+        }
     }
 
     #endregion

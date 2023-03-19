@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour, IDamage
 {
+    public static playerController instance;
+
     #region Member Fields
     // Components used by this script
     [Header("----- Components -----")]
@@ -106,6 +108,14 @@ public class playerController : MonoBehaviour, IDamage
     bool godModeEnabled = false;
     #endregion
 
+    void Awake()
+    {
+        if (instance != null)
+            Destroy(gameObject);
+
+        instance = this;
+    }
+    
     // Start is called before the first frame update
     void Start()
     {

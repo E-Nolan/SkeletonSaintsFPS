@@ -42,8 +42,8 @@ public class sceneLoader : MonoBehaviour
 
     IEnumerator LoadNextLevel()
     {
-        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         loading.SetActive(true);
+        hUDManager.instance.closeHUD();
         AsyncOperation control = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
         while(!control.isDone)
         {
@@ -69,7 +69,6 @@ public class sceneLoader : MonoBehaviour
         menuManager.instance.toggleGameMenu();
         hUDManager.instance.closeHUD();
         loading.SetActive(true);
-        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         AsyncOperation control = SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
         while(!control.isDone)
         {
