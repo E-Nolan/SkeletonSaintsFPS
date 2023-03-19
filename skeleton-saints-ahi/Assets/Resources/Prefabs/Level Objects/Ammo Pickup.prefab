@@ -54,6 +54,7 @@ MonoBehaviour:
   healthRecovery: 0
   rotationSpeed: 90
   pickupSound: {fileID: 8300000, guid: 406f880e3ae0e254f8999d7239c1164d, type: 3}
+  pistolText: {fileID: 7485779829907086184, guid: 8fac9d86db56f3347a019d75201c365d, type: 3}
 --- !u!135 &3451316076778513555
 SphereCollider:
   m_ObjectHideFlags: 0
