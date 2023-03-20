@@ -23,6 +23,7 @@ public class creditsRoll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // AHHHHHH
         if (isScrolling)
         {
             _rect.position = Vector3.MoveTowards(_rect.position, endPos, scrollSpeed * Time.deltaTime);
