@@ -26,7 +26,7 @@ public class creditsRoll : MonoBehaviour
         if (isScrolling)
         {
             _rect.position = Vector3.MoveTowards(_rect.position, endPos, scrollSpeed * Time.deltaTime);
-            if (endPosY >= _rect.position.y)
+            if (endPosY == _rect.position.y)
                 stopScrolling();
         }
     }
