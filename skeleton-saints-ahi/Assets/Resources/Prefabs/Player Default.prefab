@@ -102,8 +102,6 @@ MonoBehaviour:
   id: 
   idParent: 
   dontSave: 0
-  isEnemy: 0
-  EnemyWeaponSave: {fileID: 0}
 --- !u!114 &3169843501779763169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,9 +132,9 @@ MonoBehaviour:
   armorRegenSpeed: 1
   armorRegenCooldown: 1
   invincibilityCooldown: 0.25
-  maxJumpVel: 8
-  jumpAcceleration: 50
-  initialJumpVelocity: 3
+  maxJumpVel: 9
+  jumpAcceleration: 45
+  initialJumpVelocity: 1
   maxJumps: 1
   jumpStaminaCost: 0
   coyoteTime: 0.2
