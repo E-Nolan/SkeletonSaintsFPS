@@ -7656,7 +7656,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5179444884724989037}
         m_TargetAssemblyTypeName: menuButton, Assembly-CSharp
-        m_MethodName: ResetSetting
+        m_MethodName: ResetSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10080,7 +10080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2105544199471190606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15034,7 +15034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2105544200414457329
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26376,9 +26376,9 @@ MonoBehaviour:
   activeMenu: {fileID: 0}
   changesSaved: 0
   canToggleGameMenu: 0
-  Audio: {fileID: 0}
-  Click: {fileID: 0}
-  MAM: {fileID: 0}
+  Audio: {fileID: 6775273163089092382}
+  Click: {fileID: 8300000, guid: c7f38a7ca287d31479b6aaacd90e1cb4, type: 3}
+  MAM: {fileID: 24100000, guid: 775b9f6a6d2d92c4f9a08fab7daf0da5, type: 2}
 --- !u!1 &4072881853415156538
 GameObject:
   m_ObjectHideFlags: 0
@@ -26662,7 +26662,7 @@ MonoBehaviour:
   horizontal: 0
   vertical: 0
   invertX: 0
-  masterVolume: 1
+  masterVolume: 0.704
   musicVolume: 1
   sfxVolume: 1
   masterVolumeDefault: 0

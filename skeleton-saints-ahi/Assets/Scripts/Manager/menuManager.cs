@@ -252,6 +252,13 @@ public class menuManager : MonoBehaviour
 		}
 	}
 
+	public void UpdateSettings()
+    {
+		MAM.SetFloat("masterVolume", Mathf.Log10(playerPreferences.instance.masterVolume) * 20);
+		MAM.SetFloat("musicVolume", Mathf.Log10(playerPreferences.instance.musicVolume) * 20);
+		MAM.SetFloat("sfxVolume", Mathf.Log10(playerPreferences.instance.sfxVolume) * 20);
+	}
+
 	//setting menu
 	public void SaveSettingsToPlayer()
 	{

@@ -116,4 +116,16 @@ public class menuButton : MonoBehaviour
     {
         menuManager.instance.Resume();
     }
+
+    public void SaveSettings()
+    {
+        menuManager.instance.SaveSettingsToPlayer();
+        menuManager.instance.UpdateSettings();
+    }
+
+    public void ResetSettings()
+    {
+        menuManager.instance.ResetDefault();
+        menuManager.instance.UpdateSettings();
+    }
 }
