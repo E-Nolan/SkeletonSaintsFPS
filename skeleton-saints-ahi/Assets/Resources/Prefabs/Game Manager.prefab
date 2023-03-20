@@ -18848,6 +18848,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 920282642}
+        m_TargetAssemblyTypeName: creditsRoll, Assembly-CSharp
+        m_MethodName: startScrolling
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2105544199050972504}
         m_TargetAssemblyTypeName: menuButton, Assembly-CSharp
         m_MethodName: MainCredit
@@ -26346,7 +26358,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 4072881852477406259}
   victoryMenu: {fileID: 4072881852266713183}
   defeatMenu: {fileID: 4072881851509210758}
-  credits: {fileID: 0}
+  credits: {fileID: 7827540601664703630}
   startMenu: {fileID: 3418769217782410273}
   easyMode: {fileID: 3418769217504369618}
   normalMode: {fileID: 3418769216334029322}
@@ -34729,6 +34741,7 @@ GameObject:
   - component: {fileID: 2741210174385274330}
   - component: {fileID: 3149672773883783304}
   - component: {fileID: 5231477416577907429}
+  - component: {fileID: 920282642}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -34805,6 +34818,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &920282642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7827540601664703630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b360acb447b2c4748b941b196140bd09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endPosY: 2200
+  scrollSpeed: 100
+  isScrolling: 1
 --- !u!1 &7863885980202347976
 GameObject:
   m_ObjectHideFlags: 0
