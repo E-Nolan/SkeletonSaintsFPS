@@ -91,6 +91,13 @@ public class hUDManager : MonoBehaviour
         armor.value = gameManager.instance.PlayerScript().currentArmor;
     }
 
+    public void updateUi()
+    {
+        health.value = gameManager.instance.PlayerScript().currentHealth;
+        stamina.value = gameManager.instance.PlayerScript().currentStamina;
+        armor.value = gameManager.instance.PlayerScript().currentArmor;
+    }
+
     public void updateWeaponDisplay()
     {
         activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;

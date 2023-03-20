@@ -56,6 +56,7 @@ public class gameManager : MonoBehaviour
 		/*beginGame() will start GM functionality and if(BUILDMODE) will expect to have only the persistent scene loaded
 		  If not, this will start functionality but with expectation that it has the play level already loaded
 		 */
+		
 		beginGame();
 	}
 	private void LateUpdate()
@@ -287,6 +288,9 @@ public class gameManager : MonoBehaviour
 	public void winGame()
 	{
 		menuManager.instance.canToggleGameMenu = false;
+		menuManager.instance.pause();
+		menuManager.instance.activeMenu = menuManager.instance.victoryMenu;
+		menuManager.instance.activeMenu.SetActive(true);
 	}
 
 	public void updateGameGoal(int amt)

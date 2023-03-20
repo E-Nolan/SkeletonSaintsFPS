@@ -112,19 +112,8 @@ public class menuButton : MonoBehaviour
         menuManager.instance.ConfirmRespawn();
     }
 
-    public void DefeatRestartLevel()
+    public void Resume()
     {
-
+        menuManager.instance.Resume();
     }
-
-    public void DefeatRestartGame()
-    {
-
-    }
-
-    public void DefeatRespawn()
-    {
-
-    }
-
 }

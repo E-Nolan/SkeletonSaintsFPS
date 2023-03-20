@@ -120,7 +120,7 @@ public class playerController : MonoBehaviour, IDamage
         currentHealth = maxHealth;
         currentStamina = maxStamina;
         currentArmor = maxArmor;
-
+        hUDManager.instance.updateUi();
         /*
         if (startingWeapon)
             rangedWeaponPickup(startingWeapon, startingWeapon.weaponType);

@@ -69,6 +69,8 @@ public class sceneLoader : MonoBehaviour
 
     IEnumerator LoadMain()
     {
+        if (menuManager.instance.canToggleGameMenu == false)
+            menuManager.instance.canToggleGameMenu = true;
         menuManager.instance.toggleGameMenu();
         hUDManager.instance.closeHUD();
         gameEventManager.instance.ClearEventListUI();
