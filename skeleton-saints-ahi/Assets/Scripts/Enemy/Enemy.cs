@@ -50,6 +50,8 @@ public class Enemy : MonoBehaviour, IDamage
     public bool isAttacking;
     public bool fadeHealthBar = false;
     public bool DummyEnemy;
+    public bool canDetectPlayer;
+    public bool canAttack;
 
     private bool shrinkAway = false;
     private float _maxHealth;
@@ -73,8 +75,8 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Start()
     {
-
         isAttacking = false;
+        _enemyAi = GetComponent<EnemyAI>();
 
         if(SceneManager.GetActiveScene().name != "Main Menu") 
             _difficulty = gameManager.instance.currentDifficulty;
@@ -117,8 +119,7 @@ public class Enemy : MonoBehaviour, IDamage
         if (_material == null)
             _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
 
-        if(_enemyAi == null)
-            _enemyAi = GetComponent<EnemyAI>();
+        _enemyAi = GetComponent<EnemyAI>();
 
         if(_animator == null)
             _animator = GetComponent<Animator>();
@@ -148,7 +149,7 @@ public class Enemy : MonoBehaviour, IDamage
                 Destroy(gameObject);
         }
 
-        if(!isBossEnemy && healthBarUI.activeSelf)
+        if(!isBossEnemy && healthBarUI.activeSelf && gameManager.instance.playerInstance != null)
             healthBarUI.transform.LookAt(gameManager.instance.playerInstance.transform.position);
 
         if (!isBossEnemy && !isMutant && currentWeapon != null)

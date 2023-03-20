@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,16 +12,25 @@ public class bullet : MonoBehaviour
     [SerializeField] private Transform damagePopupPrefab;
 
     private Transform damageNumber;
+    private Camera mainCamera;
 
     public void setTimer(float _timer)
     {
         StartCoroutine(timerWait(_timer));
     }
 
+    void Start()
+    {
+        mainCamera = Camera.main;
+    }
+
     void Update()
     {
-        if(damageNumber != null)
-            damageNumber.rotation = Quaternion.LookRotation(damageNumber.position - Camera.main.transform.position, Camera.main.transform.up);
+        if (Camera.main != null && mainCamera == null)
+            mainCamera = Camera.main;
+
+        if(damageNumber != null && mainCamera != null)
+            damageNumber.rotation = Quaternion.LookRotation(damageNumber.position - mainCamera.transform.position, mainCamera.transform.up);
     }
 
     IEnumerator timerWait(float _timer)

@@ -55,12 +55,14 @@ public class EnemyAI : MonoBehaviour
     void Awake()
     {
         destinationChosen = false;
+        CanDetectPlayer = false;
+        CanAttack = false;
+        _enemyScript = GetComponent<Enemy>();
     }
 
     void Start()
     {
-        if(_agent == null)
-            _agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
 
         _playerMask = LayerMask.GetMask("Player"); // Player layer mask for Enemy to check for Player check
         _obstacleMask = LayerMask.GetMask("Obstacle"); // Obstacle layer mask for Enemy to check if Obstacle is in the way for Player check
@@ -70,6 +72,7 @@ public class EnemyAI : MonoBehaviour
 
         if (_animator == null)
             GetComponent<Animator>();
+
 
         if (_enemyLookAt == null)
             GetComponent<EnemyLookAt>();
@@ -194,6 +197,7 @@ public class EnemyAI : MonoBehaviour
                 if (!Physics.Raycast(transform.position, playerDirection, distanceToPlayer, _obstacleMask))
                 {
                     CanDetectPlayer = true;
+                    _enemyScript.canDetectPlayer = CanDetectPlayer;
 
                     if (NavMesh.SamplePosition(playerTransform.position, out NavMeshHit hit, ViewRadius, -1))
                     {
@@ -212,6 +216,7 @@ public class EnemyAI : MonoBehaviour
 
                     // Set CanShoot bool to the result of (angleToPlayer <= FireAngle), if the Player is within the FireAngle
                     CanAttack = angleToPlayer <= FireAngle;
+                    _enemyScript.canAttack = CanAttack;
                 }
                 else
                 {
@@ -340,6 +345,16 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent GetAgent()
     {
         return _agent;
+    }
+
+    public bool GetCanDetectPlayer()
+    {
+        return CanDetectPlayer;
+    }
+
+    public bool GetCanAttack()
+    {
+        return CanAttack;
     }
 
 
