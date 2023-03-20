@@ -128,4 +128,9 @@ public class menuButton : MonoBehaviour
         menuManager.instance.ResetDefault();
         menuManager.instance.UpdateSettings();
     }
+
+    public void MainCredit()
+    {
+        menuManager.instance.MainCredit();
+    }
 }

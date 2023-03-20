@@ -18850,7 +18850,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2105544199050972504}
         m_TargetAssemblyTypeName: menuButton, Assembly-CSharp
-        m_MethodName: DisplayCredits
+        m_MethodName: MainCredit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26346,6 +26346,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 4072881852477406259}
   victoryMenu: {fileID: 4072881852266713183}
   defeatMenu: {fileID: 4072881851509210758}
+  credits: {fileID: 0}
   startMenu: {fileID: 3418769217782410273}
   easyMode: {fileID: 3418769217504369618}
   normalMode: {fileID: 3418769216334029322}

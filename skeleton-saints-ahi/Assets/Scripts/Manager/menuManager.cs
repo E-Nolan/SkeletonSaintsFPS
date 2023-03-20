@@ -15,6 +15,7 @@ public class menuManager : MonoBehaviour
 	public GameObject pauseMenu;
 	public GameObject victoryMenu;
 	public GameObject defeatMenu;
+	public GameObject credits;
 
 	[Header("----- Main Menu -----")]
 	public GameObject startMenu;
@@ -180,7 +181,6 @@ public class menuManager : MonoBehaviour
 
 	public void Resume()
 	{
-		unPause();
 		toggleGameMenu();
 	}
 
@@ -348,6 +348,23 @@ public class menuManager : MonoBehaviour
 		gameManager.instance.playStarted = true;
 	}
 
-	//defeat menu
+	public void MainCredit()
+    {
+		DeactivateMain();
+		credits.SetActive(true);
+		StartCoroutine(waitTime());
+		credits.SetActive(false);
+		ActivateMenu();
+    }
+
+	public void VictoryCredit()
+    {
+
+    }
+
+	IEnumerator waitTime()
+    {
+		yield return new WaitForSeconds(3f);
+    }
 
 }
