@@ -920,7 +920,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (Input.GetKeyDown(KeyCode.I))
             godMode();
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Level Three")
             skipLevel();
     }
     public void godMode()
