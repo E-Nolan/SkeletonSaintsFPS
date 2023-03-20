@@ -345,16 +345,12 @@ public class menuManager : MonoBehaviour
 		mainMenu.SetActive(false);
 		sharedMenu.SetActive(false);
 		startMenu.SetActive(false);
-		gameManager.instance.playStarted = true;
+        gameManager.instance.playStarted = true;
 	}
 
 	public void MainCredit()
     {
-		DeactivateMain();
-		credits.SetActive(true);
-		StartCoroutine(waitTime());
-		credits.SetActive(false);
-		ActivateMenu();
+        StartCoroutine(waitTime());
     }
 
 	public void VictoryCredit()
@@ -362,9 +358,18 @@ public class menuManager : MonoBehaviour
 
     }
 
-	IEnumerator waitTime()
+    private IEnumerator waitTime()
     {
-		yield return new WaitForSeconds(3f);
+        DeactivateMain();
+        credits.SetActive(true);
+        GameObject tempSideMenu = GameObject.Find("Game Manager/Menu Manager/Side Menu");
+        GameObject tempCinematicManager = GameObject.Find("CinematicManager");
+        tempCinematicManager.SetActive(false);
+		tempSideMenu.SetActive(false);
+        yield return new WaitUntil(() => credits.GetComponent<creditsRoll>().isScrolling == false);
+        credits.SetActive(false);
+        tempCinematicManager.SetActive(true);
+        tempSideMenu.SetActive(true);
+        ActivateMenu();
     }
-
 }

@@ -8,15 +8,13 @@ public class creditsRoll : MonoBehaviour
     [SerializeField] float scrollSpeed;
     public bool isScrolling = false;
     RectTransform rectangle;
-    Rect _rect;
     Vector3 startingPos;
     Vector3 endPos;
     // Start is called before the first frame update
     void Start()
     {
-        endPos = new Vector3 (rectangle.position.x, endPosY, rectangle.position.z);
         rectangle = GetComponent<RectTransform>();
-        _rect = rectangle.rect;
+        endPos = new Vector3 (rectangle.position.x, endPosY, rectangle.position.z);
         startingPos = rectangle.position;
     }
 
@@ -26,20 +24,20 @@ public class creditsRoll : MonoBehaviour
         // AHHHHHH
         if (isScrolling)
         {
-            _rect.position = Vector3.MoveTowards(_rect.position, endPos, scrollSpeed * Time.deltaTime);
-            if (endPosY == _rect.position.y)
+            rectangle.position = Vector3.MoveTowards(rectangle.position, endPos, scrollSpeed * Time.deltaTime);
+            if (endPosY <= rectangle.position.y)
                 stopScrolling();
         }
     }
 
     public void startScrolling()
     {
-        rectangle.position = startingPos;
         isScrolling = true;
     }
 
     public void stopScrolling()
     {
         isScrolling = false;
+        rectangle.position = startingPos;
     }
 }

@@ -117,6 +117,7 @@ public class Cinematic : MonoBehaviour
             mainMenu.gameObject.SetActive(true);
             sharedMenu.gameObject.SetActive(true);
             activeMenu.gameObject.SetActive(true);
+            GameObject.Find("Game Manager/Menu Manager/Side Menu").gameObject.SetActive(true);
         }
 
     }
