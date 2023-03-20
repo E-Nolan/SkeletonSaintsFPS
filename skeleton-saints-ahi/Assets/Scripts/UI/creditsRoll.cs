@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class creditsRoll : MonoBehaviour
 {
-    [SerializeField] Vector3 endPosition;
+    [SerializeField] int endHeight;
     [SerializeField] float scrollSpeed;
     public bool isScrolling = false;
-    Vector3 startPosition;
+    RectTransform rectangle;
+    Rect _rect;
+    float startingHeight;
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = transform.position;
+        rectangle = GetComponent<RectTransform>();
+        _rect = rectangle.rect;
+        startingHeight = rectangle.rect.height;
     }
 
     // Update is called once per frame
@@ -19,19 +23,20 @@ public class creditsRoll : MonoBehaviour
     {
         if (isScrolling)
         {
-            transform.position = Vector3.MoveTowards(transform.position, endPosition, scrollSpeed * Time.deltaTime);
+            _rect.height += scrollSpeed * Time.deltaTime;
+            if (endHeight >= _rect.height)
+                stopScrolling();
         }
     }
 
     public void startScrolling()
     {
-        transform.position = startPosition;
+        _rect.height = startingHeight;
         isScrolling = true;
     }
 
     public void stopScrolling()
     {
-        transform.position = startPosition;
         isScrolling = false;
     }
 }
