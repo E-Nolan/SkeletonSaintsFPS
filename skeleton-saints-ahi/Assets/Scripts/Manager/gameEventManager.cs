@@ -17,6 +17,7 @@ public class gameEventManager : MonoBehaviour
     public GameObject CollectionEventText;
     public GameObject KillEventText;
     public GameObject EventTextGroup;
+    public TaskListUIElement[] EventTexts;
     public LayoutElement EventTextLayout;
 
     private void Awake()
@@ -36,6 +37,7 @@ public class gameEventManager : MonoBehaviour
     }
     public void FindEvents()
     {
+        if (gameEvents != null)
         gameEvents.Clear();
         ClearEventListUI();
         GameObject[] objs = GameObject.FindGameObjectsWithTag("GameEvent");

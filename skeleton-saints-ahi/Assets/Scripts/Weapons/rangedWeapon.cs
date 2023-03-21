@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 [System.Serializable]
 public class rangedWeapon : MonoBehaviour
 {
@@ -372,6 +373,8 @@ public class rangedWeapon : MonoBehaviour
         bulletIcon.GetComponent<Image>().sprite = _stats.bulletIcon;
 
         audioSource = gameObject.AddComponent<AudioSource>();
+        AudioMixerGroup[] sfxGroup = gameManager.instance.masterMixer.FindMatchingGroups("SFX");
+        audioSource.outputAudioMixerGroup = sfxGroup[0];
         audioSource.spatialBlend = 1.0f;
         if (usedByPlayer)
             audioSource.volume = 0.5f;

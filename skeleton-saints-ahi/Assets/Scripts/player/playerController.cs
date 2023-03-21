@@ -908,12 +908,16 @@ public class playerController : MonoBehaviour, IDamage
         rangedWeaponPickup(startingOffHand, startingOffHand.weaponType);
     }
 
-
+    public void OnSerialize()
+    {
+        savePlayer.instance.updatePlayer();
+    }
     public void OnDeserialize()
     {
         gameManager.instance.SetPlayerController = this;
         gameManager.instance.SetCameraControls = Camera.main.gameObject.GetComponent<cameraControls>();
         gameManager.instance.playerInstance = gameObject;
+        savePlayer.instance.updatePlayerInstance();
     }
 
     void cheatCodeInput()
