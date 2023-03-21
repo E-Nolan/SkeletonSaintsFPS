@@ -11,6 +11,7 @@ public class weaponManager: MonoBehaviour
     public weaponStats shotgun;
     public weaponStats assaultRifle;
     public weaponStats grenadeLauncher;
+    public weaponStats grappleGun;
 
     public weaponStats enemyPistol;
     public weaponStats enemySMG;
@@ -36,6 +37,8 @@ public class weaponManager: MonoBehaviour
                 return assaultRifle;
             case "Grenade Launcher":
                 return grenadeLauncher;
+            case "Grapple Gun":
+                return grappleGun;
             default:
                 break;
         }

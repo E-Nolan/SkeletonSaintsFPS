@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class gameManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class gameManager : MonoBehaviour
 	[SerializeField] playerController playerScript;
 	[SerializeField] cameraControls playerCamera;
 
+	[Header("----- Audio -----")]
+	public AudioMixer masterMixer;
 	[Header("Game State Variables")]
 	public bool isPaused;
 	bool isEnemyFiring;
