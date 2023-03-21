@@ -59,17 +59,34 @@ public class bullet : MonoBehaviour
         if (other.GetComponent<IDamage>() != null)
         {
             other.GetComponent<IDamage>().TakeDamage(bulletDmg);
+
             Vector3 direction = new Vector3(transform.position.x, 0, 
                 transform.position.z) - new Vector3(other.transform.position.x, 0, other.transform.position.z);
             damageNumber = Instantiate(damagePopupPrefab, 
                 GetComponent<Rigidbody>().transform.position, Quaternion.LookRotation(direction));
+
             if (other.CompareTag("Player"))
             {
                 damageNumber.position -= transform.forward * 2.5f;
             }
+
             damageNumber.rotation = Quaternion.LookRotation(damageNumber.position - Camera.main.transform.position, Camera.main.transform.up);
             DamagePopup damagePopup = damageNumber.GetComponent<DamagePopup>();
             damagePopup.Setup(bulletDmg);
+        } else if (other.GetComponent<Turret>())
+        {
+            Vector3 direction = new Vector3(transform.position.x, 0, 
+                transform.position.z) - new Vector3(other.transform.position.x, 0, other.transform.position.z);
+
+            damageNumber = Instantiate(damagePopupPrefab, 
+                GetComponent<Rigidbody>().transform.position, Quaternion.LookRotation(direction));
+
+            damageNumber.rotation = Quaternion.LookRotation(damageNumber.position - Camera.main.transform.position, Camera.main.transform.up);
+            //damageNumber.GetComponent<TMPro.TextMeshPro>().enableAutoSizing = true;
+            damageNumber.GetComponent<TMPro.TextMeshPro>().autoSizeTextContainer = true;
+            damageNumber.GetComponent<TMPro.TextMeshPro>().fontSize = 2000f;
+            DamagePopup damagePopup = damageNumber.GetComponent<DamagePopup>();
+            damagePopup.Setup("IMMUNE");
         }
 
         if (bulletImpactSound)

@@ -20,6 +20,13 @@ public class DamagePopup : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
+    public void Setup(string text)
+    {
+        _textMeshPro.SetText(text);
+        StartCoroutine(FadeCoroutine());
+        Destroy(gameObject, 1f);
+    }
+
     private IEnumerator FadeCoroutine()
     {
         float waitTime = 0;
