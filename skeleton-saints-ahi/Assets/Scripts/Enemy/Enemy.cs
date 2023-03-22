@@ -419,7 +419,8 @@ public class Enemy : MonoBehaviour, IDamage
 
     private void PlaySpawnScreech()
     {
-        audioSource.PlayOneShot(spawnScreech, spawnScreechVolume);
+        if (spawnScreech != null)
+            audioSource.PlayOneShot(spawnScreech, spawnScreechVolume);
     }
 
     public void OnDeserialize()

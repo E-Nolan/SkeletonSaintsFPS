@@ -45,6 +45,7 @@ public class sceneLoader : MonoBehaviour
     {
         loading.SetActive(true);
         hUDManager.instance.closeHUD();
+        hUDManager.instance.TransitionFromPlay();
         AsyncOperation control = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
         while(!control.isDone)
         {
@@ -73,6 +74,7 @@ public class sceneLoader : MonoBehaviour
         if (menuManager.instance.canToggleGameMenu == false)
             menuManager.instance.canToggleGameMenu = true;
         hUDManager.instance.closeHUD();
+        hUDManager.instance.TransitionFromPlay();
         loading.SetActive(true);
         AsyncOperation control = SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
         while(!control.isDone)
@@ -95,8 +97,8 @@ public class sceneLoader : MonoBehaviour
     {
         menuManager.instance.toggleGameMenu();
         hUDManager.instance.closeHUD();
+        hUDManager.instance.TransitionFromPlay();
         loading.SetActive(true);
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         AsyncOperation control = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
         while(!control.isDone)
         {
@@ -123,6 +125,7 @@ public class sceneLoader : MonoBehaviour
     {
         menuManager.instance.toggleGameMenu();
         hUDManager.instance.closeHUD();
+        hUDManager.instance.TransitionFromPlay();
         loading.SetActive(true);
         AsyncOperation control = SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
         while (!control.isDone)

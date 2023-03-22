@@ -27,13 +27,11 @@ public class levelTransition : MonoBehaviour
     /// <param name="_sceneName"></param>
     public static void SwitchToLevel()
     {
-        for (int i = 0; i < gameManager.instance.keyCard.Length; i++)
-        {
-            gameManager.instance.keyCard[i] = false;
-        }
+        hUDManager.instance.TransitionFromPlay();
         saveManager.SaveGameData(saveManager.mainData_Current);
 
         savePlayer.instance.updatePlayer();
         sceneLoader.instance.LoadNextScene();
     }
+
 }

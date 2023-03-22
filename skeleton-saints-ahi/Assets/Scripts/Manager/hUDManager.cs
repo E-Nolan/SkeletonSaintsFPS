@@ -109,7 +109,12 @@ public class hUDManager : MonoBehaviour
 
         updateWeaponText();
     }
-
+    public void TransitionFromPlay()
+    {
+        ResetKeyColors();
+        gateText.gameObject.SetActive(false);
+        swap.SetActive(false);
+    }
     public void updateWeaponText()
     {
         activeClip.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentClip}";
@@ -183,6 +188,22 @@ public class hUDManager : MonoBehaviour
     }
 
     #endregion
+    void ResetKeyColors()
+    {
+        for (int i = 0; i < gameManager.instance.keyCard.Length; i++)
+        {
+            gameManager.instance.keyCard[i] = false;
+
+        }
+        card01.color = new Color(card01.color.r, card01.color.g, card01.color.b, 0.25f);
+        keyCard01Text.color = new Color(keyCard01Text.color.r, keyCard01Text.color.g, keyCard01Text.color.b, 0.75f);
+
+        card02.color = new Color(card02.color.r, card02.color.g, card02.color.b, 0.25f);
+        keyCard02Text.color = new Color(keyCard02Text.color.r, keyCard02Text.color.g, keyCard02Text.color.b, 0.75f);
+
+        card03.color = new Color(card03.color.r, card03.color.g, card03.color.b, 0.25f);
+        keyCard03Text.color = new Color(keyCard03Text.color.r, keyCard03Text.color.g, keyCard03Text.color.b, 0.75f);
+    }
     #region Accessors
     public IEnumerator flashDamage(float dmg)
     {

@@ -51,7 +51,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDmg: 1
-  timer: 3
   bulletImpactSound: {fileID: 3347115775144427716}
   damagePopupPrefab: {fileID: 5156991524456792442, guid: 48bf4594a2656ef49afe5d660714f3c4, type: 3}
 --- !u!54 &4428256112240588752
@@ -250,11 +249,11 @@ AudioSource:
   m_GameObject: {fileID: 8273331056342493339}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -712471482325451337, guid: 775b9f6a6d2d92c4f9a08fab7daf0da5, type: 2}
   m_audioClip: {fileID: 8300000, guid: c4afa6a5e0b326347b9f9ad8d9264fc4, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
-  m_Pitch: 1
+  m_Volume: 0.1
+  m_Pitch: 0.5
   Loop: 0
   Mute: 0
   Spatialize: 0
