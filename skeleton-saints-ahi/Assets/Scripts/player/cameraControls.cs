@@ -18,6 +18,7 @@ public class cameraControls : MonoBehaviour
 
     bool recoilUp = false;
     bool recoilDown = false;
+    private bool webGL = false;
     float recoilSpeed = 0.0f;
     float remainingRecoilAngle = 0.0f;
     float recoilAngle = 0.0f;
@@ -27,6 +28,8 @@ public class cameraControls : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            webGL = true;
     }
 
     // Update is called once per frame
@@ -35,6 +38,11 @@ public class cameraControls : MonoBehaviour
         //get input
         float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensVer;
         float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensHor;
+
+        if (webGL) {
+            mouseX *= 0.1f;
+            mouseY *= 0.1f;
+        }
 
         if ( invertX )
             xRotation += mouseY;
