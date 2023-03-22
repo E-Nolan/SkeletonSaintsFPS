@@ -13,18 +13,21 @@ public class menuButton : MonoBehaviour
     {
         menuManager.instance.EasyMode();
         gameManager.instance.currentDifficulty = gameManager.Difficulty.Easy;
+        playerPreferences.instance.difficulty = gameManager.Difficulty.Easy;
     }
 
     public void NormalMode()
     {
         menuManager.instance.NormalMode();
         gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
+        playerPreferences.instance.difficulty = gameManager.Difficulty.Normal;
     }
 
     public void HardMode()
     {
         menuManager.instance.HardMode();
         gameManager.instance.currentDifficulty = gameManager.Difficulty.Hard;
+        playerPreferences.instance.difficulty = gameManager.Difficulty.Hard;
     }
 
     public void PlayGame()
@@ -54,7 +57,7 @@ public class menuButton : MonoBehaviour
 
     public void DisplayCredits()
     {
-        
+
     }
 
     public void DisplayGame()
@@ -132,5 +135,10 @@ public class menuButton : MonoBehaviour
     public void MainCredit()
     {
         menuManager.instance.MainCredit();
+    }
+
+    public void ExitGame()
+    {
+        menuManager.instance.ExitGame();
     }
 }

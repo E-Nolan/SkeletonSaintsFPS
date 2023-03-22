@@ -94,6 +94,7 @@ MonoBehaviour:
   shotgun: {fileID: 0}
   assaultRifle: {fileID: 0}
   grenadeLauncher: {fileID: 0}
+  grappleGun: {fileID: 0}
   enemyPistol: {fileID: 0}
   enemySMG: {fileID: 0}
   enemyShotgun: {fileID: 0}
@@ -9199,8 +9200,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: mainMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 4072881853364254308}
+        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
         m_MethodName: UpdateSliderText
         m_Mode: 1
         m_Arguments:
@@ -11297,8 +11298,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: mainMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 4072881853364254308}
+        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
         m_MethodName: UpdateSliderText
         m_Mode: 1
         m_Arguments:
@@ -12318,8 +12319,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: mainMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 4072881853364254308}
+        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
         m_MethodName: UpdateSliderText
         m_Mode: 1
         m_Arguments:
@@ -12990,8 +12991,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: mainMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 4072881853364254308}
+        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
         m_MethodName: UpdateSliderText
         m_Mode: 1
         m_Arguments:
@@ -14372,8 +14373,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: mainMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 4072881853364254308}
+        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
         m_MethodName: UpdateSliderText
         m_Mode: 1
         m_Arguments:
@@ -18850,7 +18851,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 920282642}
         m_TargetAssemblyTypeName: creditsRoll, Assembly-CSharp
-        m_MethodName: startScrolling
+        m_MethodName: MainCredit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26609,6 +26610,7 @@ MonoBehaviour:
   playerInstance: {fileID: 0}
   playerScript: {fileID: 0}
   playerCamera: {fileID: 0}
+  masterMixer: {fileID: 24100000, guid: 775b9f6a6d2d92c4f9a08fab7daf0da5, type: 2}
   isPaused: 0
   currentDifficulty: 0
   currentScene: {fileID: 0}
@@ -26643,6 +26645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainWeapons: []
   OffWeapon: 0
+  difficulty: 1
   playerSpeed: 10
   gravity: 24
   maxStamina: 100
@@ -26652,11 +26655,11 @@ MonoBehaviour:
   maxArmor: 3
   armorRegenSpeed: 1
   armorRegenCooldown: 1
-  invincibilityCooldown: 0.2
-  maxJumpVel: 8
-  jumpAcceleration: 50
+  invincibilityCooldown: 0.25
+  maxJumpVel: 9
+  jumpAcceleration: 45
   maxJumps: 1
-  jumpStaminaCost: 0
+  jumpStaminaCost: 1
   coyoteTime: 0.2
   jumpInputCooldown: 0
   dashSpeed: 25
@@ -26665,23 +26668,23 @@ MonoBehaviour:
   dashStaminaCost: 30
   dashInvincibilityTime: 0.05
   sprintSpeed: 15
-  sprintStaminaDrain: 20
+  sprintStaminaDrain: 25
   Button_Jump: Jump
   Button_Crouch: Crouch
   Button_Sprint: Sprint
   Button_Menu: Cancel
   Button_FirePrimary: Fire1
   Button_Interact: Interact
-  horizontal: 0
-  vertical: 0
+  horizontal: 400
+  vertical: 500
   invertX: 0
-  masterVolume: 0.704
-  musicVolume: 1
-  sfxVolume: 1
-  masterVolumeDefault: 0
-  musicVolumeDefault: 0
-  sfxVolumeDefault: 0
-  horizontalDefault: 600
+  masterVolume: 1
+  musicVolume: 0.7
+  sfxVolume: 0.7
+  masterVolumeDefault: 1
+  musicVolumeDefault: 0.7
+  sfxVolumeDefault: 0.7
+  horizontalDefault: 400
   verticalDefault: 500
   invertXDefault: 0
 --- !u!114 &6775273163089092380
@@ -26832,6 +26835,7 @@ MonoBehaviour:
   CollectionEventText: {fileID: 1048726702225621522, guid: 427d76626835b83469f3136057fe4c43, type: 3}
   KillEventText: {fileID: 1048726702225621522, guid: e11f7b508d73c3244a038e9937660443, type: 3}
   EventTextGroup: {fileID: 2141430598413751641}
+  EventTexts: []
   EventTextLayout: {fileID: 2141430598413751642}
 --- !u!82 &3164147366722195949
 AudioSource:
@@ -36536,7 +36540,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3630797087784199747}
         m_TargetAssemblyTypeName: menuButton, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

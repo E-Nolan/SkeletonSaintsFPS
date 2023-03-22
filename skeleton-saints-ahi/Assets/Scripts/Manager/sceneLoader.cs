@@ -68,12 +68,11 @@ public class sceneLoader : MonoBehaviour
     }
 
     IEnumerator LoadMain()
-    {
+    { 
+        menuManager.instance.toggleGameMenu();
         if (menuManager.instance.canToggleGameMenu == false)
             menuManager.instance.canToggleGameMenu = true;
-        menuManager.instance.toggleGameMenu();
         hUDManager.instance.closeHUD();
-        gameEventManager.instance.ClearEventListUI();
         loading.SetActive(true);
         AsyncOperation control = SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
         while(!control.isDone)

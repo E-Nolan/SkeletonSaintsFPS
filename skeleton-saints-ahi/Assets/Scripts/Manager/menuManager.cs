@@ -58,15 +58,39 @@ public class menuManager : MonoBehaviour
 
 	private void Awake()
 	{
-		if(instance == null)
+		if (instance == null)
 			instance = this;
-
-		difficulty = easyMode;
-		difficulty.SetActive(true);
-		activeMenu = startMenu;
 	}
 
-	private void LateUpdate()
+    private void Start()
+    {
+		switch (playerPreferences.instance.difficulty)
+		{
+			case gameManager.Difficulty.Easy:
+				difficulty = easyMode;
+				gameManager.instance.currentDifficulty = gameManager.Difficulty.Easy;
+				break;
+			case gameManager.Difficulty.Normal:
+				difficulty = normalMode;
+				gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
+				break;
+			case gameManager.Difficulty.Hard:
+				difficulty = hardMode;
+				gameManager.instance.currentDifficulty = gameManager.Difficulty.Hard;
+				break;
+			default:
+				difficulty = normalMode;
+				gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
+				playerPreferences.instance.difficulty = gameManager.Difficulty.Normal;
+				break;
+		}
+
+		difficulty.SetActive(true);
+		activeMenu = startMenu;
+		SetSettings();
+	}
+
+    private void LateUpdate()
 	{
 		if (gameManager.instance.PlayStarted())
 			HandleInGameMenuInput();
@@ -131,6 +155,11 @@ public class menuManager : MonoBehaviour
 			activeMenu = exitGame;
 			activeMenu.SetActive(true);
 		}
+	}
+
+	public void ExitGame()
+	{
+		Application.Quit();
 	}
 
 	//pause menu
@@ -253,13 +282,24 @@ public class menuManager : MonoBehaviour
 	}
 
 	public void UpdateSettings()
-    {
+	{
 		MAM.SetFloat("masterVolume", Mathf.Log10(playerPreferences.instance.masterVolume) * 20);
 		MAM.SetFloat("musicVolume", Mathf.Log10(playerPreferences.instance.musicVolume) * 20);
 		MAM.SetFloat("sfxVolume", Mathf.Log10(playerPreferences.instance.sfxVolume) * 20);
 	}
 
 	//setting menu
+	public void SetSettings()
+    {
+		masterSlider.value = playerPreferences.instance.masterVolume;
+		musicSlider.value = playerPreferences.instance.masterVolume;
+		sfxSlider.value = playerPreferences.instance.masterVolume;
+		horizontalSlider.value = playerPreferences.instance.masterVolume;
+		verticalSlider.value = playerPreferences.instance.masterVolume;
+		invertX.isOn = playerPreferences.instance.invertX;
+
+	}
+
 	public void SaveSettingsToPlayer()
 	{
 		playerPreferences.instance.masterVolume = masterSlider.value;
@@ -269,7 +309,7 @@ public class menuManager : MonoBehaviour
 		playerPreferences.instance.vertical = verticalSlider.value;
 		playerPreferences.instance.invertX = invertX.isOn;
 
-		changesSaved = true;
+		UpdateSettings();
 	}
 
 	public void ResetDefault()
@@ -292,6 +332,8 @@ public class menuManager : MonoBehaviour
 		verticalSlider.value = playerPreferences.instance.verticalDefault;
 		playerPreferences.instance.invertX = playerPreferences.instance.invertXDefault;
 		invertX.isOn = playerPreferences.instance.invertX;
+
+		SaveSettingsToPlayer();
 	}
 
 	public void UpdateSliderText()
@@ -301,6 +343,8 @@ public class menuManager : MonoBehaviour
 		sfx.GetComponent<TextMeshProUGUI>().text = $"{Mathf.FloorToInt(sfxSlider.value * 100)}";
 		horizontal.GetComponent<TextMeshProUGUI>().text = $"{Mathf.FloorToInt(horizontalSlider.value)}";
 		vertical.GetComponent<TextMeshProUGUI>().text = $"{Mathf.FloorToInt(verticalSlider.value)}";
+
+		SaveSettingsToPlayer();
 	}
 
 	//shared functions
@@ -320,7 +364,7 @@ public class menuManager : MonoBehaviour
 		{
 			activeMenu.SetActive(false);
 			activeMenu = settingsMenu;
-			activeMenu.SetActive(true);
+			activeMenu.SetActive(true);	
 		}
 	}
 
