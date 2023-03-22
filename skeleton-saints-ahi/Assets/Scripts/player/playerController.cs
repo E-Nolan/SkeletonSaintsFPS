@@ -657,6 +657,13 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    public void stopPlayerVelocity()
+    {
+        moveInput = Vector3.zero;
+        playerVelocity = Vector3.zero;
+        externalVelocity = Vector3.zero;
+    }
+
     #region Public Member Accessors
     public int GetMaxHealth()
     { return maxHealth; }

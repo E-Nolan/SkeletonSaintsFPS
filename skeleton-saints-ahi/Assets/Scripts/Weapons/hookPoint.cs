@@ -41,6 +41,7 @@ public class hookPoint : MonoBehaviour
         if (collision.transform.CompareTag("GrapplePoint") || collision.transform.CompareTag("Enemy") && currentCatch == null)
         {
             rb.isKinematic = true;
+            gameManager.instance.PlayerScript().stopPlayerVelocity();
             beginPulling();
         }
         // If the hook collided with something else, retract it
