@@ -9193,7 +9193,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 2105544199570535227}
   m_HandleRect: {fileID: 2105544199129558903}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.000001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -12312,7 +12312,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 2105544200128516399}
   m_HandleRect: {fileID: 2105544199182703402}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.000001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -14366,7 +14366,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 2105544200004810494}
   m_HandleRect: {fileID: 2105544198705551440}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.000001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -26646,29 +26646,29 @@ MonoBehaviour:
   MainWeapons: []
   OffWeapon: 0
   difficulty: 1
-  playerSpeed: 10
-  gravity: 24
-  maxStamina: 100
-  staminaRegenSpeed: 50
-  staminaRegenCooldown: 0.5
-  maxHealth: 10
-  maxArmor: 3
-  armorRegenSpeed: 1
-  armorRegenCooldown: 1
-  invincibilityCooldown: 0.25
-  maxJumpVel: 9
-  jumpAcceleration: 45
-  maxJumps: 1
-  jumpStaminaCost: 1
-  coyoteTime: 0.2
+  playerSpeed: 0
+  gravity: 0
+  maxStamina: 0
+  staminaRegenSpeed: 0
+  staminaRegenCooldown: 0
+  maxHealth: 0
+  maxArmor: 0
+  armorRegenSpeed: 0
+  armorRegenCooldown: 0
+  invincibilityCooldown: 0
+  maxJumpVel: 0
+  jumpAcceleration: 0
+  maxJumps: 0
+  jumpStaminaCost: 0
+  coyoteTime: 0
   jumpInputCooldown: 0
-  dashSpeed: 25
-  dashCooldown: 0.75
-  dashDuration: 0.25
-  dashStaminaCost: 30
-  dashInvincibilityTime: 0.05
-  sprintSpeed: 15
-  sprintStaminaDrain: 25
+  dashSpeed: 0
+  dashCooldown: 0
+  dashDuration: 0
+  dashStaminaCost: 0
+  dashInvincibilityTime: 0
+  sprintSpeed: 0
+  sprintStaminaDrain: 0
   Button_Jump: Jump
   Button_Crouch: Crouch
   Button_Sprint: Sprint

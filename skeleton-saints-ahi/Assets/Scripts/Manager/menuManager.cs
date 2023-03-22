@@ -64,29 +64,7 @@ public class menuManager : MonoBehaviour
 
     private void Start()
     {
-		switch (playerPreferences.instance.difficulty)
-		{
-			case gameManager.Difficulty.Easy:
-				difficulty = easyMode;
-				gameManager.instance.currentDifficulty = gameManager.Difficulty.Easy;
-				break;
-			case gameManager.Difficulty.Normal:
-				difficulty = normalMode;
-				gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
-				break;
-			case gameManager.Difficulty.Hard:
-				difficulty = hardMode;
-				gameManager.instance.currentDifficulty = gameManager.Difficulty.Hard;
-				break;
-			default:
-				difficulty = normalMode;
-				gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
-				playerPreferences.instance.difficulty = gameManager.Difficulty.Normal;
-				break;
-		}
-
-		difficulty.SetActive(true);
-		activeMenu = startMenu;
+		ActivateMenu();
 		SetSettings();
 	}
 
@@ -100,7 +78,33 @@ public class menuManager : MonoBehaviour
 	public void ActivateMenu()
 	{
 		mainMenu.SetActive(true);
-		startMenu.SetActive(true);
+		if (activeMenu != startMenu && activeMenu != controlMenu && activeMenu != settingsMenu && activeMenu != exitGame || activeMenu == null)
+        {
+			activeMenu = startMenu;
+			switch (playerPreferences.instance.difficulty)
+			{
+				case gameManager.Difficulty.Easy:
+					difficulty = easyMode;
+					gameManager.instance.currentDifficulty = gameManager.Difficulty.Easy;
+					break;
+				case gameManager.Difficulty.Normal:
+					difficulty = normalMode;
+					gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
+					break;
+				case gameManager.Difficulty.Hard:
+					difficulty = hardMode;
+					gameManager.instance.currentDifficulty = gameManager.Difficulty.Hard;
+					break;
+				default:
+					difficulty = normalMode;
+					gameManager.instance.currentDifficulty = gameManager.Difficulty.Normal;
+					playerPreferences.instance.difficulty = gameManager.Difficulty.Normal;
+					break;
+			}
+			
+		}
+		activeMenu.SetActive(true);
+		difficulty.SetActive(true);
 		sharedMenu.SetActive(true);
 	}
 
@@ -387,6 +391,7 @@ public class menuManager : MonoBehaviour
 	public void DeactivateMain()
 	{
 		mainMenu.SetActive(false);
+		activeMenu.SetActive(false);
 		sharedMenu.SetActive(false);
 		startMenu.SetActive(false);
         gameManager.instance.playStarted = true;
