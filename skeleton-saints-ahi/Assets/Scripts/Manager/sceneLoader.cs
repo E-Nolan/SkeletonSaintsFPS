@@ -113,8 +113,8 @@ public class sceneLoader : MonoBehaviour
             if (gameManager.instance.playerInstance == null)
             {
                 loading.SetActive(false);
-                hUDManager.instance.showHUD();
                 gameManager.instance.LevelSetup();
+                menuManager.instance.unPause();
             }
 
         };
@@ -141,8 +141,8 @@ public class sceneLoader : MonoBehaviour
             if (gameManager.instance.playerInstance == null)
             {
                 loading.SetActive(false);
-                hUDManager.instance.showHUD();
                 gameManager.instance.LevelSetup();
+                menuManager.instance.unPause();
             }
         };
     }

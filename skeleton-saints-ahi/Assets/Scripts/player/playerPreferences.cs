@@ -16,44 +16,44 @@ public sealed class playerPreferences: MonoBehaviour
 	public gameManager.Difficulty difficulty = gameManager.Difficulty.Normal;
 
 	[Header("----- Stats -----")]
-	[Range(5, 30)] public int playerSpeed = 10;
-	[Range(0, 50)] public int gravity = 24;
+	[Range(5, 30)] public int playerSpeed;
+	[Range(0, 50)] public int gravity;
 
 	[Header("----- Stamina -----")]
-	[Range(10, 500)] public int maxStamina = 100;
-	[Range(0.0f, 100.0f)] public float staminaRegenSpeed = 50;
+	[Range(10, 500)] public int maxStamina;
+	[Range(0.0f, 100.0f)] public float staminaRegenSpeed;
 	[Tooltip("This is how long (in seconds) the player will have to stop using stamina in order for their stamina to regenerate")]
-	[Range(0.0f, 5.0f)] public float staminaRegenCooldown = .5f;
+	[Range(0.0f, 5.0f)] public float staminaRegenCooldown;
 
 	[Header("----- Health and Armor -----")]
-	[Range(1, 100)] public int maxHealth = 10;
-	[Range(0, 5)] public int maxArmor = 3;
-	[Range(0.0f, 10.0f)] public float armorRegenSpeed = 1;
-	[Range(0.0f, 5.0f)] public float armorRegenCooldown = 1;
-	[Range(0.0f, 2.0f)] public float invincibilityCooldown = .25f;
+	[Range(1, 100)] public int maxHealth;
+	[Range(0, 5)] public int maxArmor;
+	[Range(0.0f, 10.0f)] public float armorRegenSpeed;
+	[Range(0.0f, 5.0f)] public float armorRegenCooldown;
+	[Range(0.0f, 2.0f)] public float invincibilityCooldown;
 
 	[Header("----- Jump -----")]
-	[Range(1.0f, 10.0f)] public float maxJumpVel = 9;
-	[Range(0.05f, 1000.0f)] public float jumpAcceleration = 45;
-	[Range(0, 3)] public int maxJumps = 1;
-	[Range(0, 100)] public int jumpStaminaCost = 1;
-	[Range(0.0f, 1.0f)] public float coyoteTime = .2f;
-	[Range(0.0f, 1.0f)] public float jumpInputCooldown = 0;
+	[Range(1.0f, 10.0f)] public float maxJumpVel;
+	[Range(0.05f, 1000.0f)] public float jumpAcceleration;
+	[Range(0, 3)] public int maxJumps;
+	[Range(0, 100)] public int jumpStaminaCost;
+	[Range(0.0f, 1.0f)] public float coyoteTime;
+	[Range(0.0f, 1.0f)] public float jumpInputCooldown;
 
 	// Stats for player dashing
 	[Header("----- Dash -----")]
-	[Range(15, 100)] public int dashSpeed = 25;
+	[Range(15, 100)] public int dashSpeed;
 	[Tooltip("This should be longer or equal to Dash Duration")]
-	[Range(0.0f, 20.0f)] public float dashCooldown = .75f;
+	[Range(0.0f, 20.0f)] public float dashCooldown;
 	[Tooltip("This should be shorter or equal to Dash Cooldown")]
-	[Range(0.0f, 5.0f)] public float dashDuration = .25f;
-	[Range(0, 100)] public int dashStaminaCost = 30;
-	[Range(0.0f, 1.0f)] public float dashInvincibilityTime = .05f;
+	[Range(0.0f, 5.0f)] public float dashDuration;
+	[Range(0, 100)] public int dashStaminaCost;
+	[Range(0.0f, 1.0f)] public float dashInvincibilityTime;
 
 	[Header("----- Sprint -----")]
 	[Tooltip("This should ideally be between normal Speed and Dash Speed")]
-	[Range(10, 60)] public int sprintSpeed = 15;
-	[Range(0.0f, 50.0f)] public float sprintStaminaDrain = 25;
+	[Range(10, 60)] public int sprintSpeed;
+	[Range(0.0f, 50.0f)] public float sprintStaminaDrain;
 
 	[Header("Active Buttons")]
 	#region Button Codes

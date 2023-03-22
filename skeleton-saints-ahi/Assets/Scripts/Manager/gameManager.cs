@@ -289,8 +289,8 @@ public class gameManager : MonoBehaviour
 
 	public void winGame()
 	{
-		menuManager.instance.canToggleGameMenu = false;
 		menuManager.instance.pause();
+		menuManager.instance.canToggleGameMenu = false;
 		menuManager.instance.activeMenu = menuManager.instance.victoryMenu;
 		menuManager.instance.activeMenu.SetActive(true);
 	}
