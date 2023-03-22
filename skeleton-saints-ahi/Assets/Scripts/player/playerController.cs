@@ -165,7 +165,7 @@ public class playerController : MonoBehaviour, IDamage
             shoot(currentWeapon);
 
 
-        if (Input.GetButtonDown("Reload") && !currentWeapon.isAmmoEmpty())
+        if (Input.GetButtonDown("Reload") && !currentWeapon.isAmmoEmpty() && !currentWeapon.isClipFull())
             currentWeapon.startReload();
 
         if (Input.GetButtonDown("Fire2") && !isSecondaryShooting && !gameManager.instance.isPaused && currentSecondary)

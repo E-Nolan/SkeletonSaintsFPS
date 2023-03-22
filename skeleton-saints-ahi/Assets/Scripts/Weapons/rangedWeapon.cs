@@ -251,7 +251,8 @@ public class rangedWeapon : MonoBehaviour
             // Force the camera to tilt up slightly
             if (usedByPlayer)
             {
-                gameManager.instance.PlayerScript().giveExternalVelocity((weaponFirePos.position - targetFinder.transform.position) * (recoilForce / bulletsPerSpread));
+                if (!gameManager.instance.PlayerScript().isGrappling)
+                    gameManager.instance.PlayerScript().giveExternalVelocity((weaponFirePos.position - targetFinder.transform.position) * (recoilForce / bulletsPerSpread));
                 gameManager.instance.CameraControls().startRecoil(recoilForce);
             }
 
