@@ -98,6 +98,8 @@ public class sceneLoader : MonoBehaviour
                 gameManager.instance.beginGame();
             };
         }
+
+        musicManager.instance.StartTrackWithName("Shamanistic");
     }
 
     IEnumerator LoadCurrent()

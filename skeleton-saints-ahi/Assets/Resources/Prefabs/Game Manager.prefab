@@ -26103,8 +26103,9 @@ MonoBehaviour:
   audSources:
   - {fileID: 6775273163089092382}
   - {fileID: 3164147366722195949}
-  musicTrackList: []
-  fadeTimeSeconds: 0
+  musicTrackList:
+  - {fileID: 8300000, guid: ddb3678189f066048a431c1e5b4e163e, type: 3}
+  fadeTimeSeconds: 0.5
   isFading: 
 --- !u!114 &6775273163089092381
 MonoBehaviour:
