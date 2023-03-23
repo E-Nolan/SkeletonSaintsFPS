@@ -10,17 +10,31 @@ public class creditsRoll : MonoBehaviour
     RectTransform rectangle;
     Vector3 startingPos;
     Vector3 endPos;
+
+    private float originalScrollSpeed;
     // Start is called before the first frame update
     void Start()
     {
         rectangle = GetComponent<RectTransform>();
         endPos = new Vector3 (rectangle.position.x, endPosY, rectangle.position.z);
         startingPos = rectangle.position;
+        originalScrollSpeed = scrollSpeed;
+    }
+
+    void OnDisable()
+    {
+        scrollSpeed = originalScrollSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+            scrollSpeed *= 15f;
+
+        if (Input.GetKeyUp(KeyCode.Space))
+            scrollSpeed /= 15f;
+
         // AHHHHHH
         if (isScrolling)
         {

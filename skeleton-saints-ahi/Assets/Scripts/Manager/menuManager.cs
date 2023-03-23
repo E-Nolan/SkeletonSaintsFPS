@@ -409,6 +409,7 @@ public class menuManager : MonoBehaviour
 
     private IEnumerator waitTime()
     {
+        credits.GetComponent<creditsRoll>().isScrolling = true;
         DeactivateMain();
         credits.SetActive(true);
         GameObject tempSideMenu = GameObject.Find("Game Manager/Menu Manager/Side Menu");
