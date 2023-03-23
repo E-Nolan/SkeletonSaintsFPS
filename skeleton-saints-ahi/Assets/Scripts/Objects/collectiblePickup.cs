@@ -23,7 +23,7 @@ public class collectiblePickup : MonoBehaviour
                 Quaternion.LookRotation(transform.position - gameManager.instance.playerInstance.transform.position);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
