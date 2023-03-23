@@ -6,13 +6,13 @@ using UnityEngine;
 public class homingMissile : MonoBehaviour
 {
     [SerializeField] private GameObject _explosionObject;
+    [SerializeField] private GameObject rocket;
 
     [Header("----- Missile Vars -----")]
     [Range(0.0f, 10.0f)] [SerializeField] float turnSpeed;
     [Range(0.0f, 10.0f)] [SerializeField] float accelerationRate;
     [Range(0.0f, 10.0f)] [SerializeField] float explosionRadius;
     [Range(0.0f, 10.0f)] [SerializeField] float explosionDamage;
-    [Range(0.0f, 10.0f)] [SerializeField] private float destroyTimer;
 
     Vector3 toPlayerDir;
     Rigidbody rb;
@@ -20,11 +20,6 @@ public class homingMissile : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-    }
-
-    private void Start()
-    {
-        Destroy(gameObject, destroyTimer);
     }
 
     // Update is called once per frame
@@ -36,6 +31,14 @@ public class homingMissile : MonoBehaviour
             Quaternion.LookRotation(toPlayerDir), Time.deltaTime * turnSpeed);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+        rocket.GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+    }
+    /*
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("Ground") ||
@@ -60,4 +63,5 @@ public class homingMissile : MonoBehaviour
             enabled = false;
         }
     }
+    */
 }
