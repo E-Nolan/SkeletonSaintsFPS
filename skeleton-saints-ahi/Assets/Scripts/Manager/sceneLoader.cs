@@ -52,19 +52,23 @@ public class sceneLoader : MonoBehaviour
             loadingSlider.value = slide;
             loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
 
-            yield return new WaitForSeconds(time);
+            
+            yield return null;
 
         }
-        control.completed += (sceneComplete) =>
+        if (control.progress >= .9f)
         {
-            loading.SetActive(false);
-            if (gameManager.instance.playerInstance == null)
+            control.completed += (sceneComplete) =>
             {
-                gameManager.instance.LevelSetup();
-                hUDManager.instance.showHUD();
-                gameManager.instance.isPaused = false;
-            }
-        };
+                loading.SetActive(false);
+                if (gameManager.instance.playerInstance == null)
+                {
+                    gameManager.instance.LevelSetup();
+                    hUDManager.instance.showHUD();
+                    gameManager.instance.isPaused = false;
+                }
+            };
+        }
     }
 
     IEnumerator LoadMain()
@@ -82,14 +86,17 @@ public class sceneLoader : MonoBehaviour
             loadingSlider.value = slide;
             loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
 
-            yield return new WaitForSeconds(time);
+            yield return null;
         }
-        control.completed += (sceneComplete) =>
+        if (control.progress >= .9f)
         {
-            loading.SetActive(false);
-            menuManager.instance.ActivateMenu();
-            gameManager.instance.beginGame();
-        };
+            control.completed += (sceneComplete) =>
+            {
+                loading.SetActive(false);
+                menuManager.instance.ActivateMenu();
+                gameManager.instance.beginGame();
+            };
+        }
     }
 
     IEnumerator LoadCurrent()
@@ -107,16 +114,19 @@ public class sceneLoader : MonoBehaviour
 
             yield return new WaitForSeconds(time);
         }
-        control.completed += (sceneComplete) =>
+        if (control.progress >= .9f)
         {
-            if (gameManager.instance.playerInstance == null)
+            control.completed += (sceneComplete) =>
             {
-                loading.SetActive(false);
-                gameManager.instance.LevelSetup();
-                menuManager.instance.unPause();
-            }
+                if (gameManager.instance.playerInstance == null)
+                {
+                    loading.SetActive(false);
+                    gameManager.instance.LevelSetup();
+                    menuManager.instance.unPause();
+                }
 
-        };
+            };
+        }
     }
 
  
@@ -132,18 +142,20 @@ public class sceneLoader : MonoBehaviour
             float slide = Mathf.Clamp01(control.progress / .9f);
             loadingSlider.value = slide;
             loadingValue.GetComponent<TextMeshProUGUI>().text = $"{slide * 100}";
-
+      
             yield return new WaitForSeconds(time);
         }
-        control.completed += (sceneComplete) =>
+        if (control.progress >= .9f)
         {
-            if (gameManager.instance.playerInstance == null)
+            control.completed += (sceneComplete) =>
             {
-                loading.SetActive(false);
-                gameManager.instance.LevelSetup();
-                menuManager.instance.unPause();
-            }
-        };
+                if (gameManager.instance.playerInstance == null)
+                {
+                    loading.SetActive(false);
+                    gameManager.instance.LevelSetup();
+                    menuManager.instance.unPause();
+                }
+            };
+        }
     }
-    
 }
