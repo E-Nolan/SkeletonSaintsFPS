@@ -92,13 +92,12 @@ public class playerController : MonoBehaviour, IDamage
     public bool isSecondaryShooting = false;
     public bool isGrappling = false;
 
-    bool isSwitchingWeapons = false;
-    float weaponSwitchCooldown = 0.1f;
-
-    public float currentStamina { get; private set; }
+    public float currentStamina; // { get; private set; } = 0;
     public int jumpsCurrent; // { get; private set; } = 0;
     public float currentHealth; //{ get; private set; }
     public float currentArmor; //{ get; private set; }
+    bool isSwitchingWeapons = false;
+    float weaponSwitchCooldown = 0.1f;
 
     bool canPlayFootsteps = true;
     public int currWepIndex { get; private set; } = 0;
@@ -664,202 +663,7 @@ public class playerController : MonoBehaviour, IDamage
         externalVelocity = Vector3.zero;
     }
 
-    #region Public Member Accessors
-    public int GetMaxHealth()
-    { return maxHealth; }
-
-    public float GetCurrentHealth()
-    { return currentHealth; }
-
-    public int GetMaxArmor()
-    { return maxArmor; }
-
-    public float GetCurrentArmor()
-    { return currentArmor; }
-
-    public int GetMaxStamina()
-    { return maxStamina; }
-
-    public float GetCurrentStamina()
-    { return currentStamina; }
-
-    public bool isAmmoInfinite()
-    { return currentWeapon.isAmmoInfinite(); }
-
-    public bool IsPlayerShooting()
-    { return (isPrimaryShooting || isSecondaryShooting); }
-
-    public bool IsPrimaryShooting()
-    { return isPrimaryShooting; }
-
-    public bool IsSecondaryShooting()
-    { return isSecondaryShooting; }
-
-    public Vector3 GetPlayerVelocity()
-    { return controller.velocity + moveInput * playerSpeed + externalVelocity; }
-
-    public int SetPlayerSpeed
-    {
-        set
-        {
-            playerSpeed = value;
-        }
-    }
-    public int SetGravity
-    {
-        set
-        {
-            gravity = value;
-        }
-    }
-    public int SetMaxStamina
-    {
-        set
-        {
-            maxStamina = value;
-        }
-    }
-    public float SetStaminaRegenSpeed
-    {
-        set
-        {
-            staminaRegenSpeed = value;
-        }
-    }
-    public float SetStaminaRegenCooldown
-    {
-        set
-        {
-            staminaRegenCooldown = value;
-        }
-    }
-    public int SetMaxHealth
-    {
-        set
-        {
-            maxHealth = value;
-        }
-    }
-    public int SetMaxArmor
-    {
-        set
-        {
-            maxArmor = value;
-        }
-    }
-    public float SetArmorRegenSpeed
-    {
-        set
-        {
-            armorRegenSpeed = value;
-        }
-    }
-    public float SetArmorRegenCooldown
-    {
-        set
-        {
-            armorRegenCooldown = value;
-        }
-    }
-    public float SetInvincibilityCooldown
-    {
-        set
-        {
-            invincibilityCooldown = value;
-        }
-    }
-    public float SetMaxJumpVel
-    {
-        set
-        {
-            maxJumpVel = value;
-        }
-    }
-    public float SetJumpAcceleration
-    {
-        set
-        {
-            jumpAcceleration = value;
-        }
-    }
-    public int SetMaxJumps
-    {
-        set
-        {
-            maxJumps = value;
-        }
-    }
-    public int SetJumpStaminaCost
-    {
-        set
-        {
-            jumpStaminaCost = value;
-        }
-    }
-    public float SetCoyoteTime
-    {
-        set
-        {
-            coyoteTime = value;
-        }
-    }
-    public float SetJumpInputCooldown
-    {
-        set
-        {
-            jumpInputCooldown = value;
-        }
-    }
-    public int SetDashSpeed
-    {
-        set
-        {
-            dashSpeed = value;
-        }
-    }
-    public float SetDashCooldown
-    {
-        set
-        {
-            dashCooldown = value;
-        }
-    }
-    public float SetDashDuration
-    {
-        set
-        {
-            dashDuration = value;
-        }
-    }
-    public int SetDashStaminaCost
-    {
-        set
-        {
-            dashStaminaCost = value;
-        }
-    }
-    public float SetDashInvincibilityTime
-    {
-        set
-        {
-            dashInvincibilityTime = value;
-        }
-    }
-    public int SetSprintSpeed
-    {
-        set
-        {
-            sprintSpeed = value;
-        }
-    }
-    public float SetSprintStaminaDrain
-    {
-        set
-        {
-            sprintStaminaDrain = value;
-        }
-    }
-#endregion
+    
 
 
     IEnumerator playFootstep()
@@ -950,4 +754,44 @@ public class playerController : MonoBehaviour, IDamage
 
         sceneControl.instance.LoadNextLevel();
     }
+    /*
+     public float currentStamina { get; private set; }
+    public int jumpsCurrent; // { get; private set; } = 0;
+    public float currentHealth; //{ get; private set; }
+    public float currentArmor; //{ get; private set; }
+     */
+
+    #region Getters/Setter
+    public int MaxHealth { get { return maxHealth; } set { maxHealth = value; }  }
+    public float GetCurrentHealth { get { return currentHealth; } }
+    public int MaxArmor { get { return maxArmor; } set { maxArmor = value; } }
+    public float GetCurrentArmor { get { return currentArmor; } }
+    public int MaxStamina { get { return maxStamina; } set { maxStamina = value; } }
+    public float GetCurrentStamina { get { return currentStamina; } }
+    public bool isAmmoInfinite { get { return currentWeapon.isAmmoInfinite(); } }
+    public bool IsPlayerShooting { get { return (isPrimaryShooting || isSecondaryShooting); } }
+    public bool IsPrimaryShooting { get { return isPrimaryShooting; } }
+    public bool IsSecondaryShooting { get { return isSecondaryShooting; } }
+    public Vector3 GetPlayerVelocity { get { return controller.velocity + moveInput * playerSpeed + externalVelocity; } }
+    public int PlayerSpeed { get { return playerSpeed; } set { playerSpeed = value; } }
+    public int SetGravity { set { gravity = value; } }
+    public float SetStaminaRegenSpeed { set { staminaRegenSpeed = value; } }
+    public float SetStaminaRegenCooldown { set { staminaRegenCooldown = value; } }
+    public float SetArmorRegenSpeed { set { armorRegenSpeed = value; } }
+    public float SetArmorRegenCooldown { set { armorRegenCooldown = value; } }
+    public float SetInvincibilityCooldown { set { invincibilityCooldown = value; } }
+    public float SetMaxJumpVel { set { maxJumpVel = value; } }
+    public float SetJumpAcceleration { set { jumpAcceleration = value; } }
+    public int SetMaxJumps { set { maxJumps = value; } }
+    public int SetJumpStaminaCost { set { jumpStaminaCost = value; } }
+    public float SetCoyoteTime { set { coyoteTime = value; } }
+    public float SetJumpInputCooldown { set { jumpInputCooldown = value; } }
+    public int SetDashSpeed { set { dashSpeed = value; } }
+    public float SetDashCooldown { set { dashCooldown = value; } }
+    public float SetDashDuration { set { dashDuration = value; } }
+    public int SetDashStaminaCost { set { dashStaminaCost = value; } }
+    public float SetDashInvincibilityTime { set { dashInvincibilityTime = value; } }
+    public int SetSprintSpeed { set { sprintSpeed = value; } }
+    public float SetSprintStaminaDrain { set { sprintStaminaDrain = value; } }
+    #endregion
 }

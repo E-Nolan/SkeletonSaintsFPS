@@ -85,7 +85,7 @@ public class gameManager : MonoBehaviour
 		{
 			//menuManager.instance.DeactivateAllMenus
 			menuManager.instance.DeactivateMain();
-			sceneControl.instance.LoadMainLevel();
+			sceneLoader.instance.LoadNextScene();
 			isPaused = false;
 		}
 
@@ -162,16 +162,16 @@ public class gameManager : MonoBehaviour
 		if (playerScript.startingOffHand)
 			playerScript.rangedWeaponPickup(playerScript.startingOffHand, playerScript.startingOffHand.weaponType);
 
-		playerScript.SetPlayerSpeed = playerPreferences.instance.playerSpeed;
+		playerScript.PlayerSpeed = playerPreferences.instance.playerSpeed;
 		playerScript.SetGravity = playerPreferences.instance.gravity;
 
-		playerScript.SetMaxStamina = playerPreferences.instance.maxStamina;
+		playerScript.MaxStamina = playerPreferences.instance.maxStamina;
 		playerScript.SetStaminaRegenSpeed = playerPreferences.instance.staminaRegenSpeed;
 		playerScript.SetStaminaRegenCooldown = playerPreferences.instance.staminaRegenCooldown;
 
-		playerScript.SetMaxHealth = playerPreferences.instance.maxHealth;
+		playerScript.MaxHealth = playerPreferences.instance.maxHealth;
 
-		playerScript.SetMaxArmor = playerPreferences.instance.maxArmor;
+		playerScript.MaxArmor = playerPreferences.instance.maxArmor;
 		playerScript.SetArmorRegenSpeed = playerPreferences.instance.armorRegenSpeed;
 		playerScript.SetArmorRegenCooldown = playerPreferences.instance.armorRegenCooldown;
 
@@ -198,7 +198,7 @@ public class gameManager : MonoBehaviour
 	{
 
 		//if we are respawning because the player died, just un-set the flash screen and toggle the menu
-		if (playerScript.GetCurrentHealth() <= 0)
+		if (playerScript.GetCurrentHealth <= 0)
 		{
 			hUDManager.instance.damageFlashScreen.SetActive(false);
 
@@ -232,7 +232,7 @@ public class gameManager : MonoBehaviour
 			menuManager.instance.toggleGameMenu();
 		}
 
-		if (playerScript.GetCurrentHealth() <= 0)
+		if (playerScript.GetCurrentHealth <= 0)
 		{
 			hUDManager.instance.damageFlashScreen.SetActive(false);
 		}
@@ -249,7 +249,7 @@ public class gameManager : MonoBehaviour
 			menuManager.instance.toggleGameMenu();
 		}
 
-		if (playerScript.GetCurrentHealth() <= 0)
+		if (playerScript.GetCurrentHealth <= 0)
 		{
 			hUDManager.instance.damageFlashScreen.SetActive(false);
 		}

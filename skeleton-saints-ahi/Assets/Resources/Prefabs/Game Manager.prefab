@@ -19306,9 +19306,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Start
-
-'
+  m_text: New Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
   m_sharedMaterial: {fileID: 21032597133445202, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
@@ -25736,7 +25734,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -26504,7 +26502,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -26646,29 +26644,29 @@ MonoBehaviour:
   MainWeapons: []
   OffWeapon: 0
   difficulty: 1
-  playerSpeed: 0
-  gravity: 0
-  maxStamina: 0
-  staminaRegenSpeed: 0
-  staminaRegenCooldown: 0
-  maxHealth: 0
-  maxArmor: 0
-  armorRegenSpeed: 0
-  armorRegenCooldown: 0
-  invincibilityCooldown: 0
-  maxJumpVel: 0
-  jumpAcceleration: 0
-  maxJumps: 0
-  jumpStaminaCost: 0
-  coyoteTime: 0
+  playerSpeed: 10
+  gravity: 24
+  maxStamina: 100
+  staminaRegenSpeed: 50
+  staminaRegenCooldown: 0.5
+  maxHealth: 10
+  maxArmor: 3
+  armorRegenSpeed: 1
+  armorRegenCooldown: 1
+  invincibilityCooldown: 0.25
+  maxJumpVel: 9
+  jumpAcceleration: 45
+  maxJumps: 1
+  jumpStaminaCost: 1
+  coyoteTime: 0.2
   jumpInputCooldown: 0
-  dashSpeed: 0
-  dashCooldown: 0
-  dashDuration: 0
-  dashStaminaCost: 0
-  dashInvincibilityTime: 0
-  sprintSpeed: 0
-  sprintStaminaDrain: 0
+  dashSpeed: 25
+  dashCooldown: 0.75
+  dashDuration: 0.25
+  dashStaminaCost: 30
+  dashInvincibilityTime: 0.05
+  sprintSpeed: 15
+  sprintStaminaDrain: 25
   Button_Jump: Jump
   Button_Crouch: Crouch
   Button_Sprint: Sprint
@@ -30595,7 +30593,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

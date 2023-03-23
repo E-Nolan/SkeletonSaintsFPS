@@ -23,7 +23,6 @@ public class sceneLoader : MonoBehaviour
     public void LoadNextScene()
     {
         StartCoroutine(LoadNextLevel());
-        //gameManager.instance.PlayerScript().OnDeserialize();
     }
 
     public void LoadMainMenu()

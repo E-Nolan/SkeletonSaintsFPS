@@ -240,7 +240,7 @@ public class rangedWeapon : MonoBehaviour
             if (usedByPlayer)
             {
                 if (gameManager.instance.PlayerScript() != null)
-                newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed + Vector3.Project(gameManager.instance.PlayerScript().GetPlayerVelocity(), newBullet.transform.forward);
+                newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed + Vector3.Project(gameManager.instance.PlayerScript().GetPlayerVelocity, newBullet.transform.forward);
             }
             else
                 newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletSpeed;

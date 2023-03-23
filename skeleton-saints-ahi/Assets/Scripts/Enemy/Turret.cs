@@ -134,7 +134,7 @@ public class Turret : MonoBehaviour
     /// </summary>
     private bool IsPlayerShooting()
     {
-        return gameManager.instance.PlayerScript().IsPlayerShooting();
+        return gameManager.instance.PlayerScript().IsPlayerShooting;
     }
 
     /// <summary>

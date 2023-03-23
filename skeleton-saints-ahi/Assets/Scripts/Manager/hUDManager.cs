@@ -75,19 +75,19 @@ public class hUDManager : MonoBehaviour
     #region Public Methods
     public void updateHealth()
     {
-        health.maxValue = gameManager.instance.PlayerScript().GetMaxHealth();
+        health.maxValue = gameManager.instance.PlayerScript().MaxHealth;
         health.value = gameManager.instance.PlayerScript().currentHealth;
     }
 
     public void updateStamina()
     {
-        stamina.maxValue = gameManager.instance.PlayerScript().GetMaxStamina();
+        stamina.maxValue = gameManager.instance.PlayerScript().MaxStamina;
         stamina.value = gameManager.instance.PlayerScript().currentStamina;
     }
 
     public void updateArmor()
     {
-        armor.maxValue = gameManager.instance.PlayerScript().GetMaxArmor();
+        armor.maxValue = gameManager.instance.PlayerScript().MaxArmor;
         armor.value = gameManager.instance.PlayerScript().currentArmor;
     }
 

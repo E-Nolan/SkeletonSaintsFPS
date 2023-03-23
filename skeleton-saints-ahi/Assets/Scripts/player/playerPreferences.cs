@@ -10,7 +10,8 @@ public sealed class playerPreferences: MonoBehaviour
     {
 		instance = this;
 		GetDefaultsFromFile();
-    }
+	}
+
 	public List<GameObject> MainWeapons = new List<GameObject>();
 	public bool OffWeapon;
 	public gameManager.Difficulty difficulty = gameManager.Difficulty.Normal;
@@ -86,9 +87,9 @@ public sealed class playerPreferences: MonoBehaviour
     public float horizontalDefault = 400;
 	public float verticalDefault = 500;
 	public bool invertXDefault= false;
-    #endregion
+	#endregion
 
-    public void AssignActivetoDefault()
+	public void AssignActivetoDefault()
     {
 
 		masterVolume = masterVolumeDefault;
@@ -100,6 +101,7 @@ public sealed class playerPreferences: MonoBehaviour
 		invertX = invertXDefault;
 
 	}
+
 	public void GetDefaultsFromFile(/*string fileName*/)
     {
 		AssignActivetoDefault();
