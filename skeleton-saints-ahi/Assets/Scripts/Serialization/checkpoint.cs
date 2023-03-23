@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class checkpoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    IGate gateCheck;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        gateCheck = GetComponent<IGate>();
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (gateCheck.isUnlocked)
+        {
+            if (other.CompareTag("Player"))
+            {
+                Debug.Log("Saving at checkpoint");
+                saveManagerInterface.instance.SaveMain();
+            }
+        }
     }
 }

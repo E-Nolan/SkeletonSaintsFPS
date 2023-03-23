@@ -78,6 +78,7 @@ public class sceneLoader : MonoBehaviour
             menuManager.instance.canToggleGameMenu = true;
         hUDManager.instance.closeHUD();
         hUDManager.instance.TransitionFromPlay();
+        hUDManager.instance.clearWeapons();
         loading.SetActive(true);
         AsyncOperation control = SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
         while(!control.isDone)
@@ -135,6 +136,7 @@ public class sceneLoader : MonoBehaviour
         menuManager.instance.toggleGameMenu();
         hUDManager.instance.closeHUD();
         hUDManager.instance.TransitionFromPlay();
+        hUDManager.instance.clearWeapons();
         loading.SetActive(true);
         AsyncOperation control = SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
         while (!control.isDone)
@@ -157,5 +159,9 @@ public class sceneLoader : MonoBehaviour
                 }
             };
         }
+    }
+    public Scene currentScene()
+    {
+        return SceneManager.GetActiveScene();
     }
 }

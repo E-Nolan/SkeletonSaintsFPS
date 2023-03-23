@@ -100,34 +100,38 @@ public class hUDManager : MonoBehaviour
 
     public void updateWeaponDisplay()
     {
-        activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
-        for (int i = 0; i < gameManager.instance.PlayerScript().inactiveWeapons.Count; i++)
+        if (gameManager.instance.PlayerScript() != null)
         {
-            if (gameManager.instance.PlayerScript().inactiveWeapons[i] != null)
-                inactiveGuns[i].GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapons[i].inactiveImage;
-        }
+            if (activeGun != null)
+            {
+                activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
 
-        updateWeaponText();
-    }
-    public void TransitionFromPlay()
-    {
-        ResetKeyColors();
-        gateText.gameObject.SetActive(false);
-        swap.SetActive(false);
+
+                for (int i = 0; i < gameManager.instance.PlayerScript().inactiveWeapons.Count; i++)
+                {
+                    if (gameManager.instance.PlayerScript().inactiveWeapons[i] != null)
+                        inactiveGuns[i].GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapons[i].inactiveImage;
+                }
+            }
+            updateWeaponText();
+        }
     }
     public void updateWeaponText()
     {
-        activeClip.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentClip}";
-        activeReserve.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentAmmo}";
-        if(gameManager.instance.PlayerScript().currentWeapon.weaponName == "Pistol")
+        if (gameManager.instance.PlayerScript() != null)
         {
-            activeReserve.enabled = false;
-            pistolReserve.enabled = true;
-        }
-        else
-        {
-            activeReserve.enabled = true;
-            pistolReserve.enabled = false;
+            activeClip.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentClip}";
+            activeReserve.GetComponent<TextMeshProUGUI>().text = $"{gameManager.instance.PlayerScript().currentWeapon.CurrentAmmo}";
+            if (gameManager.instance.PlayerScript().currentWeapon.weaponName == "Pistol")
+            {
+                activeReserve.enabled = false;
+                pistolReserve.enabled = true;
+            }
+            else
+            {
+                activeReserve.enabled = true;
+                pistolReserve.enabled = false;
+            }
         }
     }
     public void displayWeaponPickUpTrue()
@@ -186,7 +190,22 @@ public class hUDManager : MonoBehaviour
     {
         hud.SetActive(false);
     }
+    public void TransitionFromPlay()
+    {
+        ResetKeyColors();
+        gateText.gameObject.SetActive(false);
+        swap.SetActive(false);
 
+    }
+    public void clearWeapons()
+    {
+        if (playerPreferences.instance != null)
+        {
+            playerPreferences.instance.MainWeapons.Clear();
+            playerPreferences.instance.OffWeapon = false;
+        }
+        updateWeaponDisplay();
+    }
     #endregion
     void ResetKeyColors()
     {
