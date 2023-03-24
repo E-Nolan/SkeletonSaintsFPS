@@ -25,14 +25,17 @@ public class hookPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (retracting)
-            gradualRetract();
+        if (gameManager.instance.PlayerScript() != null)
+        {
+            if (retracting)
+                gradualRetract();
 
-        else if (pulling)
-            gradualPull();
+            else if (pulling)
+                gradualPull();
 
-        else if (!gameManager.instance.PlayerScript().isGrappling && (transform.position - grappleGunScript.transform.position).magnitude >= grappleGunScript.hookRange)
-            beginRetracting();
+            else if (!gameManager.instance.PlayerScript().isGrappling && (transform.position - grappleGunScript.transform.position).magnitude >= grappleGunScript.hookRange)
+                beginRetracting();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

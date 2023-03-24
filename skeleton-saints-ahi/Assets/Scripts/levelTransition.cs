@@ -28,7 +28,6 @@ public class levelTransition : MonoBehaviour
     public static void SwitchToLevel()
     {
         hUDManager.instance.TransitionFromPlay();
-        saveManager.SaveGameData(saveManager.mainData_Current);
 
         savePlayer.instance.updatePreferences();
         sceneLoader.instance.LoadNextScene();
