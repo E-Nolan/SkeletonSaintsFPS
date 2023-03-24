@@ -19,6 +19,7 @@ public class gameEventManager : MonoBehaviour
     public GameObject EventTextGroup;
     public List<TaskListUIElement> EventTexts;
     public LayoutElement EventTextLayout;
+    public GameObject EventTextBody;
 
     private void Awake()
     {
@@ -113,7 +114,7 @@ public class gameEventManager : MonoBehaviour
                 {
                     TaskListUI_Location locationUI = Instantiate(LocationEventText, EventTextGroup.transform).GetComponent<TaskListUI_Location>();
                     EventTexts.Add(locationUI);
-                    EventTextLayout.preferredHeight += 50;
+                    expandEventText();
                     locationUI.EventUIText.text = eCondition.description;
                     (eCondition as locationCondition).ConditionUI = locationUI;
                     (eCondition as locationCondition).UpdateLocationUI((locationCondition)eCondition);
@@ -122,6 +123,7 @@ public class gameEventManager : MonoBehaviour
                 {
                     TaskListUI_Interaction interactionUI = Instantiate(InteractionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Interaction>();
                     EventTexts.Add(interactionUI);
+                    expandEventText();
                     interactionUI.EventUIText.text = eCondition.description;
                     (eCondition as interactionCondition).ConditionUI = interactionUI;
                     (eCondition as interactionCondition).UpdateInteractionUI((interactionCondition)eCondition);
@@ -130,6 +132,7 @@ public class gameEventManager : MonoBehaviour
                 {
                     TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Collection>();
                     EventTexts.Add(collectionUI);
+                    expandEventText();
                     collectionUI.EventUIText.text = eCondition.description;
                     (eCondition as collectionCondition).ConditionUI = collectionUI;
                     (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
@@ -138,6 +141,7 @@ public class gameEventManager : MonoBehaviour
                 {
                     TaskListUI_Kill KillUI = Instantiate(KillEventText, EventTextGroup.transform).GetComponent<TaskListUI_Kill>();
                     EventTexts.Add(KillUI);
+                    expandEventText();
                     KillUI.EventUIText.text = eCondition.description;
                     (eCondition as killCondition).ConditionUI = KillUI;
                     (eCondition as killCondition).UpdateKillUI((killCondition)eCondition);
@@ -152,7 +156,7 @@ public class gameEventManager : MonoBehaviour
                 {
                     TaskListUI_Location locationUI = Instantiate(LocationEventText, EventTextGroup.transform).GetComponent<TaskListUI_Location>();
                     EventTexts.Add(locationUI);
-                    EventTextLayout.preferredHeight += 50;
+                    expandEventText();
                     locationUI.EventUIText.text = eCondition.description;
                     (eCondition as locationCondition).ConditionUI = locationUI;
                     (eCondition as locationCondition).UpdateLocationUI((locationCondition)eCondition);
@@ -160,7 +164,7 @@ public class gameEventManager : MonoBehaviour
                 if (eCondition.EventClass == (int)gameManager.EventClass.Interaction)
                 {
                     TaskListUI_Interaction interactionUI = Instantiate(InteractionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Interaction>();
-                    EventTextLayout.preferredHeight += 50;
+                    expandEventText();
                     EventTexts.Add(interactionUI);
                     interactionUI.EventUIText.text = eCondition.description;
                     (eCondition as interactionCondition).ConditionUI = interactionUI;
@@ -169,7 +173,7 @@ public class gameEventManager : MonoBehaviour
                 if (eCondition.EventClass == (int)gameManager.EventClass.Collection)
                 {
                     TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Collection>();
-                    EventTextLayout.preferredHeight += 50;
+                    expandEventText();
                     EventTexts.Add(collectionUI);
                     collectionUI.EventUIText.text = eCondition.description;
                     (eCondition as collectionCondition).ConditionUI = collectionUI;
@@ -178,7 +182,7 @@ public class gameEventManager : MonoBehaviour
                 if (eCondition.EventClass == (int)gameManager.EventClass.Kill)
                 {
                     TaskListUI_Kill KillUI = Instantiate(KillEventText, EventTextGroup.transform).GetComponent<TaskListUI_Kill>();
-                    EventTextLayout.preferredHeight += 50;
+                    expandEventText();
                     EventTexts.Add(KillUI);
                     KillUI.EventUIText.text = eCondition.description;
                     (eCondition as killCondition).ConditionUI = KillUI;
@@ -248,7 +252,14 @@ public class gameEventManager : MonoBehaviour
             }
         }
     }
-
+    void expandEventText()
+    {
+        EventTextLayout.preferredHeight += 50;
+        RectTransform currentRect = EventTextBody.GetComponent<RectTransform>();
+        EventTextBody.GetComponent<RectTransform>().sizeDelta = new Vector2(500, currentRect.sizeDelta.y + 100);
+        Vector3 newPos = new Vector3(currentRect.position.x, currentRect.position.y - 50, currentRect.position.z);
+        EventTextBody.GetComponent<RectTransform>().SetPositionAndRotation(newPos, currentRect.rotation);
+    }
     public void ResetEvents()
     {
         //If no events active just back out
