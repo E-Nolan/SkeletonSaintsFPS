@@ -142,7 +142,6 @@ public class sceneLoader : MonoBehaviour
         menuManager.instance.canToggleGameMenu = false;
         hUDManager.instance.closeHUD();
         hUDManager.instance.TransitionFromPlay();
-        hUDManager.instance.clearWeapons();
         loading.SetActive(true);
         AsyncOperation control = SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
         while (!control.isDone)
@@ -160,6 +159,7 @@ public class sceneLoader : MonoBehaviour
                 if (gameManager.instance.playerInstance == null)
                 {
                     loading.SetActive(false);
+                    hUDManager.instance.clearWeapons();
                     gameManager.instance.LevelSetup();
                     menuManager.instance.canToggleGameMenu = true;
                 }

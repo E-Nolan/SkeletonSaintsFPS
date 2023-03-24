@@ -106,16 +106,27 @@ public class hUDManager : MonoBehaviour
             {
                 activeGun.GetComponent<Image>().sprite = gameManager.instance.PlayerScript().currentWeapon.activeImage;
 
-
-                for (int i = 0; i < gameManager.instance.PlayerScript().inactiveWeapons.Count; i++)
+                if (gameManager.instance.PlayerScript().inactiveWeapons.Count == 0)
                 {
-                    if (gameManager.instance.PlayerScript().inactiveWeapons[i] != null)
-                        inactiveGuns[i].GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapons[i].inactiveImage;
+                    for (int i = 0; i < inactiveGuns.Length; i++)
+                    {
+                        inactiveGuns[i].sprite = null;
+                    }
                 }
+                else
+                {
+                    for (int i = 0; i < gameManager.instance.PlayerScript().inactiveWeapons.Count; i++)
+                    {
+                        if (gameManager.instance.PlayerScript().inactiveWeapons[i] != null)
+                            inactiveGuns[i].GetComponent<Image>().sprite = gameManager.instance.PlayerScript().inactiveWeapons[i].inactiveImage;
+                    }
+                }
+
             }
             updateWeaponText();
         }
     }
+    
     public void updateWeaponText()
     {
         if (gameManager.instance.PlayerScript() != null)
@@ -203,11 +214,8 @@ public class hUDManager : MonoBehaviour
     }
     public void clearWeapons()
     {
-        if (playerPreferences.instance != null)
-        {
-            playerPreferences.instance.MainWeapons.Clear();
-            playerPreferences.instance.OffWeapon = false;
-        }
+        playerPreferences.instance.MainWeapons.Clear();
+
         updateWeaponDisplay();
     }
     #endregion

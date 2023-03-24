@@ -85,7 +85,8 @@ public class playerController : MonoBehaviour, IDamage
 
     public rangedWeapon currentWeapon { get; private set; }
     public rangedWeapon currentSecondary { get; private set; }
-    public List<rangedWeapon> inactiveWeapons { get; private set; }
+
+    public List<rangedWeapon> inactiveWeapons;
     public bool isDashing { get; private set; } = false;
     public bool isSprinting { get; private set; } = false;
     public bool isPrimaryShooting = false;
@@ -109,6 +110,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (inactiveWeapons == null)
             inactiveWeapons = new List<rangedWeapon>();
+        
     }
     
     // Start is called before the first frame update
