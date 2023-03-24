@@ -120,7 +120,7 @@ public class gameObjectSaveData
 		//Go through the stored object's component list and reassign all values in each component, and add components that are missing
 		foreach (objectComponent obc in sceneObject.objectComponents)
 		{
-			if (obc.saveableType.SystemType == null)
+			if (obc.GetType() == null)
             {
 				continue;
             }
@@ -141,12 +141,18 @@ public class gameObjectSaveData
 										  BindingFlags.SetField);
 					if (fld != null)
 					{
-
+						Debug.Log(p.Value);
 						object value = p.Value;
 						fld.SetValue(obj, value);
+					} else
+                    {
+						Debug.Log(p.Key + " is null");
 					}
 				}
-            }
+            } else
+            {
+				Debug.Log(obc.componentName + " is null");
+			}
 		}
 	}
 }

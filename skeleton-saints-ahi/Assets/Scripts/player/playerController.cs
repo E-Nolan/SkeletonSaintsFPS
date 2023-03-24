@@ -721,14 +721,14 @@ public class playerController : MonoBehaviour, IDamage
 
     public void OnSerialize()
     {
-        savePlayer.instance.updatePlayer();
+        savePlayer.instance.updatePreferences();
     }
     public void OnDeserialize()
     {
         gameManager.instance.SetPlayerController = this;
         gameManager.instance.SetCameraControls = Camera.main.gameObject.GetComponent<cameraControls>();
         gameManager.instance.playerInstance = gameObject;
-        savePlayer.instance.updatePlayerInstance();
+        savePlayer.instance.updatePlayer();
     }
 
     void cheatCodeInput()
@@ -749,15 +749,14 @@ public class playerController : MonoBehaviour, IDamage
         {
             gameManager.instance.keyCard[i] = false;
         }
-        saveManager.SaveGameData(saveManager.mainData_Current);
-        savePlayer.instance.updatePlayer();
+        savePlayer.instance.updatePreferences();
 
         sceneControl.instance.LoadNextLevel();
     }
     /*
      public float currentStamina { get; private set; }
     public int jumpsCurrent; // { get; private set; } = 0;
-    public float currentHealth; //{ get; private set; }
+    public float currentHealth; //{ get; private set; }isPlayer
     public float currentArmor; //{ get; private set; }
      */
 

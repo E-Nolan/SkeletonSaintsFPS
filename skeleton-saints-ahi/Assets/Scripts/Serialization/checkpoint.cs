@@ -5,10 +5,11 @@ using UnityEngine;
 public class checkpoint : MonoBehaviour
 {
     IGate gateCheck;
+    bool savedOnce = false;
 
-    private void Awake()
+    private void Start()
     {
-        gateCheck = GetComponent<IGate>();
+        gateCheck = gameObject.GetComponent<IGate>();
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -16,9 +17,15 @@ public class checkpoint : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                Debug.Log("Saving at checkpoint");
-                saveManagerInterface.instance.SaveMain();
+                if (!savedOnce) {
+                    savedOnce = true;
+                    saveManagerInterface.instance.SaveMain();
+                }
             }
         }
+    }
+    public void OnSerialize()
+    {
+        gateCheck = gameObject.GetComponent<IGate>();
     }
 }

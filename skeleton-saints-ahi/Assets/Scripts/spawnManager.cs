@@ -89,9 +89,8 @@ public class spawnManager : MonoBehaviour
         {
             if (weaponTypes.Length > 0 && newWeapon != null)
             {
-                Enemy tempScript  = newEnemy.GetComponent<Enemy>();
                 weaponPickup pickup = newWeapon.GetComponent<weaponPickup>();
-                tempScript.PickupWeapon(pickup.weapon);
+                newEnemy.GetComponent<Enemy>().PickupWeapon(pickup.weapon);
             }
             
 
