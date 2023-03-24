@@ -30,7 +30,7 @@ public class levelTransition : MonoBehaviour
         hUDManager.instance.TransitionFromPlay();
         saveManager.SaveGameData(saveManager.mainData_Current);
 
-        savePlayer.instance.updatePlayer();
+        savePlayer.instance.updatePreferences();
         sceneLoader.instance.LoadNextScene();
     }
 

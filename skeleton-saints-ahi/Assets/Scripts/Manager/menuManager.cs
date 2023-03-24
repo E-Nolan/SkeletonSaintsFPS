@@ -199,6 +199,7 @@ public class menuManager : MonoBehaviour
 	public void pause()
 	{
 		hUDManager.instance.closeHUD();
+		hUDManager.instance.closeDialogue();
 		gameManager.instance.isPaused = true;
 		Time.timeScale = 0f;
 		hUDManager.instance.toggleCursorVisibility();

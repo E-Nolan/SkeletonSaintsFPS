@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 31549776}
   - component: {fileID: 31549777}
+  - component: {fileID: 1464486709}
   m_Layer: 0
   m_Name: Save Manger
   m_TagString: Untagged
@@ -45,6 +46,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultSaveName: Main Save
+--- !u!114 &1464486709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31549775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a095abad90e841d3b43a0c12512637a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  savedWeaponIndex: 0
 --- !u!1 &169866488
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,18 +103,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d55a2e89d8fa67488d59d2e546955e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pistol: {fileID: 0}
-  SMG: {fileID: 0}
-  shotgun: {fileID: 0}
-  assaultRifle: {fileID: 0}
-  grenadeLauncher: {fileID: 0}
-  grappleGun: {fileID: 0}
-  enemyPistol: {fileID: 0}
-  enemySMG: {fileID: 0}
-  enemyShotgun: {fileID: 0}
-  enemyAssaultRifle: {fileID: 0}
-  enemyGrenadeLauncher: {fileID: 0}
-  enemyMissileLauncher: {fileID: 0}
+  pistol: {fileID: 11400000, guid: a9de44a8f9d569b47b6d1a1d18cd1369, type: 2}
+  SMG: {fileID: 11400000, guid: 4aec58d033b72d64c9b677df6d02123e, type: 2}
+  shotgun: {fileID: 11400000, guid: 0bbe3188e75a69f4ba400c4d233b4e05, type: 2}
+  assaultRifle: {fileID: 11400000, guid: c25fec7d022e7ac47bc84a7e7caeddbb, type: 2}
+  grenadeLauncher: {fileID: 11400000, guid: 537853f1ba83ba64b9c81234f319d51b, type: 2}
+  grappleGun: {fileID: 11400000, guid: 15a93ac0856030645a33b7d5d6981d20, type: 2}
+  enemyPistol: {fileID: 11400000, guid: 72ec6970052e693429023d6f4aa5443c, type: 2}
+  enemySMG: {fileID: 11400000, guid: b20bd1295e4a12648b08b77882e1b881, type: 2}
+  enemyShotgun: {fileID: 11400000, guid: 43c0e2c7d540f534692be630e4268eca, type: 2}
+  enemyAssaultRifle: {fileID: 11400000, guid: 3f95d0408ddfd254fb91ca5154a44e99, type: 2}
+  enemyGrenadeLauncher: {fileID: 11400000, guid: bea601a81e409694c941be2870aee029, type: 2}
+  enemyMissileLauncher: {fileID: 11400000, guid: 0a90e0f8d7da4c74388505ce2a5fb275, type: 2}
 --- !u!1 &284633554
 GameObject:
   m_ObjectHideFlags: 0
@@ -26004,8 +26018,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a443fa24aa68b4c9811d5fbe8ea362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Game: 1
-  Testing: 0
+  Game: 0
+  Testing: 1
   PlayerPrefab: {fileID: 3169843501779763172, guid: 4cb34049403758d428bd6f86c3628ab2, type: 3}
   PlayerSpawnPos: {fileID: 0}
   playerInstance: {fileID: 0}
@@ -26721,7 +26735,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2160480847822161826
 RectTransform:
   m_ObjectHideFlags: 0

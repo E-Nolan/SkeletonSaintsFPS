@@ -193,9 +193,13 @@ public class hUDManager : MonoBehaviour
     public void TransitionFromPlay()
     {
         ResetKeyColors();
+        closeDialogue();
+    }
+
+    public void closeDialogue()
+    {
         gateText.gameObject.SetActive(false);
         swap.SetActive(false);
-
     }
     public void clearWeapons()
     {

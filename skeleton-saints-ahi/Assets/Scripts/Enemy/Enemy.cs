@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[Serializable]
 public class Enemy : MonoBehaviour, IDamage
 {
     [SerializeField] private EnemyAI _enemyAi;
@@ -44,6 +45,7 @@ public class Enemy : MonoBehaviour, IDamage
     [Header("----- Publics -----")]
     public bool isShooting = false;
     public rangedWeapon currentWeapon;
+    [SerializeField]
     public string savedWeapon;
     public bool acquiringWeapon;
     public bool isDead = false;
@@ -423,6 +425,10 @@ public class Enemy : MonoBehaviour, IDamage
             audioSource.PlayOneShot(spawnScreech, spawnScreechVolume);
     }
 
+    public void OnSerialize()
+    {
+        savedWeapon = currentWeapon.weaponName;
+    }
     public void OnDeserialize()
     {
         PickupWeapon(weaponManager.instance.GetEnemyWeaponStats(savedWeapon));
