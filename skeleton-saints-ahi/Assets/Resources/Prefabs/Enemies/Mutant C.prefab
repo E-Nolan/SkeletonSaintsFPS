@@ -2266,7 +2266,7 @@ MonoBehaviour:
   enemyDrops:
   - {fileID: 5174752464892961894, guid: 13a90e8c99bd36144abf28008ba6bcb8, type: 3}
   - {fileID: 2771983218902681831, guid: 1495490627c0ae043975db4410e5ea6f, type: 3}
-  dropChance: 0.1
+  dropChance: 0.2
   isShooting: 0
   currentWeapon: {fileID: 0}
   savedWeapon: 
@@ -2275,6 +2275,8 @@ MonoBehaviour:
   isAttacking: 0
   fadeHealthBar: 0
   DummyEnemy: 0
+  canDetectPlayer: 0
+  canAttack: 0
   _healthBar: {fileID: 2083425801631744019}
   _animator: {fileID: 8290775159967972618}
 --- !u!114 &8290775159967972631

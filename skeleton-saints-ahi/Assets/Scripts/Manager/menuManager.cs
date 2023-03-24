@@ -115,9 +115,7 @@ public class menuManager : MonoBehaviour
 			activeMenu.SetActive(false);
 			activeMenu = startMenu;
 			activeMenu.SetActive(true);
-			difficulty = easyMode;
 			difficulty.SetActive(true);
-
 		}
 	}
 
@@ -399,15 +397,15 @@ public class menuManager : MonoBehaviour
 
 	public void MainCredit()
     {
-        StartCoroutine(waitTime());
+        StartCoroutine(mainCredit());
     }
 
 	public void VictoryCredit()
     {
-
+		StartCoroutine(victoryCredit());
     }
 
-    private IEnumerator waitTime()
+    private IEnumerator mainCredit()
     {
         credits.GetComponent<creditsRoll>().isScrolling = true;
         DeactivateMain();
@@ -422,4 +420,14 @@ public class menuManager : MonoBehaviour
         tempSideMenu.SetActive(true);
         ActivateMenu();
     }
+
+	private IEnumerator victoryCredit()
+	{
+		credits.GetComponent<creditsRoll>().isScrolling = true;
+		victoryMenu.SetActive(false);
+		credits.SetActive(true);
+		yield return new WaitUntil(() => credits.GetComponent<creditsRoll>().isScrolling == false);
+		credits.SetActive(false);
+		victoryMenu.SetActive(true);
+	}
 }

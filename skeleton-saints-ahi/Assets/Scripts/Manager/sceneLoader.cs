@@ -42,6 +42,7 @@ public class sceneLoader : MonoBehaviour
 
     IEnumerator LoadNextLevel()
     {
+        menuManager.instance.canToggleGameMenu = false;
         loading.SetActive(true);
         hUDManager.instance.closeHUD();
         hUDManager.instance.TransitionFromPlay();
@@ -66,6 +67,7 @@ public class sceneLoader : MonoBehaviour
                     gameManager.instance.LevelSetup();
                     hUDManager.instance.showHUD();
                     gameManager.instance.isPaused = false;
+                    menuManager.instance.canToggleGameMenu = true;
                 }
             };
         }
@@ -105,6 +107,7 @@ public class sceneLoader : MonoBehaviour
     IEnumerator LoadCurrent()
     {
         menuManager.instance.toggleGameMenu();
+        menuManager.instance.canToggleGameMenu = false;
         hUDManager.instance.closeHUD();
         hUDManager.instance.TransitionFromPlay();
         loading.SetActive(true);
@@ -125,7 +128,7 @@ public class sceneLoader : MonoBehaviour
                 {
                     loading.SetActive(false);
                     gameManager.instance.LevelSetup();
-                    menuManager.instance.unPause();
+                    menuManager.instance.canToggleGameMenu = true;
                 }
 
             };
@@ -136,6 +139,7 @@ public class sceneLoader : MonoBehaviour
     IEnumerator LoadBeginning()
     {
         menuManager.instance.toggleGameMenu();
+        menuManager.instance.canToggleGameMenu = false;
         hUDManager.instance.closeHUD();
         hUDManager.instance.TransitionFromPlay();
         hUDManager.instance.clearWeapons();
@@ -157,7 +161,7 @@ public class sceneLoader : MonoBehaviour
                 {
                     loading.SetActive(false);
                     gameManager.instance.LevelSetup();
-                    menuManager.instance.unPause();
+                    menuManager.instance.canToggleGameMenu = true;
                 }
             };
         }
