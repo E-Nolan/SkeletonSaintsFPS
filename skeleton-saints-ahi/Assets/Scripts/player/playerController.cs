@@ -157,7 +157,7 @@ public class playerController : MonoBehaviour, IDamage
 
     void getPlayerInput()
     {
-        cheatCodeInput();
+        //cheatCodeInput();
 
         movement();
 
