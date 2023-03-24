@@ -26093,7 +26093,7 @@ MonoBehaviour:
   dashSpeed: 25
   dashCooldown: 0.75
   dashDuration: 0.25
-  dashStaminaCost: 30
+  dashStaminaCost: 10
   dashInvincibilityTime: 0.05
   sprintSpeed: 15
   sprintStaminaDrain: 25
