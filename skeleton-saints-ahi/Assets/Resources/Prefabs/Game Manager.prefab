@@ -539,22 +539,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Beauty Flow by Kevin MacLeod
+  m_text: '"Beauty Flow", "Burnt Spirit", "Cognitive Dissonance", Firebrand", "Mechanolith",
+    "Shamanistic", & "The Way Out" Kevin MacLeod (incompetech.com)
 
-    Burnt Spirit by Kevin MacLeod
+    Licensed
+    under Creative Commons: By Attribution 4.0 License
 
-    Cognitive
-    Dissonance by Kevin MacLeod
+    http://creativecommons.org/licenses/by/4.0/
 
-    Firebrand by Kevin MacLeod
-
-    Mechanolith
-    by Kevin MacLeod
-
-    Shamanistic by Kevin MacLeod
-
-    The Way Out by Kevin
-    MacLeod'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
   m_sharedMaterial: {fileID: 21032597133445202, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
@@ -1084,9 +1077,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 734101524882160803}
-        m_TargetAssemblyTypeName: winLoseButton, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 2094811880}
+        m_TargetAssemblyTypeName: menuButton, Assembly-CSharp
+        m_MethodName: VictoryCredit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5892,7 +5885,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -29326,7 +29319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: from creativecommons.com
+  m_text: 'Music:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
   m_sharedMaterial: {fileID: 21032597133445202, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
@@ -34183,7 +34176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2741210174385274330
 RectTransform:
   m_ObjectHideFlags: 0
