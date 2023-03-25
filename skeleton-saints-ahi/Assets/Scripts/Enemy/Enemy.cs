@@ -186,8 +186,11 @@ public class Enemy : MonoBehaviour, IDamage
 
     private void OnDestroy()
     {
-        if(isBossEnemy && Health <= 0 && SceneManager.GetActiveScene().name != "Main Menu")
+        if (isBossEnemy && Health <= 0 && SceneManager.GetActiveScene().name != "Main Menu")
+        {
             gameManager.instance.queuePlayerVictory(1f);
+            gameManager.instance.bossIsDead = true;
+        }
     }
 
     private float CalculateHealth()

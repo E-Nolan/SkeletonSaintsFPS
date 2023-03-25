@@ -16,6 +16,7 @@ public class gameEventManager : MonoBehaviour
     public GameObject InteractionEventText;
     public GameObject CollectionEventText;
     public GameObject KillEventText;
+    public GameObject BossEventText;
 
     [Header("References")]
     public GameObject EventTextGroup;
@@ -135,23 +136,12 @@ public class gameEventManager : MonoBehaviour
                 }
                 if (eCondition.EventClass == (int)gameManager.EventClass.Collection)
                 {
-                    if ((eCondition as collectionCondition).keycardObjectives)
-                    {
-                        TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, MainEventBody.transform).GetComponent<TaskListUI_Collection>();
-                        EventTexts.Add(collectionUI);
-                        modifyEventText(50, 100);
-                        collectionUI.EventUIText.text = eCondition.description;
-                        (eCondition as collectionCondition).ConditionUI = collectionUI;
-                        (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
-                    } else
-                    {
-                        TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Collection>();
-                        EventTexts.Add(collectionUI);
-                        modifyEventText(50, 100);
-                        collectionUI.EventUIText.text = eCondition.description;
-                        (eCondition as collectionCondition).ConditionUI = collectionUI;
-                        (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
-                    }
+
+                    TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, MainEventBody.transform).GetComponent<TaskListUI_Collection>();
+                    EventTexts.Add(collectionUI);
+                    collectionUI.EventUIText.text = eCondition.description;
+                    (eCondition as collectionCondition).ConditionUI = collectionUI;
+                    (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
 
                 }
                 if (eCondition.EventClass == (int)gameManager.EventClass.Kill)
@@ -162,6 +152,14 @@ public class gameEventManager : MonoBehaviour
                     KillUI.EventUIText.text = eCondition.description;
                     (eCondition as killCondition).ConditionUI = KillUI;
                     (eCondition as killCondition).UpdateKillUI((killCondition)eCondition);
+                }
+                if (eCondition.EventClass == (int)gameManager.EventClass.Boss)
+                {
+                    TaskListUI_Boss bossUIMain = Instantiate(BossEventText, MainEventBody.transform).GetComponent<TaskListUI_Boss>();
+                    EventTexts.Add(bossUIMain);
+                    bossUIMain.EventUIText.text = eCondition.description;
+                    (eCondition as bossCondition).ConditionUI = bossUIMain;
+                    (eCondition as bossCondition).UpdateBossUI((bossCondition)eCondition);
                 }
             }
         }
@@ -243,6 +241,10 @@ public class gameEventManager : MonoBehaviour
                 if (eCondition.EventClass == (int)gameManager.EventClass.Kill)
                 {
                     (eCondition as killCondition).UpdateKillUI((killCondition)eCondition);
+                }
+                if (eCondition.EventClass == (int)gameManager.EventClass.Boss)
+                {
+                    (eCondition as bossCondition).UpdateBossUI((bossCondition)eCondition);
                 }
             }
         }

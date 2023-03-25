@@ -34,6 +34,7 @@ public class gameManager : MonoBehaviour
 	[SerializeField] public bool[] keyCard = new bool[3];
 	List<gameEvent> activeGameEvents;
 	[SerializeField] gateButton finalGateButton;
+	public bool bossIsDead;
 
 	public string activeScene;
 	//Bool to determine when a scene with the player in it has started (I.E. Not in the main menu or level selection.

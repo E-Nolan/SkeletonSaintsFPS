@@ -26044,6 +26044,7 @@ MonoBehaviour:
   currentScene: {fileID: 0}
   keyCard: 000000
   finalGateButton: {fileID: 0}
+  bossIsDead: 0
   activeScene: 
   playStarted: 0
   confirmed: 0
@@ -26263,6 +26264,7 @@ MonoBehaviour:
   InteractionEventText: {fileID: 7805358072916256354, guid: 21bd6ba2270fcc344a160d8bc7dbef82, type: 3}
   CollectionEventText: {fileID: 1048726702225621522, guid: 427d76626835b83469f3136057fe4c43, type: 3}
   KillEventText: {fileID: 1048726702225621522, guid: e11f7b508d73c3244a038e9937660443, type: 3}
+  BossEventText: {fileID: 7805358072916256354, guid: e3585a18d8ce726408c36478ad6e4b86, type: 3}
   EventTextGroup: {fileID: 2141430598413751641}
   EventTexts: []
   EventTextLayout: {fileID: 2141430598413751642}
