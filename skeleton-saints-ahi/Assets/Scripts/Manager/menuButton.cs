@@ -141,4 +141,9 @@ public class menuButton : MonoBehaviour
     {
         menuManager.instance.ExitGame();
     }
+
+    public void VictoryCredit()
+    {
+        menuManager.instance.VictoryCredit();
+    }
 }
