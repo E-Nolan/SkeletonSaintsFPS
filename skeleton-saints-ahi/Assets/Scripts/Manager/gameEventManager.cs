@@ -136,12 +136,22 @@ public class gameEventManager : MonoBehaviour
                 }
                 if (eCondition.EventClass == (int)gameManager.EventClass.Collection)
                 {
-
-                    TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, MainEventBody.transform).GetComponent<TaskListUI_Collection>();
-                    EventTexts.Add(collectionUI);
-                    collectionUI.EventUIText.text = eCondition.description;
-                    (eCondition as collectionCondition).ConditionUI = collectionUI;
-                    (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
+                    if ((eCondition as collectionCondition).keycardObjectives)
+                    {
+                        TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, MainEventBody.transform).GetComponent<TaskListUI_Collection>();
+                        EventTexts.Add(collectionUI);
+                        collectionUI.EventUIText.text = eCondition.description;
+                        (eCondition as collectionCondition).ConditionUI = collectionUI;
+                        (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
+                    } else
+                    {
+                        TaskListUI_Collection collectionUI = Instantiate(CollectionEventText, EventTextGroup.transform).GetComponent<TaskListUI_Collection>();
+                        EventTexts.Add(collectionUI);
+                        modifyEventText(50, 100);
+                        collectionUI.EventUIText.text = eCondition.description;
+                        (eCondition as collectionCondition).ConditionUI = collectionUI;
+                        (eCondition as collectionCondition).UpdateCollectionUI((collectionCondition)eCondition);
+                    }
 
                 }
                 if (eCondition.EventClass == (int)gameManager.EventClass.Kill)
